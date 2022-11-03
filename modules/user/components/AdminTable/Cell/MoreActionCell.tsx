@@ -37,11 +37,9 @@ export function MoreActionCell({
       </MenuButton>
       <MenuList>
         {actionItems.map(item => (
-          <>
-            <MenuItem key={item.key} onClick={item.onClick}>
-              {item.content}
-            </MenuItem>
-          </>
+          <MenuItem key={item.key} onClick={item.onClick}>
+            {item.content}
+          </MenuItem>
         ))}
       </MenuList>
     </Menu>

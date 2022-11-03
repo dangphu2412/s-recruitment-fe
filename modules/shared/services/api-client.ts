@@ -1,11 +1,11 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { TokenManager } from '@modules/shared/services/token-manager';
+import { ClientErrorCode } from '@modules/error-handling/client-code';
+import { ClientError } from '@modules/error-handling/useErrorHandler';
 import { BrowserStorage } from './browser-storage';
 
 const API_URL = process.env.NEXT_PUBLIC_API_ENDPOINT ?? 'http://localhost:8080';
 
-if (!API_URL) {
-  throw new Error('Missing API_ENDPOINT');
-}
 axios.defaults.baseURL = API_URL;
 axios.defaults.timeout = 10000;
 axios.interceptors.request.use(config => {
@@ -16,10 +16,21 @@ axios.interceptors.request.use(config => {
   return config;
 });
 
-axios.interceptors.response.use(async response => {
-  // TODO: Do something if rejected
-  return response;
-});
+axios.interceptors.response.use(
+  response => response,
+  async (error: AxiosError) => {
+    const isUnauthorized =
+      (error.response?.data as ClientError)?.errorCode ===
+      ClientErrorCode.UNAUTHORIZED;
+
+    if (isUnauthorized) {
+      await TokenManager.renew();
+      return axios.request(error.config);
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export type ClientRequestConfig<D> = AxiosRequestConfig<D>;
 

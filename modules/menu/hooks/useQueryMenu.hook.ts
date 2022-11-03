@@ -4,6 +4,7 @@ import { MenuApiClient } from '../services/menu-api.client';
 export function useQueryMenu() {
   return useQuery({
     queryFn: MenuApiClient.getMenus,
-    queryKey: 'MENU'
+    queryKey: 'MENU',
+    retry: false
   });
 }
