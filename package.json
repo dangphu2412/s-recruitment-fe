@@ -21,6 +21,7 @@
     "classnames": "^2.3.1",
     "framer-motion": "^6",
     "lodash.isempty": "^4.4.0",
+    "lodash.uniq": "^4.5.0",
     "next": "12.2.0",
     "rc-pagination": "^3.1.17",
     "rc-select": "^14.1.9",
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "@types/lodash.isempty": "^4.4.7",
+    "@types/lodash.uniq": "^4.5.7",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-datepicker": "^4.4.2",

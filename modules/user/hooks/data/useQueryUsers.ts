@@ -4,6 +4,7 @@ import { selectAdminState } from '@modules/user/store/user.selector';
 import { toFilterQuery } from '@modules/shared/common/filter/filter.mapper';
 import { toPagination } from '@modules/shared/common/pagination/pagination.mapper';
 import { userActions } from '@modules/user/store/user.slice';
+import { useErrorHandler } from '@modules/error-handling/useErrorHandler';
 import { UserApiClient } from '../../services/user-api-client';
 
 export const QUERY_USERS_KEY = 'QUERY_USERS';
@@ -11,6 +12,7 @@ export const QUERY_USERS_KEY = 'QUERY_USERS';
 export function useQueryUsers() {
   const dispatch = useDispatch();
   const { isSubmitted, filters, pagination } = useSelector(selectAdminState);
+  const { handle } = useErrorHandler();
 
   const { data, isLoading } = useQuery(QUERY_USERS_KEY, {
     queryFn: () =>
@@ -21,7 +23,8 @@ export function useQueryUsers() {
     enabled: isSubmitted,
     onSuccess() {
       dispatch(userActions.setIsSubmitted(false));
-    }
+    },
+    onError: handle
   });
 
   return { data, isLoading };

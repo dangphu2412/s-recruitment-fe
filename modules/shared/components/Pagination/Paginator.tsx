@@ -9,7 +9,7 @@ type Props = {
   defaultPage?: number;
   defaultPageSize?: number;
   pageSizeItems?: number[];
-  totalPage: number;
+  totalRecords: number;
   onPaginationChange(page: number, pageSize: number): void;
 };
 
@@ -17,7 +17,7 @@ export function Paginator({
   defaultPage = 1,
   defaultPageSize = 10,
   pageSizeItems = [10, 20, 30, 40, 50],
-  totalPage,
+  totalRecords,
   onPaginationChange,
   className
 }: Props): React.ReactElement {
@@ -41,7 +41,7 @@ export function Paginator({
         defaultPageSize={defaultPageSize}
         pageSize={pageSize}
         onChange={onChange}
-        total={totalPage}
+        total={totalRecords}
       />
       <ItemPerPageSelector
         pageSize={pageSize}

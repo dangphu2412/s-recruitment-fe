@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Drawer,
@@ -10,18 +10,15 @@ import {
   DrawerOverlay,
   Flex,
   FormLabel,
-  Input,
   Text,
   useDisclosure
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useForm } from 'react-hook-form';
+import { InputMultipleValues } from '@modules/shared/components/Input/InputMultiValues/InputMultiValues';
 
 export type CreateUserInputs = {
-  username: string;
-  password: string;
-  confirmPassword: string;
+  emails: string[];
 };
 
 type Props = {
@@ -31,9 +28,17 @@ type Props = {
 export function TableHeader({ onAddNewUser }: Props): React.ReactElement {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<HTMLButtonElement>(null);
-  const { register, handleSubmit } = useForm<CreateUserInputs>();
+  const [emails, setEmails] = useState<string[]>([]);
 
-  function handleSaveUser(createUserInputs: CreateUserInputs): void {
+  function handleEmailsChange(newEmails: string[]) {
+    setEmails(newEmails);
+  }
+
+  function handleSaveUser(): void {
+    const createUserInputs: CreateUserInputs = {
+      emails
+    };
+
     onAddNewUser(createUserInputs);
     onClose();
   }
@@ -51,7 +56,7 @@ export function TableHeader({ onAddNewUser }: Props): React.ReactElement {
 
       <Button ref={btnRef} colorScheme="pink" onClick={onOpen}>
         <FontAwesomeIcon className="mr-2" icon={faPlus} />
-        New user
+        Add new members
       </Button>
 
       <Drawer
@@ -59,48 +64,28 @@ export function TableHeader({ onAddNewUser }: Props): React.ReactElement {
         placement="right"
         onClose={onClose}
         finalFocusRef={btnRef}
+        size="lg"
       >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Create your account</DrawerHeader>
+          <DrawerHeader>Create new S-Group members</DrawerHeader>
 
           <DrawerBody className="space-y-2">
-            <div>
-              <FormLabel htmlFor="username">Username</FormLabel>
-              <Input
-                {...register('username')}
-                type="text"
-                placeholder="Please enter user name"
-              />
-            </div>
+            <FormLabel htmlFor="emails">Email</FormLabel>
 
-            <div>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <Input
-                {...register('password')}
-                type="password"
-                placeholder="Please enter password"
-              />
-            </div>
-
-            <div>
-              <FormLabel htmlFor="confirmPassword">
-                Confirm Your Password
-              </FormLabel>
-              <Input
-                {...register('confirmPassword')}
-                type="password"
-                placeholder="Please confirm your password"
-              />
-            </div>
+            <InputMultipleValues
+              onAddChange={handleEmailsChange}
+              onDeleteChange={handleEmailsChange}
+              placeholder="Please enter emails"
+            />
           </DrawerBody>
 
           <DrawerFooter>
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue" onClick={handleSubmit(handleSaveUser)}>
+            <Button colorScheme="blue" onClick={handleSaveUser}>
               Save
             </Button>
           </DrawerFooter>

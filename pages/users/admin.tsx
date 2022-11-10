@@ -23,7 +23,7 @@ export default function AdministratorPage(): React.ReactElement {
   const columns = useAdminColumns();
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: data ?? [] });
+    useTable({ columns, data: data?.items ?? [] });
 
   return (
     <AdminContainer>
@@ -32,7 +32,7 @@ export default function AdministratorPage(): React.ReactElement {
       <div className="px-6">
         <TableHeaderContainer />
         <FilterBar />
-        <PaginationContainer />
+        <PaginationContainer totalRecords={data?.metadata.totalRecords} />
       </div>
 
       <TableContainer>

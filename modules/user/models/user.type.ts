@@ -8,6 +8,9 @@ export type User = {
 };
 
 export type CreateUserDto = {
-  username: string;
-  password: string;
+  email: string;
+};
+
+export type ExtractNewEmailsDto = {
+  value: string[];
 };

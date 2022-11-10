@@ -1,13 +1,13 @@
-import { GetManyParams } from '@modules/shared/clients/list.api';
+import { GetManyParams, Page } from '@modules/shared/clients/list.api';
 import { ApiClient } from '../../shared/services/api-client';
-import { CreateUserDto, User } from '../models/user.type';
+import { CreateUserDto, ExtractNewEmailsDto, User } from '../models/user.type';
 
 export const UserApiClient = {
   getMyProfile(): Promise<User> {
     return ApiClient.get<User, unknown>('/users/me');
   },
-  getMany(params: GetManyParams): Promise<User[]> {
-    return ApiClient.get<User[], unknown>('/users', {
+  getMany(params: GetManyParams): Promise<Page<User>> {
+    return ApiClient.get<Page<User>, unknown>('/users', {
       params: {
         ...params.filters,
         ...params.pagination
@@ -17,7 +17,17 @@ export const UserApiClient = {
   toggleActive(userId: string): Promise<void> {
     return ApiClient.patch<void, unknown>(`/users/${userId}/active`);
   },
-  createUser(createUserDto: CreateUserDto): Promise<void> {
-    return ApiClient.post<void, CreateUserDto>('/users', createUserDto);
+  createUser(createUserDto: CreateUserDto[]): Promise<void> {
+    return ApiClient.post<void, CreateUserDto[]>('/users', createUserDto);
+  },
+  extractNewEmails(
+    extractNewEmailsDto: ExtractNewEmailsDto
+  ): Promise<string[]> {
+    return ApiClient.get<string[], ExtractNewEmailsDto>(
+      '/users/extract-new-values',
+      {
+        params: { value: extractNewEmailsDto.value.join(',') }
+      }
+    );
   }
 };

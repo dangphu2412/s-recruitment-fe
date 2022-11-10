@@ -6,10 +6,13 @@ export function TableHeaderContainer(): React.ReactElement {
   const { mutate } = useMutateCreateUser();
 
   function handleAddNewUser(createUserInputs: CreateUserInputs) {
-    mutate({
-      password: createUserInputs.password,
-      username: createUserInputs.username
-    });
+    mutate(
+      createUserInputs.emails.map(email => {
+        return {
+          email
+        };
+      })
+    );
   }
 
   return (
