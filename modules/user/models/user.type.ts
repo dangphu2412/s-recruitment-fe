@@ -1,3 +1,5 @@
+import { CreateUserType } from '@modules/user/constants/admin-management.constants';
+
 export type User = {
   id: string;
   username: string;
@@ -7,8 +9,10 @@ export type User = {
   deletedAt: string;
 };
 
-export type CreateUserDto = {
-  email: string;
+export type CreateUsersDto = {
+  emails: string[];
+  createUserType: CreateUserType;
+  monthlyConfigId?: string;
 };
 
 export type ExtractNewEmailsDto = {

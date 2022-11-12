@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Button,
   Drawer,
@@ -18,9 +18,12 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { InputMultipleValues } from '@modules/shared/components/Input';
 import { MonthlyMoneyConfig } from '@modules/monthly-money/clients/monthly-money.types';
 import { CreateUserType } from '@modules/user/constants/admin-management.constants';
+import { SubmitHandler, useController, useForm } from 'react-hook-form';
 
 export type CreateUserInputs = {
+  createType: CreateUserType;
   emails: string[];
+  monthlyConfigId?: string;
 };
 
 type Props = {
@@ -32,38 +35,32 @@ export function HeaderActions({
   onAddNewUser,
   monthlyMoneyConfigs
 }: Props): React.ReactElement {
-  const btnRef = React.useRef<HTMLButtonElement>(null);
-  const monthlyMoneyConfigSelectedRef = React.useRef<HTMLSelectElement>(null);
-
-  const [emails, setEmails] = useState<string[]>([]);
-  const [createUserType, setCreateUserType] = useState<CreateUserType>(
-    CreateUserType.NEWBIE
-  );
+  const addNewUserButtonRef = React.useRef<HTMLButtonElement>(null);
+  const { handleSubmit, register, control, watch, reset } =
+    useForm<CreateUserInputs>({
+      defaultValues: {
+        emails: [],
+        createType: CreateUserType.NEWBIE
+      }
+    });
+  const {
+    field: { onChange, name: emailsInputName }
+  } = useController({
+    control,
+    name: 'emails'
+  });
+  const createUserType = watch('createType');
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  function handleEmailsChange(newEmails: string[]) {
-    setEmails(newEmails);
-  }
-
-  function handleSaveUser(): void {
-    const createUserInputs: CreateUserInputs = {
-      emails
-    };
-
-    onAddNewUser(createUserInputs);
-    onClose();
-  }
-
-  function handleSelectUserType(
-    e: React.SyntheticEvent<HTMLSelectElement, Event>
-  ) {
-    setCreateUserType(e.currentTarget.value as CreateUserType);
-  }
+  const saveUser: SubmitHandler<CreateUserInputs> = inputs => {
+    onAddNewUser(inputs);
+    reset();
+  };
 
   return (
     <>
-      <Button ref={btnRef} colorScheme="pink" onClick={onOpen}>
+      <Button ref={addNewUserButtonRef} colorScheme="pink" onClick={onOpen}>
         <FontAwesomeIcon className="mr-2" icon={faPlus} />
         Add new members
       </Button>
@@ -72,7 +69,7 @@ export function HeaderActions({
         isOpen={isOpen}
         placement="right"
         onClose={onClose}
-        finalFocusRef={btnRef}
+        finalFocusRef={addNewUserButtonRef}
         size="lg"
       >
         <DrawerOverlay />
@@ -84,27 +81,25 @@ export function HeaderActions({
             <FormControl>
               <FormLabel htmlFor="create-user-type">Create type</FormLabel>
 
-              <Select
-                ref={monthlyMoneyConfigSelectedRef}
-                placeholder="Select option"
-                name="create-user-type"
-                value={createUserType}
-                onChange={handleSelectUserType}
-              >
+              <Select placeholder="Select option" {...register('createType')}>
                 {Object.values(CreateUserType).map(type => {
-                  return <option value={type}>{type}</option>;
+                  return (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  );
                 })}
               </Select>
             </FormControl>
 
             <FormControl>
-              <FormLabel htmlFor="emails">Email</FormLabel>
+              <FormLabel htmlFor={emailsInputName}>Email</FormLabel>
 
               <InputMultipleValues
-                onAddChange={handleEmailsChange}
-                onDeleteChange={handleEmailsChange}
+                onAddChange={onChange}
+                onDeleteChange={onChange}
                 placeholder="Please enter emails"
-                name="emails"
+                name={emailsInputName}
               />
             </FormControl>
 
@@ -113,13 +108,12 @@ export function HeaderActions({
                 <FormLabel htmlFor="monthly-configs">Monthly paid</FormLabel>
 
                 <Select
-                  ref={monthlyMoneyConfigSelectedRef}
                   placeholder="Select option"
-                  name="monthly-configs"
+                  {...register('monthlyConfigId')}
                 >
                   {monthlyMoneyConfigs.map(config => {
                     return (
-                      <option value={config.id}>
+                      <option value={config.id} key={config.id}>
                         {`${config.amount}K / ${config.monthRange} month`}
                       </option>
                     );
@@ -133,7 +127,7 @@ export function HeaderActions({
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue" onClick={handleSaveUser}>
+            <Button colorScheme="blue" onClick={handleSubmit(saveUser)}>
               Save
             </Button>
           </DrawerFooter>

@@ -1,6 +1,6 @@
 import { GetManyParams, Page } from '@modules/shared/clients/list.api';
-import { ApiClient } from '../../shared/services/api-client';
-import { CreateUserDto, ExtractNewEmailsDto, User } from '../models/user.type';
+import { ApiClient } from '@modules/shared/services';
+import { CreateUsersDto, ExtractNewEmailsDto, User } from '../models/user.type';
 
 export const UserApiClient = {
   getMyProfile(): Promise<User> {
@@ -17,8 +17,8 @@ export const UserApiClient = {
   toggleActive(userId: string): Promise<void> {
     return ApiClient.patch<void, unknown>(`/users/${userId}/active`);
   },
-  createUser(createUserDto: CreateUserDto[]): Promise<void> {
-    return ApiClient.post<void, CreateUserDto[]>('/users', createUserDto);
+  createUser(createUserDto: CreateUsersDto): Promise<void> {
+    return ApiClient.post<void, CreateUsersDto>('/users', createUserDto);
   },
   extractNewEmails(
     extractNewEmailsDto: ExtractNewEmailsDto

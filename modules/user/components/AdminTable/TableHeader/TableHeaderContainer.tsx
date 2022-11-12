@@ -8,14 +8,12 @@ export function TableHeaderContainer(): React.ReactElement {
   const { mutate } = useMutateCreateUser();
   const { data: monthlyMoneyConfigs } = useQueryMonthlyMoneyConfigs();
 
-  function handleAddNewUser(createUserInputs: CreateUserInputs) {
-    mutate(
-      createUserInputs.emails.map(email => {
-        return {
-          email
-        };
-      })
-    );
+  function handleAddNewUser(createUserInputs: CreateUserInputs): void {
+    mutate({
+      createUserType: createUserInputs.createType,
+      emails: createUserInputs.emails,
+      monthlyConfigId: createUserInputs.monthlyConfigId
+    });
   }
 
   return (

@@ -21,6 +21,7 @@ export function useQueryUsers() {
         pagination: toPagination(pagination.page, pagination.size)
       }),
     enabled: isSubmitted,
+    retry: false,
     onSuccess() {
       dispatch(userActions.setIsSubmitted(false));
     },
