@@ -1,13 +1,20 @@
-import { useQuery } from 'react-query';
-import { useErrorHandler } from '@modules/error-handling/useErrorHandler';
+import { ExtractNewEmailsDto } from '@modules/user/models/user.type';
+import { useAppQuery } from '@modules/shared/hooks/useAppQuery';
 import { UserApiClient } from '../../services/user-api-client';
 
-export function useQueryExtractNewEmails() {
-  const { handle } = useErrorHandler();
+type QueryExtractNewEmailsProps = {
+  params: ExtractNewEmailsDto;
+  isEnabled?: boolean;
+};
 
-  const { data, isLoading } = useQuery('QUERY_EXTRACT_NEW_EMAILS', {
-    queryFn: () => UserApiClient.extractNewEmails,
-    onError: handle
+export function useQueryExtractNewEmails({
+  params,
+  isEnabled
+}: QueryExtractNewEmailsProps) {
+  const { data, isLoading } = useAppQuery({
+    queryKey: 'QUERY_EXTRACT_NEW_EMAILS',
+    queryFn: () => UserApiClient.extractNewEmails(params),
+    enabled: isEnabled
   });
 
   return { data, isLoading };

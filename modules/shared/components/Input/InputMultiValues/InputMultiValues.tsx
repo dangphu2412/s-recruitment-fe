@@ -16,6 +16,7 @@ type InputMultipleValueProps = React.ComponentProps<'input'> & {
   onDeleteChange?(items: string[]): void;
   typingInputTransformers?: InputTransformer[];
   isResetAll?: boolean;
+  inputValues?: string[];
 };
 
 export const InputMultipleValues = forwardRef<
@@ -32,6 +33,7 @@ export const InputMultipleValues = forwardRef<
     typingInputTransformers,
     isResetAll,
     className,
+    inputValues = [],
     ...props
   }: InputMultipleValueProps,
   ref
@@ -133,21 +135,24 @@ export const InputMultipleValues = forwardRef<
     }
   }, [isResetAll]);
 
+  React.useEffect(() => {
+    setValues(inputValues);
+  }, [inputValues]);
+
   return (
     <div className={classnames(classes['input-container'], className)}>
       {values.map((item, index) => (
-        <div key={`${item}`} className={classes['tag-item']}>
+        <span
+          key={`${item}`}
+          className={classes['tag-item']}
+          onClick={() => handleDeleteItem(index)}
+        >
           {item}
 
-          <button
-            className={classes['remove-icon']}
-            data-cy="remove-icon"
-            type="button"
-            onClick={() => handleDeleteItem(index)}
-          >
+          <span className={classes['remove-icon']} data-cy="remove-icon">
             {removeIcon ?? <FontAwesomeIcon icon={faRemove} />}
-          </button>
-        </div>
+          </span>
+        </span>
       ))}
 
       <input

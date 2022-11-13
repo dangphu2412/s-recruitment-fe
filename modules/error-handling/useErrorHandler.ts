@@ -69,7 +69,12 @@ export function useErrorHandler({
 
     switch (clientCode) {
       case AxiosError.ERR_NETWORK:
-        alert('There are network error');
+        showToast({
+          title: 'Network error',
+          duration: 5000,
+          status: 'warning',
+          description: message
+        });
         break;
       case ClientErrorCode.MAINTENANCE:
         alert('System maintenance');

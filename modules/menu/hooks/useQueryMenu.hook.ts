@@ -1,14 +1,9 @@
-import { useQuery } from 'react-query';
-import { useErrorHandler } from '@modules/error-handling/useErrorHandler';
+import { useAppQuery } from '@modules/shared/hooks/useAppQuery';
 import { MenuApiClient } from '../services/menu-api.client';
 
 export function useQueryMenu() {
-  const { handle } = useErrorHandler();
-
-  return useQuery({
+  return useAppQuery({
     queryFn: MenuApiClient.getMenus,
-    queryKey: 'MENU',
-    retry: false,
-    onError: handle
+    queryKey: 'MENU'
   });
 }

@@ -13,6 +13,7 @@ export type CreateUsersDto = {
   emails: string[];
   createUserType: CreateUserType;
   monthlyConfigId?: string;
+  isSilentCreate: boolean;
 };
 
 export type ExtractNewEmailsDto = {

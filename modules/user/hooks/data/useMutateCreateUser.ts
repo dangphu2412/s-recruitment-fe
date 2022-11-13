@@ -1,4 +1,3 @@
-import { useMutation } from 'react-query';
 import { UserApiClient } from '@modules/user/services/user-api-client';
 import { useToast } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
@@ -8,8 +7,15 @@ import {
   useErrorHandler
 } from '@modules/error-handling/useErrorHandler';
 import { ClientErrorCode } from '@modules/error-handling/client-code';
+import { useAppMutation } from '@modules/shared/hooks/useAppMutation';
 
-export function useMutateCreateUser() {
+type MutateCreateUserProps = {
+  onEmailsExistedError?: () => void;
+};
+
+export function useMutateCreateUser({
+  onEmailsExistedError
+}: MutateCreateUserProps = {}) {
   const dispatch = useDispatch();
   const toast = useToast();
 
@@ -23,6 +29,8 @@ export function useMutateCreateUser() {
         position: 'top',
         description: message
       });
+
+      onEmailsExistedError?.();
     }
   }
 
@@ -30,7 +38,8 @@ export function useMutateCreateUser() {
     onHandleClientError: handleMutateCreateUserError
   });
 
-  return useMutation('MUTATION_CREATE_USER', {
+  return useAppMutation({
+    mutationKey: 'MUTATION_CREATE_USER',
     mutationFn: UserApiClient.createUser,
     onSuccess() {
       toast({

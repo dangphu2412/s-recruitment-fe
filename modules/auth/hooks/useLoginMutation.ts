@@ -1,17 +1,16 @@
-import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
-import { AuthApiClient } from '../services/auth-api-client';
+import { useAppMutation } from '@modules/shared/hooks/useAppMutation';
 import {
   BrowserStorage,
   registerBrowserStorage
-} from '../../shared/services/browser-storage';
-import { useErrorHandler } from '../../error-handling/useErrorHandler';
+} from '@modules/shared/services';
+import { AuthApiClient } from '../services/auth-api-client';
 
 export function useLoginMutation() {
-  const { handle } = useErrorHandler();
   const router = useRouter();
 
-  return useMutation(AuthApiClient.login, {
+  return useAppMutation({
+    mutationFn: AuthApiClient.login,
     mutationKey: 'POST_LOGIN',
     onSuccess: async data => {
       registerBrowserStorage();
@@ -19,7 +18,6 @@ export function useLoginMutation() {
         BrowserStorage.set(token.name, token.value);
       });
       await router.push('/');
-    },
-    onError: handle
+    }
   });
 }

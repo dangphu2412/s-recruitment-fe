@@ -1,14 +1,10 @@
-import { useQuery } from 'react-query';
-import { useErrorHandler } from '@modules/error-handling/useErrorHandler';
 import { MonthlyMoneyApiClient } from '@modules/monthly-money/services';
+import { useAppQuery } from '@modules/shared/hooks/useAppQuery';
 
 export function useQueryMonthlyMoneyConfigs() {
-  const { handle } = useErrorHandler();
-
-  return useQuery({
+  return useAppQuery({
     queryFn: MonthlyMoneyApiClient.getAllConfigs,
     queryKey: 'MONTHLY_MONEY_CONFIGS',
-    retry: false,
-    onError: handle
+    retry: false
   });
 }

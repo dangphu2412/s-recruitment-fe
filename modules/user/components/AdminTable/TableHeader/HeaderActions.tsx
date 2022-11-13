@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Button,
+  Checkbox,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -19,44 +20,66 @@ import { InputMultipleValues } from '@modules/shared/components/Input';
 import { MonthlyMoneyConfig } from '@modules/monthly-money/clients/monthly-money.types';
 import { CreateUserType } from '@modules/user/constants/admin-management.constants';
 import { SubmitHandler, useController, useForm } from 'react-hook-form';
+import { ConfirmExtractEmailsPopup } from '@modules/user/components/AdminTable/TableHeader/ConfirmExtractEmailsPopup';
 
 export type CreateUserInputs = {
   createType: CreateUserType;
   emails: string[];
   monthlyConfigId?: string;
+  isSilentCreate: boolean;
 };
 
 type Props = {
   monthlyMoneyConfigs: MonthlyMoneyConfig[];
+  isOpenExtractEmailConfirmation?: boolean;
+  extractedEmails: string[];
   onAddNewUser(createUserInputs: CreateUserInputs): void;
+  onAcceptEmailsExtraction(emails: string[]): void;
 };
 
+/**
+ * Newbie ->
+ * - add new user normally and warn about existed users
+ * - add new user within skip duplicated users.
+ *
+ * New members of Sgroup.
+ * - Non existing users will fire an error about un existed users.
+ * - Upgrade newbie to members would skip updated members.
+ */
 export function HeaderActions({
   onAddNewUser,
-  monthlyMoneyConfigs
+  onAcceptEmailsExtraction,
+  monthlyMoneyConfigs,
+  isOpenExtractEmailConfirmation = false,
+  extractedEmails
 }: Props): React.ReactElement {
   const addNewUserButtonRef = React.useRef<HTMLButtonElement>(null);
-  const { handleSubmit, register, control, watch, reset } =
-    useForm<CreateUserInputs>({
-      defaultValues: {
-        emails: [],
-        createType: CreateUserType.NEWBIE
-      }
-    });
+  const { handleSubmit, register, control, watch } = useForm<CreateUserInputs>({
+    defaultValues: {
+      emails: [],
+      createType: CreateUserType.NEWBIE,
+      isSilentCreate: false
+    }
+  });
   const {
-    field: { onChange, name: emailsInputName }
+    field: { onChange, name: emailsInputName, value: currentEmails }
   } = useController({
     control,
     name: 'emails'
   });
   const createUserType = watch('createType');
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure({
+    id: 'createDrawer'
+  });
 
   const saveUser: SubmitHandler<CreateUserInputs> = inputs => {
     onAddNewUser(inputs);
-    reset();
   };
+
+  function handleAcceptExtractEmails() {
+    onAcceptEmailsExtraction?.(currentEmails);
+  }
 
   return (
     <>
@@ -100,7 +123,12 @@ export function HeaderActions({
                 onDeleteChange={onChange}
                 placeholder="Please enter emails"
                 name={emailsInputName}
+                inputValues={extractedEmails}
               />
+
+              <Checkbox marginTop="1rem" {...register('isSilentCreate')}>
+                Skip existed emails
+              </Checkbox>
             </FormControl>
 
             {createUserType === CreateUserType.NEW_MEMBERS && (
@@ -133,6 +161,10 @@ export function HeaderActions({
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
+
+      {isOpenExtractEmailConfirmation && (
+        <ConfirmExtractEmailsPopup onAgree={handleAcceptExtractEmails} />
+      )}
     </>
   );
 }
