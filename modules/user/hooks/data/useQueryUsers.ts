@@ -3,7 +3,7 @@ import { selectAdminState } from '@modules/user/store/user.selector';
 import { toFilterQuery } from '@modules/shared/common/filter/filter.mapper';
 import { toPagination } from '@modules/shared/common/pagination/pagination.mapper';
 import { userActions } from '@modules/user/store/user.slice';
-import { useAppQuery } from '@modules/shared/hooks/useAppQuery';
+import { useQuery } from 'react-query';
 import { UserApiClient } from '../../services/user-api-client';
 
 export const QUERY_USERS_KEY = 'QUERY_USERS';
@@ -12,7 +12,7 @@ export function useQueryUsers() {
   const dispatch = useDispatch();
   const { isSubmitted, filters, pagination } = useSelector(selectAdminState);
 
-  const { data, isLoading } = useAppQuery({
+  const { data, isLoading } = useQuery({
     queryKey: QUERY_USERS_KEY,
     queryFn: () =>
       UserApiClient.getMany({

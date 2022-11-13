@@ -37,15 +37,6 @@ type Props = {
   onAcceptEmailsExtraction(emails: string[]): void;
 };
 
-/**
- * Newbie ->
- * - add new user normally and warn about existed users
- * - add new user within skip duplicated users.
- *
- * New members of Sgroup.
- * - Non existing users will fire an error about un existed users.
- * - Upgrade newbie to members would skip updated members.
- */
 export function HeaderActions({
   onAddNewUser,
   onAcceptEmailsExtraction,

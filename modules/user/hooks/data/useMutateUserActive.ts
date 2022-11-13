@@ -1,14 +1,14 @@
 import { useToast } from '@chakra-ui/react';
 import { userActions } from '@modules/user/store/user.slice';
 import { useDispatch } from 'react-redux';
-import { useAppMutation } from '@modules/shared/hooks/useAppMutation';
+import { useMutation } from 'react-query';
 import { UserApiClient } from '../../services/user-api-client';
 
 export function useMutateUserActive() {
   const toast = useToast();
   const dispatch = useDispatch();
 
-  return useAppMutation({
+  return useMutation({
     mutationFn: UserApiClient.toggleActive,
     mutationKey: 'MUTATION_TOGGLE_USER_STATUS',
     onSuccess() {

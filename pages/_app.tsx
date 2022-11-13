@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { NextPage } from 'next';
 import { UserProvider } from '@modules/user/contexts/UserContext/user.provider';
 import { AdminLayout } from '@modules/shared/layouts/AdminLayout/AdminLayout';
+import { useErrorHandler } from '@modules/error-handling/useErrorHandler';
 import { store } from '../config/store';
 
 export type NextPageWithLayout = NextPage & {
@@ -30,7 +31,22 @@ const theme = extendTheme({
 });
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const [queryClient] = React.useState(() => new QueryClient());
+  const { handle } = useErrorHandler();
+
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            retry: false,
+            staleTime: Infinity,
+            refetchOnMount: 'always',
+            onError: handle
+          }
+        }
+      })
+  );
   const renderLayout =
     Component.getLayout ?? (page => <AdminLayout>{page}</AdminLayout>);
 

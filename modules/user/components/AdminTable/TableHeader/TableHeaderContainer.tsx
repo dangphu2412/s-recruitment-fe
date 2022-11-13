@@ -21,7 +21,7 @@ export function TableHeaderContainer(): React.ReactElement {
     onEmailsExistedError: handleExistedEmailsError
   });
   const { data: extractedEmails } = useQueryExtractNewEmails({
-    isEnabled: false,
+    isEnabled: extractionRequestEmails.length > 0,
     params: {
       value: extractionRequestEmails
     }

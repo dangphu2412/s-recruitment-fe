@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useAppMutation } from '@modules/shared/hooks/useAppMutation';
+import { useMutation } from 'react-query';
 import {
   BrowserStorage,
   registerBrowserStorage
@@ -9,7 +9,7 @@ import { AuthApiClient } from '../services/auth-api-client';
 export function useLoginMutation() {
   const router = useRouter();
 
-  return useAppMutation({
+  return useMutation({
     mutationFn: AuthApiClient.login,
     mutationKey: 'POST_LOGIN',
     onSuccess: async data => {

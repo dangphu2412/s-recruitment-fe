@@ -1,8 +1,8 @@
 import { MonthlyMoneyApiClient } from '@modules/monthly-money/services';
-import { useAppQuery } from '@modules/shared/hooks/useAppQuery';
+import { useQuery } from 'react-query';
 
 export function useQueryMonthlyMoneyConfigs() {
-  return useAppQuery({
+  return useQuery({
     queryFn: MonthlyMoneyApiClient.getAllConfigs,
     queryKey: 'MONTHLY_MONEY_CONFIGS',
     retry: false

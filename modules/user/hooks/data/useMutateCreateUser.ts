@@ -1,13 +1,13 @@
-import { UserApiClient } from '@modules/user/services/user-api-client';
+import { useMutation } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
+import { UserApiClient } from '@modules/user/services/user-api-client';
 import { userActions } from '@modules/user/store/user.slice';
 import {
   AppError,
   useErrorHandler
 } from '@modules/error-handling/useErrorHandler';
 import { ClientErrorCode } from '@modules/error-handling/client-code';
-import { useAppMutation } from '@modules/shared/hooks/useAppMutation';
 
 type MutateCreateUserProps = {
   onEmailsExistedError?: () => void;
@@ -38,7 +38,7 @@ export function useMutateCreateUser({
     onHandleClientError: handleMutateCreateUserError
   });
 
-  return useAppMutation({
+  return useMutation({
     mutationKey: 'MUTATION_CREATE_USER',
     mutationFn: UserApiClient.createUser,
     onSuccess() {
