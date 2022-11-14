@@ -27,9 +27,11 @@ export function Paginator({
     if (currentPage !== page) {
       setPage(currentPage);
     }
+
     if (currentPageSize !== pageSize) {
       setPageSize(currentPageSize);
     }
+
     onPaginationChange(currentPage, currentPageSize);
   };
 
@@ -43,6 +45,7 @@ export function Paginator({
         onChange={onChange}
         total={totalRecords}
       />
+
       <ItemPerPageSelector
         pageSize={pageSize}
         setPageSize={setPageSize}

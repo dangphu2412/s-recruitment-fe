@@ -11,11 +11,11 @@ export function useQueryExtractNewEmails({
   params,
   isEnabled
 }: QueryExtractNewEmailsProps) {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isSuccess } = useQuery({
     queryKey: 'QUERY_EXTRACT_NEW_EMAILS',
     queryFn: () => UserApiClient.extractNewEmails(params),
     enabled: isEnabled
   });
 
-  return { data, isLoading };
+  return { data, isLoading, isSuccess };
 }

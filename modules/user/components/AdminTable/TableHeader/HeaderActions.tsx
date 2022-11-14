@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Button,
   Checkbox,
@@ -45,15 +45,20 @@ export function HeaderActions({
   extractedEmails
 }: Props): React.ReactElement {
   const addNewUserButtonRef = React.useRef<HTMLButtonElement>(null);
-  const { handleSubmit, register, control, watch } = useForm<CreateUserInputs>({
-    defaultValues: {
-      emails: [],
-      createType: CreateUserType.NEWBIE,
-      isSilentCreate: false
-    }
-  });
+  const { handleSubmit, register, control, watch, setValue } =
+    useForm<CreateUserInputs>({
+      defaultValues: {
+        emails: [],
+        createType: CreateUserType.NEWBIE,
+        isSilentCreate: false
+      }
+    });
   const {
-    field: { onChange, name: emailsInputName, value: currentEmails }
+    field: {
+      onChange: onEmailsChange,
+      name: emailsInputName,
+      value: currentEmails
+    }
   } = useController({
     control,
     name: 'emails'
@@ -71,6 +76,11 @@ export function HeaderActions({
   function handleAcceptExtractEmails() {
     onAcceptEmailsExtraction?.(currentEmails);
   }
+
+  useEffect(() => {
+    setValue('emails', extractedEmails);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [extractedEmails]);
 
   return (
     <>
@@ -110,11 +120,11 @@ export function HeaderActions({
               <FormLabel htmlFor={emailsInputName}>Email</FormLabel>
 
               <InputMultipleValues
-                onAddChange={onChange}
-                onDeleteChange={onChange}
+                onAddChange={onEmailsChange}
+                onDeleteChange={onEmailsChange}
                 placeholder="Please enter emails"
                 name={emailsInputName}
-                inputValues={extractedEmails}
+                inputValues={currentEmails}
               />
 
               <Checkbox marginTop="1rem" {...register('isSilentCreate')}>

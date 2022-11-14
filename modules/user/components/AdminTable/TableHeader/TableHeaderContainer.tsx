@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useMutateCreateUser } from '@modules/user/hooks/data/useMutateCreateUser';
 import { useQueryMonthlyMoneyConfigs } from '@modules/monthly-money/hooks';
 import { Flex, Text } from '@chakra-ui/react';
 import { useQueryExtractNewEmails } from '@modules/user/hooks/data/useQueryExtractNewEmails';
+import { EMPTY_ARRAY } from '@modules/shared/constants';
 import { CreateUserInputs, HeaderActions } from './HeaderActions';
 
 export function TableHeaderContainer(): React.ReactElement {
@@ -17,14 +18,15 @@ export function TableHeaderContainer(): React.ReactElement {
   }
 
   const { data: monthlyMoneyConfigs } = useQueryMonthlyMoneyConfigs();
+  const { data: extractedEmails, isSuccess: isEmailExtractionSuccess } =
+    useQueryExtractNewEmails({
+      isEnabled: extractionRequestEmails.length > 0,
+      params: {
+        value: extractionRequestEmails
+      }
+    });
   const { mutate } = useMutateCreateUser({
     onEmailsExistedError: handleExistedEmailsError
-  });
-  const { data: extractedEmails } = useQueryExtractNewEmails({
-    isEnabled: extractionRequestEmails.length > 0,
-    params: {
-      value: extractionRequestEmails
-    }
   });
 
   function handleAddNewUser(createUserInputs: CreateUserInputs): void {
@@ -35,6 +37,13 @@ export function TableHeaderContainer(): React.ReactElement {
       isSilentCreate: createUserInputs.isSilentCreate
     });
   }
+
+  useEffect(() => {
+    if (isEmailExtractionSuccess) {
+      setIsTriggerEmailsExtraction(false);
+      setExtractionRequestEmails([]);
+    }
+  }, [isEmailExtractionSuccess]);
 
   return (
     <Flex justifyContent="space-between" className="pt-6 pb-2">
@@ -51,7 +60,7 @@ export function TableHeaderContainer(): React.ReactElement {
         onAddNewUser={handleAddNewUser}
         onAcceptEmailsExtraction={setExtractionRequestEmails}
         monthlyMoneyConfigs={monthlyMoneyConfigs ?? []}
-        extractedEmails={extractedEmails ?? []}
+        extractedEmails={extractedEmails ?? EMPTY_ARRAY}
         isOpenExtractEmailConfirmation={isTriggerEmailsExtraction}
       />
     </Flex>
