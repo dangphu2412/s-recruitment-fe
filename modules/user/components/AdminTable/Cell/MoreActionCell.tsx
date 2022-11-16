@@ -5,7 +5,7 @@ import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { CellProps } from 'react-table';
 import styles from './Cell.module.scss';
 import { useMutateUserActive } from '../../../hooks/data/useMutateUserActive';
-import { User } from '../../../models/user.type';
+import { UserManagementView } from '../../../models/user.type';
 
 type ActionOnUserItem = {
   key: string;
@@ -15,7 +15,7 @@ type ActionOnUserItem = {
 
 export function MoreActionCell({
   row
-}: CellProps<User, string>): React.ReactElement {
+}: CellProps<UserManagementView, string>): React.ReactElement {
   const { mutate: toggleUserActive } = useMutateUserActive();
 
   const actionItems: ActionOnUserItem[] = [

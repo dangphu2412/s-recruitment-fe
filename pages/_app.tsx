@@ -40,7 +40,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           queries: {
             refetchOnWindowFocus: false,
             retry: false,
-            staleTime: Infinity,
             refetchOnMount: 'always',
             onError: handle
           }

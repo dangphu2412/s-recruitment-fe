@@ -1,13 +1,18 @@
 import { GetManyParams, Page } from '@modules/shared/clients/list.api';
 import { ApiClient } from '@modules/shared/services';
-import { CreateUsersDto, ExtractNewEmailsDto, User } from '../models/user.type';
+import {
+  CreateUsersDto,
+  ExtractNewEmailsDto,
+  User,
+  UserManagementView
+} from '../models/user.type';
 
 export const UserApiClient = {
   getMyProfile(): Promise<User> {
     return ApiClient.get<User, unknown>('/users/me');
   },
-  getMany(params: GetManyParams): Promise<Page<User>> {
-    return ApiClient.get<Page<User>, unknown>('/users', {
+  getMany(params: GetManyParams): Promise<Page<UserManagementView>> {
+    return ApiClient.get<Page<UserManagementView>, unknown>('/users', {
       params: {
         ...params.filters,
         ...params.pagination

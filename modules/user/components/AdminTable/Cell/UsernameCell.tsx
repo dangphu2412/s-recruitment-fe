@@ -1,11 +1,11 @@
 import React from 'react';
 import { CellProps } from 'react-table';
-import { User } from '../../../models/user.type';
+import { UserManagementView } from '../../../models/user.type';
 
 export function UsernameCell({
   value,
   row
-}: CellProps<User, string>): React.ReactElement {
+}: CellProps<UserManagementView, string>): React.ReactElement {
   return (
     <>
       <div>{value}</div>

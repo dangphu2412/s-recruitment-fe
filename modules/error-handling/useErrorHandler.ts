@@ -69,15 +69,8 @@ export function useErrorHandler({
 
     switch (clientCode) {
       case AxiosError.ERR_NETWORK:
-        showToast({
-          title: 'Network error',
-          duration: 5000,
-          status: 'warning',
-          description: message
-        });
-        break;
       case ClientErrorCode.MAINTENANCE:
-        alert('System maintenance');
+        push('/500');
         break;
       case ClientErrorCode.INVALID_TOKEN_FORMAT:
       case ClientErrorCode.LOGOUT_REQUIRED:
