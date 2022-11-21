@@ -3,3 +3,8 @@ export type MonthlyMoneyConfig = {
   amount: number;
   monthRange: number;
 };
+
+export type PatchUserPaidMoneyRequest = {
+  userId: string;
+  newPaid: number;
+};

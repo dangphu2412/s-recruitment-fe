@@ -1,0 +1,148 @@
+import React, { useState } from 'react';
+import { CellProps } from 'react-table';
+import { UserManagementView } from '@modules/user/models/user.type';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPlusCircle,
+  faMinusCircle,
+  faCheck,
+  faClose
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  useDisclosure,
+  PopoverBody,
+  useToast
+} from '@chakra-ui/react';
+import classNames from 'classnames';
+import { useMutateUpdatePaidMoney } from '@modules/user/hooks/data/useMutateUpdatePaidMoney';
+import classes from './Cell.module.scss';
+
+export function PaidCell({
+  row
+}: CellProps<UserManagementView, string>): React.ReactElement {
+  const isMember = !!row.original.operationFee;
+  const paidMoney = row.original?.operationFee?.paidMoney ?? 0;
+  const amountPerChange = row.original?.operationFee?.monthlyConfig.amount;
+  const monthRange = row.original?.operationFee?.monthlyConfig.monthRange;
+
+  const [currentPaid, setCurrentPaid] = useState(paidMoney);
+
+  const showToast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { mutate: updatePaidMoney } = useMutateUpdatePaidMoney();
+
+  function handlePaidIncrease() {
+    const newPaid = currentPaid + (amountPerChange as number);
+    const isExceedLimit =
+      (monthRange as number) * (amountPerChange as number) < newPaid;
+
+    onOpen();
+
+    if (isExceedLimit) {
+      showToast({
+        title: 'You can not increase more paid money. It has exceed the limit'
+      });
+      return;
+    }
+
+    setCurrentPaid(newPaid);
+  }
+
+  function handlePaidDecrease() {
+    onOpen();
+
+    if (currentPaid > 0) {
+      const newPaid = currentPaid - (amountPerChange as number);
+
+      setCurrentPaid(Math.max(newPaid, 0));
+    }
+  }
+
+  function handleSavePaid() {
+    updatePaidMoney(
+      {
+        userId: row.original.id,
+        newPaid: currentPaid
+      },
+      {
+        onSuccess: () => {
+          showToast({
+            title: `Update paid money of user: ${row.original.username} success`,
+            status: 'success'
+          });
+        },
+        onError: () => {
+          showToast({
+            title: `Update paid money of user: ${row.original.username} failed`,
+            status: 'error'
+          });
+
+          setCurrentPaid(paidMoney);
+        }
+      }
+    );
+
+    onClose();
+  }
+
+  function handleRemoveChange() {
+    setCurrentPaid(paidMoney as number);
+
+    onClose();
+  }
+
+  return (
+    <>
+      {isMember ? (
+        <>
+          <Popover isOpen={isOpen}>
+            <PopoverTrigger>
+              <div className="space-x-2">
+                <span
+                  role="presentation"
+                  onClick={handlePaidDecrease}
+                  className={classes['cell-paid']}
+                >
+                  <FontAwesomeIcon icon={faMinusCircle} />
+                </span>
+
+                <span>{currentPaid}</span>
+
+                <span
+                  role="presentation"
+                  onClick={handlePaidIncrease}
+                  className={classes['cell-paid']}
+                >
+                  <FontAwesomeIcon icon={faPlusCircle} />
+                </span>
+              </div>
+            </PopoverTrigger>
+
+            <PopoverContent width="auto" outline="none">
+              <PopoverBody className="space-x-4">
+                <FontAwesomeIcon
+                  className="cursor-pointer"
+                  icon={faCheck}
+                  onClick={handleSavePaid}
+                />
+
+                <FontAwesomeIcon
+                  className="cursor-pointer"
+                  icon={faClose}
+                  onClick={handleRemoveChange}
+                />
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </>
+      ) : (
+        <span className={classNames(classes['cell-status'], 'bg-success')}>
+          New Member
+        </span>
+      )}
+    </>
+  );
+}

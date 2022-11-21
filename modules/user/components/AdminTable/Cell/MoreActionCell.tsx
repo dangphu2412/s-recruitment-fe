@@ -20,10 +20,6 @@ export function MoreActionCell({
 
   const actionItems: ActionOnUserItem[] = [
     {
-      key: `UPDATE_USER_KEY${row.original.id}`,
-      content: 'Update user'
-    },
-    {
       key: `TOGGLE_STATUS_KEY${row.original.id}`,
       content: 'Toggle status',
       onClick: () => toggleUserActive(row.original.id)

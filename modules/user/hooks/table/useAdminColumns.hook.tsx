@@ -1,6 +1,7 @@
 import { Column } from 'react-table';
 import { useMemo } from 'react';
 import { format } from 'date-fns';
+import { PaidCell } from '@modules/user/components/AdminTable/Cell/PaidCell';
 import { UserManagementView } from '../../models/user.type';
 import { StatusCell } from '../../components/AdminTable/Cell/StatusCell';
 import { UsernameCell } from '../../components/AdminTable/Cell/UsernameCell';
@@ -24,8 +25,7 @@ export function useAdminColumns(): Column<UserManagementView>[] {
       },
       {
         Header: 'Paid',
-        accessor: row =>
-          row?.operationFee ? row?.operationFee?.paidMoney : 'Not start'
+        Cell: PaidCell
       },
       {
         Header: 'Status',
