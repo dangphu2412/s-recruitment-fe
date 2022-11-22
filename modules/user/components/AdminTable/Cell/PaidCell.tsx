@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react';
 import classNames from 'classnames';
 import { useMutateUpdatePaidMoney } from '@modules/user/hooks/data/useMutateUpdatePaidMoney';
+import { OperationFee } from '@modules/monthly-money/types';
 import classes from './Cell.module.scss';
 
 export function PaidCell({
@@ -36,36 +37,42 @@ export function PaidCell({
 
   function handlePaidIncrease() {
     const newPaid = currentPaid + (amountPerChange as number);
-    const isExceedLimit =
+    const isExceedMaxLimit =
       (monthRange as number) * (amountPerChange as number) < newPaid;
 
-    onOpen();
-
-    if (isExceedLimit) {
+    if (isExceedMaxLimit) {
       showToast({
-        title: 'You can not increase more paid money. It has exceed the limit'
+        title:
+          'You can not increase more paid money. It has exceed the max limit'
       });
       return;
     }
+
+    onOpen();
 
     setCurrentPaid(newPaid);
   }
 
   function handlePaidDecrease() {
+    const isExceedMinLimit = currentPaid < 0;
+
+    if (isExceedMinLimit) {
+      return;
+    }
+
     onOpen();
 
-    if (currentPaid > 0) {
-      const newPaid = currentPaid - (amountPerChange as number);
+    const newPaid = currentPaid - (amountPerChange as number);
 
-      setCurrentPaid(Math.max(newPaid, 0));
-    }
+    setCurrentPaid(Math.max(newPaid, 0));
   }
 
   function handleSavePaid() {
     updatePaidMoney(
       {
         userId: row.original.id,
-        newPaid: currentPaid
+        newPaid: currentPaid,
+        operationFeeId: (row.original.operationFee as OperationFee).id
       },
       {
         onSuccess: () => {

@@ -6,5 +6,6 @@ export type MonthlyMoneyConfig = {
 
 export type PatchUserPaidMoneyRequest = {
   userId: string;
+  operationFeeId: number;
   newPaid: number;
 };

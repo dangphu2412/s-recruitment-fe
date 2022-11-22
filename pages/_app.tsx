@@ -42,6 +42,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             retry: false,
             refetchOnMount: 'always',
             onError: handle
+          },
+          mutations: {
+            onError: handle,
+            retry: false
           }
         }
       })
