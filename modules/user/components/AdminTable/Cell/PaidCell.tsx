@@ -104,47 +104,45 @@ export function PaidCell({
   return (
     <>
       {isMember ? (
-        <>
-          <Popover isOpen={isOpen}>
-            <PopoverTrigger>
-              <div className="space-x-2">
-                <span
-                  role="presentation"
-                  onClick={handlePaidDecrease}
-                  className={classes['cell-paid']}
-                >
-                  <FontAwesomeIcon icon={faMinusCircle} />
-                </span>
+        <Popover isOpen={isOpen}>
+          <PopoverTrigger>
+            <div className="space-x-2">
+              <span
+                role="presentation"
+                onClick={handlePaidDecrease}
+                className={classes['cell-paid']}
+              >
+                <FontAwesomeIcon icon={faMinusCircle} />
+              </span>
 
-                <span>{currentPaid}</span>
+              <span>{currentPaid}</span>
 
-                <span
-                  role="presentation"
-                  onClick={handlePaidIncrease}
-                  className={classes['cell-paid']}
-                >
-                  <FontAwesomeIcon icon={faPlusCircle} />
-                </span>
-              </div>
-            </PopoverTrigger>
+              <span
+                role="presentation"
+                onClick={handlePaidIncrease}
+                className={classes['cell-paid']}
+              >
+                <FontAwesomeIcon icon={faPlusCircle} />
+              </span>
+            </div>
+          </PopoverTrigger>
 
-            <PopoverContent width="auto" outline="none">
-              <PopoverBody className="space-x-4">
-                <FontAwesomeIcon
-                  className="cursor-pointer"
-                  icon={faCheck}
-                  onClick={handleSavePaid}
-                />
+          <PopoverContent width="auto" outline="none">
+            <PopoverBody className="space-x-4">
+              <FontAwesomeIcon
+                className="cursor-pointer"
+                icon={faCheck}
+                onClick={handleSavePaid}
+              />
 
-                <FontAwesomeIcon
-                  className="cursor-pointer"
-                  icon={faClose}
-                  onClick={handleRemoveChange}
-                />
-              </PopoverBody>
-            </PopoverContent>
-          </Popover>
-        </>
+              <FontAwesomeIcon
+                className="cursor-pointer"
+                icon={faClose}
+                onClick={handleRemoveChange}
+              />
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
       ) : (
         <span className={classNames(classes['cell-status'], 'bg-success')}>
           New Member

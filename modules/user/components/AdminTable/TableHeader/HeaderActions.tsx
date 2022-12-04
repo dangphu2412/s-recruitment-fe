@@ -86,7 +86,7 @@ export function HeaderActions({
     <>
       <Button ref={addNewUserButtonRef} colorScheme="pink" onClick={onOpen}>
         <FontAwesomeIcon className="mr-2" icon={faPlus} />
-        Add new members
+        Add
       </Button>
 
       <Drawer

@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { useTable } from 'react-table';
 import { useQueryUsers } from '@modules/user/hooks/data/useQueryUsers';
-import { useAdminColumns } from '@modules/user/hooks/table/useAdminColumns.hook';
+import { useAdminColumns } from '@modules/user/hooks/table/useAdminColumns';
 import { PaginationContainer } from '@modules/user/components/AdminTable/PaginationContainer/PaginationContainer';
 import { TableHeaderContainer } from '@modules/user/components/AdminTable/TableHeader/TableHeaderContainer';
 import { AdminContainer } from '@modules/user/containers/AdminContainer/AdminContainer';
@@ -57,9 +57,11 @@ export default function AdministratorPage(): React.ReactElement {
               return (
                 <Tr {...row.getRowProps()}>
                   {row.cells.map(cell => {
-                    return (
-                      <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>
-                    );
+                    const props = cell.getCellProps({
+                      key: `cell_${cell.column.id}_${cell.row.original.id}`
+                    });
+
+                    return <Td {...props}>{cell.render('Cell')}</Td>;
                   })}
                 </Tr>
               );
