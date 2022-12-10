@@ -40,28 +40,44 @@ export default function AdministratorPage(): React.ReactElement {
           <TableCaption>Manage admin users</TableCaption>
 
           <Thead>
-            {headerGroups.map(headerGroup => (
-              <Tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <Th {...column.getHeaderProps()}>
-                    {column.render('Header')}
-                  </Th>
-                ))}
-              </Tr>
-            ))}
+            {headerGroups.map(headerGroup => {
+              const { key, ...headerRowProps } =
+                headerGroup.getHeaderGroupProps();
+
+              return (
+                <Tr key={key} {...headerRowProps}>
+                  {headerGroup.headers.map(column => {
+                    const { key, ...colProps } = column.getHeaderGroupProps();
+
+                    return (
+                      <Th key={key} {...colProps}>
+                        {column.render('Header')}
+                      </Th>
+                    );
+                  })}
+                </Tr>
+              );
+            })}
           </Thead>
 
           <Tbody {...getTableBodyProps()}>
             {rows.map(row => {
               prepareRow(row);
+
+              const { key, ...rowProps } = row.getRowProps();
+
               return (
-                <Tr {...row.getRowProps()}>
+                <Tr key={key} {...rowProps}>
                   {row.cells.map(cell => {
-                    const props = cell.getCellProps({
+                    const { key: keyCell, ...cellProps } = cell.getCellProps({
                       key: `cell_${cell.column.id}_${cell.row.original.id}`
                     });
 
-                    return <Td {...props}>{cell.render('Cell')}</Td>;
+                    return (
+                      <Td key={keyCell} {...cellProps}>
+                        {cell.render('Cell')}
+                      </Td>
+                    );
                   })}
                 </Tr>
               );

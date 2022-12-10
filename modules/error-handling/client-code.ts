@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 
 export const ClientErrorCode = {
   UNAUTHORIZED: '401',
+  FORBIDDEN: '403',
   MAINTENANCE: 'MAINTENANCE',
   GOT_ISSUE: 'GOT_ISSUE',
   UN_HANDLE_ERROR_CLIENT: 'UN_HANDLE_ERROR_CLIENT',
@@ -20,6 +21,7 @@ export const ErrorMessageManager = new Map([
   [`${ClientErrorCode.MAINTENANCE}`, 'System is maintenance'],
   [`${ClientErrorCode.GOT_ISSUE}`, 'System is getting some issue'],
   [`${ClientErrorCode.UNAUTHORIZED}`, ''],
+  [`${ClientErrorCode.FORBIDDEN}`, 'You cannot access this resource'],
   [
     `${ClientErrorCode.LOGOUT_REQUIRED}`,
     'Your session has been expired. You need to log out now'

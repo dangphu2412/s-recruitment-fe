@@ -96,7 +96,7 @@ export function PaidCell({
   }
 
   function handleRemoveChange() {
-    setCurrentPaid(paidMoney as number);
+    setCurrentPaid(paidMoney);
 
     onClose();
   }

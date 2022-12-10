@@ -11,7 +11,7 @@ type InputTransformer = (input: string) => string;
 type InputMultipleValueProps = React.ComponentProps<'input'> & {
   defaultValues?: string[];
   removeIcon?: React.ReactNode;
-  multiValueSplitter?: string;
+  multiValueSplitter?: string | RegExp;
   onAddChange?(items: string[]): void;
   onDeleteChange?(items: string[]): void;
   typingInputTransformers?: InputTransformer[];
@@ -25,7 +25,7 @@ export const InputMultipleValues = forwardRef<
 >(function InputMultipleValue(
   {
     defaultValues = [],
-    multiValueSplitter = ',',
+    multiValueSplitter = /[,\n]/gi,
     removeIcon,
     placeholder,
     onAddChange,

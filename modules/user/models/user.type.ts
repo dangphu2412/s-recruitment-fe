@@ -8,7 +8,7 @@ export type User = {
   avatar: string;
   createdAt: string;
   deletedAt: string;
-  operationFee: OperationFee;
+  operationFee?: OperationFee;
 };
 
 export type UserManagementView = {
