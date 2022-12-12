@@ -11,7 +11,9 @@ export function UsernameCell({
     <>
       <div>{value}</div>
 
-      <Image src={row.original.avatar} alt="No avatar" />
+      {row.original.avatar && (
+        <Image src={row.original.avatar} alt="No avatar" />
+      )}
     </>
   );
 }

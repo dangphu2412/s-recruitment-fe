@@ -41,16 +41,17 @@ export default function AdministratorPage(): React.ReactElement {
 
           <Thead>
             {headerGroups.map(headerGroup => {
-              const { key, ...headerRowProps } =
+              const { key: headerKey, ...headerRowProps } =
                 headerGroup.getHeaderGroupProps();
 
               return (
-                <Tr key={key} {...headerRowProps}>
+                <Tr key={headerKey} {...headerRowProps}>
                   {headerGroup.headers.map(column => {
-                    const { key, ...colProps } = column.getHeaderGroupProps();
+                    const { key: headerGroupKey, ...colProps } =
+                      column.getHeaderProps();
 
                     return (
-                      <Th key={key} {...colProps}>
+                      <Th key={headerGroupKey} {...colProps}>
                         {column.render('Header')}
                       </Th>
                     );
@@ -64,10 +65,10 @@ export default function AdministratorPage(): React.ReactElement {
             {rows.map(row => {
               prepareRow(row);
 
-              const { key, ...rowProps } = row.getRowProps();
+              const { key: rowKey, ...rowProps } = row.getRowProps();
 
               return (
-                <Tr key={key} {...rowProps}>
+                <Tr key={rowKey} {...rowProps}>
                   {row.cells.map(cell => {
                     const { key: keyCell, ...cellProps } = cell.getCellProps({
                       key: `cell_${cell.column.id}_${cell.row.original.id}`
