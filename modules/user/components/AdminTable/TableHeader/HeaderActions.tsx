@@ -1,86 +1,39 @@
-import React, { useEffect } from 'react';
-import {
-  Button,
-  Checkbox,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  FormControl,
-  FormLabel,
-  Select,
-  useDisclosure
-} from '@chakra-ui/react';
+import React from 'react';
+import { Button, useDisclosure } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { InputMultipleValues } from '@modules/shared/components/Input';
-import { MonthlyMoneyConfig } from '@modules/monthly-money/clients/monthly-money.types';
 import { CreateUserType } from '@modules/user/constants/admin-management.constants';
-import { SubmitHandler, useController, useForm } from 'react-hook-form';
-import { ConfirmExtractEmailsPopup } from '@modules/user/components/AdminTable/TableHeader/ConfirmExtractEmailsPopup';
+import { AddUserDrawer } from '@modules/user/components/AdminTable/TableHeader/AddUserDrawer';
+import { useQueryMonthlyMoneyConfigs } from '@modules/monthly-money/hooks';
+import { useMutateCreateUser } from '@modules/user/hooks/data/useMutateCreateUser';
 
 export type CreateUserInputs = {
   createType: CreateUserType;
-  emails: string[];
+  emails: Array<string>;
   monthlyConfigId?: string;
   isSilentCreate: boolean;
 };
 
-type Props = {
-  monthlyMoneyConfigs: MonthlyMoneyConfig[];
-  isOpenExtractEmailConfirmation?: boolean;
-  extractedEmails: string[];
-  onAddNewUser(createUserInputs: CreateUserInputs): void;
-  onAcceptEmailsExtraction(emails: string[]): void;
-};
-
-export function HeaderActions({
-  onAddNewUser,
-  onAcceptEmailsExtraction,
-  monthlyMoneyConfigs,
-  isOpenExtractEmailConfirmation = false,
-  extractedEmails
-}: Props): React.ReactElement {
+export function HeaderActions(): React.ReactElement {
   const addNewUserButtonRef = React.useRef<HTMLButtonElement>(null);
-  const { handleSubmit, register, control, watch, setValue } =
-    useForm<CreateUserInputs>({
-      defaultValues: {
-        emails: [],
-        createType: CreateUserType.NEWBIE,
-        isSilentCreate: false
-      }
-    });
-  const {
-    field: {
-      onChange: onEmailsChange,
-      name: emailsInputName,
-      value: currentEmails
-    }
-  } = useController({
-    control,
-    name: 'emails'
-  });
-  const createUserType = watch('createType');
-
   const { isOpen, onOpen, onClose } = useDisclosure({
     id: 'createDrawer'
   });
 
-  const saveUser: SubmitHandler<CreateUserInputs> = inputs => {
-    onAddNewUser(inputs);
-  };
+  const { data: monthlyMoneyConfigs } = useQueryMonthlyMoneyConfigs({
+    isEnabled: isOpen
+  });
 
-  function handleAcceptExtractEmails() {
-    onAcceptEmailsExtraction?.(currentEmails);
+  const { mutate, isLoading } = useMutateCreateUser();
+
+  function handleAddNewUser(createUserInputs: CreateUserInputs): void {
+    mutate({
+      createUserType: createUserInputs.createType,
+      emails: createUserInputs.emails,
+      monthlyConfigId: createUserInputs.monthlyConfigId,
+      isSilentCreate: createUserInputs.isSilentCreate
+    });
   }
-
-  useEffect(() => {
-    setValue('emails', extractedEmails);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [extractedEmails]);
 
   return (
     <>
@@ -89,82 +42,15 @@ export function HeaderActions({
         Add
       </Button>
 
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={addNewUserButtonRef}
-        size="lg"
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Create new S-Group members</DrawerHeader>
-
-          <DrawerBody className="space-y-2">
-            <FormControl>
-              <FormLabel htmlFor="create-user-type">Create type</FormLabel>
-
-              <Select placeholder="Select option" {...register('createType')}>
-                {Object.values(CreateUserType).map(type => {
-                  return (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  );
-                })}
-              </Select>
-            </FormControl>
-
-            <FormControl>
-              <FormLabel htmlFor={emailsInputName}>Email</FormLabel>
-
-              <InputMultipleValues
-                onAddChange={onEmailsChange}
-                onDeleteChange={onEmailsChange}
-                placeholder="Please enter emails"
-                name={emailsInputName}
-                inputValues={currentEmails}
-              />
-
-              <Checkbox marginTop="1rem" {...register('isSilentCreate')}>
-                Skip existed emails
-              </Checkbox>
-            </FormControl>
-
-            {createUserType === CreateUserType.NEW_MEMBERS && (
-              <FormControl>
-                <FormLabel htmlFor="monthly-configs">Monthly paid</FormLabel>
-
-                <Select
-                  placeholder="Select option"
-                  {...register('monthlyConfigId')}
-                >
-                  {monthlyMoneyConfigs.map(config => {
-                    return (
-                      <option value={config.id} key={config.id}>
-                        {`${config.amount}K / ${config.monthRange} month`}
-                      </option>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            )}
-          </DrawerBody>
-
-          <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue" onClick={handleSubmit(saveUser)}>
-              Save
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-
-      {isOpenExtractEmailConfirmation && (
-        <ConfirmExtractEmailsPopup onAgree={handleAcceptExtractEmails} />
+      {isOpen && (
+        <AddUserDrawer
+          isOpen={isOpen}
+          isLoading={isLoading}
+          onClose={onClose}
+          finalFocusRef={addNewUserButtonRef}
+          onAddNewUser={handleAddNewUser}
+          monthlyMoneyConfigs={monthlyMoneyConfigs ?? []}
+        />
       )}
     </>
   );

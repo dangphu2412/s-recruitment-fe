@@ -9,13 +9,7 @@ import {
 } from '@modules/error-handling/useErrorHandler';
 import { ClientErrorCode } from '@modules/error-handling/client-code';
 
-type MutateCreateUserProps = {
-  onEmailsExistedError?: () => void;
-};
-
-export function useMutateCreateUser({
-  onEmailsExistedError
-}: MutateCreateUserProps = {}) {
+export function useMutateCreateUser() {
   const dispatch = useDispatch();
   const toast = useToast();
 
@@ -29,8 +23,6 @@ export function useMutateCreateUser({
         position: 'top',
         description: message
       });
-
-      onEmailsExistedError?.();
     }
   }
 

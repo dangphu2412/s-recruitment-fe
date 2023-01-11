@@ -1,10 +1,15 @@
 import { MonthlyMoneyApiClient } from '@modules/monthly-money/services';
 import { useQuery } from 'react-query';
 
-export function useQueryMonthlyMoneyConfigs() {
+type Props = {
+  isEnabled: boolean;
+};
+
+export function useQueryMonthlyMoneyConfigs({ isEnabled = true }: Props) {
   return useQuery({
     queryFn: MonthlyMoneyApiClient.getAllConfigs,
     queryKey: 'MONTHLY_MONEY_CONFIGS',
-    retry: false
+    retry: false,
+    enabled: isEnabled
   });
 }

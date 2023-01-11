@@ -143,7 +143,7 @@ export const InputMultipleValues = forwardRef<
     <div className={classnames(classes['input-container'], className)}>
       {values.map((item, index) => (
         <span
-          key={`${item}`}
+          key={`${item}${index}`}
           className={classes['tag-item']}
           onClick={() => handleDeleteItem(index)}
         >
