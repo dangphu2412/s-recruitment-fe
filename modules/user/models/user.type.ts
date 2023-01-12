@@ -26,6 +26,7 @@ export type CreateUsersDto = {
   createUserType: CreateUserType;
   monthlyConfigId?: string;
   isSilentCreate: boolean;
+  attachment?: File;
 };
 
 export type ExtractNewEmailsDto = {

@@ -6,6 +6,7 @@ import {
   User,
   UserManagementView
 } from '../models/user.type';
+import FormData from 'form-data';
 
 export const UserApiClient = {
   getMyProfile(): Promise<User> {
@@ -23,6 +24,18 @@ export const UserApiClient = {
     return ApiClient.patch<void, unknown>(`/users/${userId}/active`);
   },
   createUser(createUserDto: CreateUsersDto): Promise<void> {
+    if (createUserDto.attachment) {
+      const attachmentForm = new FormData();
+
+      attachmentForm.append('file', createUserDto.attachment);
+      attachmentForm.append('fileType', createUserDto.attachment.type);
+
+      return ApiClient.post<void, FormData>('/users', attachmentForm, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+    }
     return ApiClient.post<void, CreateUsersDto>('/users', createUserDto);
   },
   extractNewEmails(
