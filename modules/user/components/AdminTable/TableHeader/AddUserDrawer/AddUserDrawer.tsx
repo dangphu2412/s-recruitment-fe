@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Button,
-  Checkbox,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -16,19 +15,19 @@ import {
   Select
 } from '@chakra-ui/react';
 import { CreateUserType } from '@modules/user/constants/admin-management.constants';
-import { InputMultipleValues } from '@modules/shared/components/Input';
 import { UseDisclosureApi } from '@modules/shared/clients/disclosure.api';
-import { SubmitHandler, useController, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { array, boolean, mixed, object, string } from 'yup';
+import { mixed, object, string } from 'yup';
 import { MonthlyMoneyConfig } from '@modules/monthly-money/clients/monthly-money.types';
 import { FullLoader } from '@modules/shared/components/Loader/Full/FullLoader';
 
 export type CreateUserInputs = {
   createType: CreateUserType;
-  emails: Array<string>;
+  email: string;
+  fullName: string;
+  birthday?: string;
   monthlyConfigId?: string;
-  isSilentCreate: boolean;
   excelFile?: File;
 };
 
@@ -43,16 +42,14 @@ const validationSchema = object({
   createType: mixed<CreateUserType>()
     .oneOf(Object.values(CreateUserType))
     .required(),
-  emails: array().optional().of(string().email().required()),
+  email: string().optional().email(),
+  fullName: string().optional(),
+  birthday: string().optional(),
   monthlyConfigId: string().optional().when('createType', {
     is: CreateUserType.NEW_MEMBERS,
     then: string().required()
   }),
-  isSilentCreate: boolean().required(),
-  excelFile: object().optional().when('createType', {
-    is: CreateUserType.EXCEL,
-    then: object().required()
-  })
+  excelFile: object().optional()
 });
 
 export function AddUserDrawer({
@@ -66,49 +63,26 @@ export function AddUserDrawer({
   const {
     handleSubmit,
     register,
-    control,
     watch,
-    setValue,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<CreateUserInputs>({
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      emails: [],
+      email: '',
+      fullName: '',
+      birthday: '',
       createType: CreateUserType.NEWBIE,
-      isSilentCreate: false,
       excelFile: undefined
     }
   });
-  const {
-    field: {
-      onChange: onEmailsChange,
-      name: emailsInputName,
-      value: currentEmails
-    }
-  } = useController({
-    control,
-    name: 'emails'
-  });
+
   const createUserType = watch('createType');
+  const excelFile = watch('excelFile');
 
   const saveUser: SubmitHandler<CreateUserInputs> = inputs => {
     onAddNewUser(inputs);
   };
-
-  function handleUploadExcel(e: React.ChangeEvent<HTMLInputElement>) {
-    if (!e.target.files) {
-      return;
-    }
-
-    const file = e.target.files[0];
-
-    setValue('excelFile', file);
-  }
-
-  useEffect(() => {
-    setValue('createType', CreateUserType.NEWBIE);
-  }, [setValue]);
 
   return (
     <Drawer
@@ -122,7 +96,6 @@ export function AddUserDrawer({
       <FullLoader isLoading={isLoading} />
 
       <DrawerContent>
-        {!isValid && 'Invalid'}
         <DrawerCloseButton />
 
         <DrawerHeader>Create new S-Group members</DrawerHeader>
@@ -143,28 +116,30 @@ export function AddUserDrawer({
           </FormControl>
 
           {createUserType !== CreateUserType.EXCEL && (
-            <FormControl isInvalid={!!errors.emails} pt="1rem">
-              <FormLabel htmlFor={emailsInputName}>Email</FormLabel>
+            <>
+              <FormControl isInvalid={!!errors.email} pt="1rem">
+                <FormLabel>Email</FormLabel>
 
-              <InputMultipleValues
-                onAddChange={onEmailsChange}
-                onDeleteChange={onEmailsChange}
-                placeholder="Please enter emails"
-                name={emailsInputName}
-                inputValues={currentEmails}
-              />
+                <Input type={'email'} {...register('email')} />
 
-              {errors.emails && (
-                <FormErrorMessage>Incorrect email format</FormErrorMessage>
-              )}
-            </FormControl>
+                {errors.email && (
+                  <FormErrorMessage>Incorrect email format</FormErrorMessage>
+                )}
+              </FormControl>
+
+              <FormControl pt="1rem">
+                <FormLabel>Full name</FormLabel>
+
+                <Input {...register('fullName')} />
+
+                {errors.fullName && (
+                  <FormErrorMessage>
+                    Incorrect full name format
+                  </FormErrorMessage>
+                )}
+              </FormControl>
+            </>
           )}
-
-          <FormControl>
-            <Checkbox {...register('isSilentCreate')}>
-              Skip existed emails
-            </Checkbox>
-          </FormControl>
 
           {[CreateUserType.NEW_MEMBERS, CreateUserType.EXCEL].includes(
             createUserType
@@ -190,8 +165,8 @@ export function AddUserDrawer({
           {createUserType === CreateUserType.EXCEL && (
             <FormControl>
               <FormLabel borderWidth="0.5rem">
-                Upload file
-                <Input type="file" hidden={true} onChange={handleUploadExcel} />
+                Upload file: {excelFile?.name}
+                <Input type="file" />
               </FormLabel>
             </FormControl>
           )}

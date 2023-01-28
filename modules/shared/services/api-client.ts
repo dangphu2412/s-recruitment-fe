@@ -29,7 +29,7 @@ export class ApiClientImpl {
     );
   }
 
-  private createRequestInterceptor() {
+  private createRequestInterceptor = () => {
     return (config: AxiosRequestConfig) => {
       if (config.headers) {
         config.headers.authorization =
@@ -38,9 +38,9 @@ export class ApiClientImpl {
 
       return config;
     };
-  }
+  };
 
-  private createErrorResponseInterceptor() {
+  private createErrorResponseInterceptor = () => {
     return async (error: AxiosError) => {
       const isUnauthorized =
         (error.response?.data as ClientError)?.errorCode ===
@@ -53,7 +53,7 @@ export class ApiClientImpl {
 
       return Promise.reject(error);
     };
-  }
+  };
 
   async get<T = any, D = any>(
     url: string,

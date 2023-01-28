@@ -22,10 +22,11 @@ export type UserManagementView = {
 };
 
 export type CreateUsersDto = {
-  emails: string[];
+  email: string;
+  fullName: string;
+  birthday?: string;
   createUserType: CreateUserType;
   monthlyConfigId?: string;
-  isSilentCreate: boolean;
   attachment?: File;
 };
 

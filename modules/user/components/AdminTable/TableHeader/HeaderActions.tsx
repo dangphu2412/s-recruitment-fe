@@ -19,14 +19,15 @@ export function HeaderActions(): React.ReactElement {
     isEnabled: isOpen
   });
 
-  const { mutate, isLoading } = useMutateCreateUser();
+  const { mutate: dispatchCreateUser, isLoading } = useMutateCreateUser();
 
   function handleAddNewUser(createUserInputs: CreateUserInputs): void {
-    mutate({
+    dispatchCreateUser({
       createUserType: createUserInputs.createType,
-      emails: createUserInputs.emails,
+      email: createUserInputs.email,
+      fullName: createUserInputs.fullName,
+      birthday: createUserInputs.birthday,
       monthlyConfigId: createUserInputs.monthlyConfigId,
-      isSilentCreate: createUserInputs.isSilentCreate,
       attachment: createUserInputs.excelFile
     });
   }

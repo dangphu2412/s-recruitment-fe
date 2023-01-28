@@ -15,8 +15,19 @@ export function useMutateCreateUser() {
 
   function handleMutateCreateUserError({ clientCode, message }: AppError) {
     if (clientCode === ClientErrorCode.USER_EMAIL_EXISTED) {
-      toast({
+      return toast({
         title: 'Email existed',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top',
+        description: message
+      });
+    }
+
+    if (clientCode === ClientErrorCode.NOT_FOUND_USER) {
+      return toast({
+        title: 'This user is not ready to become member',
         status: 'error',
         duration: 9000,
         isClosable: true,

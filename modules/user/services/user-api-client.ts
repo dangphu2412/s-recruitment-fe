@@ -36,6 +36,7 @@ export const UserApiClient = {
         }
       });
     }
+
     return ApiClient.post<void, CreateUsersDto>('/users', createUserDto);
   },
   extractNewEmails(
