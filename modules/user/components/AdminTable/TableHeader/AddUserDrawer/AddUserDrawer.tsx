@@ -21,6 +21,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { mixed, object, string } from 'yup';
 import { MonthlyMoneyConfig } from '@modules/monthly-money/clients/monthly-money.types';
 import { FullLoader } from '@modules/shared/components/Loader/Full/FullLoader';
+import { read } from 'xlsx';
 
 export type CreateUserInputs = {
   createType: CreateUserType;
@@ -28,7 +29,8 @@ export type CreateUserInputs = {
   fullName: string;
   birthday?: string;
   monthlyConfigId?: string;
-  excelFile?: File;
+  excelFile?: { file: File; processSheetName: string };
+  processSheetNameOptions?: string[];
 };
 
 type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
@@ -48,8 +50,7 @@ const validationSchema = object({
   monthlyConfigId: string().optional().when('createType', {
     is: CreateUserType.NEW_MEMBERS,
     then: string().required()
-  }),
-  excelFile: object().optional()
+  })
 });
 
 export function AddUserDrawer({
@@ -64,6 +65,7 @@ export function AddUserDrawer({
     handleSubmit,
     register,
     watch,
+    setValue,
     formState: { errors }
   } = useForm<CreateUserInputs>({
     mode: 'onChange',
@@ -73,16 +75,37 @@ export function AddUserDrawer({
       fullName: '',
       birthday: '',
       createType: CreateUserType.NEWBIE,
-      excelFile: undefined
+      excelFile: undefined,
+      processSheetNameOptions: undefined
     }
   });
 
   const createUserType = watch('createType');
   const excelFile = watch('excelFile');
+  const processSheetNameOptions = watch('processSheetNameOptions');
 
   const saveUser: SubmitHandler<CreateUserInputs> = inputs => {
     onAddNewUser(inputs);
   };
+
+  async function handleSelectFile(
+    e: React.ChangeEvent<HTMLInputElement>
+  ): Promise<void> {
+    const file = Array.from(e.target.files ?? [])?.[0];
+
+    if (!file) {
+      throw new Error('Empty file selected');
+    }
+
+    const workbook = read(await file.arrayBuffer());
+
+    setValue('processSheetNameOptions', workbook.SheetNames);
+
+    setValue('excelFile', {
+      file,
+      processSheetName: ''
+    });
+  }
 
   return (
     <Drawer
@@ -165,9 +188,25 @@ export function AddUserDrawer({
           {createUserType === CreateUserType.EXCEL && (
             <FormControl>
               <FormLabel borderWidth="0.5rem">
-                Upload file: {excelFile?.name}
-                <Input type="file" />
+                Upload file: {excelFile?.file?.name}
+                <Input type="file" onChange={handleSelectFile} />
               </FormLabel>
+
+              <FormLabel htmlFor="create-user-type">Process options</FormLabel>
+
+              <Select
+                placeholder="Select option"
+                {...register('excelFile.processSheetName')}
+              >
+                {processSheetNameOptions &&
+                  processSheetNameOptions?.map(name => {
+                    return (
+                      <option key={name} value={name}>
+                        {name}
+                      </option>
+                    );
+                  })}
+              </Select>
             </FormControl>
           )}
         </DrawerBody>

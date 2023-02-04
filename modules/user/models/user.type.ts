@@ -28,6 +28,7 @@ export type CreateUsersDto = {
   createUserType: CreateUserType;
   monthlyConfigId?: string;
   attachment?: File;
+  processSheetName?: string;
 };
 
 export type ExtractNewEmailsDto = {

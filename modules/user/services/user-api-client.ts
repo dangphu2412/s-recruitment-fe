@@ -7,6 +7,7 @@ import {
   UserManagementView
 } from '../models/user.type';
 import FormData from 'form-data';
+import { CreateUserType } from '@modules/user/constants/admin-management.constants';
 
 export const UserApiClient = {
   getMyProfile(): Promise<User> {
@@ -24,13 +25,18 @@ export const UserApiClient = {
     return ApiClient.patch<void, unknown>(`/users/${userId}/active`);
   },
   createUser(createUserDto: CreateUsersDto): Promise<void> {
-    if (createUserDto.attachment) {
+    if (
+      createUserDto.attachment &&
+      CreateUserType.EXCEL === createUserDto.createUserType
+    ) {
       const attachmentForm = new FormData();
 
       attachmentForm.append('file', createUserDto.attachment);
+      attachmentForm.append('createUserType', createUserDto.createUserType);
       attachmentForm.append('fileType', createUserDto.attachment.type);
+      attachmentForm.append('processSheetName', createUserDto.processSheetName);
 
-      return ApiClient.post<void, FormData>('/users', attachmentForm, {
+      return ApiClient.post<void, FormData>('/users/upload', attachmentForm, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

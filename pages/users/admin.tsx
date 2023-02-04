@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactElement } from 'react';
 import {
   Table,
   TableCaption,
@@ -18,7 +18,7 @@ import { AdminContainer } from '@modules/user/containers/AdminContainer/AdminCon
 import { FilterBar } from '@modules/user/components/AdminTable/FilterBar/FilterBar';
 import { FullLoader } from '@modules/shared/components/Loader/Full/FullLoader';
 
-export default function AdministratorPage(): React.ReactElement {
+export default function AdministratorPage(): ReactElement {
   const { data, isLoading } = useQueryUsers();
   const columns = useAdminColumns();
 

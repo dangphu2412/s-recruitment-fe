@@ -28,7 +28,8 @@ export function HeaderActions(): React.ReactElement {
       fullName: createUserInputs.fullName,
       birthday: createUserInputs.birthday,
       monthlyConfigId: createUserInputs.monthlyConfigId,
-      attachment: createUserInputs.excelFile
+      attachment: createUserInputs.excelFile?.file,
+      processSheetName: createUserInputs.excelFile?.processSheetName
     });
   }
 
