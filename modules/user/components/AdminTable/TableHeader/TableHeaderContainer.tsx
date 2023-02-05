@@ -4,7 +4,7 @@ import { HeaderActions } from './HeaderActions';
 
 export function TableHeaderContainer(): React.ReactElement {
   return (
-    <Flex justifyContent="space-between" className="pt-6 pb-2">
+    <Flex justifyContent="space-between" className="pb-2">
       <div>
         <Text fontSize="lg" fontWeight="semibold">
           Administrator management
