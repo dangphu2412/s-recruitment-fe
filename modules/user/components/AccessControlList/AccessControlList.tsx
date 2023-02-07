@@ -13,19 +13,32 @@ import {
   Text
 } from '@chakra-ui/react';
 import { useQueryControlList } from '@modules/user/hooks/data/useQueryControlList';
-import { Right } from '@modules/user/models/rbac.types';
+import { useRBACState } from '@modules/user/hooks/state/useRBACState';
+import { useMutateSaveRoles } from '@modules/user/hooks/data/useMutateSaveRoles';
+import { FullLoader } from '@modules/shared/components/Loader/Full/FullLoader';
 
 export function AccessControlList(): ReactElement {
   const { data } = useQueryControlList();
+  const { mutate: saveRoles, isLoading } = useMutateSaveRoles();
+  const { rbacState, togglePermission, getPermissionMap } = useRBACState(data);
 
-  function createSaveRoleHandler(): React.MouseEventHandler<HTMLButtonElement> {
-    return () => {};
+  function createSaveRoleHandler(
+    roleId: string
+  ): React.MouseEventHandler<HTMLButtonElement> {
+    return () => {
+      const permissions = getPermissionMap(roleId);
+
+      saveRoles({
+        id: roleId,
+        rights: Object.keys(permissions)
+      });
+    };
   }
 
   function createCheckboxOnChangeHandler(
-    _right: Right
+    permissionId: string
   ): (event: React.ChangeEvent<HTMLInputElement>) => void {
-    return () => {};
+    return () => togglePermission(permissionId);
   }
 
   if (!data) {
@@ -34,9 +47,18 @@ export function AccessControlList(): ReactElement {
 
   return (
     <Accordion defaultIndex={[0]} allowMultiple className="py-2 px-6">
-      {data.access.map(({ id, name, description, rights }) => {
+      {isLoading && <FullLoader />}
+
+      {Object.keys(rbacState).map(roleId => {
+        const {
+          name,
+          description,
+          id,
+          permissions: rights
+        } = rbacState[roleId];
+
         return (
-          <AccordionItem borderY="none">
+          <AccordionItem borderY="none" key={name}>
             <AccordionButton>
               <Text fontSize="md" fontWeight="semibold">
                 <AccordionIcon />
@@ -54,7 +76,7 @@ export function AccessControlList(): ReactElement {
                   Permissions
                 </Text>
 
-                <Button onClick={createSaveRoleHandler()}>Save</Button>
+                <Button onClick={createSaveRoleHandler(id)}>Save</Button>
               </Flex>
 
               <Grid
@@ -62,16 +84,23 @@ export function AccessControlList(): ReactElement {
                 justifyContent="space-between"
                 gap={6}
               >
-                {rights.map(right => {
+                {Object.keys(rights).map(permissionId => {
+                  const {
+                    name: permissionName,
+                    description: permissionDescription,
+                    canAccess
+                  } = rights[permissionId];
+
                   return (
                     <div>
                       <Checkbox
-                        defaultChecked={right.canAccess}
-                        onChange={createCheckboxOnChangeHandler(right)}
+                        key={`${name}${permissionName}`}
+                        defaultChecked={canAccess}
+                        onChange={createCheckboxOnChangeHandler(permissionId)}
                       >
-                        {right.name}
+                        {permissionName}
                       </Checkbox>
-                      <Text fontSize="sm">{right.description}</Text>
+                      <Text fontSize="sm">{permissionDescription}</Text>
                     </div>
                   );
                 })}

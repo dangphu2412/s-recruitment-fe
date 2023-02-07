@@ -3,7 +3,7 @@ import { AccessControlApiClient } from '@modules/user/services/access-control.cl
 
 export function useQueryControlList() {
   const { data, isLoading, isSuccess } = useQuery({
-    queryKey: 'QUERY_EXTRACT_NEW_EMAILS',
+    queryKey: 'QUERY_CONTROL_LIST',
     queryFn: () => AccessControlApiClient.get()
   });
 
