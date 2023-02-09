@@ -1,6 +1,5 @@
 import { ControlList, Right, Role } from '@modules/user/models/rbac.types';
-import { useEffect, useRef, useState } from 'react';
-import produce from 'immer';
+import { useEffect, useState } from 'react';
 
 type AccessControlState = Record<
   string,
@@ -8,7 +7,6 @@ type AccessControlState = Record<
     permissions: Record<string, Right>;
   }
 >;
-type PermissionMapToRole = Record<string, string>;
 
 function buildState(rbac: ControlList): AccessControlState {
   const state: AccessControlState = {};
@@ -26,34 +24,27 @@ function buildState(rbac: ControlList): AccessControlState {
   return state;
 }
 
-function buildPermissionMapToRole(rbac: ControlList): PermissionMapToRole {
-  const map: Record<string, string> = {};
-
-  rbac.access.forEach(role => {
-    role.rights.forEach(right => {
-      map[right.id] = role.id;
-    });
-  });
-
-  return map;
-}
-
 export function useRBACState(rbac: ControlList | undefined) {
-  const permissionMapToRoleIdRef = useRef<PermissionMapToRole>();
   const [rbacState, setRbacState] = useState<AccessControlState>(
     rbac ? buildState(rbac) : {}
   );
 
-  function togglePermission(permissionId: string): void {
+  function togglePermission(roleId: string, permissionId: string): void {
     setRbacState(baseState => {
-      return produce(baseState, draft => {
-        const roleId = (
-          permissionMapToRoleIdRef.current as PermissionMapToRole
-        )[permissionId];
+      const role = baseState[roleId];
 
-        draft[roleId].permissions[permissionId].canAccess =
-          !baseState[roleId].permissions[permissionId].canAccess;
-      });
+      role.permissions[permissionId].canAccess =
+        !role.permissions[permissionId].canAccess;
+
+      return {
+        ...baseState,
+        [roleId]: {
+          ...role,
+          permissions: {
+            ...role.permissions
+          }
+        }
+      };
     });
   }
 
@@ -62,8 +53,7 @@ export function useRBACState(rbac: ControlList | undefined) {
   }
 
   useEffect(() => {
-    if (!permissionMapToRoleIdRef.current && rbac) {
-      permissionMapToRoleIdRef.current = buildPermissionMapToRole(rbac);
+    if (rbac) {
       setRbacState(buildState(rbac));
     }
   }, [rbac]);

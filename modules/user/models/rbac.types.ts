@@ -4,7 +4,13 @@ export type Permission = {
   description: string;
 };
 
-export type Role = { id: string; name: string; description: string };
+export type Role = {
+  id: string;
+  name: string;
+  isEditable: boolean;
+  description: string;
+};
+
 export type Right = Permission & { canAccess: boolean };
 export type ControlList = {
   access: (Role & {

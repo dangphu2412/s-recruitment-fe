@@ -10,7 +10,8 @@ import {
   Divider,
   Flex,
   Grid,
-  Text
+  Text,
+  useToast
 } from '@chakra-ui/react';
 import { useQueryControlList } from '@modules/user/hooks/data/useQueryControlList';
 import { useRBACState } from '@modules/user/hooks/state/useRBACState';
@@ -18,6 +19,7 @@ import { useMutateSaveRoles } from '@modules/user/hooks/data/useMutateSaveRoles'
 import { FullLoader } from '@modules/shared/components/Loader/Full/FullLoader';
 
 export function AccessControlList(): ReactElement {
+  const toast = useToast();
   const { data } = useQueryControlList();
   const { mutate: saveRoles, isLoading } = useMutateSaveRoles();
   const { rbacState, togglePermission, getPermissionMap } = useRBACState(data);
@@ -26,19 +28,36 @@ export function AccessControlList(): ReactElement {
     roleId: string
   ): React.MouseEventHandler<HTMLButtonElement> {
     return () => {
-      const permissions = getPermissionMap(roleId);
+      const permissionMap = getPermissionMap(roleId);
+      const toUpdatePermissions = Object.keys(permissionMap).filter(
+        permissionId => permissionMap[permissionId].canAccess
+      );
 
-      saveRoles({
-        id: roleId,
-        rights: Object.keys(permissions)
-      });
+      saveRoles(
+        {
+          id: roleId,
+          rights: toUpdatePermissions
+        },
+        {
+          onSuccess: () => {
+            toast({
+              title: 'Save role success',
+              status: 'success',
+              duration: 9000,
+              isClosable: true,
+              position: 'top'
+            });
+          }
+        }
+      );
     };
   }
 
   function createCheckboxOnChangeHandler(
+    roleId: string,
     permissionId: string
   ): (event: React.ChangeEvent<HTMLInputElement>) => void {
-    return () => togglePermission(permissionId);
+    return () => togglePermission(roleId, permissionId);
   }
 
   if (!data) {
@@ -46,14 +65,14 @@ export function AccessControlList(): ReactElement {
   }
 
   return (
-    <Accordion defaultIndex={[0]} allowMultiple className="py-2 px-6">
+    <Accordion allowMultiple className="py-2 px-6">
       {isLoading && <FullLoader />}
 
       {Object.keys(rbacState).map(roleId => {
         const {
           name,
           description,
-          id,
+          isEditable,
           permissions: rights
         } = rbacState[roleId];
 
@@ -76,7 +95,7 @@ export function AccessControlList(): ReactElement {
                   Permissions
                 </Text>
 
-                <Button onClick={createSaveRoleHandler(id)}>Save</Button>
+                <Button onClick={createSaveRoleHandler(roleId)}>Save</Button>
               </Flex>
 
               <Grid
@@ -92,16 +111,19 @@ export function AccessControlList(): ReactElement {
                   } = rights[permissionId];
 
                   return (
-                    <div>
+                    <React.Fragment key={permissionName}>
                       <Checkbox
-                        key={`${name}${permissionName}`}
                         defaultChecked={canAccess}
-                        onChange={createCheckboxOnChangeHandler(permissionId)}
+                        onChange={createCheckboxOnChangeHandler(
+                          roleId,
+                          permissionId
+                        )}
+                        disabled={!isEditable}
                       >
                         {permissionName}
                       </Checkbox>
                       <Text fontSize="sm">{permissionDescription}</Text>
-                    </div>
+                    </React.Fragment>
                   );
                 })}
               </Grid>
