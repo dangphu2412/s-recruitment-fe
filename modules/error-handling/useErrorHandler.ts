@@ -76,6 +76,9 @@ export function useErrorHandler({
       case ClientErrorCode.LOGOUT_REQUIRED:
         push('/logout');
         break;
+      case ClientErrorCode.FORBIDDEN:
+        push('/403');
+        break;
       default:
         if (onHandleClientError) {
           onHandleClientError({ clientCode, message });

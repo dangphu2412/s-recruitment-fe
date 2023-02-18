@@ -65,74 +65,91 @@ export function AccessControlList(): ReactElement {
   }
 
   return (
-    <Accordion allowMultiple className="py-2 px-6">
-      {isLoading && <FullLoader />}
+    <>
+      <div className="px-6 pt-6">
+        <Text fontSize="lg" fontWeight="semibold">
+          Access Rights management
+        </Text>
 
-      {Object.keys(rbacState).map(roleId => {
-        const {
-          name,
-          description,
-          isEditable,
-          permissions: rights
-        } = rbacState[roleId];
+        <Text fontSize="sm" fontWeight="light">
+          Where you manipulate application access rights
+        </Text>
+      </div>
 
-        return (
-          <AccordionItem borderY="none" key={name}>
-            <AccordionButton>
-              <Text fontSize="md" fontWeight="semibold">
-                <AccordionIcon />
-                {name}
-              </Text>
-            </AccordionButton>
+      <Accordion defaultIndex={[0]} allowMultiple className="py-2 px-6">
+        {isLoading && <FullLoader />}
 
-            <AccordionPanel ml={6} pb={4}>
-              <Text fontSize="sm" fontWeight="light">
-                {description}
-              </Text>
+        {Object.keys(rbacState).map(roleId => {
+          const {
+            name,
+            description,
+            isEditable,
+            permissions: rights
+          } = rbacState[roleId];
 
-              <Flex justifyContent="space-between" className="pb-2">
-                <Text my="1rem" fontSize="md" fontWeight="semibold">
-                  Permissions
+          return (
+            <AccordionItem borderY="none" key={name}>
+              <AccordionButton>
+                <Text fontSize="md" fontWeight="semibold">
+                  <AccordionIcon />
+                  {name}
+                </Text>
+              </AccordionButton>
+
+              <AccordionPanel ml={6} pb={4}>
+                <Text fontSize="sm" fontWeight="light">
+                  {description}
                 </Text>
 
-                <Button onClick={createSaveRoleHandler(roleId)}>Save</Button>
-              </Flex>
+                <Flex justifyContent="space-between" className="pb-2">
+                  <Text my="1rem" fontSize="md" fontWeight="semibold">
+                    Permissions
+                  </Text>
 
-              <Grid
-                templateColumns="repeat(2, 1fr)"
-                justifyContent="space-between"
-                gap={6}
-              >
-                {Object.keys(rights).map(permissionId => {
-                  const {
-                    name: permissionName,
-                    description: permissionDescription,
-                    canAccess
-                  } = rights[permissionId];
+                  <Button
+                    disabled={!isEditable}
+                    onClick={createSaveRoleHandler(roleId)}
+                  >
+                    Save
+                  </Button>
+                </Flex>
 
-                  return (
-                    <React.Fragment key={permissionName}>
-                      <Checkbox
-                        defaultChecked={canAccess}
-                        onChange={createCheckboxOnChangeHandler(
-                          roleId,
-                          permissionId
-                        )}
-                        disabled={!isEditable}
-                      >
-                        {permissionName}
-                      </Checkbox>
-                      <Text fontSize="sm">{permissionDescription}</Text>
-                    </React.Fragment>
-                  );
-                })}
-              </Grid>
-            </AccordionPanel>
+                <Grid
+                  templateColumns="repeat(2, 1fr)"
+                  justifyContent="space-between"
+                  gap={6}
+                >
+                  {Object.keys(rights).map(permissionId => {
+                    const {
+                      name: permissionName,
+                      description: permissionDescription,
+                      canAccess
+                    } = rights[permissionId];
 
-            <Divider />
-          </AccordionItem>
-        );
-      })}
-    </Accordion>
+                    return (
+                      <React.Fragment key={permissionName}>
+                        <Checkbox
+                          defaultChecked={canAccess}
+                          onChange={createCheckboxOnChangeHandler(
+                            roleId,
+                            permissionId
+                          )}
+                          disabled={!isEditable}
+                        >
+                          {permissionName}
+                        </Checkbox>
+                        <Text fontSize="sm">{permissionDescription}</Text>
+                      </React.Fragment>
+                    );
+                  })}
+                </Grid>
+              </AccordionPanel>
+
+              <Divider />
+            </AccordionItem>
+          );
+        })}
+      </Accordion>
+    </>
   );
 }

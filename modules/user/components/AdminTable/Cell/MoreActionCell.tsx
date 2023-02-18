@@ -6,6 +6,10 @@ import { CellProps } from 'react-table';
 import styles from './Cell.module.scss';
 import { useMutateUserActive } from '../../../hooks/data/useMutateUserActive';
 import { UserManagementView } from '../../../models/user.type';
+import { Router } from 'next/router';
+
+type MoreActionCellProps = CellProps<UserManagementView, string> &
+  Pick<Router, 'push'>;
 
 type ActionOnUserItem = {
   key: string;
@@ -14,8 +18,9 @@ type ActionOnUserItem = {
 };
 
 export function MoreActionCell({
-  row
-}: CellProps<UserManagementView, string>): React.ReactElement {
+  row,
+  push
+}: MoreActionCellProps): React.ReactElement {
   const { mutate: toggleUserActive } = useMutateUserActive();
 
   const actionItems: ActionOnUserItem[] = [
@@ -23,6 +28,11 @@ export function MoreActionCell({
       key: `TOGGLE_STATUS_KEY${row.original.id}`,
       content: 'Toggle status',
       onClick: () => toggleUserActive(row.original.id)
+    },
+    {
+      key: `UPDATE_ROLE_KEY${row.original.id}`,
+      content: 'Update role',
+      onClick: () => push(`/users/${row.original.id}/edit-roles`)
     }
   ];
 
