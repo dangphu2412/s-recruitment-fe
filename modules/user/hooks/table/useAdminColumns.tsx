@@ -31,6 +31,10 @@ export function useAdminColumns(): Column<UserManagementView>[] {
         Cell: PaidCell
       },
       {
+        Header: 'Roles',
+        accessor: row => row.roles.map(role => role.name)
+      },
+      {
         Header: 'Status',
         accessor: 'deletedAt',
         Cell: StatusCell

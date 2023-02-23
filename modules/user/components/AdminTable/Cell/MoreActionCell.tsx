@@ -4,7 +4,6 @@ import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { CellProps } from 'react-table';
 import styles from './Cell.module.scss';
-import { useMutateUserActive } from '../../../hooks/data/useMutateUserActive';
 import { UserManagementView } from '../../../models/user.type';
 import { Router } from 'next/router';
 
@@ -21,18 +20,11 @@ export function MoreActionCell({
   row,
   push
 }: MoreActionCellProps): React.ReactElement {
-  const { mutate: toggleUserActive } = useMutateUserActive();
-
   const actionItems: ActionOnUserItem[] = [
-    {
-      key: `TOGGLE_STATUS_KEY${row.original.id}`,
-      content: 'Toggle status',
-      onClick: () => toggleUserActive(row.original.id)
-    },
     {
       key: `UPDATE_ROLE_KEY${row.original.id}`,
       content: 'Update role',
-      onClick: () => push(`/users/${row.original.id}/edit-roles`)
+      onClick: () => push(`/users/settings?${row.original.id}`)
     }
   ];
 

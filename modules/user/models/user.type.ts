@@ -1,5 +1,6 @@
 import { CreateUserType } from '@modules/user/constants/admin-management.constants';
 import { OperationFee } from '@modules/monthly-money/types';
+import { Role } from '@modules/user/models/rbac.types';
 
 export type User = {
   id: string;
@@ -19,6 +20,7 @@ export type UserManagementView = {
   createdAt: string;
   deletedAt: string;
   operationFee?: OperationFee;
+  roles: Role[];
 };
 
 export type CreateUsersDto = {
