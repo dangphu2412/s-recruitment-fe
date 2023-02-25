@@ -8,7 +8,13 @@ export function ContentLayout({
   ...rest
 }: Props): React.ReactElement {
   return (
-    <ChakraBox borderRadius="1rem" backgroundColor="#ffffff" {...rest}>
+    <ChakraBox
+      borderRadius="1rem"
+      backgroundColor="#ffffff"
+      {...rest}
+      paddingY="2rem"
+      paddingX="2rem"
+    >
       {children}
     </ChakraBox>
   );

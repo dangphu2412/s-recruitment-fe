@@ -17,6 +17,7 @@ import { useQueryControlList } from '@modules/user/hooks/data/useQueryControlLis
 import { useRBACState } from '@modules/user/hooks/state/useRBACState';
 import { useMutateSaveRoles } from '@modules/user/hooks/data/useMutateSaveRoles';
 import { FullLoader } from '@modules/shared/components/Loader/Full/FullLoader';
+import { ContentHeader } from '@modules/shared/components/Header/ContentHeader/ContentHeader';
 
 export function AccessControlList(): ReactElement {
   const toast = useToast();
@@ -67,13 +68,10 @@ export function AccessControlList(): ReactElement {
   return (
     <>
       <div className="px-6 pt-6">
-        <Text fontSize="lg" fontWeight="semibold">
-          Access Rights management
-        </Text>
-
-        <Text fontSize="sm" fontWeight="light">
-          Where you manipulate application access rights
-        </Text>
+        <ContentHeader
+          main={'Access Rights management'}
+          brief={'Where you manipulate application access rights'}
+        />
       </div>
 
       <Accordion defaultIndex={[0]} allowMultiple className="py-2 px-6">

@@ -14,11 +14,9 @@ export default function AdministratorPage(): ReactElement {
     <AdminContainer>
       <FullLoader isLoading={isLoading} />
 
-      <div className="px-6 pt-6">
-        <TableHeaderContainer />
-        <FilterBar />
-        <PaginationContainer totalRecords={data?.metadata.totalRecords} />
-      </div>
+      <TableHeaderContainer />
+      <FilterBar />
+      <PaginationContainer totalRecords={data?.metadata.totalRecords} />
 
       <AdminTable data={data} />
     </AdminContainer>
