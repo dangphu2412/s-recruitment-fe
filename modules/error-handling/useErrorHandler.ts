@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
-import { useToast } from '@chakra-ui/react';
 import { ClientErrorCode, ErrorMessageManager } from './client-code';
+import { useNotify } from '@modules/shared/hooks/useNotify.hook';
 
 export interface AppError {
   clientCode: string;
@@ -62,7 +62,7 @@ export function useErrorHandler({
   onHandleClientError
 }: ErrorHandlerProps = {}): ErrorHandler {
   const { push } = useRouter();
-  const showToast = useToast();
+  const showToast = useNotify();
 
   function handle(error: any): void {
     const { clientCode, message } = transformToAppError(error);
@@ -87,7 +87,6 @@ export function useErrorHandler({
 
         showToast({
           title: 'Error',
-          duration: 5000,
           status: 'error',
           description: message
         });

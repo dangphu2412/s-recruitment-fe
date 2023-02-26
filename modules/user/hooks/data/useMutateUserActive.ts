@@ -1,11 +1,11 @@
-import { useToast } from '@chakra-ui/react';
 import { userActions } from '@modules/user/store/user.slice';
 import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
 import { UserApiClient } from '../../services/user-api-client';
+import { useNotify } from '@modules/shared/hooks/useNotify.hook';
 
 export function useMutateUserActive() {
-  const toast = useToast();
+  const toast = useNotify();
   const dispatch = useDispatch();
 
   return useMutation({
@@ -14,10 +14,7 @@ export function useMutateUserActive() {
     onSuccess() {
       toast({
         title: 'Toggle user active successfully',
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-        position: 'top'
+        status: 'success'
       });
 
       dispatch(userActions.setIsSubmitted(true));

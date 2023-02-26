@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { normalizeParam } from '@modules/shared/utils/router.utils';
 import { useMutateSaveUserRoles } from '@modules/user/hooks/data/useMutateSaveUserRoles';
 import { useQueryControlList } from '@modules/user/hooks/data/useQueryControlList';
+import { useNotify } from '@modules/shared/hooks/useNotify.hook';
 
 type RoleView = {
   name: string;
@@ -14,6 +15,7 @@ export function useRoleView() {
   const [roleViews, setRoleViews] = useState<RoleView[]>([]);
   const [selectionViews, setSelectionViews] = useState<RoleView[]>([]);
   const [, setOwningRoles] = useState<string[]>([]);
+  const notify = useNotify();
 
   const {
     query: { userId: userIdPathParam }
@@ -28,7 +30,17 @@ export function useRoleView() {
     setOwningRoles(prevRoleIds => {
       const newRoles = [...prevRoleIds, id];
 
-      saveUserRoles({ userId, roleIds: newRoles });
+      saveUserRoles(
+        { userId, roleIds: newRoles },
+        {
+          onSuccess() {
+            notify({
+              title: 'Save roles',
+              status: 'success'
+            });
+          }
+        }
+      );
 
       return newRoles;
     });
@@ -38,7 +50,17 @@ export function useRoleView() {
     setOwningRoles(prevRoleIds => {
       const newRoles = prevRoleIds.filter(currentId => currentId !== id);
 
-      saveUserRoles({ userId, roleIds: newRoles });
+      saveUserRoles(
+        { userId, roleIds: newRoles },
+        {
+          onSuccess() {
+            notify({
+              title: 'Save roles',
+              status: 'success'
+            });
+          }
+        }
+      );
 
       return newRoles;
     });

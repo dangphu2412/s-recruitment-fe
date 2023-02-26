@@ -10,21 +10,21 @@ import {
   Divider,
   Flex,
   Grid,
-  Text,
-  useToast
+  Text
 } from '@chakra-ui/react';
 import { useQueryControlList } from '@modules/user/hooks/data/useQueryControlList';
-import { useRBACState } from '@modules/user/hooks/state/useRBACState';
+import { useRBACView } from '@modules/user/hooks/state/useRBACView';
 import { useMutateSaveRoles } from '@modules/user/hooks/data/useMutateSaveRoles';
 import { FullLoader } from '@modules/shared/components/Loader/Full/FullLoader';
 import { ContentHeader } from '@modules/shared/components/Header/ContentHeader/ContentHeader';
+import { useNotify } from '@modules/shared/hooks/useNotify.hook';
 
 export function AccessControlList(): ReactElement {
-  const toast = useToast();
+  const notify = useNotify();
   const { allRoles } = useQueryControlList();
   const { saveRoles, isLoading } = useMutateSaveRoles();
   const { rbacState, togglePermission, getPermissionMap } =
-    useRBACState(allRoles);
+    useRBACView(allRoles);
 
   function createSaveRoleHandler(
     roleId: string
@@ -42,12 +42,9 @@ export function AccessControlList(): ReactElement {
         },
         {
           onSuccess: () => {
-            toast({
+            notify({
               title: 'Save role success',
-              status: 'success',
-              duration: 9000,
-              isClosable: true,
-              position: 'top'
+              status: 'success'
             });
           }
         }

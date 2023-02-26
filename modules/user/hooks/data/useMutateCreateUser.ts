@@ -1,5 +1,4 @@
 import { useMutation } from 'react-query';
-import { useToast } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { UserApiClient } from '@modules/user/services/user-api-client';
 import { userActions } from '@modules/user/store/user.slice';
@@ -8,30 +7,25 @@ import {
   useErrorHandler
 } from '@modules/error-handling/useErrorHandler';
 import { ClientErrorCode } from '@modules/error-handling/client-code';
+import { useNotify } from '@modules/shared/hooks/useNotify.hook';
 
 export function useMutateCreateUser() {
   const dispatch = useDispatch();
-  const toast = useToast();
+  const notify = useNotify();
 
   function handleMutateCreateUserError({ clientCode, message }: AppError) {
     if (clientCode === ClientErrorCode.USER_EMAIL_EXISTED) {
-      return toast({
+      return notify({
         title: 'Email existed',
         status: 'error',
-        duration: 9000,
-        isClosable: true,
-        position: 'top',
         description: message
       });
     }
 
     if (clientCode === ClientErrorCode.NOT_FOUND_USER) {
-      return toast({
+      return notify({
         title: 'This user is not ready to become member',
         status: 'error',
-        duration: 9000,
-        isClosable: true,
-        position: 'top',
         description: message
       });
     }
@@ -45,12 +39,9 @@ export function useMutateCreateUser() {
     mutationKey: 'MUTATION_CREATE_USER',
     mutationFn: UserApiClient.createUser,
     onSuccess() {
-      toast({
+      notify({
         title: 'Create user successfully',
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-        position: 'top'
+        status: 'success'
       });
 
       dispatch(userActions.setIsSubmitted(true));

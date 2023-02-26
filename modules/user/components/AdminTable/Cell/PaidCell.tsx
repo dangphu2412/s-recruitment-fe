@@ -3,23 +3,23 @@ import { CellProps } from 'react-table';
 import { UserManagementView } from '@modules/user/models/user.type';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faPlusCircle,
-  faMinusCircle,
   faCheck,
-  faClose
+  faClose,
+  faMinusCircle,
+  faPlusCircle
 } from '@fortawesome/free-solid-svg-icons';
 import {
   Popover,
-  PopoverTrigger,
-  PopoverContent,
-  useDisclosure,
   PopoverBody,
-  useToast
+  PopoverContent,
+  PopoverTrigger,
+  useDisclosure
 } from '@chakra-ui/react';
 import classNames from 'classnames';
 import { useMutateUpdatePaidMoney } from '@modules/user/hooks/data/useMutateUpdatePaidMoney';
 import { OperationFee } from '@modules/monthly-money/types';
 import classes from './Cell.module.scss';
+import { useNotify } from '@modules/shared/hooks/useNotify.hook';
 
 export function PaidCell({
   row
@@ -31,7 +31,7 @@ export function PaidCell({
 
   const [currentPaid, setCurrentPaid] = useState(paidMoney);
 
-  const showToast = useToast();
+  const notify = useNotify();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { mutate: updatePaidMoney } = useMutateUpdatePaidMoney();
 
@@ -41,7 +41,7 @@ export function PaidCell({
       (monthRange as number) * (amountPerChange as number) < newPaid;
 
     if (isExceedMaxLimit) {
-      showToast({
+      notify({
         title:
           'You can not increase more paid money. It has exceed the max limit'
       });
@@ -76,13 +76,13 @@ export function PaidCell({
       },
       {
         onSuccess: () => {
-          showToast({
+          notify({
             title: `Update paid money of user: ${row.original.username} success`,
             status: 'success'
           });
         },
         onError: () => {
-          showToast({
+          notify({
             title: `Update paid money of user: ${row.original.username} failed`,
             status: 'error'
           });

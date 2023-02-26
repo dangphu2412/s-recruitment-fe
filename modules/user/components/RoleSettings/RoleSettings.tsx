@@ -22,12 +22,10 @@ export function RoleSettings(): ReactElement {
         nodeR < right && nodeL > left && nodeT > top && nodeB < bottom;
 
       if (isInsideBox) {
-        alert('Adding roles');
         addRole(roleId);
         return;
       }
 
-      alert('Removing roles');
       removeRole(roleId);
     };
   }

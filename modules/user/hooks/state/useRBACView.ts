@@ -1,15 +1,15 @@
 import { ControlList, Right, Role } from '@modules/user/models/rbac.types';
 import { useEffect, useState } from 'react';
 
-type AccessControlState = Record<
+type AccessControlView = Record<
   string,
   Role & {
     permissions: Record<string, Right>;
   }
 >;
 
-function buildState(rbac: ControlList): AccessControlState {
-  const state: AccessControlState = {};
+function buildState(rbac: ControlList): AccessControlView {
+  const state: AccessControlView = {};
 
   rbac.access.forEach(({ rights, ...role }) => {
     state[role.id] = {
@@ -24,8 +24,8 @@ function buildState(rbac: ControlList): AccessControlState {
   return state;
 }
 
-export function useRBACState(rbac: ControlList | undefined) {
-  const [rbacState, setRbacState] = useState<AccessControlState>(
+export function useRBACView(rbac: ControlList | undefined) {
+  const [rbacState, setRbacState] = useState<AccessControlView>(
     rbac ? buildState(rbac) : {}
   );
 
