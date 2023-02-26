@@ -7,5 +7,5 @@ export function useQueryControlList() {
     queryFn: () => AccessControlApiClient.get()
   });
 
-  return { data, isLoading, isSuccess };
+  return { allRoles: data, isLoading, isSuccess };
 }

@@ -23,6 +23,8 @@ export type UserManagementView = {
   roles: Role[];
 };
 
+export type UserRolesView = Pick<Partial<UserManagementView>, 'roles'>;
+
 export type CreateUsersDto = {
   email: string;
   fullName: string;
@@ -31,6 +33,11 @@ export type CreateUsersDto = {
   monthlyConfigId?: string;
   attachment?: File;
   processSheetName?: string;
+};
+
+export type PatchUserRolesPayload = {
+  userId: string;
+  roleIds: string[];
 };
 
 export type ExtractNewEmailsDto = {

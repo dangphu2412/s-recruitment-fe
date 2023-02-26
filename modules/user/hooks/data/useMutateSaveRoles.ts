@@ -9,5 +9,5 @@ export function useMutateSaveRoles() {
     mutationKey: 'MUTATION_SAVE_ROLES'
   });
 
-  return { mutate, isLoading };
+  return { saveRoles: mutate, isLoading };
 }

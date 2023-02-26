@@ -3,8 +3,10 @@ import { ApiClient } from '@modules/shared/services';
 import {
   CreateUsersDto,
   ExtractNewEmailsDto,
+  PatchUserRolesPayload,
   User,
-  UserManagementView
+  UserManagementView,
+  UserRolesView
 } from '../models/user.type';
 import FormData from 'form-data';
 import { CreateUserType } from '@modules/user/constants/admin-management.constants';
@@ -20,6 +22,18 @@ export const UserApiClient = {
         ...params.pagination
       }
     });
+  },
+  getUserRoles(userId: string): Promise<UserRolesView> {
+    return ApiClient.get<UserRolesView, unknown>(`/users/${userId}/roles`);
+  },
+  updateUserRoles({ userId, roleIds }: PatchUserRolesPayload): Promise<void> {
+    return ApiClient.patch<void, PatchUserRolesPayload>(
+      `/users/${userId}/roles`,
+      {
+        userId,
+        roleIds
+      }
+    );
   },
   toggleActive(userId: string): Promise<void> {
     return ApiClient.patch<void, unknown>(`/users/${userId}/active`);

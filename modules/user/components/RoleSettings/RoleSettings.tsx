@@ -1,44 +1,81 @@
-import React, { ReactElement } from 'react';
-import { useQueryControlList } from '@modules/user/hooks/data/useQueryControlList';
-import {
-  Box,
-  Grid,
-  GridItem,
-  Input,
-  List,
-  ListItem,
-  Button
-} from '@chakra-ui/react';
+import React, { ReactElement, useRef } from 'react';
+import { Box, Grid, GridItem, List } from '@chakra-ui/react';
+import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
+import { useRoleView } from '@modules/user/hooks/state/useRoleView';
 
 export function RoleSettings(): ReactElement {
-  const { data } = useQueryControlList();
+  const handleBarRef = useRef<HTMLDivElement>(null);
+  const { roleViews, selectionViews, addRole, removeRole } = useRoleView();
+
+  function createStopDragHandler(roleId: string) {
+    return (e: DraggableEvent, data: DraggableData) => {
+      const { right, left, top, bottom } =
+        handleBarRef.current!.getBoundingClientRect();
+      const {
+        right: nodeR,
+        left: nodeL,
+        top: nodeT,
+        bottom: nodeB
+      } = data.node.getBoundingClientRect();
+
+      const isInsideBox =
+        nodeR < right && nodeL > left && nodeT > top && nodeB < bottom;
+
+      if (isInsideBox) {
+        alert('Adding roles');
+        addRole(roleId);
+        return;
+      }
+
+      alert('Removing roles');
+      removeRole(roleId);
+    };
+  }
 
   return (
     <>
       <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-        <GridItem colSpan={4} w="100%" h="10">
-          <Button
-            w="50px"
-            cursor={'pointer'}
-            padding={'1rem'}
-            border={'1px'}
-            draggable
-          >
-            Drag me
-          </Button>
+        <GridItem colSpan={4} w="100%" ref={handleBarRef}>
+          <Box border={'1px'} height="400px">
+            {roleViews.map(view => {
+              return (
+                <Draggable
+                  key={view.name}
+                  onStop={createStopDragHandler(view.id)}
+                >
+                  <Box
+                    cursor={'pointer'}
+                    padding={'1rem'}
+                    border={'1px'}
+                    width="180px"
+                    height="40px"
+                  >
+                    {view.name}
+                  </Box>
+                </Draggable>
+              );
+            })}
+          </Box>
         </GridItem>
 
         <GridItem colSpan={1} w="100%" h="10">
-          <Input placeholder="Search by username" />
-
           <List>
-            {data?.access?.map(item => {
+            {selectionViews.map(item => {
               return (
-                <ListItem draggable>
-                  <Box cursor={'pointer'} padding={'1rem'} border={'1px'}>
+                <Draggable
+                  key={item.name}
+                  onStop={createStopDragHandler(item.id)}
+                >
+                  <Box
+                    cursor={'pointer'}
+                    padding={'1rem'}
+                    border={'1px'}
+                    width="180px"
+                    height="40px"
+                  >
                     {item.name}
                   </Box>
-                </ListItem>
+                </Draggable>
               );
             })}
           </List>

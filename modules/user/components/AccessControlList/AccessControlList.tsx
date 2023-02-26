@@ -21,9 +21,10 @@ import { ContentHeader } from '@modules/shared/components/Header/ContentHeader/C
 
 export function AccessControlList(): ReactElement {
   const toast = useToast();
-  const { data } = useQueryControlList();
-  const { mutate: saveRoles, isLoading } = useMutateSaveRoles();
-  const { rbacState, togglePermission, getPermissionMap } = useRBACState(data);
+  const { allRoles } = useQueryControlList();
+  const { saveRoles, isLoading } = useMutateSaveRoles();
+  const { rbacState, togglePermission, getPermissionMap } =
+    useRBACState(allRoles);
 
   function createSaveRoleHandler(
     roleId: string
@@ -61,7 +62,7 @@ export function AccessControlList(): ReactElement {
     return () => togglePermission(roleId, permissionId);
   }
 
-  if (!data) {
+  if (!allRoles) {
     return <></>;
   }
 
