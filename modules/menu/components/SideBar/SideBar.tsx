@@ -31,21 +31,21 @@ export function SideBar({
   isHovering,
   ...rest
 }: Props): React.ReactElement {
-  const router = useRouter();
+  const { push } = useRouter();
+  const { menus } = useQueryMenu();
 
-  const { data: menu } = useQueryMenu();
   const sidebarMenuItems = React.useMemo(
-    () => convertToSidebarMenu(menu),
-    [menu]
+    () => convertToSidebarMenu(menus),
+    [menus]
   );
 
   const handleNavigate = React.useCallback(
     (item: SidebarMenuItem) => {
       if (item.accessLink && isEmpty(item.subMenus)) {
-        router.push(item.accessLink);
+        push(item.accessLink);
       }
     },
-    [router]
+    [push]
   );
 
   return (
