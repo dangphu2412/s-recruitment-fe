@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useQueryUserRoles } from '@modules/user/hooks/data/useQueryUserRoles';
-import { useRouter } from 'next/router';
-import { normalizeParam } from '@modules/shared/utils/router.utils';
 import { useMutateSaveUserRoles } from '@modules/user/hooks/data/useMutateSaveUserRoles';
 import { useQueryControlList } from '@modules/user/hooks/data/useQueryControlList';
 import { useNotify } from '@modules/shared/hooks/useNotify.hook';
@@ -11,16 +9,15 @@ type RoleView = {
   id: string;
 };
 
-export function useRoleView() {
+type RoleViewProps = {
+  userId: string;
+};
+
+export function useRoleView({ userId }: RoleViewProps) {
   const [roleViews, setRoleViews] = useState<RoleView[]>([]);
   const [selectionViews, setSelectionViews] = useState<RoleView[]>([]);
   const [, setOwningRoles] = useState<string[]>([]);
   const notify = useNotify();
-
-  const {
-    query: { userId: userIdPathParam }
-  } = useRouter();
-  const userId = normalizeParam(userIdPathParam);
 
   const { userRoles } = useQueryUserRoles(userId);
   const { allRoles } = useQueryControlList();

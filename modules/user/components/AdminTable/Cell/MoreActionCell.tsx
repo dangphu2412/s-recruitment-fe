@@ -24,7 +24,7 @@ export function MoreActionCell({
     {
       key: `UPDATE_ROLE_KEY${row.original.id}`,
       content: 'Update role',
-      onClick: () => push(`/users/settings?${row.original.id}`)
+      onClick: () => push(`/users/${row.original.id}/role-settings`)
     }
   ];
 

@@ -10,12 +10,10 @@ export default function UserProfile(): ReactElement {
   } = useRouter();
 
   return (
-    <>
-      <ContentLayout>
-        <ContentHeader main={'Profile'} brief={'User information'} />
+    <ContentLayout>
+      <ContentHeader main={'Profile'} brief={'User information'} />
 
-        <Link href={`/users/${userId}/role-settings`}>Go to role settings</Link>
-      </ContentLayout>
-    </>
+      <Link href={`/users/${userId}/role-settings`}>Go to role settings</Link>
+    </ContentLayout>
   );
 }

@@ -7,6 +7,7 @@ import { StatusCell } from '../../components/AdminTable/Cell/StatusCell';
 import { UsernameCell } from '../../components/AdminTable/Cell/UsernameCell';
 import { MoreActionCell } from '../../components/AdminTable/Cell/MoreActionCell';
 import { useRouter } from 'next/router';
+import { RoleCell } from '@modules/user/components/AdminTable/Cell/RoleCell';
 
 export function useAdminColumns(): Column<UserManagementView>[] {
   const { push } = useRouter();
@@ -32,7 +33,8 @@ export function useAdminColumns(): Column<UserManagementView>[] {
       },
       {
         Header: 'Roles',
-        accessor: row => row.roles.map(role => role.name)
+        accessor: 'roles',
+        Cell: RoleCell
       },
       {
         Header: 'Status',
