@@ -7,6 +7,7 @@ import {
   useFormContext,
   useWatch
 } from 'react-hook-form';
+import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 
 function useFormCtx() {
   return useFormContext();
@@ -48,18 +49,31 @@ function Other() {
 }
 
 const HookFormPage: NextPageWithLayout = () => {
-  const form = useForm();
-
+  // const form = useForm();
+  //
+  // return (
+  //   <FormProvider {...form}>
+  //     <UserName />
+  //
+  //     <br />
+  //
+  //     <FullName />
+  //
+  //     <Other />
+  //   </FormProvider>
+  // );
   return (
-    <FormProvider {...form}>
-      <UserName />
+    <Menu>
+      <MenuList>
+        <MenuItem>Download</MenuItem>
+        <MenuItem>Create a Copy</MenuItem>
+        <MenuItem>Mark as Draft</MenuItem>
+        <MenuItem>Delete</MenuItem>
+        <MenuItem>Attend a Workshop</MenuItem>
+      </MenuList>
 
-      <br />
-
-      <FullName />
-
-      <Other />
-    </FormProvider>
+      <MenuButton as={Button}>Actions</MenuButton>
+    </Menu>
   );
 };
 
