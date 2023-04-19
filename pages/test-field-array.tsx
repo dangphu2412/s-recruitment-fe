@@ -10,8 +10,18 @@ type X = {
   }[];
 };
 
+function SuperComponent({ item }: { item: X['fields'][0] }) {
+  console.log('Render at', item.type);
+  return (
+    <div>
+      <label>Field: {item.type}</label>
+    </div>
+  );
+}
+
 const HookFormPage: NextPageWithLayout = () => {
-  const { register, control, setValue } = useForm<X>({
+  console.log('Render');
+  const { register, control, setValue, getValues } = useForm<X>({
     defaultValues: {
       username: '',
       fields: [
@@ -21,29 +31,37 @@ const HookFormPage: NextPageWithLayout = () => {
       ]
     }
   });
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, replace } = useFieldArray({
     control,
     name: 'fields'
   });
-  console.log(fields);
 
   return (
     <>
       <label>Username Name</label>
       <input {...register('username')} />
+      <input type="number" max={10} maxLength={2} />
 
       {fields.map((item, index) => {
         return (
-          <div key={item.id}>
-            <div>
-              Fields
-              {item.type}
+          <div key={item.id} className="text-red flex flex-col gap-4">
+            At: {index}
+            <SuperComponent key={item.id} item={item} />
+            <div className="text-red flex flex-row gap-4">
               <button
+                className="border border-black rounded w-44"
                 onClick={() =>
                   setValue(`fields.${index}.type`, 'Updated' + Math.random())
                 }
               >
                 Update type
+              </button>
+
+              <button
+                className="border border-black rounded w-44"
+                onClick={() => remove(index)}
+              >
+                Remove
               </button>
             </div>
           </div>
@@ -56,6 +74,22 @@ const HookFormPage: NextPageWithLayout = () => {
         }}
       >
         Add
+      </button>
+
+      <button
+        className="border border-black rounded w-44"
+        onClick={() => {
+          replace(
+            fields.map(field => {
+              return {
+                ...field,
+                type: 'Con chim non'
+              };
+            })
+          );
+        }}
+      >
+        Replace
       </button>
     </>
   );
