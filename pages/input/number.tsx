@@ -6,22 +6,40 @@ import { NumberInputField } from '@modules/ui-system/components/form/NumberInput
 import { NumberDecrementStepper } from '@modules/ui-system/components/form/NumberInput/Stepper/NumberDecrementStepper';
 import { NumberIncrementStepper } from '@modules/ui-system/components/form/NumberInput/Stepper/NumberIncrementStepper';
 import { useCounter } from 'react-use';
+import { useController, useForm } from 'react-hook-form';
 
 const HookFormPage: NextPageWithLayout = () => {
   const [v, action] = useCounter(0);
+  const { register, watch, control, handleSubmit } = useForm();
+  const inputController = useController({
+    control,
+    name: 'inputC'
+  });
+
+  const inputValue = watch('inputC');
+  console.log(inputValue);
 
   return (
     <div className="flex flex-col gap-6">
       <NumberInputControl
         className="flex gap-4"
+        defaultValue={0}
         max={99999}
         min={-10}
-        defaultValue={0}
+        onChange={inputController.field.onChange}
       >
         <NumberDecrementStepper />
         <NumberInputField />
         <NumberIncrementStepper />
       </NumberInputControl>
+
+      <button
+        onClick={handleSubmit(data => {
+          console.log(data);
+        })}
+      >
+        Submit
+      </button>
 
       <NumberInputControl
         className="flex gap-4"
@@ -37,16 +55,7 @@ const HookFormPage: NextPageWithLayout = () => {
 
       <hr />
 
-      <input
-        type="number"
-        value={v}
-        onChange={e => {
-          console.log(e.target.value);
-          console.log(e);
-          action.set(e.target.value);
-          console.log(e);
-        }}
-      />
+      <input type="number" {...register('input')} />
     </div>
   );
 };

@@ -9,6 +9,6 @@ export const NumberInputField = forwardRef<HTMLInputElement, Props>(
     const { getInputProps } = useNumberInputProvider();
     const inputProps = getInputProps(props);
 
-    return <input type="number" {...inputProps} />;
+    return <input type="number" {...inputProps} ref={ref} />;
   }
 );
