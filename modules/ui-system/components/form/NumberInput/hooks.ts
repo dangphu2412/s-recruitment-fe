@@ -3,7 +3,7 @@ import {
   NumberControlProps,
   NumberProviderProps
 } from '@modules/ui-system/components/form/NumberInput/types';
-import { useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import { callAllHandlers } from '@modules/ui-system/components/form/NumberInput/utilts';
 
 const SPECIAL_CHAR_IGNORE_MINUS = new RegExp(/[^\w.-]+/g);
@@ -112,7 +112,8 @@ export function useNumberControl(
     min = Number.MIN_SAFE_INTEGER,
     max = Number.MAX_SAFE_INTEGER,
     step = 1,
-    precision
+    precision,
+    value: valueProp
   } = props;
 
   const { value, update, increment, decrement, clamp } = useCounter({
@@ -123,15 +124,17 @@ export function useNumberControl(
     defaultValue
   });
 
+  const actualValue = typeof valueProp !== 'undefined' ? valueProp : value;
+
   const onChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       update(e.target.value);
     },
     [update]
   );
 
   const onBlur = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const clamped = clamp(parse(e.target.value));
 
       update(clamped);
@@ -148,9 +151,19 @@ export function useNumberControl(
       precision,
       onChange: callAllHandlers(onChange, props.onChange),
       onBlur: callAllHandlers(onBlur, props.onBlur),
-      value: value
+      value: actualValue
     };
-  }, [defaultValue, max, min, onBlur, onChange, precision, props, step, value]);
+  }, [
+    defaultValue,
+    max,
+    min,
+    onBlur,
+    onChange,
+    precision,
+    props,
+    step,
+    actualValue
+  ]);
 
   const getIncrementProps = useCallback(() => {
     return {
@@ -167,7 +180,7 @@ export function useNumberControl(
   }, [decrement]);
 
   return {
-    value: value,
+    value: actualValue,
     getInputProps,
     getIncrementProps,
     getDecrementProps

@@ -5,33 +5,46 @@ import { NumberInputControl } from '@modules/ui-system/components/form/NumberInp
 import { NumberInputField } from '@modules/ui-system/components/form/NumberInput/Input/NumerInputField';
 import { NumberDecrementStepper } from '@modules/ui-system/components/form/NumberInput/Stepper/NumberDecrementStepper';
 import { NumberIncrementStepper } from '@modules/ui-system/components/form/NumberInput/Stepper/NumberIncrementStepper';
-import { useCounter } from 'react-use';
-import { useController, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 const HookFormPage: NextPageWithLayout = () => {
-  const [v, action] = useCounter(0);
-  const { register, watch, control, handleSubmit } = useForm();
-  const inputController = useController({
-    control,
-    name: 'inputC'
-  });
+  const [value, setValue] = useState('');
+  const { control, handleSubmit } = useForm();
 
-  const inputValue = watch('inputC');
-  console.log(inputValue);
+  function handleChange(e) {
+    setValue(e.target.value);
+  }
+
+  const handleBlur = e => {
+    const inputValue = e.target.value;
+    console.log('Blur', inputValue);
+    let sanitizedValue = inputValue.replace(/[^0-9]/g, ''); // remove non-digit characters
+    if (inputValue.startsWith('-')) {
+      sanitizedValue = '-' + sanitizedValue; // add back the minus sign if it was there
+    }
+    setValue(sanitizedValue);
+  };
 
   return (
     <div className="flex flex-col gap-6">
-      <NumberInputControl
-        className="flex gap-4"
-        defaultValue={0}
-        max={99999}
-        min={-10}
-        onChange={inputController.field.onChange}
-      >
-        <NumberDecrementStepper />
-        <NumberInputField />
-        <NumberIncrementStepper />
-      </NumberInputControl>
+      <Controller
+        control={control}
+        name="inputC"
+        render={({ field }) => {
+          return (
+            <NumberInputControl
+              className="flex gap-4"
+              defaultValue={0}
+              max={99999}
+              min={-10}
+              onChange={field.onChange}
+            >
+              <NumberInputField />
+            </NumberInputControl>
+          );
+        }}
+      />
 
       <button
         onClick={handleSubmit(data => {
@@ -55,7 +68,14 @@ const HookFormPage: NextPageWithLayout = () => {
 
       <hr />
 
-      <input type="number" {...register('input')} />
+      <label>Text</label>
+
+      <input
+        type="number"
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
     </div>
   );
 };
