@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { NoLayout } from '@modules/shared/components/NoLayout';
 
-const EmployeeProfile = function EmployeeProfile({ name }: { name: string }) {
+const EmployeeProfile = memo(function EmployeeProfile({
+  name
+}: {
+  name: string;
+}) {
   return (
     <>
       <p>Name:{name}</p>
       <p>Email: {'email'}</p>
     </>
   );
-};
+});
+
 function EmployeeRegForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

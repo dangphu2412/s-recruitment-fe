@@ -24,6 +24,7 @@
     "date-fns": "^2.29.3",
     "framer-motion": "^6",
     "iterare": "^1.2.1",
+    "jotai": "^2.0.4",
     "lodash.isempty": "^4.4.0",
     "lodash.uniq": "^4.5.0",
     "next": "12.2.0",
