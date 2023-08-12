@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
-import { userReducer } from '@modules/user/store/user.slice';
+import { userReducer } from 'src/user/store/user.slice';
 
 const sagaMiddleware = createSagaMiddleware();
 
