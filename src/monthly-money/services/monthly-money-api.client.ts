@@ -1,17 +1,24 @@
-import { ApiClient } from 'src/system/app/internal/services';
 import {
   MonthlyMoneyConfig,
   PatchUserPaidMoneyRequest
 } from 'src/monthly-money/clients/monthly-money.types';
+import {
+  authorizedHttpClient,
+  httpClient
+} from '../../system/infrastructure/factories/http-client.factories';
 
 export const monthlyMoneyApiClient = {
   getAllConfigs(): Promise<MonthlyMoneyConfig[]> {
-    return ApiClient.get<MonthlyMoneyConfig[]>('/monthly-money-configs');
+    return httpClient.request({
+      method: 'get',
+      url: '/monthly-money-configs'
+    });
   },
   updatePaidMoney(paidMoneyRequest: PatchUserPaidMoneyRequest): Promise<void> {
-    return ApiClient.patch<void, PatchUserPaidMoneyRequest>(
-      `/users/${paidMoneyRequest.userId}/monthly-moneys`,
-      paidMoneyRequest
-    );
+    return authorizedHttpClient.request({
+      method: 'patch',
+      url: `/users/${paidMoneyRequest.userId}/monthly-moneys`,
+      data: paidMoneyRequest
+    });
   }
 };

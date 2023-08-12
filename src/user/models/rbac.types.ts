@@ -18,7 +18,7 @@ export type ControlList = {
   })[];
 };
 
-export type UpdateRoleDto = {
+export type UpdateRolePayload = {
   id: string;
   rights: Array<string>;
 };

@@ -1,21 +1,29 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { TokenManager } from 'src/system/app/internal/services/token-manager';
+import { tokenManager } from 'src/system/app/internal/services/token-manager';
 import { NoLayout } from 'src/system/app/internal/components/NoLayout';
 import { authApiClient } from 'src/system/app/internal/services/auth-api-client';
-import { NextPageWithLayout } from './_app';
+import { persistentStorage } from '../src/system/app/internal/services/persistent.storage';
+import { NextPageWithLayout } from '../src/system/infrastructure/next.types';
 
 const LogOutPage: NextPageWithLayout = () => {
-  const router = useRouter();
-  React.useEffect(() => {
-    async function doLogout() {
-      await authApiClient.logout();
-      TokenManager.clean();
-      await router.replace('/login');
-    }
+  const { replace } = useRouter();
 
-    doLogout();
-  }, [router]);
+  useEffect(
+    function logOutRunner() {
+      async function doLogout() {
+        const refreshToken = persistentStorage.getRefreshToken();
+
+        refreshToken && (await authApiClient.logout(refreshToken));
+        tokenManager.clean();
+
+        await replace('/login');
+      }
+
+      doLogout();
+    },
+    [replace]
+  );
 
   return <></>;
 };

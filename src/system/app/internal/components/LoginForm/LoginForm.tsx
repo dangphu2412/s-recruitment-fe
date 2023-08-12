@@ -36,7 +36,7 @@ export function LoginForm(): ReactElement {
 
     mutate(loginCredentials, {
       onSuccess: credentials => {
-        persistentStorage.setAccessToken(credentials.tokens[0].value);
+        persistentStorage.saveTokens(credentials);
         push('/');
       },
       onError: () => {

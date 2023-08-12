@@ -1,8 +1,4 @@
-import { ApiClient } from 'src/system/app/internal/services/index';
-import {
-  BrowserStorage,
-  registerBrowserStorage
-} from 'src/system/app/internal/services/index';
+import { httpClient } from '../../../infrastructure/factories/http-client.factories';
 
 export interface LoginRequest {
   username: string;
@@ -19,22 +15,24 @@ export interface RenewTokensRequest {
 
 export const authApiClient = {
   login(body: LoginRequest) {
-    return ApiClient.post<Tokens, LoginRequest>('/auth/login', body);
-  },
-  renewTokens() {
-    registerBrowserStorage();
-    const refreshToken = BrowserStorage.get('refreshToken') ?? '';
-    return ApiClient.post<Tokens, RenewTokensRequest>('/auth/tokens/renew', {
-      refreshToken
+    return httpClient.request<Tokens>({
+      method: 'post',
+      data: body,
+      url: '/auth/login'
     });
   },
-  logout() {
-    registerBrowserStorage();
-    const refreshToken = BrowserStorage.get('refreshToken') ?? '';
-    return ApiClient.delete<void, RenewTokensRequest>('/auth/logout', {
-      data: {
-        refreshToken
-      }
+  renewTokens(refreshToken: string) {
+    return httpClient.request<Tokens>({
+      method: 'post',
+      data: { refreshToken } as RenewTokensRequest,
+      url: '/auth/login'
+    });
+  },
+  logout(refreshToken: string) {
+    return httpClient.request<Tokens>({
+      method: 'delete',
+      data: { refreshToken } as RenewTokensRequest,
+      url: '/auth/logout'
     });
   },
   registerByCredentials(payload: LoginRequest): Promise<Tokens> {

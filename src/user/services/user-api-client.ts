@@ -1,5 +1,4 @@
 import { GetManyParams, Page } from 'src/system/domain/clients/list.api';
-import { ApiClient } from 'src/system/app/internal/services';
 import {
   CreateUsersDto,
   ExtractNewEmailsDto,
@@ -20,7 +19,9 @@ export const UserApiClient = {
     });
   },
   getMany(params: GetManyParams): Promise<Page<UserManagementView>> {
-    return ApiClient.get<Page<UserManagementView>, unknown>('/users', {
+    return authorizedHttpClient.request<Page<UserManagementView>>({
+      url: '/users',
+      method: 'get',
       params: {
         ...params.filters,
         ...params.pagination
@@ -28,19 +29,29 @@ export const UserApiClient = {
     });
   },
   getUserRoles(userId: string): Promise<UserRolesView> {
-    return ApiClient.get<UserRolesView, unknown>(`/users/${userId}/roles`);
+    return authorizedHttpClient.request<UserRolesView>({
+      url: `/users/${userId}/roles`,
+      method: 'get'
+    });
   },
-  updateUserRoles({ userId, roleIds }: PatchUserRolesPayload): Promise<void> {
-    return ApiClient.patch<void, PatchUserRolesPayload>(
-      `/users/${userId}/roles`,
-      {
+  async updateUserRoles({
+    userId,
+    roleIds
+  }: PatchUserRolesPayload): Promise<void> {
+    await authorizedHttpClient.request({
+      url: `/users/${userId}/roles`,
+      method: 'patch',
+      data: {
         userId,
         roleIds
       }
-    );
+    });
   },
-  toggleActive(userId: string): Promise<void> {
-    return ApiClient.patch<void, unknown>(`/users/${userId}/active`);
+  async toggleActive(userId: string): Promise<void> {
+    await authorizedHttpClient.request({
+      url: `/users/${userId}/active`,
+      method: 'patch'
+    });
   },
   createUser(createUserDto: CreateUsersDto): Promise<void> {
     if (
@@ -54,23 +65,29 @@ export const UserApiClient = {
       attachmentForm.append('fileType', createUserDto.attachment.type);
       attachmentForm.append('processSheetName', createUserDto.processSheetName);
 
-      return ApiClient.post<void, FormData>('/users/upload', attachmentForm, {
+      return authorizedHttpClient.request({
+        method: 'post',
+        url: '/users/upload',
+        data: attachmentForm,
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
     }
 
-    return ApiClient.post<void, CreateUsersDto>('/users', createUserDto);
+    return authorizedHttpClient.request({
+      method: 'post',
+      url: '/users',
+      data: createUserDto
+    });
   },
   extractNewEmails(
     extractNewEmailsDto: ExtractNewEmailsDto
   ): Promise<string[]> {
-    return ApiClient.get<string[], ExtractNewEmailsDto>(
-      '/users/extract-new-values',
-      {
-        params: { value: extractNewEmailsDto.value.join(',') }
-      }
-    );
+    return authorizedHttpClient.request<string[]>({
+      method: 'get',
+      params: { value: extractNewEmailsDto.value.join(',') },
+      url: '/users/extract-new-values'
+    });
   }
 };

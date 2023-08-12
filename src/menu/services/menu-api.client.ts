@@ -1,8 +1,11 @@
-import { ApiClient } from 'src/system/app/internal/services';
 import { MenuItem } from '../clients/menu.api';
+import { authorizedHttpClient } from '../../system/infrastructure/factories/http-client.factories';
 
-export const MenuApiClient = {
+export const menuApiClient = {
   getMenus(): Promise<MenuItem[]> {
-    return ApiClient.get<MenuItem[], void>('/menus');
+    return authorizedHttpClient.request<MenuItem[]>({
+      method: 'get',
+      url: '/menus'
+    });
   }
 };

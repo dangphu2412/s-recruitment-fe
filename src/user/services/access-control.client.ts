@@ -1,11 +1,18 @@
-import { ApiClient } from 'src/system/app/internal/services';
-import { ControlList, UpdateRoleDto } from 'src/user/models/rbac.types';
+import { ControlList, UpdateRolePayload } from 'src/user/models/rbac.types';
+import { authorizedHttpClient } from '../../system/infrastructure/factories/http-client.factories';
 
 export const AccessControlApiClient = {
   get(): Promise<ControlList> {
-    return ApiClient.get<ControlList, unknown>('/roles');
+    return authorizedHttpClient.request<ControlList>({
+      method: 'get',
+      url: '/roles'
+    });
   },
-  async update(dto: UpdateRoleDto): Promise<void> {
-    await ApiClient.put<void, UpdateRoleDto>(`/roles/${dto.id}`, dto);
+  async update(payload: UpdateRolePayload): Promise<void> {
+    await authorizedHttpClient.request<ControlList>({
+      method: 'put',
+      url: `/roles/${payload.id}`,
+      data: payload
+    });
   }
 };

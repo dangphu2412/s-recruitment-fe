@@ -1,27 +1,25 @@
 import { authApiClient, Tokens } from './auth-api-client';
-import { BrowserStorage, registerBrowserStorage } from './browser-storage';
 import { ITokenManager } from './client/token-manager.interface';
+import { persistentStorage } from './persistent.storage';
 
 let renewHandler: Promise<Tokens> | undefined;
 
-export const TokenManager: ITokenManager = {
+export const tokenManager: ITokenManager = {
   clean(): void {
-    registerBrowserStorage();
-    BrowserStorage.remove('accessToken');
-    BrowserStorage.remove('refreshToken');
+    persistentStorage.cleanStorage();
   },
   async renew(): Promise<void> {
     if (!renewHandler) {
-      renewHandler = authApiClient.renewTokens();
+      const refreshToken = persistentStorage.getRefreshToken();
+
+      if (!refreshToken) return;
+
+      renewHandler = authApiClient.renewTokens(refreshToken);
     }
 
     const tokens: Tokens = await renewHandler;
 
-    registerBrowserStorage();
-
-    tokens.tokens.forEach(token => {
-      BrowserStorage.set(token.name, token.value);
-    });
+    persistentStorage.saveTokens(tokens);
 
     if (renewHandler) {
       renewHandler = undefined;
