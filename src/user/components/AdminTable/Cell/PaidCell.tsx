@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import { useMutateUpdatePaidMoney } from 'src/user/hooks/data/useMutateUpdatePaidMoney';
 import { OperationFee } from 'src/monthly-money/types';
 import classes from './Cell.module.scss';
-import { useNotify } from 'src/shared/hooks/useNotify.hook';
+import { useNotify } from 'src/system/app/internal/hooks/useNotify';
 
 export function PaidCell({
   row

@@ -1,28 +1,19 @@
 import React from 'react';
 import Head from 'next/head';
 import { Container, Grid, GridItem, Image } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-import { LoginForm } from 'src/auth/components/Form/LoginForm/LoginForm';
-import { FullLoader } from 'src/shared/components/Loader/Full/FullLoader';
-import { useLoginMutation } from 'src/auth/hooks/useLoginMutation';
-import { NoLayout } from 'src/shared/components/NoLayout';
-import { UserIdentity } from 'src/auth/services/user-identity';
-import { NextPageWithLayout } from './_app';
+import { NextPageWithLayout } from 'src/system/infrastructure/next.types';
+import { useIsMutating } from 'react-query';
+import { FullLoader } from '../src/system/app/internal/components/Loader/Full/FullLoader';
+import { LoginForm } from '../src/system/app/internal/components/LoginForm/LoginForm';
+import { NoLayout } from '../src/system/app/internal/components/NoLayout';
 
 const LoginPage: NextPageWithLayout = () => {
-  const { isLoading, mutate: doLogin } = useLoginMutation();
-  const router = useRouter();
-
-  React.useEffect(() => {
-    if (UserIdentity.isAuthenticated()) {
-      router.push('/');
-    }
-  }, [router]);
+  const isLoading = useIsMutating('loginByCredentials') > 0;
 
   return (
     <>
       <Head>
-        <title>Login page example</title>
+        <title>Login page S-Group</title>
       </Head>
 
       <FullLoader isLoading={isLoading} />
@@ -30,7 +21,7 @@ const LoginPage: NextPageWithLayout = () => {
       <Container maxW="container.xl">
         <Grid templateColumns="repeat(2, 1fr)" height="100vh">
           <GridItem>
-            <LoginForm doLogin={doLogin} />
+            <LoginForm />
           </GridItem>
 
           <GridItem>

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { ContentLayout } from 'src/shared/components/Box';
-import { ContentHeader } from 'src/shared/components/Header';
+import { ContentLayout } from 'src/system/app/internal/components/Box';
+import { ContentHeader } from 'src/system/app/internal/components/Header';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 

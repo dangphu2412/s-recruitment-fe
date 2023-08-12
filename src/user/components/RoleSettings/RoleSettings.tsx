@@ -3,7 +3,7 @@ import { Box, Grid, GridItem, List } from '@chakra-ui/react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import { useRoleView } from 'src/user/hooks/state/useRoleView';
 import { useRouter } from 'next/router';
-import { normalizeParam } from 'src/shared/utils/router.utils';
+import { normalizeParam } from 'src/system/app/internal/utils/router.utils';
 
 export function RoleSettings(): ReactElement {
   const handleBarRef = useRef<HTMLDivElement>(null);

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useQueryUserRoles } from 'src/user/hooks/data/useQueryUserRoles';
 import { useMutateSaveUserRoles } from 'src/user/hooks/data/useMutateSaveUserRoles';
 import { useQueryControlList } from 'src/user/hooks/data/useQueryControlList';
-import { useNotify } from 'src/shared/hooks/useNotify.hook';
+import { useNotify } from 'src/system/app/internal/hooks/useNotify';
 
 type RoleView = {
   name: string;

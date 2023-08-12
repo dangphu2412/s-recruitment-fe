@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paginator } from 'src/shared/components/Pagination/Paginator';
+import { Paginator } from 'src/system/app/internal/components/Pagination/Paginator';
 import { useDispatch } from 'react-redux';
 import { userActions } from 'src/user/store/user.slice';
 

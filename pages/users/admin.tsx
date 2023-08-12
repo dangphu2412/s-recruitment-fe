@@ -4,7 +4,7 @@ import { PaginationContainer } from 'src/user/components/AdminTable/PaginationCo
 import { TableHeaderContainer } from 'src/user/components/AdminTable/TableHeader/TableHeaderContainer';
 import { AdminContainer } from 'src/user/containers/AdminContainer/AdminContainer';
 import { FilterBar } from 'src/user/components/AdminTable/FilterBar/FilterBar';
-import { FullLoader } from 'src/shared/components/Loader/Full/FullLoader';
+import { FullLoader } from 'src/system/app/internal/components/Loader/Full/FullLoader';
 import { AdminTable } from 'src/user/components/AdminTable/AdminTable';
 
 export default function AdministratorPage(): ReactElement {

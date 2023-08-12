@@ -1,9 +1,9 @@
+import { Pagination } from 'src/system/domain/clients';
 import {
   CombineSearchFilter,
-  Filter,
-  FilterKey
-} from 'src/shared/common/filter';
-import { Pagination } from 'src/shared/clients';
+  Filter
+} from '../../system/domain/clients/filter.api';
+import { FilterKey } from '../../system/domain/constants';
 
 export type AdminFilter = CombineSearchFilter<{
   joinedIn: Filter<FilterKey.RANGE>;

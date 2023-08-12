@@ -1,4 +1,4 @@
-import { ApiClient } from 'src/shared/services';
+import { ApiClient } from 'src/system/app/internal/services';
 import { ControlList, UpdateRoleDto } from 'src/user/models/rbac.types';
 
 export const AccessControlApiClient = {

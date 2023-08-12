@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { noop } from 'src/shared/utils';
-import { ContextWithDispatcher } from 'src/shared/clients';
+import { noop } from 'src/system/app/internal/utils';
+import { ContextWithDispatcher } from 'src/system/domain/clients';
 import { User } from '../../models/user.type';
 
 export type UserContextState = ContextWithDispatcher<User, User>;

@@ -15,12 +15,12 @@ import {
   Select
 } from '@chakra-ui/react';
 import { CreateUserType } from 'src/user/constants/admin-management.constants';
-import { UseDisclosureApi } from 'src/shared/clients/disclosure.api';
+import { UseDisclosureApi } from 'src/system/domain/clients/disclosure.api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { mixed, object, string } from 'yup';
 import { MonthlyMoneyConfig } from 'src/monthly-money/clients/monthly-money.types';
-import { FullLoader } from 'src/shared/components/Loader/Full/FullLoader';
+import { FullLoader } from 'src/system/app/internal/components/Loader/Full/FullLoader';
 import { read } from 'xlsx';
 
 export type CreateUserInputs = {

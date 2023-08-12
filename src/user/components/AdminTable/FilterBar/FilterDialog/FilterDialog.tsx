@@ -17,7 +17,7 @@ import {
   selectJoinedInDates
 } from 'src/user/store/user.selector';
 import { userActions } from 'src/user/store/user.slice';
-import { DatePicker } from 'src/shared/components/Input/DatePicker/DatePicker';
+import { DatePicker } from 'src/system/app/internal/components/Input/DatePicker/DatePicker';
 import { MemberType } from 'src/user/constants/admin-management.constants';
 import styles from './FilterDialog.module.scss';
 

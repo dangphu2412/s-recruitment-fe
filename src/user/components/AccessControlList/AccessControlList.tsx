@@ -15,9 +15,9 @@ import {
 import { useQueryControlList } from 'src/user/hooks/data/useQueryControlList';
 import { useRBACView } from 'src/user/hooks/state/useRBACView';
 import { useMutateSaveRoles } from 'src/user/hooks/data/useMutateSaveRoles';
-import { FullLoader } from 'src/shared/components/Loader/Full/FullLoader';
-import { ContentHeader } from 'src/shared/components/Header/ContentHeader/ContentHeader';
-import { useNotify } from 'src/shared/hooks/useNotify.hook';
+import { FullLoader } from 'src/system/app/internal/components/Loader/Full/FullLoader';
+import { ContentHeader } from 'src/system/app/internal/components/Header/ContentHeader/ContentHeader';
+import { useNotify } from 'src/system/app/internal/hooks/useNotify';
 
 export function AccessControlList(): ReactElement {
   const notify = useNotify();

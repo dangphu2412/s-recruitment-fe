@@ -12,7 +12,7 @@ import {
 import { useAdminColumns } from 'src/user/hooks/table/useAdminColumns';
 import { useTable } from 'react-table';
 import { UserManagementView } from 'src/user/models/user.type';
-import { Page } from 'src/shared/clients';
+import { Page } from 'src/system/domain/clients';
 
 type Props = {
   data: Page<UserManagementView> | undefined;

@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { AppState } from '../../../config/store';
+import { AppState } from '../../system/config/store';
 
 export const selectAdminState = (state: AppState) => state.user;
 

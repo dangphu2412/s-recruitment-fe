@@ -2,9 +2,12 @@ import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { UserApiClient } from 'src/user/services/user-api-client';
 import { userActions } from 'src/user/store/user.slice';
-import { AppError, useErrorHandler } from 'src/error-handling/useErrorHandler';
-import { ClientErrorCode } from 'src/error-handling/client-code';
-import { useNotify } from 'src/shared/hooks/useNotify.hook';
+import {
+  AppError,
+  useHandleError
+} from 'src/system/app/internal/hooks/useHandleError';
+import { ClientErrorCode } from 'src/system/domain/constants/client-code';
+import { useNotify } from 'src/system/app/internal/hooks/useNotify';
 
 export function useMutateCreateUser() {
   const dispatch = useDispatch();
@@ -28,7 +31,7 @@ export function useMutateCreateUser() {
     }
   }
 
-  const { handle } = useErrorHandler({
+  const handle = useHandleError({
     onHandleClientError: handleMutateCreateUserError
   });
 

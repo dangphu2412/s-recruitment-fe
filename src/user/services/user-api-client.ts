@@ -1,5 +1,5 @@
-import { GetManyParams, Page } from 'src/shared/clients/list.api';
-import { ApiClient } from 'src/shared/services';
+import { GetManyParams, Page } from 'src/system/domain/clients/list.api';
+import { ApiClient } from 'src/system/app/internal/services';
 import {
   CreateUsersDto,
   ExtractNewEmailsDto,
@@ -10,10 +10,14 @@ import {
 } from '../models/user.type';
 import FormData from 'form-data';
 import { CreateUserType } from 'src/user/constants/admin-management.constants';
+import { authorizedHttpClient } from '../../system/infrastructure/factories/http-client.factories';
 
 export const UserApiClient = {
   getMyProfile(): Promise<User> {
-    return ApiClient.get<User, unknown>('/users/me');
+    return authorizedHttpClient.request({
+      url: '/users/me',
+      method: 'get'
+    });
   },
   getMany(params: GetManyParams): Promise<Page<UserManagementView>> {
     return ApiClient.get<Page<UserManagementView>, unknown>('/users', {

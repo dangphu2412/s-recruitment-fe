@@ -1,4 +1,4 @@
-import { ApiClient } from 'src/shared/services';
+import { ApiClient } from 'src/system/app/internal/services';
 import { MenuItem } from '../clients/menu.api';
 
 export const MenuApiClient = {

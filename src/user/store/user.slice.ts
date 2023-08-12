@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { isNil } from 'src/shared/utils';
-import { FilterKey, FilterParam } from 'src/shared/common/filter';
-import { Pagination } from 'src/shared/clients';
-import { initialPaginationState } from 'src/shared/common/pagination/pagination.reducer';
-import { getFilterDateRange } from 'src/shared/utils/date.utils';
+import { isNil } from 'src/system/app/internal/utils';
+import { Pagination } from 'src/system/domain/clients';
+import { getFilterDateRange } from 'src/system/app/internal/utils/date.utils';
 import { AdminFilter, AdminState } from './user-store.types';
+import { initialPaginationState } from '../../system/app/internal/pagination.reducer';
+import { FilterKey } from '../../system/domain/constants';
+import { FilterParam } from '../../system/domain/clients/filter.api';
 
 function getInitialUserState(): AdminState {
   const dateRange = getFilterDateRange();

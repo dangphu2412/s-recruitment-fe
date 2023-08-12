@@ -1,10 +1,10 @@
-import { ApiClient } from 'src/shared/services';
+import { ApiClient } from 'src/system/app/internal/services';
 import {
   MonthlyMoneyConfig,
   PatchUserPaidMoneyRequest
 } from 'src/monthly-money/clients/monthly-money.types';
 
-export const MonthlyMoneyApiClient = {
+export const monthlyMoneyApiClient = {
   getAllConfigs(): Promise<MonthlyMoneyConfig[]> {
     return ApiClient.get<MonthlyMoneyConfig[]>('/monthly-money-configs');
   },
