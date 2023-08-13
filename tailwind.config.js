@@ -15,7 +15,8 @@ module.exports = {
       primary: '#cb0c9f',
       disable: colors.gray['500'],
       white: '#ffffff',
-      black: '#000000'
+      black: '#000000',
+      gray: colors.gray
     }
   },
   plugins: []

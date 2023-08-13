@@ -6,9 +6,10 @@ import { useIsMutating } from 'react-query';
 import { FullLoader } from '../src/system/app/internal/components/Loader/Full/FullLoader';
 import { LoginForm } from '../src/system/app/internal/components/LoginForm/LoginForm';
 import { NoLayout } from '../src/system/app/internal/components/NoLayout';
+import { LOGIN_KEY } from '../src/system/app/internal/hooks/useLoginMutation';
 
 const LoginPage: NextPageWithLayout = () => {
-  const isLoading = useIsMutating('loginByCredentials') > 0;
+  const isLoading = useIsMutating(LOGIN_KEY) > 0;
 
   return (
     <>

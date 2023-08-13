@@ -1,0 +1,19 @@
+.option-container {
+  @apply absolute max-h-60 w-full mt-1
+  overflow-auto rounded-md bg-white
+  text-base focus:outline-none sm:text-sm
+  shadow-lg ring-1 ring-black ring-opacity-5
+  z-50;
+
+  .option-item {
+    @apply my-2 mx-1;
+    display: flex;
+    align-items: center;
+  }
+  .option-image {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px; /* Adjust spacing as needed */
+  }
+  
+}

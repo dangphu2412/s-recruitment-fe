@@ -1,6 +1,6 @@
 import { FilterKey } from '../constants';
 
-export type DateRange<T> = {
+export type DateRange<T = string> = {
   fromDate: T;
   toDate: T;
 };
