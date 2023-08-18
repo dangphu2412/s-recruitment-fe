@@ -10,8 +10,8 @@ type ItemProps = BoxItem;
 type ComboboxProps = {
   name: string;
   items: BoxItem[];
-  value: BoxItem;
-  onChange: (value: BoxItem) => void;
+  value: string;
+  onChange: (value: string) => void;
   renderItem?: FC<ItemProps>;
   placeholder?: string;
 };

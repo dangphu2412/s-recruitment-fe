@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { isNil } from 'src/system/app/internal/utils';
 import { Pagination } from 'src/system/domain/clients';
-import { getFilterDateRange } from 'src/system/app/internal/utils/date.utils';
+import {
+  formatDate,
+  getFilterDateRange
+} from 'src/system/app/internal/utils/date.utils';
 import { AdminFilter, AdminState } from './user-store.types';
 import { initialPaginationState } from '../../system/app/internal/pagination.reducer';
 import { FilterKey } from '../../system/domain/constants';
 import { FilterParam } from '../../system/domain/clients/filter.api';
 
-function getInitialUserState(): AdminState {
+export function getInitialUserState(): AdminState {
   const dateRange = getFilterDateRange();
 
   return {
@@ -23,8 +26,8 @@ function getInitialUserState(): AdminState {
       joinedIn: {
         type: FilterKey.RANGE,
         value: {
-          fromDate: dateRange.fromDate,
-          toDate: dateRange.toDate
+          fromDate: formatDate(dateRange.fromDate),
+          toDate: formatDate(dateRange.toDate)
         }
       },
       memberType: {

@@ -1,4 +1,3 @@
-import React, { useMemo } from 'react';
 import {
   Button,
   Drawer,
@@ -15,17 +14,37 @@ import {
   GridItem,
   Input
 } from '@chakra-ui/react';
-import { UseDisclosureApi } from 'src/system/domain/clients/disclosure.api';
-import { SubmitHandler, useController, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { array, object, string } from 'yup';
+import React, { useMemo } from 'react';
+import {
+  SubmitHandler,
+  useController,
+  useFieldArray,
+  useForm
+} from 'react-hook-form';
 import { FullLoader } from 'src/system/app/internal/components/Loader/Full/FullLoader';
-import { CreateRecruitmentEventFormModal } from '../../../../../app-models/recruitment-event.model';
+import { BoxItem } from 'src/system/domain/clients/combobox.api';
+import { UseDisclosureApi } from 'src/system/domain/clients/disclosure.api';
+import { getInitialUserState } from 'src/user/store/user.slice';
+import { array, number, object, string } from 'yup';
 import { MultipleCombobox } from '../../../../../../../system/app/internal/components/Combobox/MultipleCombobox';
+import { useNotify } from '../../../../../../../system/app/internal/hooks/useNotify';
+import { useQueryUsers } from '../../../../../../../user/hooks/data/useQueryUsers';
+import { CreateRecruitmentEventPayload } from '../../../../../../domain/recruitment.usecase';
+import { CreateRecruitmentEventFormModal } from '../../../../../app-models/recruitment-event.model';
+import { useCreateRecruitmentEventMutation } from '../../../../../hooks/useCreateRecruitmentEventMutation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { useQueryClient } from 'react-query';
+import { RECRUITMENT_EVENT_QUERY_KEY } from '../../../../../hooks/useQueryRecruitmentEvents';
 
 type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
   finalFocusRef: React.RefObject<HTMLButtonElement>;
   isLoading: boolean;
+};
+const defaultScoreStandard = {
+  point: 0,
+  standard: ''
 };
 
 const validationSchema = object({
@@ -37,7 +56,13 @@ const validationSchema = object({
     fromDate: string().required('From date is required for this event'),
     toDate: string().required('To date is required for this event')
   }),
-  examiners: array().min(1, 'At least 1 examiner must be selected')
+  examiners: array().min(1, 'At least 1 examiner must be selected'),
+  scoreStandards: array(
+    object({
+      point: number().required('Need to fill point'),
+      standard: string().required('Standard is required')
+    })
+  )
 });
 
 export function AddNewEventDrawer({
@@ -56,25 +81,60 @@ export function AddNewEventDrawer({
     resolver: yupResolver(validationSchema),
     defaultValues: {
       name: '',
-      examiners: []
+      examiners: [],
+      scoreStandards: [defaultScoreStandard]
     }
   });
+  const { fields, append } = useFieldArray({
+    control,
+    name: 'scoreStandards'
+  });
+  const notify = useNotify();
+  const queryClient = useQueryClient();
+  const { createRecruitmentEvent } = useCreateRecruitmentEventMutation();
 
   const { field: examinersProps } = useController({
     name: 'examiners',
     control
   });
 
-  const examinerItems = useMemo(
-    () => [
-      { text: 'Some text', value: 'Value1' },
-      { text: 'Another tedx', value: 'aasd' }
-    ],
-    []
-  );
+  const { data } = useQueryUsers({
+    ...getInitialUserState()
+  });
 
-  const saveUser: SubmitHandler<CreateRecruitmentEventFormModal> = inputs => {
-    console.log('Log', inputs);
+  const examinerItems: BoxItem[] = useMemo(() => {
+    if (!data) return [];
+
+    return data.items.map(user => {
+      return {
+        text: user.username,
+        value: user.id
+      };
+    });
+  }, [data]);
+
+  const saveUser: SubmitHandler<
+    CreateRecruitmentEventFormModal
+  > = formInputs => {
+    const payload: CreateRecruitmentEventPayload = {
+      examinerIds: formInputs.examiners,
+      recruitmentRange: {
+        fromDate: formInputs.recruitmentRange.fromDate,
+        toDate: formInputs.recruitmentRange.toDate
+      },
+      location: formInputs.location,
+      name: formInputs.name,
+      scoringStandards: formInputs.scoreStandards
+    };
+
+    createRecruitmentEvent(payload, {
+      onSuccess: () => {
+        notify({
+          title: 'Create event success'
+        });
+        queryClient.refetchQueries(RECRUITMENT_EVENT_QUERY_KEY);
+      }
+    });
   };
 
   return (
@@ -172,6 +232,56 @@ export function AddNewEventDrawer({
               </FormControl>
             </GridItem>
           </Grid>
+
+          <Button onClick={() => append(defaultScoreStandard)}>
+            <FontAwesomeIcon icon={faPlusCircle} />
+          </Button>
+          {fields.map((field, index) => {
+            return (
+              <div key={field.id}>
+                <Grid templateColumns="repeat(6, 1fr)">
+                  <GridItem colSpan={1}>
+                    <FormControl
+                      isRequired
+                      isInvalid={!!errors.scoreStandards?.[index]?.point}
+                    >
+                      <FormLabel>Point</FormLabel>
+                      <Input
+                        placeholder={'Input your location organizing ...'}
+                        type="number"
+                        {...register(`scoreStandards.${index}.point`)}
+                      />
+
+                      {errors.scoreStandards?.[index]?.point && (
+                        <FormErrorMessage>
+                          {errors.scoreStandards?.[index]?.point?.message}
+                        </FormErrorMessage>
+                      )}
+                    </FormControl>
+                  </GridItem>
+
+                  <GridItem colSpan={5}>
+                    <FormControl
+                      isRequired
+                      isInvalid={!!errors.scoreStandards?.[index]?.standard}
+                    >
+                      <FormLabel>Standard</FormLabel>
+                      <Input
+                        placeholder={'Input your location organizing ...'}
+                        {...register(`scoreStandards.${index}.standard`)}
+                      />
+
+                      {errors.scoreStandards?.[index]?.standard && (
+                        <FormErrorMessage>
+                          {errors.scoreStandards?.[index]?.standard?.message}
+                        </FormErrorMessage>
+                      )}
+                    </FormControl>
+                  </GridItem>
+                </Grid>
+              </div>
+            );
+          })}
         </DrawerBody>
 
         <DrawerFooter>

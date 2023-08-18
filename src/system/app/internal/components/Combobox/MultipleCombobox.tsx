@@ -12,8 +12,8 @@ type ItemProps = BoxItem;
 type ComboboxProps = {
   name: string;
   items: BoxItem[];
-  value: BoxItem[];
-  onChange: (value: BoxItem[]) => void;
+  value: string[];
+  onChange: (value: string[]) => void;
   renderItem?: FC<ItemProps>;
   placeholder?: string;
 };
@@ -29,7 +29,7 @@ export const MultipleCombobox = ({
   const [query, setQuery] = useState('');
   const selectedMap = useMemo(() => {
     return value.reduce<Record<string, boolean>>((map, curr) => {
-      map[curr.value] = true;
+      map[curr] = true;
       return map;
     }, {});
   }, [value]);
@@ -52,7 +52,7 @@ export const MultipleCombobox = ({
 
   function handleRemove(selectedItem: BoxItem) {
     return () => {
-      onChange(value.filter(item => item.value !== selectedItem.value));
+      onChange(value.filter(item => item !== selectedItem.value));
     };
   }
 
@@ -61,13 +61,15 @@ export const MultipleCombobox = ({
       <div className={'relative space-y-2'}>
         <div className="space-x-2">
           {value.map(item => {
+            const valueItem = items.find(i => i.value === item) as BoxItem;
+
             return (
-              <Tag key={item.value} className="space-x-2">
-                <span>{item.text}</span>
+              <Tag key={valueItem.value} className="space-x-2">
+                <span>{valueItem.text}</span>
                 <FontAwesomeIcon
                   cursor={'pointer'}
                   icon={faCircleXmark}
-                  onClick={handleRemove(item)}
+                  onClick={handleRemove(valueItem)}
                 />
               </Tag>
             );
@@ -90,7 +92,7 @@ export const MultipleCombobox = ({
         >
           <HeadlessCombobox.Options className={classes['option-container']}>
             {filteredItems.map(item => (
-              <HeadlessCombobox.Option key={item.value} value={item}>
+              <HeadlessCombobox.Option key={item.value} value={item.value}>
                 <Item text={item.text} value={item.value} />
               </HeadlessCombobox.Option>
             ))}
