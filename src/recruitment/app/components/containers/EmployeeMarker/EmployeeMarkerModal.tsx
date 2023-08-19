@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import {
   Accordion,
   AccordionButton,
@@ -8,7 +8,7 @@ import {
   FormControl,
   FormLabel,
   Grid,
-  HStack,
+  GridItem,
   Input,
   Modal,
   ModalBody,
@@ -132,14 +132,19 @@ export function EmployeeMarkerModal({
 
             {standards.map(standard => {
               return (
-                <Fragment key={standard.point}>
-                  <HStack>
-                    <TextContent className={'w-[5rem]'}>
-                      Point - {standard.point}:{' '}
-                    </TextContent>
+                <Grid
+                  key={standard.standard.slice(0, 5)}
+                  templateColumns="repeat(6, 1fr)"
+                  gap={2}
+                >
+                  <GridItem colSpan={1}>
+                    <TextContent>Point - {standard.point}: </TextContent>
+                  </GridItem>
+
+                  <GridItem colSpan={5}>
                     <Text>{standard.standard}</Text>
-                  </HStack>
-                </Fragment>
+                  </GridItem>
+                </Grid>
               );
             })}
           </div>
