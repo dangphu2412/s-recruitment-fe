@@ -58,8 +58,16 @@ export type CreateRecruitmentEventPayload = {
   scoringStandards: ScoreStandard[];
 };
 
+export type MarkEmployeePayload = {
+  eventId: number;
+  // authorId get from token
+  employeeId: string;
+  point: number;
+};
+
 export type RecruitmentApiClient = {
   getEvents(): Promise<Page<RecruitmentEvent>>;
   getEventDetail(id: number): Promise<RecruitmentEventDetail>;
   createEvent(payload: CreateRecruitmentEventPayload): Promise<void>;
+  markEmployeePoint(payload: MarkEmployeePayload): Promise<void>;
 };

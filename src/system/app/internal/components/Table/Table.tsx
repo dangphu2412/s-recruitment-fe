@@ -44,6 +44,7 @@ export function Table<T extends object>({
       overflowY={'auto'}
       overflowX={'auto'}
       maxHeight="calc(100vh - 20rem)"
+      maxWidth="calc(100vw - 20rem)"
       minHeight="300px"
       backgroundColor={'white'}
     >
@@ -95,6 +96,7 @@ export function Table<T extends object>({
                 {row.cells.map(cell => {
                   const { key: keyCell, ...cellProps } = cell.getCellProps();
                   const cellInstance = cell.render('Cell');
+
                   return (
                     <Td key={keyCell} {...cellProps}>
                       {cellInstance ? (
