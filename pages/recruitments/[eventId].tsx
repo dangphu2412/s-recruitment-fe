@@ -67,7 +67,8 @@ export default function RecruitmentEventDetailPage(): ReactElement {
       ...employee.data,
       id: employee.id,
       point: employee.point,
-      myVotedPoint: employee.myVotedPoint
+      myVotedPoint: employee.myVotedPoint,
+      myNote: employee.myNote
     }));
   }, [employees]);
 
@@ -78,7 +79,7 @@ export default function RecruitmentEventDetailPage(): ReactElement {
 
   function handleClickDetail(row: Row) {
     onOpen();
-    setSelectedEmployee(row.values);
+    setSelectedEmployee(row.original);
   }
 
   return (

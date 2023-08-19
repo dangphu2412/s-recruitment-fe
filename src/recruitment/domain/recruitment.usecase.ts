@@ -15,6 +15,7 @@ export type Employee = {
   data: object;
   point: number;
   myVotedPoint: number;
+  myNote: string;
 };
 
 export type RecruitmentEventDetail = {
@@ -65,6 +66,7 @@ export type MarkEmployeePayload = {
   // authorId get from token
   employeeId: string;
   point: number;
+  note: string;
 };
 
 export type RecruitmentApiClient = {

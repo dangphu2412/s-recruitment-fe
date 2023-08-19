@@ -12,7 +12,8 @@ import {
   FormLabel,
   Grid,
   GridItem,
-  Input
+  Input,
+  Textarea
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useMemo } from 'react';
@@ -266,8 +267,9 @@ export function AddNewEventDrawer({
                       isInvalid={!!errors.scoreStandards?.[index]?.standard}
                     >
                       <FormLabel>Standard</FormLabel>
-                      <Input
+                      <Textarea
                         placeholder={'Input your location organizing ...'}
+                        rows={1}
                         {...register(`scoreStandards.${index}.standard`)}
                       />
 

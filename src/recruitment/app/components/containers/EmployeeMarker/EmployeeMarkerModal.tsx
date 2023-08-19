@@ -1,10 +1,11 @@
-import React, { Fragment, ReactElement, useRef } from 'react';
+import React, { Fragment, ReactElement } from 'react';
 import {
   Accordion,
   AccordionButton,
   AccordionItem,
   AccordionPanel,
   Button,
+  FormControl,
   FormLabel,
   Grid,
   HStack,
@@ -15,7 +16,8 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text
+  Text,
+  Textarea
 } from '@chakra-ui/react';
 import { TitleLabel } from '../../../../../system/app/internal/components/Text/TitleLabel';
 import { TextContent } from '../../../../../system/app/internal/components/Text/TextContent';
@@ -24,6 +26,7 @@ import { useMarkEmployeeMutation } from '../../../hooks/useMarkEmployeeMutation'
 import { useNotify } from '../../../../../system/app/internal/hooks/useNotify';
 import { useQueryClient } from 'react-query';
 import { RECRUITMENT_EVENT_DETAIL_QUERY_KEY } from '../../../hooks/useQueryRecruitmentEventDetail';
+import { useForm } from 'react-hook-form';
 
 type Props = {
   employeeData: Record<string, unknown>;
@@ -32,32 +35,34 @@ type Props = {
   onClose: () => void;
 };
 
+type Data = {
+  point: string;
+  note: string;
+};
+
 export function EmployeeMarkerModal({
   onClose,
   employeeData,
   standards = [],
   eventId
 }: Props): ReactElement {
-  const markPointRef = useRef<HTMLInputElement | null>(null);
   const { markEmployee } = useMarkEmployeeMutation();
   const notify = useNotify();
   const queryClient = useQueryClient();
   const maxPoint = standards.reduce((res, curr) => {
     return res + curr.point;
   }, 0);
-
-  async function handleMark() {
-    const value = markPointRef.current?.value as string;
-
-    if (!value) {
-      notify({
-        title: 'Not allow to input empty',
-        status: 'error'
-      });
-      return;
+  const { register, handleSubmit } = useForm<Data>({
+    defaultValues: {
+      point: employeeData.myVotedPoint
+        ? String(employeeData.myVotedPoint)
+        : '0',
+      note: (employeeData?.myNote as string) ?? ''
     }
+  });
 
-    if (+value > maxPoint) {
+  async function handleMark(data: Data) {
+    if (+data.point > maxPoint) {
       notify({
         title: `Your point exceed the max ${maxPoint}`,
         status: 'error'
@@ -69,7 +74,8 @@ export function EmployeeMarkerModal({
       {
         eventId,
         employeeId: employeeData.id as string,
-        point: +value
+        point: +data.point,
+        note: data.note
       },
       {
         onSuccess: () => {
@@ -138,25 +144,27 @@ export function EmployeeMarkerModal({
             })}
           </div>
 
-          <div>
-            <FormLabel>Input your point:</FormLabel>
-            <Input
-              ref={markPointRef}
-              type={'number'}
-              min={0}
-              max={maxPoint}
-              defaultValue={
-                employeeData.myVotedPoint
-                  ? String(employeeData.myVotedPoint)
-                  : '0'
-              }
-            />
+          <div className="space-y-4">
+            <FormControl>
+              <FormLabel>Input your point:</FormLabel>
+              <Input
+                {...register('point')}
+                type={'number'}
+                min={0}
+                max={maxPoint}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Note down:</FormLabel>
+              <Textarea {...register('note')} cols={4} />
+            </FormControl>
           </div>
         </ModalBody>
 
         <ModalFooter className="space-x-2">
           <Button onClick={onClose}>Close</Button>
-          <Button colorScheme="pink" onClick={handleMark}>
+          <Button colorScheme="pink" onClick={handleSubmit(handleMark)}>
             Save
           </Button>
         </ModalFooter>
