@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { CellProps } from 'react-table';
 import { UserManagementView } from 'src/user/models/user.type';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,7 +22,8 @@ import classes from './Cell.module.scss';
 import { useNotify } from 'src/system/app/internal/hooks/useNotify';
 
 export function PaidCell({
-  row
+  row,
+  ...rest
 }: CellProps<UserManagementView, string>): React.ReactElement {
   const isMember = !!row.original.operationFee;
   const paidMoney = row.original?.operationFee?.paidMoney ?? 0;
@@ -102,7 +103,7 @@ export function PaidCell({
   }
 
   return (
-    <>
+    <Fragment key={row.id}>
       {isMember ? (
         <Popover isOpen={isOpen}>
           <PopoverTrigger>
@@ -148,6 +149,6 @@ export function PaidCell({
           New Member
         </span>
       )}
-    </>
+    </Fragment>
   );
 }

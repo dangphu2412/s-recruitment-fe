@@ -13,6 +13,7 @@ export type CreateRecruitmentEventFormModal = {
 };
 
 export type RecruitmentEventColumn = {
+  id: string;
   name: string;
   location: string;
   recruitmentRange: DateRange;

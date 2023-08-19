@@ -12,6 +12,7 @@ export function StatusCell({
 
   return (
     <Switch
+      key={row.id}
       isChecked={value === null}
       onChange={() => toggleUserActive(row.original.id)}
       colorScheme={'green'}

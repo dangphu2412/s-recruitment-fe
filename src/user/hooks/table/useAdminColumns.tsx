@@ -44,7 +44,7 @@ export function useAdminColumns(): Column<UserManagementView>[] {
       {
         Header: 'Actions',
         Cell: (props: CellProps<UserManagementView, string>) => (
-          <MoreActionCell {...props} push={push} />
+          <MoreActionCell key={props.row.id} {...props} push={push} />
         )
       }
     ],

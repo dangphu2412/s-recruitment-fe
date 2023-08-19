@@ -4,7 +4,6 @@ import { parseFilterQuery } from '../../../system/app/internal/services/filter-p
 import { parsePagination } from '../../../system/app/internal/services/pagination-parser';
 import { AdminFilter } from '../../store/user-store.types';
 import { Pagination } from '../../../system/domain/clients';
-import { formatDate } from '../../../system/app/internal/utils/date.utils';
 import { getInitialUserState } from '../../store/user.slice';
 
 export const QUERY_USERS_KEY = 'QUERY_USERS';

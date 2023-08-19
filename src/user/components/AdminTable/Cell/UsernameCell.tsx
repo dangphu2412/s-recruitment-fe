@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { Fragment, ReactElement } from 'react';
 import { CellProps } from 'react-table';
 import { UserManagementView } from '../../../models/user.type';
 import Image from 'next/image';
@@ -10,7 +10,7 @@ export function UsernameCell({
   row
 }: CellProps<UserManagementView, string>): ReactElement {
   return (
-    <>
+    <Fragment key={row.id}>
       <div>
         <Link color="teal.500" href="#">
           <NextLink href={`/users/${row.original.id}/profile`}>
@@ -22,6 +22,6 @@ export function UsernameCell({
       {row.original.avatar && (
         <Image src={row.original.avatar} alt="No avatar" />
       )}
-    </>
+    </Fragment>
   );
 }

@@ -1,16 +1,17 @@
-import { ReactElement } from 'react';
+import { Fragment, ReactElement } from 'react';
 import { CellProps } from 'react-table';
 import { UserManagementView } from 'src/user/models/user.type';
 import { Role } from 'src/user/models/rbac.types';
 
 export function RoleCell({
-  value
+  value,
+  row
 }: CellProps<UserManagementView, Role[]>): ReactElement {
   return (
-    <>
+    <Fragment key={row.id}>
       {value.map(role => (
         <div key={role.id}>{role.name}</div>
       ))}
-    </>
+    </Fragment>
   );
 }

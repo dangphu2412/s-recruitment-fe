@@ -6,7 +6,6 @@ import { chakraTheme } from 'src/system/infrastructure/config/chakra-ui.config';
 import { getQueryClientConfig } from 'src/system/infrastructure/config/react-query.config';
 import { SystemPropsAdapter } from 'src/system/infrastructure/adapters/system-props.adapter';
 import { store } from 'src/system/infrastructure/config/redux.config';
-import { UserProvider } from '../../../user/contexts/UserContext/user.provider';
 
 export function SystemProvider({
   onError,

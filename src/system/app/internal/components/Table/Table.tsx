@@ -1,7 +1,8 @@
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { Column, Row, useTable } from 'react-table';
 import {
   Table as BaseTable,
+  TableCaption,
   TableContainer,
   Tbody,
   Td,
@@ -14,6 +15,7 @@ import { TableLoading } from './TableLoading';
 import { NoData } from './NoData';
 
 type Props<D extends object> = {
+  caption?: ReactNode;
   items?: D[];
   columns: Column<D>[];
   isLoading?: boolean;
@@ -24,7 +26,8 @@ export function Table<T extends object>({
   items = [],
   columns,
   isLoading = false,
-  onRowClick
+  onRowClick,
+  caption
 }: Props<T>): ReactElement {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: items });
@@ -41,9 +44,12 @@ export function Table<T extends object>({
       overflowY={'auto'}
       overflowX={'auto'}
       maxHeight="calc(100vh - 20rem)"
+      minHeight="300px"
       backgroundColor={'white'}
     >
       <BaseTable variant="simple" {...getTableProps()}>
+        {caption && <TableCaption>{caption}</TableCaption>}
+
         <Thead position="sticky" top="0" zIndex="1">
           {headerGroups.map(headerGroup => {
             const { key: headerKey, ...headerRowProps } =
@@ -87,14 +93,12 @@ export function Table<T extends object>({
                 cursor={onRowClick ? 'pointer' : 'auto'}
               >
                 {row.cells.map(cell => {
-                  const { key: keyCell, ...cellProps } = cell.getCellProps({
-                    key: cell.column.id
-                  });
-
+                  const { key: keyCell, ...cellProps } = cell.getCellProps();
+                  const cellInstance = cell.render('Cell');
                   return (
                     <Td key={keyCell} {...cellProps}>
-                      {cell.value ? (
-                        cell.render('Cell')
+                      {cellInstance ? (
+                        cellInstance
                       ) : (
                         <Text fontSize="md" fontStyle="italic" color="gray.500">
                           No data
