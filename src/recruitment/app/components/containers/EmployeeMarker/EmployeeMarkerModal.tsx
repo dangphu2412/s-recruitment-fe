@@ -35,24 +35,41 @@ type Props = {
 export function EmployeeMarkerModal({
   onClose,
   employeeData,
-  standards,
+  standards = [],
   eventId
 }: Props): ReactElement {
   const markPointRef = useRef<HTMLInputElement | null>(null);
   const { markEmployee } = useMarkEmployeeMutation();
   const notify = useNotify();
   const queryClient = useQueryClient();
+  const maxPoint = standards.reduce((res, curr) => {
+    return res + curr.point;
+  }, 0);
 
-  function handleMark() {
-    if (!markPointRef.current?.value) {
-      throw new Error('Implementation wrong');
+  async function handleMark() {
+    const value = markPointRef.current?.value as string;
+
+    if (!value) {
+      notify({
+        title: 'Not allow to input empty',
+        status: 'error'
+      });
+      return;
+    }
+
+    if (+value > maxPoint) {
+      notify({
+        title: `Your point exceed the max ${maxPoint}`,
+        status: 'error'
+      });
+      return;
     }
 
     markEmployee(
       {
         eventId,
         employeeId: employeeData.id as string,
-        point: +markPointRef.current.value
+        point: +value
       },
       {
         onSuccess: () => {
@@ -84,11 +101,11 @@ export function EmployeeMarkerModal({
         <ModalHeader>Mark point for your employee</ModalHeader>
 
         <ModalBody className="space-y-4">
-          <TitleLabel>Mark point</TitleLabel>
+          <TitleLabel>Employee information</TitleLabel>
 
           <Accordion allowToggle>
             <AccordionItem>
-              <AccordionButton>Employee information</AccordionButton>
+              <AccordionButton>Click to view detail</AccordionButton>
               <AccordionPanel pb={4}>
                 <Grid templateColumns="repeat(2, 1fr)" gap={2}>
                   {Object.keys(employeeData).map(prop => {
@@ -111,7 +128,9 @@ export function EmployeeMarkerModal({
               return (
                 <Fragment key={standard.point}>
                   <HStack>
-                    <TextContent>Point - {standard.point}: </TextContent>
+                    <TextContent className={'w-[5rem]'}>
+                      Point - {standard.point}:{' '}
+                    </TextContent>
                     <Text>{standard.standard}</Text>
                   </HStack>
                 </Fragment>
@@ -121,7 +140,17 @@ export function EmployeeMarkerModal({
 
           <div>
             <FormLabel>Input your point:</FormLabel>
-            <Input ref={markPointRef} />
+            <Input
+              ref={markPointRef}
+              type={'number'}
+              min={0}
+              max={maxPoint}
+              defaultValue={
+                employeeData.myVotedPoint
+                  ? String(employeeData.myVotedPoint)
+                  : '0'
+              }
+            />
           </div>
         </ModalBody>
 

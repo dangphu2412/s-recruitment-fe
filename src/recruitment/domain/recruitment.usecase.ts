@@ -14,6 +14,7 @@ export type Employee = {
   id: string;
   data: object;
   point: number;
+  myVotedPoint: number;
 };
 
 export type RecruitmentEventDetail = {

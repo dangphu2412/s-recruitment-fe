@@ -48,6 +48,10 @@ export default function RecruitmentEventDetailPage(): ReactElement {
       {
         Header: 'Point',
         accessor: 'point'
+      },
+      {
+        Header: 'Voted point',
+        accessor: 'myVotedPoint'
       }
     ].concat(
       Object.keys(data).map(prop => {
@@ -62,7 +66,8 @@ export default function RecruitmentEventDetailPage(): ReactElement {
     return employees.map(employee => ({
       ...employee.data,
       id: employee.id,
-      point: employee.point
+      point: employee.point,
+      myVotedPoint: employee.myVotedPoint
     }));
   }, [employees]);
 
