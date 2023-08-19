@@ -22,6 +22,8 @@ import { TextContent } from '../../../../../system/app/internal/components/Text/
 import { ScoringStandard } from '../../../../domain/recruitment.usecase';
 import { useMarkEmployeeMutation } from '../../../hooks/useMarkEmployeeMutation';
 import { useNotify } from '../../../../../system/app/internal/hooks/useNotify';
+import { useQueryClient } from 'react-query';
+import { RECRUITMENT_EVENT_DETAIL_QUERY_KEY } from '../../../hooks/useQueryRecruitmentEventDetail';
 
 type Props = {
   employeeData: Record<string, unknown>;
@@ -39,6 +41,7 @@ export function EmployeeMarkerModal({
   const markPointRef = useRef<HTMLInputElement | null>(null);
   const { markEmployee } = useMarkEmployeeMutation();
   const notify = useNotify();
+  const queryClient = useQueryClient();
 
   function handleMark() {
     if (!markPointRef.current?.value) {
@@ -54,18 +57,24 @@ export function EmployeeMarkerModal({
       {
         onSuccess: () => {
           notify({
-            title: 'Mark success'
+            title: 'Mark success',
+            status: 'success'
           });
+          queryClient.refetchQueries([
+            RECRUITMENT_EVENT_DETAIL_QUERY_KEY,
+            eventId
+          ]);
+          onClose();
         },
         onError: () => {
           notify({
-            title: 'Mark fail'
+            title: 'Mark fail',
+            status: 'error'
           });
+          onClose();
         }
       }
     );
-
-    onClose();
   }
 
   return (

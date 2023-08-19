@@ -40,20 +40,30 @@ export default function RecruitmentEventDetailPage(): ReactElement {
 
     const { data } = employees[0] ?? {};
 
-    return Object.keys(data)
-      .map(prop => {
+    return [
+      {
+        Header: 'Id',
+        accessor: 'id'
+      },
+      {
+        Header: 'Point',
+        accessor: 'point'
+      }
+    ].concat(
+      Object.keys(data).map(prop => {
         return {
           Header: prop.toUpperCase(),
           accessor: prop
         };
       })
-      .concat({
-        Header: 'Id',
-        accessor: 'id'
-      });
+    );
   }, [employees]);
   const employeeItems = useMemo(() => {
-    return employees.map(employee => ({ ...employee.data, id: employee.id }));
+    return employees.map(employee => ({
+      ...employee.data,
+      id: employee.id,
+      point: employee.point
+    }));
   }, [employees]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();

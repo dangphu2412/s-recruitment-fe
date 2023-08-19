@@ -13,6 +13,7 @@ export type RecruitmentEvent = {
 export type Employee = {
   id: string;
   data: object;
+  point: number;
 };
 
 export type RecruitmentEventDetail = {

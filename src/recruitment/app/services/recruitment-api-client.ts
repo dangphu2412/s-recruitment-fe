@@ -12,7 +12,7 @@ export const recruitmentApiClient: RecruitmentApiClient = {
   markEmployeePoint(payload: MarkEmployeePayload): Promise<void> {
     return authorizedHttpClient.request({
       method: 'post',
-      url: `/recruitments/events/${payload.eventId}`,
+      url: `/recruitments/events/${payload.eventId}/mark`,
       data: payload
     });
   },
