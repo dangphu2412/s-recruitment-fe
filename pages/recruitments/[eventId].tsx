@@ -1,0 +1,83 @@
+import React, { ReactElement, useMemo } from 'react';
+import { useRouter } from 'next/router';
+import { useQueryRecruitmentEventDetail } from '../../src/recruitment/app/hooks/useQueryRecruitmentEventDetail';
+import { normalizeParam } from '../../src/system/app/internal/utils/router.utils';
+import { ContentLayout } from '../../src/system/app/internal/components/Box';
+import { TitleLabel } from '../../src/system/app/internal/components/Text/TitleLabel';
+import { Grid, GridItem, Heading, List, ListItem } from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { Table } from 'src/system/app/internal/components/Table';
+import { Column } from 'react-table';
+
+export default function RecruitmentEventDetailPage(): ReactElement {
+  const { query } = useRouter();
+  const eventId = normalizeParam(query.eventId);
+
+  const { recruitmentEventDetail } = useQueryRecruitmentEventDetail(+eventId);
+  const {
+    name,
+    location,
+    startDate,
+    endDate,
+    examiners = [],
+    employees = []
+  } = recruitmentEventDetail;
+
+  const genericColumns = useMemo((): Column[] => {
+    if (!employees.length) {
+      return [];
+    }
+
+    const { data } = employees[0] ?? {};
+
+    return Object.keys(data).map(prop => {
+      return {
+        Header: prop.toUpperCase(),
+        accessor: prop
+      };
+    });
+  }, [employees]);
+  const employeeItems = useMemo(() => {
+    return employees.map(employee => employee.data);
+  }, [employees]);
+
+  return (
+    <ContentLayout className={'space-y-4'}>
+      <Heading size="md">Recruitment event: {name} </Heading>
+      <Grid templateColumns="repeat(3, 1fr)">
+        <GridItem>
+          <TitleLabel>Location</TitleLabel> {location}
+        </GridItem>
+
+        <GridItem>
+          <TitleLabel>Start date</TitleLabel> {startDate}
+        </GridItem>
+
+        <GridItem>
+          <TitleLabel>End date</TitleLabel> {endDate}
+        </GridItem>
+      </Grid>
+
+      <TitleLabel>Examiners:</TitleLabel>
+      <List spacing={3}>
+        {examiners.map(examiner => {
+          return (
+            <ListItem key={examiner.id} className="space-x-2">
+              <FontAwesomeIcon icon={faThumbsUp} />
+              <span>{examiner.fullName}</span>
+            </ListItem>
+          );
+        })}
+      </List>
+
+      <TitleLabel>Employee information</TitleLabel>
+
+      <Table
+        caption={'Employee information'}
+        columns={genericColumns}
+        items={employeeItems}
+      />
+    </ContentLayout>
+  );
+}

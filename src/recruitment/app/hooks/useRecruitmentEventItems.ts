@@ -13,6 +13,7 @@ export function useRecruitmentEventItems(): RecruitmentEventColumn[] {
 
     return data.items.map(item => {
       return {
+        id: item.id,
         name: item.name,
         location: item.location,
         recruitmentRange: {

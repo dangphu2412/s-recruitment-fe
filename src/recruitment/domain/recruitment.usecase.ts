@@ -2,11 +2,47 @@ import { Page } from '../../system/domain/clients';
 import { DateRange } from '../../system/domain/clients/filter.api';
 
 export type RecruitmentEvent = {
+  id: number;
   name: string;
   location: string;
   startDate: string;
   endDate: string;
   examiners: string[];
+};
+
+export type Employee = {
+  id: string;
+  data: object;
+};
+
+export type RecruitmentEventDetail = {
+  id: number;
+  name: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  authorId: string;
+  scoringStandards: ScoringStandard[];
+  examiners: Examiner[];
+  employees: Employee[];
+};
+
+export type ScoringStandard = {
+  standard: string;
+  point: number;
+};
+
+export type Examiner = {
+  id: string;
+  username: string;
+  email: string;
+  fullName: string;
+  password: string;
+  birthday: string;
+  phoneNumber: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: any;
 };
 
 export type ScoreStandard = {
@@ -24,5 +60,6 @@ export type CreateRecruitmentEventPayload = {
 
 export type RecruitmentApiClient = {
   getEvents(): Promise<Page<RecruitmentEvent>>;
+  getEventDetail(id: number): Promise<RecruitmentEventDetail>;
   createEvent(payload: CreateRecruitmentEventPayload): Promise<void>;
 };

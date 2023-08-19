@@ -1,21 +1,22 @@
-import React, { PropsWithChildren } from 'react';
-import { Box as ChakraBox } from '@chakra-ui/react';
+import { Box as ChakraBox, BoxProps, forwardRef } from '@chakra-ui/react';
+import { ReactElement } from 'react';
 
-type Props = PropsWithChildren<{}>;
+type Props = BoxProps;
 
-export function ContentLayout({
-  children,
-  ...rest
-}: Props): React.ReactElement {
+export const ContentLayout = forwardRef(function ContentLayout(
+  { children, ...rest }: Props,
+  ref
+): ReactElement {
   return (
     <ChakraBox
-      borderRadius="1rem"
       backgroundColor="#ffffff"
-      {...rest}
+      borderRadius="1rem"
       paddingY="2rem"
       paddingX="2rem"
+      {...rest}
+      ref={ref}
     >
       {children}
     </ChakraBox>
   );
-}
+});

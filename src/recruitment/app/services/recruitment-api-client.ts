@@ -1,12 +1,19 @@
 import {
   CreateRecruitmentEventPayload,
   RecruitmentApiClient,
-  RecruitmentEvent
+  RecruitmentEvent,
+  RecruitmentEventDetail
 } from '../../domain/recruitment.usecase';
 import { Page } from '../../../system/domain/clients';
 import { authorizedHttpClient } from '../../../system/infrastructure/factories/http-client.factories';
 
 export const recruitmentApiClient: RecruitmentApiClient = {
+  getEventDetail(id: number): Promise<RecruitmentEventDetail> {
+    return authorizedHttpClient.request({
+      method: 'get',
+      url: `/recruitments/events/${id}`
+    });
+  },
   createEvent(payload: CreateRecruitmentEventPayload): Promise<void> {
     return authorizedHttpClient.request({
       method: 'post',

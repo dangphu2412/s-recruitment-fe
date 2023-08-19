@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Text } from '@chakra-ui/react';
+import { TitleLabel } from '../../Text/TitleLabel';
 
 type Props = {
   main: string;
@@ -9,9 +10,7 @@ type Props = {
 export function ContentHeader({ main, brief }: Props): ReactElement {
   return (
     <>
-      <Text fontSize="lg" fontWeight="semibold">
-        {main}
-      </Text>
+      <TitleLabel>{main}</TitleLabel>
       <Text fontSize="sm" fontWeight="light">
         {brief}
       </Text>
