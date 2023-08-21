@@ -12,6 +12,7 @@ import axios, {
 } from 'axios';
 import { tokenManager } from '../../app/internal/services';
 import { ClientErrorCode } from '../../domain/constants/client-code';
+import { persistentStorage } from '../../app/internal/services/persistent.storage';
 
 const RenewTokenOnResponseInterceptor = async (error: AxiosError) => {
   const isUnauthorized =
@@ -20,7 +21,14 @@ const RenewTokenOnResponseInterceptor = async (error: AxiosError) => {
 
   if (isUnauthorized) {
     await tokenManager.renew();
-    return axios.request(error.config);
+
+    const config = error.config;
+
+    if (config.headers) {
+      config.headers.authorization = `Bearer ${persistentStorage.getAccessToken()}`;
+    }
+
+    return axios.request(config);
   }
 
   return Promise.reject(error);
@@ -28,10 +36,7 @@ const RenewTokenOnResponseInterceptor = async (error: AxiosError) => {
 
 export class HttpClientAdapter implements HttpClient {
   constructor(private axios: AxiosInstance) {
-    axios.interceptors.response.use(
-      res => res,
-      RenewTokenOnResponseInterceptor
-    );
+    axios.interceptors.response.use(undefined, RenewTokenOnResponseInterceptor);
   }
 
   async request<T>(data: HttpRequest): Promise<HttpResponse<T>> {
