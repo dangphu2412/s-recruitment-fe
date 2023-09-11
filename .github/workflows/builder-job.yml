@@ -1,0 +1,39 @@
+name: Build runner app
+
+on:
+  workflow_call:
+
+jobs:
+  setups:
+    name: builder
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    strategy:
+      matrix:
+        node: [16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'yarn'
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/node_modules/
+          key: cache-node-modules-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            - cache-node-modules-
+
+      - name: Build dist
+        run: |
+          yarn build
+
+      - name: Upload Dist Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
