@@ -9,7 +9,7 @@ const IconKeyByCode: Record<string, IconDefinition> = {
   RECRUITMENT_ICON: faSuitcase
 };
 
-export function convertToSidebarMenu(
+export function mapMenuItemToSidebarMenus(
   menuItems: MenuItem[] | undefined
 ): SidebarMenu {
   if (!menuItems) {
@@ -20,7 +20,7 @@ export function convertToSidebarMenu(
     return {
       ...item,
       icon: iconCode ? IconKeyByCode[iconCode] : undefined,
-      subMenus: convertToSidebarMenu(subMenus)
+      subMenus: mapMenuItemToSidebarMenus(subMenus)
     };
   });
 }

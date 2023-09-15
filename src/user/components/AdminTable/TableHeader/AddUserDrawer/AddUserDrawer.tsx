@@ -19,9 +19,9 @@ import { UseDisclosureApi } from 'src/system/domain/clients/disclosure.api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { mixed, object, string } from 'yup';
-import { MonthlyMoneyConfig } from 'src/monthly-money/clients/monthly-money.types';
 import { FullLoader } from 'src/system/app/internal/components/Loader/Full/FullLoader';
-import { read } from 'xlsx';
+import { useQueryMonthlyMoneyConfigs } from '../../../../../monthly-money/hooks';
+import { useMutateCreateUser } from '../../../../hooks/data/useMutateCreateUser';
 
 export type CreateUserInputs = {
   createType: CreateUserType;
@@ -29,44 +29,38 @@ export type CreateUserInputs = {
   fullName: string;
   birthday?: string;
   monthlyConfigId?: string;
-  excelFile?: { file: File; processSheetName: string };
-  processSheetNameOptions?: string[];
 };
 
 type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
   finalFocusRef: React.RefObject<HTMLButtonElement>;
-  monthlyMoneyConfigs: MonthlyMoneyConfig[];
-  isLoading: boolean;
-  onAddNewUser(createUserInputs: CreateUserInputs): void;
 };
 
 const validationSchema = object({
   createType: mixed<CreateUserType>()
     .oneOf(Object.values(CreateUserType))
-    .required(),
-  email: string().optional().email(),
+    .required('Please select create type'),
+  email: string().email('Incorrect email format').required('Email is required'),
   fullName: string().optional(),
   birthday: string().optional(),
-  monthlyConfigId: string().optional().when('createType', {
-    is: CreateUserType.NEW_MEMBERS,
-    then: string().required()
-  })
+  monthlyConfigId: string()
+    .optional()
+    .when('createType', {
+      is: CreateUserType.NEW_MEMBERS,
+      then: string().required('Please provide monthly money config option')
+    })
 });
 
 export function AddUserDrawer({
   isOpen,
-  isLoading,
   onClose,
-  finalFocusRef,
-  onAddNewUser,
-  monthlyMoneyConfigs
+  finalFocusRef
 }: AddUserDrawerProps): React.ReactElement {
   const {
     handleSubmit,
     register,
     watch,
-    setValue,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm<CreateUserInputs>({
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
@@ -74,38 +68,35 @@ export function AddUserDrawer({
       email: '',
       fullName: '',
       birthday: '',
-      createType: CreateUserType.NEWBIE,
-      excelFile: undefined,
-      processSheetNameOptions: undefined
+      createType: CreateUserType.NEWBIE
     }
   });
 
   const createUserType = watch('createType');
-  const excelFile = watch('excelFile');
-  const processSheetNameOptions = watch('processSheetNameOptions');
 
-  const saveUser: SubmitHandler<CreateUserInputs> = inputs => {
-    onAddNewUser(inputs);
+  const { monthlyMoneyConfigs } = useQueryMonthlyMoneyConfigs({
+    isEnabled: isOpen
+  });
+
+  const { mutate: dispatchCreateUser, isLoading } = useMutateCreateUser();
+
+  const saveUser: SubmitHandler<CreateUserInputs> = createUserInputs => {
+    dispatchCreateUser(
+      {
+        createUserType: createUserInputs.createType,
+        email: createUserInputs.email,
+        fullName: createUserInputs.fullName,
+        birthday: createUserInputs.birthday,
+        monthlyConfigId: createUserInputs.monthlyConfigId
+      },
+      {
+        onSuccess: () => {
+          reset();
+          onClose();
+        }
+      }
+    );
   };
-
-  async function handleSelectFile(
-    e: React.ChangeEvent<HTMLInputElement>
-  ): Promise<void> {
-    const file = Array.from(e.target.files ?? [])?.[0];
-
-    if (!file) {
-      throw new Error('Empty file selected');
-    }
-
-    const workbook = read(await file.arrayBuffer());
-
-    setValue('processSheetNameOptions', workbook.SheetNames);
-
-    setValue('excelFile', {
-      file,
-      processSheetName: ''
-    });
-  }
 
   return (
     <Drawer
@@ -113,7 +104,7 @@ export function AddUserDrawer({
       placement="right"
       onClose={onClose}
       finalFocusRef={finalFocusRef}
-      size="lg"
+      size="xl"
     >
       <DrawerOverlay />
       <FullLoader isLoading={isLoading} />
@@ -123,8 +114,8 @@ export function AddUserDrawer({
 
         <DrawerHeader>Create new S-Group members</DrawerHeader>
 
-        <DrawerBody className="space-y-2">
-          <FormControl>
+        <DrawerBody className="space-y-4">
+          <FormControl isInvalid={!!errors.createType}>
             <FormLabel htmlFor="create-user-type">Create type</FormLabel>
 
             <Select placeholder="Select option" {...register('createType')}>
@@ -136,38 +127,47 @@ export function AddUserDrawer({
                 );
               })}
             </Select>
+
+            {errors.createType && (
+              <FormErrorMessage>{errors.createType?.message}</FormErrorMessage>
+            )}
           </FormControl>
 
-          {createUserType !== CreateUserType.EXCEL && (
-            <>
-              <FormControl isInvalid={!!errors.email} pt="1rem">
-                <FormLabel>Email</FormLabel>
+          <FormControl isInvalid={!!errors.email} isRequired>
+            <FormLabel>Email</FormLabel>
 
-                <Input type={'email'} {...register('email')} />
+            <Input type={'email'} {...register('email')} />
 
-                {errors.email && (
-                  <FormErrorMessage>Incorrect email format</FormErrorMessage>
-                )}
-              </FormControl>
+            {errors.email && (
+              <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+            )}
+          </FormControl>
 
-              <FormControl pt="1rem">
-                <FormLabel>Full name</FormLabel>
+          <FormControl isInvalid={!!errors.fullName}>
+            <FormLabel>Full name</FormLabel>
 
-                <Input {...register('fullName')} />
+            <Input {...register('fullName')} />
 
-                {errors.fullName && (
-                  <FormErrorMessage>
-                    Incorrect full name format
-                  </FormErrorMessage>
-                )}
-              </FormControl>
-            </>
-          )}
+            {errors.fullName && (
+              <FormErrorMessage>{errors.fullName.message}</FormErrorMessage>
+            )}
+          </FormControl>
 
-          {[CreateUserType.NEW_MEMBERS, CreateUserType.EXCEL].includes(
-            createUserType
-          ) && (
-            <FormControl pt="1rem">
+          <FormControl isInvalid={!!errors.birthday}>
+            <FormLabel>Birth day</FormLabel>
+            <Input
+              placeholder={'Recruit from date'}
+              {...register('birthday')}
+              type="date"
+            />
+
+            {errors.birthday && (
+              <FormErrorMessage>{errors.birthday.message}</FormErrorMessage>
+            )}
+          </FormControl>
+
+          {[CreateUserType.NEW_MEMBERS].includes(createUserType) && (
+            <FormControl>
               <FormLabel htmlFor="monthly-configs">Monthly paid</FormLabel>
 
               <Select
@@ -181,31 +181,6 @@ export function AddUserDrawer({
                     </option>
                   );
                 })}
-              </Select>
-            </FormControl>
-          )}
-
-          {createUserType === CreateUserType.EXCEL && (
-            <FormControl>
-              <FormLabel borderWidth="0.5rem">
-                Upload file: {excelFile?.file?.name}
-                <Input type="file" onChange={handleSelectFile} />
-              </FormLabel>
-
-              <FormLabel htmlFor="create-user-type">Process options</FormLabel>
-
-              <Select
-                placeholder="Select option"
-                {...register('excelFile.processSheetName')}
-              >
-                {processSheetNameOptions &&
-                  processSheetNameOptions?.map(name => {
-                    return (
-                      <option key={name} value={name}>
-                        {name}
-                      </option>
-                    );
-                  })}
               </Select>
             </FormControl>
           )}
