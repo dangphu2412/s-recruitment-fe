@@ -49,6 +49,7 @@ export function useHandleError({
           break;
         case ClientErrorCode.INVALID_TOKEN_FORMAT:
         case ClientErrorCode.LOGOUT_REQUIRED:
+        case ClientErrorCode.UNAUTHORIZED:
           push('/logout');
           break;
         case ClientErrorCode.FORBIDDEN:
