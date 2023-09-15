@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import styles from './SideBar.module.scss';
 import { SidebarMenuItem } from '../../clients/sidebar-menu.types';
 import { useQueryMenu } from '../../hooks/useQueryMenu.hook';
-import { convertToSidebarMenu } from '../../converters/convertToSidebarMenu';
+import { mapMenuItemToSidebarMenus } from '../../mappers/menu.mapper';
 
 type Props = Omit<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
@@ -35,7 +35,7 @@ export function SideBar({
   const { menus } = useQueryMenu();
 
   const sidebarMenuItems = React.useMemo(
-    () => convertToSidebarMenu(menus),
+    () => mapMenuItemToSidebarMenus(menus),
     [menus]
   );
 

@@ -1,7 +1,6 @@
 export enum CreateUserType {
   NEWBIE = 'New bie',
-  NEW_MEMBERS = 'New members',
-  EXCEL = 'Excel'
+  NEW_MEMBERS = 'New members'
 }
 
 export enum MemberType {

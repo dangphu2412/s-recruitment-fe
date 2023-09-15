@@ -7,8 +7,6 @@ import {
   UserManagementView,
   UserRolesView
 } from '../models/user.type';
-import FormData from 'form-data';
-import { CreateUserType } from 'src/user/constants/admin-management.constants';
 import { authorizedHttpClient } from '../../system/infrastructure/factories/http-client.factories';
 
 export const UserApiClient = {
@@ -54,27 +52,6 @@ export const UserApiClient = {
     });
   },
   createUser(createUserDto: CreateUsersDto): Promise<void> {
-    if (
-      createUserDto.attachment &&
-      CreateUserType.EXCEL === createUserDto.createUserType
-    ) {
-      const attachmentForm = new FormData();
-
-      attachmentForm.append('file', createUserDto.attachment);
-      attachmentForm.append('createUserType', createUserDto.createUserType);
-      attachmentForm.append('fileType', createUserDto.attachment.type);
-      attachmentForm.append('processSheetName', createUserDto.processSheetName);
-
-      return authorizedHttpClient.request({
-        method: 'post',
-        url: '/users/upload',
-        data: attachmentForm,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-    }
-
     return authorizedHttpClient.request({
       method: 'post',
       url: '/users',
