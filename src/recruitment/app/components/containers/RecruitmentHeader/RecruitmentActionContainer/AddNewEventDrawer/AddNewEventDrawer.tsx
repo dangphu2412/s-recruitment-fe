@@ -26,11 +26,11 @@ import {
 import { FullLoader } from 'src/system/app/internal/components/Loader/Full/FullLoader';
 import { BoxItem } from 'src/system/domain/clients/combobox.api';
 import { UseDisclosureApi } from 'src/system/domain/clients/disclosure.api';
-import { getInitialUserState } from 'src/user/store/user.slice';
+import { getInitialUserState } from 'src/user/internal/store/user.slice';
 import { array, number, object, string } from 'yup';
 import { MultipleCombobox } from '../../../../../../../system/app/internal/components/Combobox/MultipleCombobox';
 import { useNotify } from '../../../../../../../system/app/internal/hooks/useNotify';
-import { useQueryUsers } from '../../../../../../../user/hooks/data/useQueryUsers';
+import { useQueryUsers } from '../../../../../../../user/app/hooks/data/useQueryUsers';
 import { CreateRecruitmentEventPayload } from '../../../../../../domain/recruitment.usecase';
 import { CreateRecruitmentEventFormModal } from '../../../../../app-models/recruitment-event.model';
 import { useCreateRecruitmentEventMutation } from '../../../../../hooks/useCreateRecruitmentEventMutation';

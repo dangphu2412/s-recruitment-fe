@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../infrastructure/config/redux.config';
 import { SystemStore } from '../domain/system-store.types';
-import { User } from '../../user/models/user.type';
+import { User } from '../../user/domain/models/user.type';
 
 const systemSlice = createSlice({
   name: 'system',
