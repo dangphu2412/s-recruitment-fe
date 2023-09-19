@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useQueryMyProfile } from '../../../../user/hooks/data/useQueryMyProfile';
+import { useQueryMyProfile } from '../../../../user/app/hooks/data/useQueryMyProfile';
 import { UserSession } from '../../../domain/usecases/user.usecase';
 import { systemActions } from '../../system.store';
 
