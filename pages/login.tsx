@@ -1,12 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
 import { Container, Grid, GridItem, Image } from '@chakra-ui/react';
-import { NextPageWithLayout } from 'src/system/infrastructure/next.types';
+import { NextPageWithLayout } from 'src/shared/models/next.types';
 import { useIsMutating } from 'react-query';
-import { FullLoader } from '../src/system/app/internal/components/Loader/Full/FullLoader';
-import { LoginForm } from '../src/system/app/internal/components/LoginForm/LoginForm';
-import { NoLayout } from '../src/system/app/internal/components/NoLayout';
-import { LOGIN_KEY } from '../src/system/app/internal/hooks/useLoginMutation';
+import { LoginForm } from '../src/features/login/ui/LoginForm/LoginForm';
+import { LOGIN_KEY } from '../src/entities/user/models/auth/useLoginMutation';
+import { FullLoader } from '../src/shared/ui/Loader/Full/FullLoader';
+import { NoLayout } from '../src/shared/ui/NoLayout';
 
 const LoginPage: NextPageWithLayout = () => {
   const isLoading = useIsMutating(LOGIN_KEY) > 0;

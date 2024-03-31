@@ -1,6 +1,6 @@
 import React from 'react';
-import { NoLayout } from 'src/system/app/internal/components/NoLayout';
-import { NextPageWithLayout } from '../src/system/infrastructure/next.types';
+import { NextPageWithLayout } from '../src/shared/models/next.types';
+import { NoLayout } from '../src/shared/ui/NoLayout';
 
 const MaintenancePage: NextPageWithLayout = (): React.ReactElement => (
   <>403: Abort access</>

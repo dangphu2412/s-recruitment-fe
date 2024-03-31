@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
-import { ContentLayout } from 'src/system/app/internal/components/Box';
-import { ContentHeader } from 'src/system/app/internal/components/Header';
-import { RoleSettings } from 'src/user/app/components/RoleSettings/RoleSettings';
+import { ContentHeader } from '../../../src/shared/ui/Header';
+import { ContentLayout } from '../../../src/shared/ui/Box';
+import { RoleSettings } from '../../../src/entities/user/ui/components/RoleSettings/RoleSettings';
 
 export default function RoleSettingsPage(): ReactElement {
   return (
