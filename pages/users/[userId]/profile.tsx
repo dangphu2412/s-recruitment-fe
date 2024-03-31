@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ContentLayout } from 'src/system/app/internal/components/Box';
-import { ContentHeader } from 'src/system/app/internal/components/Header';
-import { useQueryMyProfile } from 'src/user/app/hooks/data/useQueryUserDetail';
-import { normalizeParam } from 'src/system/app/internal/utils/router.utils';
-import { UserDetailSection } from 'src/user/app/components/UserDetailSection/UserDetailSection';
+import { normalizeParam } from '../../../src/shared/models/utils/router.utils';
+import { ContentLayout } from '../../../src/shared/ui/Box';
+import { ContentHeader } from '../../../src/shared/ui/Header';
+import { UserDetailSection } from '../../../src/entities/user/ui/components/UserDetailSection/UserDetailSection';
+import { useQueryMyProfile } from '../../../src/entities/user/features/hooks/data/useQueryUserDetail';
 
 export default function UserProfile(): ReactElement {
   const {

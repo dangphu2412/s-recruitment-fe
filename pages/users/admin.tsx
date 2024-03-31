@@ -1,11 +1,11 @@
 import { ReactElement } from 'react';
-import { PaginationContainer } from 'src/user/app/components/AdminTable/PaginationContainer/PaginationContainer';
-import { TableHeaderContainer } from 'src/user/app/components/AdminTable/TableHeader/TableHeaderContainer';
-import { AdminContainer } from 'src/user/app/containers/AdminContainer/AdminContainer';
-import { FilterBar } from 'src/user/app/components/AdminTable/FilterBar/FilterBar';
-import { FullLoader } from 'src/system/app/internal/components/Loader/Full/FullLoader';
-import { AdminTable } from 'src/user/app/components/AdminTable/AdminTable';
-import { useUserOverview } from '../../src/user/app/hooks/data/useUserOverview';
+import { useUserOverview } from '../../src/entities/user/features/hooks/data/useUserOverview';
+import { AdminContainer } from '../../src/entities/user/ui/containers/AdminContainer/AdminContainer';
+import { FullLoader } from '../../src/shared/ui/Loader/Full/FullLoader';
+import { TableHeaderContainer } from '../../src/entities/user/ui/components/AdminTable/TableHeader/TableHeaderContainer';
+import { FilterBar } from '../../src/entities/user/ui/components/AdminTable/FilterBar/FilterBar';
+import { PaginationContainer } from '../../src/entities/user/ui/components/AdminTable/PaginationContainer/PaginationContainer';
+import { AdminTable } from '../../src/entities/user/ui/components/AdminTable/AdminTable';
 
 export default function AdministratorPage(): ReactElement {
   const { data, isLoading } = useUserOverview();

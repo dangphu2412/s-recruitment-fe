@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { tokenManager } from 'src/system/app/internal/services/token-manager';
-import { NoLayout } from 'src/system/app/internal/components/NoLayout';
-import { authApiClient } from 'src/system/app/internal/services/auth-api-client';
-import { persistentStorage } from '../src/system/app/internal/services/persistent.storage';
-import { NextPageWithLayout } from '../src/system/infrastructure/next.types';
+import { NextPageWithLayout } from '../src/shared/models/next.types';
+import { persistentStorage } from '../src/shared/models/services/persistent.storage';
+import { authApiClient } from '../src/shared/models/services/auth-api-client';
+import { tokenManager } from '../src/shared/models/services';
+import { NoLayout } from '../src/shared/ui/NoLayout';
 
 const LogOutPage: NextPageWithLayout = () => {
   const { replace } = useRouter();

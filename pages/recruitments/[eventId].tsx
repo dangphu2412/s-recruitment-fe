@@ -1,9 +1,5 @@
 import React, { ReactElement, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useQueryRecruitmentEventDetail } from '../../src/recruitment/app/hooks/useQueryRecruitmentEventDetail';
-import { normalizeParam } from '../../src/system/app/internal/utils/router.utils';
-import { ContentLayout } from '../../src/system/app/internal/components/Box';
-import { TitleLabel } from '../../src/system/app/internal/components/Text/TitleLabel';
 import {
   Grid,
   GridItem,
@@ -14,9 +10,13 @@ import {
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import { Table } from 'src/system/app/internal/components/Table';
 import { Column, Row } from 'react-table';
-import { EmployeeMarkerModal } from '../../src/recruitment/app/components/containers/EmployeeMarker/EmployeeMarkerModal';
+import { normalizeParam } from '../../src/shared/models/utils/router.utils';
+import { useQueryRecruitmentEventDetail } from '../../src/entities/recruitment/ui/hooks/useQueryRecruitmentEventDetail';
+import { ContentLayout } from '../../src/shared/ui/Box';
+import { EmployeeMarkerModal } from '../../src/entities/recruitment/ui/components/containers/EmployeeMarker/EmployeeMarkerModal';
+import { TitleLabel } from '../../src/shared/ui/Text/TitleLabel';
+import { Table } from 'src/shared/ui/Table';
 
 export default function RecruitmentEventDetailPage(): ReactElement {
   const { query } = useRouter();

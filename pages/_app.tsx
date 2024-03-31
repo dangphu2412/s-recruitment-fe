@@ -1,9 +1,9 @@
 import '../styles/globals.scss';
 import '../styles/typography.module.scss';
-import { SystemProvider } from 'src/system/infrastructure/providers/system.provider';
-import { AppPropsWithLayout } from 'src/system/infrastructure/next.types';
-import { useHandleError } from '../src/system/app/internal/hooks/useHandleError';
-import { AdminLayout } from '../src/system/app/internal/components/AdminLayout/AdminLayout';
+import { SystemProvider } from 'src/shared/models/system-provider/system.provider';
+import { AppPropsWithLayout } from 'src/shared/models/next.types';
+import { AdminLayout } from '../src/shared/ui/AdminLayout/AdminLayout';
+import { useHandleError } from '../src/shared/models/error/useHandleError';
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const handleError = useHandleError();
