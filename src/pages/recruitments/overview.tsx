@@ -1,14 +1,25 @@
 import React, { ReactElement } from 'react';
 import { FullLoader } from '../../shared/ui/Loader/Full/FullLoader';
-import { ContentLayout } from '../../shared/ui/Box';
-import { RecruitmentHeader } from '../../entities/recruitment/ui/components/containers/RecruitmentHeader/RecruitmentHeader';
-import { RecruitmentEventTable } from '../../entities/recruitment/ui/components/containers/RecruitmentEventTable/RecruitmentEventTable';
+import { ContentLayout } from '../../shared/ui';
+import { RecruitmentEventTable } from '../../features/recruitment/recruitment-event-table/ui/RecruitmentEventTable/RecruitmentEventTable';
+import { ContentHeader } from '../../shared/ui/Header';
+import { RecruitmentActionContainer } from 'src/features/recruitment/add-event';
+import { Flex } from '@chakra-ui/react';
 
 export default function RecruitmentOverviewPage(): ReactElement {
   return (
     <ContentLayout>
       <FullLoader isLoading={false} />
-      <RecruitmentHeader />
+      <Flex justifyContent="space-between" className="pb-2">
+        <div>
+          <ContentHeader
+            main={'Recruitment management'}
+            brief={'Where you can create, update and change recruitment events'}
+          />
+        </div>
+
+        <RecruitmentActionContainer />
+      </Flex>
       <RecruitmentEventTable />
     </ContentLayout>
   );

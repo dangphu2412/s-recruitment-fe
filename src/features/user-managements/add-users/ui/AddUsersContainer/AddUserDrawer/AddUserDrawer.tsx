@@ -20,8 +20,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { mixed, object, string } from 'yup';
 import { CreateUserType } from 'src/entities/user/config/admin-management.constants';
 import { useMutateCreateUser } from '../../../../../../entities/user/features/hooks/data/useMutateCreateUser';
-import { useQueryMonthlyMoneyConfigs } from '../../../../../../entities/monthly-money/ui/hooks';
 import { FullLoader } from '../../../../../../shared/ui/Loader/Full/FullLoader';
+import { useQueryMonthlyMoneyConfigs } from 'src/entities/monthly-money/models';
 
 export type CreateUserInputs = {
   createType: CreateUserType;
