@@ -5,7 +5,6 @@ import {
   formatDate,
   getFilterDateRange
 } from '../../../../shared/models/utils/date.utils';
-import { initialPaginationState } from '../../../../shared/models/pagination/pagination.reducer';
 import { FilterKey } from '../../../../shared/config/constants';
 import { FilterParam } from '../../../../shared/models/filter.api';
 import { isNil } from '../../../../shared/models/utils';
@@ -15,8 +14,8 @@ export function getInitialUserState(): AdminState {
 
   return {
     pagination: {
-      page: initialPaginationState.page,
-      size: initialPaginationState.pageSize
+      page: 1,
+      size: 10
     },
     filters: {
       query: {
