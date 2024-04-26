@@ -5,19 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/builder-job.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/builder-job.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/pull-request-check-workflow.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pull-request-check-workflow.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/setup-packages-job.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/setup-packages-job.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/models/useAdminColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/models/useAdminColumns.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/AdminTable/AdminTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/UsersOverviewTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/AdminTable/Cell/Cell.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/Cell.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/AdminTable/Cell/MoreActionCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/MoreActionCell.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/AdminTable/Cell/PaidCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/PaidCell.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/AdminTable/Cell/RoleCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/RoleCell.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/AdminTable/Cell/StatusCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/StatusCell.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/AdminTable/Cell/UsernameCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UsernameCell.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/admin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +36,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "refactor/separate-user-features",
+    "git-widget-placeholder": "feature/upgrade-nextjs",
     "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/user/hooks/data",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -92,7 +84,7 @@
       <scripts>
         <script value="dev" />
       </scripts>
-      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v16.16.0/bin/node" />
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node" />
       <envs />
       <method v="2" />
     </configuration>
@@ -241,5 +233,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
