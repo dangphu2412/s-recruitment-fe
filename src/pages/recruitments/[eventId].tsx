@@ -12,11 +12,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Column, Row } from 'react-table';
 import { normalizeParam } from '../../shared/models/utils/router.utils';
-import { useQueryRecruitmentEventDetail } from '../../entities/recruitment/ui/hooks/useQueryRecruitmentEventDetail';
-import { ContentLayout } from '../../shared/ui/Box';
-import { EmployeeMarkerModal } from '../../entities/recruitment/ui/components/containers/EmployeeMarker/EmployeeMarkerModal';
+import { ContentLayout } from '../../shared/ui';
+import { EmployeeMarkerModal } from '../../features/recruitment/employee-maker/ui/EmployeeMarker/EmployeeMarkerModal';
 import { TitleLabel } from '../../shared/ui/Text/TitleLabel';
 import { Table } from 'src/shared/ui/Table';
+import { useQueryRecruitmentEventDetail } from 'src/entities/recruitment/models';
 
 export default function RecruitmentEventDetailPage(): ReactElement {
   const { query } = useRouter();

@@ -4,7 +4,7 @@ import {
   RecruitmentApiClient,
   RecruitmentEvent,
   RecruitmentEventDetail
-} from '../models/recruitment.usecase';
+} from './recruitment.usecase';
 import { authorizedHttpClient } from '../../../shared/api/factories/http-client.factories';
 import { Page } from '../../../shared/models';
 

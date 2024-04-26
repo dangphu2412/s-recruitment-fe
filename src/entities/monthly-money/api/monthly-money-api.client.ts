@@ -1,11 +1,19 @@
 import {
-  MonthlyMoneyConfig,
-  PatchUserPaidMoneyRequest
-} from 'src/entities/monthly-money/models/monthly-money.types';
-import {
   authorizedHttpClient,
   httpClient
 } from '../../../shared/api/factories/http-client.factories';
+
+export type MonthlyMoneyConfig = {
+  id: number;
+  amount: number;
+  monthRange: number;
+};
+
+export type UpdateUserPaidMoneyRequest = {
+  userId: string;
+  operationFeeId: number;
+  newPaid: number;
+};
 
 export const monthlyMoneyApiClient = {
   getAllConfigs(): Promise<MonthlyMoneyConfig[]> {
@@ -14,7 +22,7 @@ export const monthlyMoneyApiClient = {
       url: '/monthly-money-configs'
     });
   },
-  updatePaidMoney(paidMoneyRequest: PatchUserPaidMoneyRequest): Promise<void> {
+  updatePaidMoney(paidMoneyRequest: UpdateUserPaidMoneyRequest): Promise<void> {
     return authorizedHttpClient.request({
       method: 'patch',
       url: `/users/${paidMoneyRequest.userId}/monthly-moneys`,

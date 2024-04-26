@@ -17,9 +17,9 @@ import {
 import classNames from 'classnames';
 import { OperationFee } from 'src/entities/monthly-money/models';
 import classes from './Cell.module.scss';
-import { useMutateUpdatePaidMoney } from '../../../../../../entities/user/features/hooks/data/useMutateUpdatePaidMoney';
-import { UserManagementView } from '../../../../../../entities/user/models/user/user.type';
-import { useNotify } from '../../../../../../shared/models/notify/useNotify';
+import { UserManagementView } from 'src/entities/user/models/user/user.type';
+import { useNotify } from 'src/shared/models/notify';
+import { useUpdatePaidMoney } from 'src/entities/monthly-money/models';
 
 export function PaidCell({
   row
@@ -33,7 +33,7 @@ export function PaidCell({
 
   const notify = useNotify();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { mutate: updatePaidMoney } = useMutateUpdatePaidMoney();
+  const { mutate: updatePaidMoney } = useUpdatePaidMoney();
 
   function handlePaidIncrease() {
     const newPaid = currentPaid + (amountPerChange as number);
