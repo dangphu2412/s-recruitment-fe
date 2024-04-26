@@ -1,24 +1,29 @@
-import { ReactElement } from 'react';
-import { useUserOverview } from '../../entities/user/features/hooks/data/useUserOverview';
-import { AdminContainer } from '../../features/user-managements/ui/AdminContainer/AdminContainer';
-import { FullLoader } from '../../shared/ui/Loader/Full/FullLoader';
-import { AdminTable } from '../../features/user-managements/ui/AdminTable/AdminTable';
-import { TableHeaderContainer } from '../../features/user-managements/ui/AdminTable/TableHeader/TableHeaderContainer';
-import { FilterBar } from '../../features/user-managements/ui/AdminTable/FilterBar/FilterBar';
-import { PaginationContainer } from '../../features/user-managements/ui/AdminTable/PaginationContainer/PaginationContainer';
+import React, { ReactElement } from 'react';
+import { Flex } from '@chakra-ui/react';
+import { ContentLayout } from 'src/shared/ui/Box';
+import { ContentHeader } from 'src/shared/ui/Header';
+import { AddUsersContainer } from '../../features/user-managements/add-users';
+import { SearchUsersContainer } from '../../features/user-managements/search-users';
+import { PaginateUsersContainer } from '../../features/user-managements/paginate-users';
+import { UsersOverviewTable } from '../../features/user-managements/users-table';
 
 export default function AdministratorPage(): ReactElement {
-  const { data, isLoading } = useUserOverview();
-
   return (
-    <AdminContainer>
-      <FullLoader isLoading={isLoading} />
+    <ContentLayout>
+      <Flex justifyContent="space-between" className="pb-2">
+        <div>
+          <ContentHeader
+            main={'Administrator management'}
+            brief={'Where you can create, update and change user active'}
+          />
+        </div>
 
-      <TableHeaderContainer />
-      <FilterBar />
-      <PaginationContainer totalRecords={data?.metadata.totalRecords} />
+        <AddUsersContainer />
+      </Flex>
+      <SearchUsersContainer />
+      <PaginateUsersContainer />
 
-      <AdminTable data={data} />
-    </AdminContainer>
+      <UsersOverviewTable />
+    </ContentLayout>
   );
 }
