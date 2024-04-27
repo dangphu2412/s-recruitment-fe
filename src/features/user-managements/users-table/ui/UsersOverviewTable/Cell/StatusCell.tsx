@@ -1,8 +1,8 @@
 import React from 'react';
 import { CellProps } from 'react-table';
 import { Switch } from '@chakra-ui/react';
-import { useMutateUserActive } from '../../../../../../entities/user/features/hooks/data/useMutateUserActive';
-import { UserManagementView } from '../../../../../../entities/user/models/user/user.type';
+import { UserManagementView } from '../../../models/useAdminColumns';
+import { useMutateUserActive } from '../../../../../../entities/user/models';
 
 export function StatusCell({
   value,

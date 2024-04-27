@@ -12,7 +12,7 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { FilterDialog } from './FilterDialog/FilterDialog';
 import { SearchInput } from './SearchInput/SearchInput';
-import { userActions } from '../../../../../entities/user/models/store/user.slice';
+import { userActions } from 'src/entities/user/models';
 
 export function SearchUsersContainer(): React.ReactElement {
   const dispatch = useDispatch();

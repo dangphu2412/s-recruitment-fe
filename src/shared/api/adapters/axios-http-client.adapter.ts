@@ -11,8 +11,8 @@ import axios, {
   default as AxiosStatic
 } from 'axios';
 import { ClientErrorCode } from '../../config/constants/client-code';
-import { persistentStorage } from 'src/shared/models/services/persistent.storage';
-import { tokenManager } from '../../models/services';
+import { persistentStorage } from 'src/shared/api/services/persistent.storage';
+import { tokenManager } from '../services';
 
 const RenewTokenOnResponseInterceptor = async (error: AxiosError) => {
   const isUnauthorized =

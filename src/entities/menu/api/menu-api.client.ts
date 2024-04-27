@@ -1,4 +1,4 @@
-import { authorizedHttpClient } from '../../../shared/api/factories/http-client.factories';
+import { authorizedHttpClient } from '../../../shared/api';
 
 export type MenuItem = {
   id: string;

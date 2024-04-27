@@ -1,6 +1,6 @@
 import { HttpClientAdapter } from '../adapters/axios-http-client.adapter';
 import { AuthorizedHttpClientAdapter } from '../adapters/authorized-http-client.adapter';
-import { persistentStorage } from 'src/shared/models/services/persistent.storage';
+import { persistentStorage } from 'src/shared/api/services/persistent.storage';
 
 const axios = require('axios').create({
   baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT ?? 'http://localhost:8080'

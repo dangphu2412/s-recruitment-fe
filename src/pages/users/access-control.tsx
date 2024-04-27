@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { ContentLayout } from '../../shared/ui/Box';
-import { AccessControlList } from '../../entities/user/ui/components/AccessControlList/AccessControlList';
+import { ContentLayout } from '../../shared/ui';
+import { AccessControlList } from '../../features/access-controls/access-managements';
 
 export default function AccessControlPage(): ReactElement {
   return (

@@ -1,6 +1,6 @@
 import '../../styles/globals.scss';
 import '../../styles/typography.module.scss';
-import { SystemProvider } from 'src/shared/models/system-provider/system.provider';
+import { SystemProvider } from 'src/config/system-provider/system.provider';
 import { AppPropsWithLayout } from 'src/shared/models/next.types';
 import { AdminLayout } from '../widgets/admin-layout';
 import { useHandleError } from '../shared/models/error/useHandleError';

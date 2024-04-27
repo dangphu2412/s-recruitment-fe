@@ -4,9 +4,9 @@ import { Container, Grid, GridItem, Image } from '@chakra-ui/react';
 import { NextPageWithLayout } from 'src/shared/models/next.types';
 import { useIsMutating } from 'react-query';
 import { LoginForm } from '../features/login/ui/LoginForm/LoginForm';
-import { LOGIN_KEY } from '../entities/user/models/auth/useLoginMutation';
 import { FullLoader } from '../shared/ui/Loader/Full/FullLoader';
 import { NoLayout } from '../shared/ui/NoLayout';
+import { LOGIN_KEY } from '../entities/auth/models';
 
 const LoginPage: NextPageWithLayout = () => {
   const isLoading = useIsMutating(LOGIN_KEY) > 0;

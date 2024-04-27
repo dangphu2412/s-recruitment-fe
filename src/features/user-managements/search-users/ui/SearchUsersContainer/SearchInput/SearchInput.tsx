@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { userActions } from 'src/entities/user/models/store/user.slice';
+import { userActions } from 'src/entities/user/models';
 
 export function SearchInput(): React.ReactElement {
   const dispatch = useDispatch();

@@ -26,7 +26,10 @@ import {
 import { BoxItem } from 'src/shared/models/combobox.api';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
 import { array, number, object, string } from 'yup';
-import { useQueryUsers } from '../../../../../../entities/user/features/hooks/data/useQueryUsers';
+import {
+  getInitialOverviewState,
+  useQueryUsers
+} from '../../../../../../entities/user/models';
 import { CreateRecruitmentEventPayload } from '../../../../../../entities/recruitment/api/recruitment.usecase';
 import {
   CreateRecruitmentEventFormModal,
@@ -36,7 +39,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { useQueryClient } from 'react-query';
-import { getInitialUserState } from '../../../../../../entities/user/models/store/user.slice';
 import { useNotify } from 'src/shared/models/notify';
 import { FullLoader } from '../../../../../../shared/ui/Loader/Full/FullLoader';
 import { MultipleCombobox } from '../../../../../../shared/ui/Combobox/MultipleCombobox';
@@ -102,7 +104,7 @@ export function AddNewEventDrawer({
   });
 
   const { data } = useQueryUsers({
-    ...getInitialUserState()
+    ...getInitialOverviewState()
   });
 
   const examinerItems: BoxItem[] = useMemo(() => {

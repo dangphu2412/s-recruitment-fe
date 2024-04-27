@@ -3,7 +3,7 @@ import {
   HttpRequest,
   HttpResponse
 } from 'src/shared/models/http-client';
-import { PersistentStorage } from '../../models/usecases/persistent-storage';
+import { PersistentStorage } from '../services/persistent.storage';
 
 export class AuthorizedHttpClientAdapter implements HttpClient {
   constructor(

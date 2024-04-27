@@ -11,10 +11,10 @@ import {
 import classes from './LoginForm.module.scss';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { persistentStorage } from '../../../../shared/models/services/persistent.storage';
+import { persistentStorage } from '../../../../shared/api/services/persistent.storage';
 import { LoginModel } from '../../../../shared/models/auth.model';
-import { useNotify } from '../../../../shared/models/notify/useNotify';
-import { useLoginMutation } from '../../../../entities/user/models/auth/useLoginMutation';
+import { useNotify } from '../../../../shared/models/notify';
+import { useLoginMutation } from '../../../../entities/auth/models';
 
 export function LoginForm(): ReactElement {
   const {
