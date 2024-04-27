@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { userActions } from '../../../../../entities/user/models/store/user.slice';
+import {
+  userActions,
+  useUserOverview
+} from '../../../../../entities/user/models';
 import { Paginator } from '../../../../../shared/ui/Pagination/Paginator';
-import { useUserOverview } from '../../../../../entities/user/features/hooks/data/useUserOverview';
 
 export function PaginateUsersContainer(): React.ReactElement {
   const dispatch = useDispatch();

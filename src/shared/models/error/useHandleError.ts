@@ -6,14 +6,15 @@ import {
 } from '../../config/constants/client-code';
 import { useCallback } from 'react';
 import { HttpError } from '../http-client';
-import { useNotify } from '../notify/useNotify';
+import { useNotify } from '../notify';
 
 export interface AppError {
   clientCode: string;
   message: string;
 }
+export type ErrorHandler = (error: unknown) => void;
 
-function transformToAppError(error: AxiosError): AppError {
+function mapToAppError(error: AxiosError): AppError {
   if (!HttpError.isHttpError(error)) {
     return {
       clientCode: ClientErrorCode.UN_HANDLE_ERROR_CLIENT,
@@ -40,7 +41,7 @@ export function useHandleError({
 
   return useCallback(
     (error: any) => {
-      const { clientCode, message } = transformToAppError(error);
+      const { clientCode, message } = mapToAppError(error);
 
       switch (clientCode) {
         case AxiosError.ERR_NETWORK:

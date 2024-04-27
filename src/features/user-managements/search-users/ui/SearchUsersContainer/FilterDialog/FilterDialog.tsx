@@ -13,13 +13,13 @@ import {
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './FilterDialog.module.scss';
-import { userActions } from 'src/entities/user/models/store/user.slice';
+import { userActions } from 'src/entities/user/models';
 import {
   selectJoinedInDates,
   selectMemberType
-} from '../../../../../../entities/user/models/store/user.selector';
+} from '../../../../../../entities/user/models';
 import { MemberType } from '../../../../../../entities/user/config/admin-management.constants';
-import { DatePicker } from '../../../../../../shared/ui/Input';
+import { DatePicker } from '../../../../../../shared/ui';
 
 type FilterItem = {
   key: string;

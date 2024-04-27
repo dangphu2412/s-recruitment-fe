@@ -5,7 +5,7 @@ import {
   RecruitmentEvent,
   RecruitmentEventDetail
 } from './recruitment.usecase';
-import { authorizedHttpClient } from '../../../shared/api/factories/http-client.factories';
+import { authorizedHttpClient } from '../../../shared/api';
 import { Page } from '../../../shared/models';
 
 export const recruitmentApiClient: RecruitmentApiClient = {

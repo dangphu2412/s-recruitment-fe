@@ -5,60 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/entities/menu/models/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/recruitment/api/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/recruitment/models/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/menu/features-menu/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/menu/features-menu/ui/SideBar/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/menu/features-menu/ui/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/recruitment/employee-maker/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/models/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/models/recruitment-event-table.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/models/notify/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/widgets/admin-layout/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/widgets/admin-layout/ui/AdminLayout/AdminLayout.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/menu/api/menu-api.client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/menu/api/menu-api.client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/menu/models/hooks/useQueryMenu.hook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/menu/models/mappers/menu.mapper.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/menu/models/menu.api.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/menu/models/sidebar-menu.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/menu/models/sidebar-menu.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/menu/ui/SideBar/SideBar.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/menu/features-menu/ui/SideBar/SideBar.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/menu/ui/SideBar/SideBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/menu/features-menu/ui/SideBar/SideBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/menu/ui/ToggleMenuButton/ToggleMenuButton.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/admin-layout/ui/ToggleMenuButton/ToggleMenuButton.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/menu/ui/ToggleMenuButton/ToggleMenuButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/admin-layout/ui/ToggleMenuButton/ToggleMenuButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/monthly-money/api/monthly-money-api.client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monthly-money/api/monthly-money-api.client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/monthly-money/models/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monthly-money/models/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/monthly-money/models/monthly-config.types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/monthly-money/models/monthly-money.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monthly-money/models/monthly-money.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/monthly-money/models/operation-fee.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monthly-money/models/operation-fee.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/monthly-money/ui/hooks/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/monthly-money/ui/hooks/useQueryMonthlyMoneyConfigs.hook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment-api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment-api-client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/models/recruitment-event.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/models/recruitment-event.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/models/recruitment.usecase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment.usecase.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/ui/components/containers/EmployeeMarker/EmployeeMarkerModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/employee-maker/ui/EmployeeMarker/EmployeeMarkerModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/ui/components/containers/RecruitmentEventTable/RecruitmentEventTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/ui/RecruitmentEventTable/RecruitmentEventTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/ui/components/containers/RecruitmentHeader/RecruitmentActionContainer/AddNewEventDrawer/AddNewEventDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/RecruitmentActionContainer/AddNewEventDrawer/AddNewEventDrawer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/ui/components/containers/RecruitmentHeader/RecruitmentActionContainer/RecruitmentActionContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/RecruitmentActionContainer/RecruitmentActionContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/ui/components/containers/RecruitmentHeader/RecruitmentHeader.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/ui/hooks/useCreateRecruitmentEventMutation.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/ui/hooks/useMarkEmployeeMutation.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/ui/hooks/useQueryRecruitmentEventDetail.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/ui/hooks/useQueryRecruitmentEvents.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/ui/hooks/useRecruitmentColumns.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/ui/hooks/useRecruitmentEventItems.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/user/features/hooks/data/useMutateUpdatePaidMoney.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/PaidCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/PaidCell.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/recruitments/[eventId].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/recruitments/[eventId].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/recruitments/overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/recruitments/overview.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/ui/AdminLayout/AdminLayout.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/menu/api/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/ui/AdminLayout/AdminLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/admin-layout/ui/AdminLayout/AdminLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/RecruitmentActionContainer/AddNewEventDrawer/AddNewEventDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/RecruitmentActionContainer/AddNewEventDrawer/AddNewEventDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-detail-view/ui/UserDetailSection/UserDetailSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-detail-view/ui/UserDetailSection/UserDetailSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/users/[userId]/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/[userId]/profile.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +36,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "refactor/refactor-user-acl-modules",
     "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/widgets/admin-layout/ui",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -94,6 +45,8 @@
     "nodejs_package_manager_path": "yarn",
     "npm.backend.executor": "Run",
     "npm.dev.executor": "Run",
+    "npm.lint.executor": "Run",
+    "npm.pretty.executor": "Run",
     "prettierjs.PrettierConfiguration.Package": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/prettier",
     "settings.editor.selected.configurable": "settings.javascript.prettier",
     "ts.external.directory.path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/typescript/lib",
@@ -109,14 +62,14 @@
       <recent name="$PROJECT_DIR$/src/recruitment/app/components/containers/RecruitmentEventTable" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/features/recruitment/add-event/ui" />
-      <recent name="$PROJECT_DIR$/src/features/recruitment/add-event" />
-      <recent name="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/ui" />
-      <recent name="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table" />
-      <recent name="$PROJECT_DIR$/src/features/recruitment/employee-maker/ui" />
+      <recent name="$PROJECT_DIR$/src/shared/models/store" />
+      <recent name="$PROJECT_DIR$/src/config" />
+      <recent name="$PROJECT_DIR$/src/shared/config" />
+      <recent name="$PROJECT_DIR$/src/shared" />
+      <recent name="$PROJECT_DIR$/src/shared/api" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.backend">
+  <component name="RunManager" selected="npm.pretty">
     <configuration name="backend" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/../member-management-be/package.json" />
       <command value="run" />
@@ -124,6 +77,16 @@
         <script value="start:dev" />
       </scripts>
       <node-interpreter value="$USER_HOME$/.nvm/versions/node/v16.16.0/bin/node" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
@@ -137,12 +100,38 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="lint" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="lint" />
+      </scripts>
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="pretty" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="pretty" />
+      </scripts>
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="npm.backend" />
+      <item itemvalue="npm.build" />
+      <item itemvalue="npm.lint" />
+      <item itemvalue="npm.pretty" />
       <item itemvalue="npm.dev" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.pretty" />
+        <item itemvalue="npm.lint" />
+        <item itemvalue="npm.build" />
         <item itemvalue="npm.dev" />
       </list>
     </recent_temporary>

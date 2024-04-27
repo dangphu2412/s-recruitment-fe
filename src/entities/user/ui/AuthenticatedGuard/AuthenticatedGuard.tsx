@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactElement, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useUserSession } from '../../models/user/useUserSession';
-import { useLogOut } from '../../models/auth/useLogOut';
+import { useUserSession } from '../../models';
+import { useLogOut } from '../../../auth/models';
 
 export function AuthenticatedGuard({
   children

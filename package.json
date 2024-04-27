@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --fix",
-    "pretty": "prettier --write --config .prettierrc.json {modules,pages,config}/**/*.{ts,tsx}",
+    "pretty": "prettier --write --config .prettierrc.json src/**/*.{ts,tsx}",
     "prepare": "husky install"
   },
   "dependencies": {

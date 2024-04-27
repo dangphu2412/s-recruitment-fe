@@ -17,9 +17,9 @@ import {
 import classNames from 'classnames';
 import { OperationFee } from 'src/entities/monthly-money/models';
 import classes from './Cell.module.scss';
-import { UserManagementView } from 'src/entities/user/models/user/user.type';
 import { useNotify } from 'src/shared/models/notify';
 import { useUpdatePaidMoney } from 'src/entities/monthly-money/models';
+import { UserManagementView } from '../../../models/useAdminColumns';
 
 export function PaidCell({
   row

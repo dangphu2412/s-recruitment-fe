@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
 import { useAdminColumns } from '../../models/useAdminColumns';
-import { Table } from '../../../../../shared/ui/Table';
+import { Table } from '../../../../../shared/ui';
 import { EMPTY_ARRAY } from '../../../../../shared/config/constants';
-import { useUserOverview } from '../../../../../entities/user/features/hooks/data/useUserOverview';
+import { useUserOverview } from '../../../../../entities/user/models';
 
 export function UsersOverviewTable(): ReactElement {
   const { data } = useUserOverview();
