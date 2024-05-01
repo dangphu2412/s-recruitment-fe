@@ -1,9 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
-import { Container, Grid, GridItem, Image } from '@chakra-ui/react';
+import { Container, Grid, GridItem } from '@chakra-ui/react';
 import { NextPageWithLayout } from 'src/shared/models/next.types';
 import { useIsMutating } from 'react-query';
-import { LoginForm } from '../features/login/ui/LoginForm/LoginForm';
+import { LoginForm, RightBanner } from '../features/login/ui';
 import { FullLoader } from '../shared/ui/Loader/Full/FullLoader';
 import { NoLayout } from '../shared/ui/NoLayout';
 import { LOGIN_KEY } from '../entities/auth/models';
@@ -26,13 +26,7 @@ const LoginPage: NextPageWithLayout = () => {
           </GridItem>
 
           <GridItem>
-            <div>
-              <Image
-                className="h-screen"
-                src="/login-background.jpg"
-                alt="Background image"
-              />
-            </div>
+            <RightBanner />
           </GridItem>
         </Grid>
       </Container>

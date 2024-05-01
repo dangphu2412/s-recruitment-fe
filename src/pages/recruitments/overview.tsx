@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { FullLoader } from '../../shared/ui/Loader/Full/FullLoader';
-import { ContentLayout } from '../../shared/ui';
+import { Card } from '../../shared/ui';
 import { RecruitmentEventTable } from '../../features/recruitment/recruitment-event-table/ui/RecruitmentEventTable/RecruitmentEventTable';
 import { ContentHeader } from '../../shared/ui/Header';
 import { RecruitmentActionContainer } from 'src/features/recruitment/add-event';
@@ -8,7 +8,7 @@ import { Flex } from '@chakra-ui/react';
 
 export default function RecruitmentOverviewPage(): ReactElement {
   return (
-    <ContentLayout>
+    <Card>
       <FullLoader isLoading={false} />
       <Flex justifyContent="space-between" className="pb-2">
         <div>
@@ -21,6 +21,6 @@ export default function RecruitmentOverviewPage(): ReactElement {
         <RecruitmentActionContainer />
       </Flex>
       <RecruitmentEventTable />
-    </ContentLayout>
+    </Card>
   );
 }

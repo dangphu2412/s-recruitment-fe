@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 
 type Props = BoxProps;
 
-export const ContentLayout = forwardRef(function ContentLayout(
+export const Card = forwardRef(function ContentLayout(
   { children, ...rest }: Props,
   ref
 ): ReactElement {
