@@ -50,7 +50,7 @@ export function AdminLayout({
         <Box flex={1}>
           <Header isMenuHidden={isSideBarHidden} />
 
-          <div className="p-6">{children}</div>
+          <div className="p-6 min-h-[400px]">{children}</div>
 
           <Footer />
         </Box>

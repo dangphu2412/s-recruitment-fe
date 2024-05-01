@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const colors = require('tailwindcss/colors');
+//https://stackoverflow.com/questions/64872861/how-to-use-css-variables-with-tailwind-css
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -11,12 +12,14 @@ module.exports = {
       'footer-height': '6rem'
     },
     colors: {
-      success: colors.green['500'],
-      primary: '#cb0c9f',
-      disable: colors.gray['500'],
-      white: '#ffffff',
-      black: '#000000',
-      gray: colors.gray
+      success: 'var(--bs-success)',
+      primary: 'var(--bs-primary)',
+      disable: 'var(--bs-gray)',
+      white: 'var(--bs-white)',
+      black: 'var(--bs-gray-900)',
+      gray: 'var(--bs-gray-900)',
+      body: 'var(--bs-body-color)',
+      dark: 'var(--bs-dark)'
     }
   },
   plugins: []

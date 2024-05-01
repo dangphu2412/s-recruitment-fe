@@ -144,7 +144,7 @@ export function PaidCell({
           </PopoverContent>
         </Popover>
       ) : (
-        <span className={classNames(classes['cell-status'], 'bg-success')}>
+        <span className={classNames(classes['cell-status'], 'bg-primary')}>
           New Member
         </span>
       )}

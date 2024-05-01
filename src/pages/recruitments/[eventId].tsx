@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Column, Row } from 'react-table';
 import { normalizeParam } from '../../shared/models/utils/router.utils';
-import { ContentLayout } from '../../shared/ui';
+import { Card } from '../../shared/ui';
 import { EmployeeMarkerModal } from '../../features/recruitment/employee-maker/ui/EmployeeMarker/EmployeeMarkerModal';
 import { TitleLabel } from '../../shared/ui/Text/TitleLabel';
 import { Table } from 'src/shared/ui/Table';
@@ -83,7 +83,7 @@ export default function RecruitmentEventDetailPage(): ReactElement {
   }
 
   return (
-    <ContentLayout className={'space-y-4'}>
+    <Card className={'space-y-4'}>
       {isOpen && (
         <EmployeeMarkerModal
           standards={scoringStandards}
@@ -128,6 +128,6 @@ export default function RecruitmentEventDetailPage(): ReactElement {
         items={employeeItems}
         onRowClick={handleClickDetail}
       />
-    </ContentLayout>
+    </Card>
   );
 }

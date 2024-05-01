@@ -3,18 +3,22 @@ import { useForm } from 'react-hook-form';
 import {
   Button,
   FormControl,
-  FormLabel,
+  FormErrorMessage,
   Heading,
   Input,
   Text
 } from '@chakra-ui/react';
+import { FormLabel } from 'src/shared/ui';
 import classes from './LoginForm.module.scss';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { persistentStorage } from '../../../../shared/api/services/persistent.storage';
-import { LoginModel } from '../../../../shared/models/auth.model';
 import { useNotify } from '../../../../shared/models/notify';
 import { useLoginMutation } from '../../../../entities/auth/models';
+
+type LoginModel = {
+  username: string;
+  password: string;
+};
 
 export function LoginForm(): ReactElement {
   const {
@@ -52,15 +56,18 @@ export function LoginForm(): ReactElement {
   return (
     <>
       <div className={classes['form-container']}>
-        <Heading size="md" className="text-left mb-3" color="primary">
+        <Heading as="h3" size="lg" className={classes['welcome-text']}>
           Welcome back
         </Heading>
 
-        <Text fontSize="sm" className="text-left mb-5">
+        <Text className="mb-5 text-body">
           Enter your username and password to sign in
         </Text>
 
-        <form onSubmit={handleSubmit(submitResolver)}>
+        <form
+          className={classes['login-form']}
+          onSubmit={handleSubmit(submitResolver)}
+        >
           <FormControl isInvalid={!!errors?.username?.message} isRequired>
             <FormLabel htmlFor="username">Username</FormLabel>
             <Input
@@ -68,13 +75,16 @@ export function LoginForm(): ReactElement {
               type="text"
               placeholder="Username"
               {...register('username', {
-                minLength: 4,
-                required: true
+                minLength: {
+                  value: 4,
+                  message: 'Username must be at least 4 characters long'
+                },
+                required: 'Username is required'
               })}
             />
 
             {errors.username && (
-              <div>Username required longer than 6 character</div>
+              <FormErrorMessage>{errors.username.message}</FormErrorMessage>
             )}
           </FormControl>
 
@@ -85,28 +95,27 @@ export function LoginForm(): ReactElement {
               type="password"
               placeholder="Password"
               {...register('password', {
-                minLength: 6,
-                required: true
+                minLength: {
+                  value: 6,
+                  message: 'Password must be at least 6 characters long'
+                },
+                required: 'Password is required'
               })}
             />
             {errors.password && (
-              <div>Password required longer than 6 character</div>
+              <FormErrorMessage>{errors.password.message}</FormErrorMessage>
             )}
           </FormControl>
 
           <Button
-            variant="outline"
-            colorScheme="teal"
+            variant="solid"
+            colorScheme="twitter"
             type="submit"
-            className="w-full mt-5"
+            className={classes['submit-btn']}
           >
             Sign In
           </Button>
         </form>
-
-        <Text fontSize="sm" className="text-center my-5">
-          <Link href={'register'}>Register now</Link>
-        </Text>
       </div>
     </>
   );
