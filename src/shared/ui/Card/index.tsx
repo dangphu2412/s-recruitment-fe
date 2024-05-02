@@ -1,10 +1,11 @@
 import { Box as ChakraBox, BoxProps, forwardRef } from '@chakra-ui/react';
 import { ReactElement } from 'react';
+import classNames from 'classnames';
 
 type Props = BoxProps;
 
 export const Card = forwardRef(function ContentLayout(
-  { children, ...rest }: Props,
+  { className, children, ...rest }: Props,
   ref
 ): ReactElement {
   return (
@@ -13,6 +14,7 @@ export const Card = forwardRef(function ContentLayout(
       borderRadius="1rem"
       paddingY="2rem"
       paddingX="2rem"
+      className={classNames('shadow-highlight', className)}
       {...rest}
       ref={ref}
     >

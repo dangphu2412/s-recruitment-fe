@@ -12,7 +12,7 @@ import {
   Text
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faStore, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
@@ -25,10 +25,6 @@ type UserActionItem = {
   text: React.ReactNode;
   link: string;
 };
-
-// If update css pls remember to change this
-// TODO: Update handle of hook to track on element top position
-const HEADER_TOP_SPACE = 24;
 
 export function Header({ isMenuHidden }: Props): React.ReactElement {
   const router = useRouter();
@@ -49,43 +45,10 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
     }
   ];
 
-  const [isHeaderLeftTop, setIsHeaderLeftTop] = React.useState(false);
-
-  React.useEffect(() => {
-    function handleDisplayHeader() {
-      if (!headerRef.current) {
-        return;
-      }
-
-      const isHeaderLeaving =
-        headerRef.current.offsetTop > HEADER_TOP_SPACE && !isHeaderLeftTop;
-
-      if (isHeaderLeaving) {
-        setIsHeaderLeftTop(true);
-        return;
-      }
-
-      const isHeaderBackToTop =
-        headerRef.current.offsetTop === HEADER_TOP_SPACE && isHeaderLeftTop;
-      if (isHeaderBackToTop) {
-        setIsHeaderLeftTop(false);
-      }
-    }
-
-    handleDisplayHeader();
-
-    window.addEventListener('scroll', handleDisplayHeader);
-
-    return () => window.removeEventListener('scroll', handleDisplayHeader);
-  }, [isHeaderLeftTop]);
-
   return (
     <Flex
       ref={headerRef}
-      className={classNames(
-        styles['header-wrapper'],
-        isHeaderLeftTop && styles.blur
-      )}
+      className={classNames(styles['header-wrapper'])}
       justifyContent="space-between"
       alignItems="center"
       paddingX="1rem"
@@ -98,12 +61,6 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
           fontSize="sm"
           marginLeft={isMenuHidden ? '2rem' : 0}
         >
-          <BreadcrumbItem>
-            <BreadcrumbLink href="#">
-              <FontAwesomeIcon icon={faStore} />
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-
           <BreadcrumbItem>
             <BreadcrumbLink href="#">Pages</BreadcrumbLink>
           </BreadcrumbItem>
@@ -132,7 +89,7 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
         >
           <Menu>
             <MenuButton cursor="pointer">
-              <FontAwesomeIcon icon={faUser} className="mr-2" />
+              <FontAwesomeIcon icon={faUser} className="text-body" />
             </MenuButton>
             <MenuList>
               {userActionItems.map(item => (
@@ -145,10 +102,6 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
               ))}
             </MenuList>
           </Menu>
-
-          <div>
-            <FontAwesomeIcon icon={faBell} />
-          </div>
         </Flex>
       </Box>
     </Flex>

@@ -1,10 +1,10 @@
 import React, { PropsWithChildren } from 'react';
 import { Box, Flex } from '@chakra-ui/react';
-import { Header } from '../../../../shared/ui/Header';
 import { AuthenticatedGuard } from '../../../../entities/user/ui/AuthenticatedGuard/AuthenticatedGuard';
 import { Footer } from '../../../../shared/ui/Footer';
 import { SideBar } from '../../../../features/menu/features-menu';
 import { ToggleMenuButton } from '../ToggleMenuButton/ToggleMenuButton';
+import { Header } from '../Header/Header';
 
 type AdminLayoutProps = PropsWithChildren;
 
@@ -39,7 +39,7 @@ export function AdminLayout({
         onMouseLeave={handleMouseLeaveToggleItem}
       />
 
-      <Flex h="100vh" gap={4} paddingY="1.5rem">
+      <Flex h="100vh" gap={4}>
         <SideBar
           isSideBarHidden={isSideBarHidden}
           isHovering={isSideBarHovering}

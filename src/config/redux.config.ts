@@ -3,12 +3,14 @@ import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
 import { userStorage } from 'src/entities/user/models';
 import { systemStorage } from 'src/shared/models/store';
+import { menuStorage } from '../entities/menu/models';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const appStoreReducer = combineReducers({
   ...userStorage,
-  ...systemStorage
+  ...systemStorage,
+  ...menuStorage
 });
 
 function* sideEffectRegistry() {
