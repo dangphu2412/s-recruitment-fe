@@ -5,36 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/features/login/ui/RightBanner/RightBanner.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/login/ui/RightBanner/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/login/ui/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/ui/Form/FormLabel/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/ui/Form/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/color.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/chakra-ui.config.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/system-provider/system.provider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/system-provider/system.provider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/login/ui/LoginForm/LoginForm.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/login/ui/LoginForm/LoginForm.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/login/ui/LoginForm/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/login/ui/LoginForm/LoginForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/PaidCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/PaidCell.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/recruitments/[eventId].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/recruitments/[eventId].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/recruitments/overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/recruitments/overview.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/[userId]/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/[userId]/profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/[userId]/role-settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/[userId]/role-settings.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/access-control.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/access-control.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/admin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/models/auth.model.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/models/context.api.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/models/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/models/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/ui/Box/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Card/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/ui/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/widgets/admin-layout/ui/AdminLayout/AdminLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/admin-layout/ui/AdminLayout/AdminLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Home.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/globals.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,28 +28,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;refactor/migrate-to-self-built-component&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/widgets/admin-layout/ui&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;npm.backend.executor&quot;: &quot;Run&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;npm.lint.executor&quot;: &quot;Run&quot;,
-    &quot;npm.pretty.executor&quot;: &quot;Run&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "refactor/enhance-ui-sidebar",
+    "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/widgets/admin-layout/ui",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "npm.backend.executor": "Run",
+    "npm.dev.executor": "Run",
+    "npm.lint.executor": "Run",
+    "npm.pretty.executor": "Run",
+    "prettierjs.PrettierConfiguration.Package": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/prettier",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "ts.external.directory.path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/widgets/admin-layout/ui" />
@@ -87,11 +59,11 @@
       <recent name="$PROJECT_DIR$/src/recruitment/app/components/containers/RecruitmentEventTable" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/widgets/admin-layout/ui/Header" />
       <recent name="$PROJECT_DIR$/src/shared/models/store" />
       <recent name="$PROJECT_DIR$/src/config" />
       <recent name="$PROJECT_DIR$/src/shared/config" />
       <recent name="$PROJECT_DIR$/src/shared" />
-      <recent name="$PROJECT_DIR$/src/shared/api" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">

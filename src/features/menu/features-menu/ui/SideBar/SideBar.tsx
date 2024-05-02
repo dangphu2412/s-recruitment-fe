@@ -10,15 +10,9 @@ import {
   Text
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from 'next/router';
-import isEmpty from 'lodash/isEmpty';
 import classNames from 'classnames';
 import styles from './SideBar.module.scss';
-import {
-  mapMenuItemToSidebarMenus,
-  SidebarMenuItem,
-  useQueryMenu
-} from 'src/entities/menu/models';
+import { useMenu } from 'src/entities/menu/models';
 
 type Props = Omit<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
@@ -33,22 +27,7 @@ export function SideBar({
   isHovering,
   ...rest
 }: Props): React.ReactElement {
-  const { push } = useRouter();
-  const { menus } = useQueryMenu();
-
-  const sidebarMenuItems = React.useMemo(
-    () => mapMenuItemToSidebarMenus(menus),
-    [menus]
-  );
-
-  const handleNavigate = React.useCallback(
-    (item: SidebarMenuItem) => {
-      if (item.accessLink && isEmpty(item.subMenus)) {
-        push(item.accessLink);
-      }
-    },
-    [push]
-  );
+  const { items, selectMenu, goToDashboard } = useMenu();
 
   return (
     <aside
@@ -59,8 +38,13 @@ export function SideBar({
       )}
       {...rest}
     >
-      <Box marginLeft="1rem" marginTop="0.5rem" marginBottom="1.5rem">
-        <Text align="left" fontSize="lg">
+      <Box
+        marginLeft="1rem"
+        marginTop="0.5rem"
+        marginBottom="1.5rem"
+        onClick={goToDashboard}
+      >
+        <Text align="left" fontSize="lg" className={'cursor-pointer'}>
           Admin Dashboard
         </Text>
       </Box>
@@ -69,7 +53,7 @@ export function SideBar({
 
       <Box display={{ base: 'none', md: 'block' }}>
         <Accordion allowToggle>
-          {sidebarMenuItems?.map(item => {
+          {items?.map(item => {
             return (
               <AccordionItem borderY="none" key={item.id}>
                 {({ isExpanded }) => (
@@ -79,7 +63,7 @@ export function SideBar({
                       paddingX="1rem"
                       marginBottom="0.375rem"
                       className={`${isExpanded ? styles['active-menu'] : ''}`}
-                      onClick={() => handleNavigate(item)}
+                      onClick={() => selectMenu(item)}
                     >
                       {!!item?.icon && (
                         <Box
@@ -123,7 +107,7 @@ export function SideBar({
                                 paddingLeft={4}
                                 fontWeight="light"
                                 cursor="pointer"
-                                onClick={() => handleNavigate(subMenuItem)}
+                                onClick={() => selectMenu(subMenuItem)}
                               >
                                 {subMenuItem.name}
                               </ListItem>
