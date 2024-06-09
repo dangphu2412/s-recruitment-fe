@@ -9,7 +9,8 @@ const nextConfig = {
           as: '*.js'
         }
       }
-    }
+    },
+    optimizePackageImports: ['@chakra-ui/react']
   },
   eslint: {
     dirs: ['src'],

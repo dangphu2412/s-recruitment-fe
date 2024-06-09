@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 
 export const ClientErrorCode = {
-  UNAUTHORIZED: '401',
+  UNAUTHORIZED: 'SYS_UNAUTHORIZED',
   FORBIDDEN: '403',
   MAINTENANCE: 'MAINTENANCE',
   GOT_ISSUE: 'GOT_ISSUE',

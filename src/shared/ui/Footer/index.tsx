@@ -4,12 +4,8 @@ import Link from 'next/link';
 
 export const Footer = React.forwardRef((): React.ReactElement => {
   return (
-    <Flex
-      justifyContent="space-between"
-      alignItems="center"
-      className="m-6 pb-6"
-    >
-      <p>© 2022, made with by Phu Dang for a better web.</p>
+    <Flex justifyContent="space-between" alignItems="center" className="p-6">
+      <p>© 2022, made by Phu Dang for a better web.</p>
 
       <p className="space-x-4">
         <Link href="/about-us">About Us</Link>
