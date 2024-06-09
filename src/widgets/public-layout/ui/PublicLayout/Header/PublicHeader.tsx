@@ -9,13 +9,13 @@ export function PublicHeader() {
   const categories = [
     {
       id: 'Rules',
-      label: 'Rules',
-      link: '/documents/rules'
+      label: 'Quy định',
+      link: '/tai-lieu/quy-dinh'
     },
     {
       id: 'News',
-      label: 'News',
-      link: '/documents/news'
+      label: 'Tin tức',
+      link: '/tai-lieu/tin-tuc'
     }
   ];
   const [isOpenSearch, setIsOpenSearch] = useState(false);
@@ -23,13 +23,12 @@ export function PublicHeader() {
   function renderSearch() {
     if (!isOpenSearch) {
       return (
-        <span className={'space-x-1'}>
-          <span>Search</span>
-          <FontAwesomeIcon
-            className={'cursor-pointer'}
-            icon={faSearch}
-            onClick={() => setIsOpenSearch(prev => !prev)}
-          />
+        <span
+          className={'space-x-1 cursor-pointer'}
+          onClick={() => setIsOpenSearch(prev => !prev)}
+        >
+          <span>Tìm kiếm</span>
+          <FontAwesomeIcon icon={faSearch} />
         </span>
       );
     }
@@ -43,7 +42,11 @@ export function PublicHeader() {
             onClick={() => setIsOpenSearch(prev => !prev)}
           />
         </InputLeftElement>
-        <Input type="text" placeholder="Search" />
+        <Input
+          type="text"
+          placeholder="Search"
+          onBlur={() => setIsOpenSearch(false)}
+        />
       </InputGroup>
     );
   }
@@ -51,7 +54,9 @@ export function PublicHeader() {
   return (
     <header className="flex flex-col px-10 py-8 space-y-6 w-[13.125rem]">
       <div className={'flex flex-col gap-2'}>
-        <Image src={'/logo.png'} alt={'logo'} width={'35'} height={'42'} />
+        <Link href={'/documents'}>
+          <Image src={'/logo.png'} alt={'logo'} width={'35'} height={'42'} />
+        </Link>
       </div>
 
       <div className={'flex flex-col gap-4'}>
