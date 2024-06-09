@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/widgets/admin-layout/ui/AdminLayout/AdminLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/admin-layout/ui/AdminLayout/AdminLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +16,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;phu-dangn-otsv&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:dangphu2412/sgroup-member-manage-fe.git&quot;,
+    &quot;accountId&quot;: &quot;ea2cc74c-2c34-43bd-a2db-f38e0ca27a3e&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -33,40 +45,44 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "refactor/enhance-ui-sidebar",
-    "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/widgets/admin-layout/ui",
+    "git-widget-placeholder": "feature/build-layout-public",
+    "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/widgets/public-layout/ui/PublicLayout",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
     "npm.backend.executor": "Run",
+    "npm.build.executor": "Run",
     "npm.dev.executor": "Run",
     "npm.lint.executor": "Run",
     "npm.pretty.executor": "Run",
     "prettierjs.PrettierConfiguration.Package": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/prettier",
     "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/typescript/lib",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout" />
+      <recent name="$PROJECT_DIR$/src/shared/assets" />
       <recent name="$PROJECT_DIR$/src/widgets/admin-layout/ui" />
       <recent name="$PROJECT_DIR$/src/user/hooks/data" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/system/domain/usecases" />
-      <recent name="$PROJECT_DIR$/src/recruitment/app/components/containers/RecruitmentEventTable" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/widgets/admin-layout/ui/Header" />
+      <recent name="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout" />
+      <recent name="$PROJECT_DIR$/public" />
+      <recent name="$PROJECT_DIR$/src/features/documents/document-overviews/ui" />
       <recent name="$PROJECT_DIR$/src/shared/models/store" />
       <recent name="$PROJECT_DIR$/src/config" />
       <recent name="$PROJECT_DIR$/src/shared/config" />
       <recent name="$PROJECT_DIR$/src/shared" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="npm.build">
     <configuration name="backend" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/../member-management-be/package.json" />
       <command value="run" />
@@ -83,7 +99,8 @@
       <scripts>
         <script value="build" />
       </scripts>
-      <node-interpreter value="project" />
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v20.12.2/bin/node" />
+      <package-manager value="$USER_HOME$/.nvm/versions/node/v20.12.2/bin/npm" />
       <envs />
       <method v="2" />
     </configuration>
@@ -126,12 +143,19 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.build" />
         <item itemvalue="npm.dev" />
         <item itemvalue="npm.pretty" />
         <item itemvalue="npm.lint" />
-        <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.17011.90" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -257,7 +281,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="develop" />
+                        <option value="feature/build-layout-public" />
                       </list>
                     </value>
                   </entry>

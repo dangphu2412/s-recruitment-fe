@@ -1,18 +1,10 @@
 import React from 'react';
-import {
-  Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  List,
-  ListItem,
-  Text
-} from '@chakra-ui/react';
+import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Box, List, ListItem, Text } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import styles from './SideBar.module.scss';
 import { useMenu } from 'src/entities/menu/models';
+import Image from 'next/image';
 
 type Props = Omit<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
@@ -44,6 +36,7 @@ export function SideBar({
         marginBottom="1.5rem"
         onClick={goToDashboard}
       >
+        <Image src={'/logo.png'} alt={'logo'} width={'24'} height={'28'} />
         <Text align="left" fontSize="lg" className={'cursor-pointer'}>
           Admin Dashboard
         </Text>

@@ -94,6 +94,7 @@ export function LoginForm(): ReactElement {
               id="password"
               type="password"
               placeholder="Password"
+              autoComplete={'password'}
               {...register('password', {
                 minLength: {
                   value: 6,

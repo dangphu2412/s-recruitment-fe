@@ -49,7 +49,7 @@ export class HttpClientAdapter implements HttpClient {
         throw new HttpError({
           message: error.message,
           status: error.status ?? '500',
-          code: (error.response?.data as ClientError)?.errorCode ?? ''
+          code: error.code ?? ClientErrorCode.GOT_ISSUE
         });
       }
 
