@@ -1,5 +1,14 @@
 import React from 'react';
-import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Box, List, ListItem, Text } from '@chakra-ui/react';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  List,
+  ListItem,
+  Text
+} from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import styles from './SideBar.module.scss';
