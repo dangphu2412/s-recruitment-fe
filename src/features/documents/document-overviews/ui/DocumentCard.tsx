@@ -24,12 +24,12 @@ export function DocumentCard({
 }: DocumentCardProps) {
   return (
     <article className="space-y-2 py-8">
-      <Text fontSize="xl" className="text-primary">
+      <Text fontSize="xl" className="text-sprimary">
         <Link href={'/quy-tac'}>{category}</Link>
       </Text>
 
       <Link href={`/quy-tac/${titleSlug}`}>
-        <Heading className={'hover:text-primary'} size={isHot ? 'xl' : 'md'}>
+        <Heading className={'hover:text-sprimary'} size={isHot ? 'xl' : 'md'}>
           {title}
         </Heading>
       </Link>

@@ -5,15 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/rules.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/documents/document-overviews/ui/DocumentCard.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/documents/rule-details/ui/RuleDetail.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/quy-tac/[slug].tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/birthday2023.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/operation.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/documents/rule-details/ui/rule-example.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/documents/document-overviews/ui/document-overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/documents/document-overviews/ui/document-overview.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/documents/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/tai-lieu/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/documents/document-overviews/ui/DocumentCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/documents/document-overviews/ui/DocumentCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/documents/rule-details/ui/RuleDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/documents/rule-details/ui/RuleDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/menu/features-menu/ui/SideBar/SideBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/menu/features-menu/ui/SideBar/SideBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/quy-tac/[slug].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/quy-tac/[slug].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout/Footer/PublicFooter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout/Footer/PublicFooter.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout/Header/PublicHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout/Header/PublicHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout/PublicLayout.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout/PublicLayout.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +56,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/document-view&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/widgets/public-layout/ui/PublicLayout&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,

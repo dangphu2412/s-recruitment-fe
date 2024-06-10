@@ -23,7 +23,8 @@ module.exports = {
       black: 'var(--bs-gray-900)',
       gray: 'var(--bs-gray-900)',
       body: 'var(--bs-body-color)',
-      dark: 'var(--bs-dark)'
+      dark: 'var(--bs-dark)',
+      sprimary: '#fa4210'
     }
   },
   plugins: []
