@@ -1,0 +1,15 @@
+.public-layout {
+  @apply flex flex-row;
+
+  .public-main {
+    @apply flex flex-col w-full;
+
+    .content {
+      @apply px-2 py-8 min-h-[calc(100vh-4.5rem)];
+    }
+
+    .footer {
+      @apply h-[4.5rem];
+    }
+  }
+}

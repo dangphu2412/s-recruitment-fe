@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/birthday2023.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/operation.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/documents/rule-details/ui/rule-example.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/documents/document-overviews/ui/DocumentCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/documents/document-overviews/ui/DocumentCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/documents/rule-details/ui/RuleDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/documents/rule-details/ui/RuleDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/menu/features-menu/ui/SideBar/SideBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/menu/features-menu/ui/SideBar/SideBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/quy-tac/[slug].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/quy-tac/[slug].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout/Footer/PublicFooter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout/Footer/PublicFooter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout/Header/PublicHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout/Header/PublicHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;phu-dangn-otsv&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:dangphu2412/sgroup-member-manage-fe.git&quot;,
+    &quot;accountId&quot;: &quot;ea2cc74c-2c34-43bd-a2db-f38e0ca27a3e&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2NvBhyL2C2lKE1o8wjT4Fa1N52F" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/document-view&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/widgets/public-layout/ui/PublicLayout&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;npm.backend.executor&quot;: &quot;Run&quot;,
+    &quot;npm.build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.lint.executor&quot;: &quot;Run&quot;,
+    &quot;npm.pretty.executor&quot;: &quot;Run&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout" />
+      <recent name="$PROJECT_DIR$/src/shared/assets" />
+      <recent name="$PROJECT_DIR$/src/widgets/admin-layout/ui" />
+      <recent name="$PROJECT_DIR$/src/user/hooks/data" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public" />
+      <recent name="$PROJECT_DIR$/src/widgets/admin-layout/ui/Header" />
+      <recent name="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout" />
+      <recent name="$PROJECT_DIR$/src/features/documents/document-overviews/ui" />
+      <recent name="$PROJECT_DIR$/src/shared/models/store" />
+      <recent name="$PROJECT_DIR$/src/config" />
+      <recent name="$PROJECT_DIR$/src/shared/config" />
+      <recent name="$PROJECT_DIR$/src/shared" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="backend" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/../member-management-be/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start:dev" />
+      </scripts>
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v16.16.0/bin/node" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v20.12.2/bin/node" />
+      <package-manager value="$USER_HOME$/.nvm/versions/node/v20.12.2/bin/npm" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="lint" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="lint" />
+      </scripts>
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="pretty" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="pretty" />
+      </scripts>
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="npm.backend" />
+      <item itemvalue="npm.build" />
+      <item itemvalue="npm.dev" />
+      <item itemvalue="npm.lint" />
+      <item itemvalue="npm.pretty" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.pretty" />
+        <item itemvalue="npm.lint" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.17011.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="" />
+      <created>1680534798801</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1680534798801</updated>
+      <workItem from="1680534800375" duration="51000" />
+      <workItem from="1680534958705" duration="3526000" />
+      <workItem from="1680573531415" duration="1000" />
+      <workItem from="1680955780918" duration="144000" />
+      <workItem from="1680956135845" duration="424000" />
+      <workItem from="1681110329227" duration="618000" />
+      <workItem from="1681401078964" duration="508000" />
+      <workItem from="1681437847723" duration="54000" />
+      <workItem from="1681458086237" duration="793000" />
+      <workItem from="1681485701478" duration="1450000" />
+      <workItem from="1681527245902" duration="1950000" />
+      <workItem from="1681535787107" duration="616000" />
+      <workItem from="1681614352906" duration="397000" />
+      <workItem from="1681700243727" duration="22000" />
+      <workItem from="1681700423133" duration="1275000" />
+      <workItem from="1681801675056" duration="387000" />
+      <workItem from="1681890431464" duration="1667000" />
+      <workItem from="1681953279646" duration="2793000" />
+      <workItem from="1681961357295" duration="163000" />
+      <workItem from="1682085386183" duration="4481000" />
+      <workItem from="1682089895901" duration="522000" />
+      <workItem from="1682325593988" duration="7688000" />
+      <workItem from="1682345616723" duration="15000" />
+      <workItem from="1682355014153" duration="1136000" />
+      <workItem from="1682356694968" duration="4000" />
+      <workItem from="1682384652897" duration="4738000" />
+      <workItem from="1682389744888" duration="2855000" />
+      <workItem from="1682396143781" duration="323000" />
+      <workItem from="1682398953375" duration="16000" />
+      <workItem from="1682412760631" duration="310000" />
+      <workItem from="1682760369163" duration="1086000" />
+      <workItem from="1683161939940" duration="35000" />
+      <workItem from="1683172128879" duration="928000" />
+      <workItem from="1683383470222" duration="547000" />
+      <workItem from="1683432688461" duration="36000" />
+      <workItem from="1683448794955" duration="787000" />
+      <workItem from="1683449629988" duration="1843000" />
+      <workItem from="1683879667831" duration="1452000" />
+      <workItem from="1684219089580" duration="116000" />
+      <workItem from="1685431175518" duration="1134000" />
+      <workItem from="1686587379052" duration="243000" />
+      <workItem from="1687436945838" duration="707000" />
+      <workItem from="1691809943527" duration="7376000" />
+      <workItem from="1691821519000" duration="8737000" />
+      <workItem from="1691910917299" duration="5000" />
+      <workItem from="1691914109182" duration="7613000" />
+      <workItem from="1691979287418" duration="618000" />
+      <workItem from="1691984340312" duration="3135000" />
+      <workItem from="1691991065273" duration="368000" />
+      <workItem from="1691994575073" duration="695000" />
+      <workItem from="1692067964773" duration="41000" />
+      <workItem from="1692095574063" duration="1686000" />
+      <workItem from="1692109715741" duration="479000" />
+      <workItem from="1692161383179" duration="235000" />
+      <workItem from="1692164207440" duration="824000" />
+      <workItem from="1692167568133" duration="20000" />
+      <workItem from="1692260486594" duration="1616000" />
+      <workItem from="1692284445104" duration="1819000" />
+      <workItem from="1692328827825" duration="8000" />
+      <workItem from="1692374633813" duration="1514000" />
+      <workItem from="1692430162041" duration="12312000" />
+      <workItem from="1692451308434" duration="3374000" />
+      <workItem from="1692460741031" duration="3900000" />
+      <workItem from="1692494734472" duration="8000" />
+      <workItem from="1692515657513" duration="529000" />
+      <workItem from="1692584508211" duration="416000" />
+      <workItem from="1692595323360" duration="2931000" />
+      <workItem from="1692599761561" duration="554000" />
+      <workItem from="1692626914960" duration="2924000" />
+      <workItem from="1692698989303" duration="954000" />
+      <workItem from="1693121276446" duration="666000" />
+      <workItem from="1693198574524" duration="184000" />
+      <workItem from="1693199875972" duration="324000" />
+      <workItem from="1693997604816" duration="289000" />
+      <workItem from="1694341378481" duration="717000" />
+      <workItem from="1694410293683" duration="6000" />
+      <workItem from="1694445657623" duration="2116000" />
+      <workItem from="1694688613275" duration="414000" />
+      <workItem from="1694745303708" duration="4000" />
+      <workItem from="1694765900424" duration="6122000" />
+      <workItem from="1694789925584" duration="599000" />
+      <workItem from="1694835320028" duration="21000" />
+      <workItem from="1694835691886" duration="251000" />
+      <workItem from="1694921932377" duration="4306000" />
+      <workItem from="1695004876086" duration="7000" />
+      <workItem from="1695101397639" duration="10000" />
+      <workItem from="1695101833218" duration="2325000" />
+      <workItem from="1695269161823" duration="27000" />
+      <workItem from="1695295323535" duration="300000" />
+      <workItem from="1695349148455" duration="3000" />
+      <workItem from="1695530826528" duration="1274000" />
+      <workItem from="1695915099266" duration="845000" />
+      <workItem from="1698117317575" duration="325000" />
+      <workItem from="1698287105158" duration="35000" />
+      <workItem from="1701240357667" duration="640000" />
+      <workItem from="1701577966626" duration="577000" />
+      <workItem from="1704522540083" duration="408000" />
+      <workItem from="1704769243929" duration="580000" />
+      <workItem from="1705984649517" duration="1574000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="feature/build-layout-public" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+</project>
