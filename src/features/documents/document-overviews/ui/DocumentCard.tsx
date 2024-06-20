@@ -28,7 +28,7 @@ export function DocumentCard({
         <Link href={'/quy-tac'}>{category}</Link>
       </Text>
 
-      <Link href={`/quy-tac/${titleSlug}`}>
+      <Link href={`/thong-bao/${titleSlug}`}>
         <Heading className={'hover:text-sprimary'} size={isHot ? 'xl' : 'md'}>
           {title}
         </Heading>

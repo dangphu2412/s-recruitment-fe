@@ -46,10 +46,14 @@ export class HttpClientAdapter implements HttpClient {
       return response;
     } catch (error: unknown) {
       if (AxiosStatic.isAxiosError(error)) {
+        const code = error.response
+          ? (error.response?.data as ClientError)?.code
+          : error.code;
+
         throw new HttpError({
           message: error.message,
           status: error.status ?? '500',
-          code: error.code ?? ClientErrorCode.GOT_ISSUE
+          code: code ?? ClientErrorCode.GOT_ISSUE
         });
       }
 

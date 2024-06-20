@@ -8,7 +8,7 @@ const RulePage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Quy tắc ở S-Group</title>
+        <title>Thông báo ở S-Group</title>
       </Head>
 
       <RuleDetail />
