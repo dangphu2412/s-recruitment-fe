@@ -10,12 +10,12 @@ export function PublicHeader() {
     {
       id: 'Rules',
       label: 'Quy định',
-      link: '/tai-lieu/quy-dinh'
+      link: '/thong-bao'
     },
     {
       id: 'News',
       label: 'Tin tức',
-      link: '/tai-lieu/tin-tuc'
+      link: '/thong-bao'
     }
   ];
   const [isOpenSearch, setIsOpenSearch] = useState(false);
@@ -54,7 +54,7 @@ export function PublicHeader() {
   return (
     <header className="flex flex-col px-10 py-8 space-y-6 w-[13.125rem]">
       <div className={'flex flex-col gap-2'}>
-        <Link href={'/tai-lieu'}>
+        <Link href={'/thong-bao'}>
           <Image src={'/logo.png'} alt={'logo'} width={'35'} height={'42'} />
         </Link>
       </div>

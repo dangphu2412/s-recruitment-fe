@@ -9,7 +9,7 @@ const DocumentPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Document of S-Group</title>
+        <title>Thông báo S-Group</title>
       </Head>
 
       <Container maxW="container.xl">
