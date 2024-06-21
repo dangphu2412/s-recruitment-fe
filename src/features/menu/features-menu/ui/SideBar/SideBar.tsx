@@ -12,7 +12,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import styles from './SideBar.module.scss';
-import { useMenu } from 'src/entities/menu/models';
+import { useMenu, useSyncParamsToMenu } from 'src/entities/menu/models';
 import Image from 'next/image';
 
 type Props = Omit<
@@ -30,6 +30,10 @@ export function SideBar({
 }: Props): React.ReactElement {
   const { items, selectMenu, goToDashboard } = useMenu();
 
+  useSyncParamsToMenu({
+    menus: items
+  });
+
   return (
     <aside
       className={classNames(
@@ -43,11 +47,14 @@ export function SideBar({
         marginLeft="1rem"
         marginTop="0.5rem"
         marginBottom="1.5rem"
+        display={'flex'}
+        className={'flex items-center justify-left cursor-pointer gap-2'}
         onClick={goToDashboard}
       >
-        <Image src={'/logo.png'} alt={'logo'} width={'24'} height={'28'} />
-        <Text align="left" fontSize="lg" className={'cursor-pointer'}>
-          Admin Dashboard
+        <Image src={'/logo.png'} alt={'logo'} width={'35'} height={'42'} />
+
+        <Text align="left" fontSize="lg">
+          Admin
         </Text>
       </Box>
 

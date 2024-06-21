@@ -7,7 +7,6 @@ import {
   AccordionPanel,
   Button,
   Checkbox,
-  Divider,
   Flex,
   Grid,
   Text
@@ -66,15 +65,13 @@ export function AccessControlList(): ReactElement {
   }
 
   return (
-    <>
-      <div className="px-6 pt-6">
-        <ContentHeader
-          main={'Access Rights management'}
-          brief={'Where you manipulate application access rights'}
-        />
-      </div>
+    <div className="space-y-4">
+      <ContentHeader
+        main={'Access Rights management'}
+        brief={'Where you manipulate application access rights'}
+      />
 
-      <Accordion defaultIndex={[0]} allowMultiple className="py-2 px-6">
+      <Accordion defaultIndex={[0]} allowMultiple className="py-2">
         {isLoading && <FullLoader />}
 
         {Object.keys(rbacState).map(roleId => {
@@ -86,7 +83,7 @@ export function AccessControlList(): ReactElement {
           } = rbacState[roleId];
 
           return (
-            <AccordionItem borderY="none" key={name}>
+            <AccordionItem key={name}>
               <AccordionButton>
                 <Text fontSize="md" fontWeight="semibold">
                   <AccordionIcon />
@@ -115,7 +112,7 @@ export function AccessControlList(): ReactElement {
                 <Grid
                   templateColumns="repeat(2, 1fr)"
                   justifyContent="space-between"
-                  gap={6}
+                  gap={4}
                 >
                   {Object.keys(rights).map(permissionId => {
                     const {
@@ -142,12 +139,10 @@ export function AccessControlList(): ReactElement {
                   })}
                 </Grid>
               </AccordionPanel>
-
-              <Divider />
             </AccordionItem>
           );
         })}
       </Accordion>
-    </>
+    </div>
   );
 }

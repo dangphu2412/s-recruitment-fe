@@ -20,6 +20,7 @@ import {
 } from '../../../../../../entities/user/models';
 import { MemberType } from '../../../../../../entities/user/config/admin-management.constants';
 import { DatePicker } from '../../../../../../shared/ui';
+import { formatDate } from '../../../../../../shared/models/utils/date.utils';
 
 type FilterItem = {
   key: string;
@@ -74,7 +75,7 @@ export function FilterDialog({
     dispatch(
       userActions.setFilter({
         joinedIn: {
-          fromDate: date.toString(),
+          fromDate: formatDate(date),
           toDate
         }
       })
@@ -86,7 +87,7 @@ export function FilterDialog({
       userActions.setFilter({
         joinedIn: {
           fromDate,
-          toDate: date.toString()
+          toDate: formatDate(date)
         }
       })
     );
