@@ -42,7 +42,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "chore/update-error-handler",
+    "git-widget-placeholder": "feature/enhance-access-control-ui-and-menu-and-header",
     "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/entities/posts/api",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
@@ -82,7 +82,7 @@
       <recent name="$PROJECT_DIR$/src/shared" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="npm.backend">
     <configuration name="backend" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/../member-management-be/package.json" />
       <command value="run" />
@@ -281,7 +281,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="feature/build-layout-public" />
+                        <option value="chore/update-height-admin-layout" />
                       </list>
                     </value>
                   </entry>
@@ -294,6 +294,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="chore: update height admin layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: update height admin layout" />
   </component>
 </project>

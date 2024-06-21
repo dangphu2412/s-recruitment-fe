@@ -12,7 +12,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import styles from './SideBar.module.scss';
-import { useMenu } from 'src/entities/menu/models';
+import { useMenu, useSyncParamsToMenu } from 'src/entities/menu/models';
 import Image from 'next/image';
 
 type Props = Omit<
@@ -29,6 +29,10 @@ export function SideBar({
   ...rest
 }: Props): React.ReactElement {
   const { items, selectMenu, goToDashboard } = useMenu();
+
+  useSyncParamsToMenu({
+    menus: items
+  });
 
   return (
     <aside

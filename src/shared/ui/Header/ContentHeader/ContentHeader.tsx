@@ -9,11 +9,11 @@ type Props = {
 
 export function ContentHeader({ main, brief }: Props): ReactElement {
   return (
-    <>
+    <div>
       <TitleLabel>{main}</TitleLabel>
       <Text fontSize="sm" fontWeight="light">
         {brief}
       </Text>
-    </>
+    </div>
   );
 }

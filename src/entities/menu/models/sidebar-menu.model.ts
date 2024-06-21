@@ -1,12 +1,18 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faCake, faHome, faSuitcase } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBook,
+  faCake,
+  faHome,
+  faSuitcase
+} from '@fortawesome/free-solid-svg-icons';
 import { menuApiClient, MenuItem } from '../api';
 import { useQuery } from 'react-query';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createStoreModel } from '../../../shared/models/store';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import isEmpty from 'lodash/isEmpty';
+import { useDispatch } from 'react-redux';
 
 export type SidebarMenu = SidebarMenuItem[];
 
@@ -21,7 +27,8 @@ export type SidebarMenuItem = {
 const IconKeyByCode: Record<string, IconDefinition> = {
   USER_MANAGEMENT_ICON: faCake,
   CATEGORY_ICON: faHome,
-  RECRUITMENT_ICON: faSuitcase
+  RECRUITMENT_ICON: faSuitcase,
+  POST_ICON: faBook
 };
 
 export function mapMenuItemToSidebarMenus(
@@ -73,6 +80,34 @@ export function useMenu() {
     selectMenu,
     goToDashboard
   };
+}
+
+type SyncParamsToMenuProps = {
+  menus: SidebarMenu;
+};
+
+export function useSyncParamsToMenu({ menus }: SyncParamsToMenuProps) {
+  const { pathname } = useRouter();
+  const flattenItems = React.useMemo(() => {
+    return menus.reduce((acc, item) => {
+      acc.push(item);
+
+      if (item.subMenus) {
+        acc.push(...item.subMenus);
+      }
+
+      return acc;
+    }, [] as SidebarMenu);
+  }, [menus]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const found = flattenItems.find(item => item.accessLink === pathname);
+
+    if (found) {
+      dispatch(menuActions.setCurrentMenu(found));
+    }
+  }, [dispatch, flattenItems, pathname]);
 }
 
 export type MenuDomain = {
