@@ -16,6 +16,9 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
+import { useSelector } from 'react-redux';
+import { currentMenuSelector } from '../../../../entities/menu/models';
+import Link from 'next/link';
 
 type Props = {
   isMenuHidden: boolean;
@@ -29,6 +32,8 @@ type UserActionItem = {
 export function Header({ isMenuHidden }: Props): React.ReactElement {
   const router = useRouter();
   const headerRef = React.useRef<HTMLDivElement>(null);
+  const currentMenu = useSelector(currentMenuSelector);
+  const menuName = currentMenu?.name ?? 'Main';
 
   const userActionItems: UserActionItem[] = [
     {
@@ -66,7 +71,9 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
           </BreadcrumbItem>
 
           <BreadcrumbItem>
-            <BreadcrumbLink href="#">Current Menu</BreadcrumbLink>
+            <BreadcrumbLink href={currentMenu?.accessLink ?? '/'} as={Link}>
+              {menuName}
+            </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
 
@@ -76,7 +83,7 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
           fontWeight="semibold"
           marginTop="0.5rem"
         >
-          Current Menu
+          {menuName}
         </Text>
       </div>
 

@@ -14,6 +14,7 @@ export type HttpErrorConstructParams = {
 };
 export interface ClientError extends Error {
   errorCode: string;
+  code: string;
 }
 export class HttpError extends Error {
   static isHttpError(error: unknown): error is HttpError {
