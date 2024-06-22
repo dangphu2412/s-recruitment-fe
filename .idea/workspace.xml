@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="" />
+    <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
+      <change beforePath="$PROJECT_DIR$/src/features/posts/paginate-posts/ui/PaginatePostsContainer/PaginatePostContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/posts/paginate-posts/ui/PaginatePostsContainer/PaginatePostContainer.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,8 +44,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/enhance-access-control-ui-and-menu-and-header",
-    "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/entities/posts/api",
+    "git-widget-placeholder": "feature/build-posts-overview",
+    "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/entities",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -64,11 +66,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/entities" />
+      <recent name="$PROJECT_DIR$/src/features/posts" />
       <recent name="$PROJECT_DIR$/src/entities/posts/api" />
       <recent name="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout" />
       <recent name="$PROJECT_DIR$/src/shared/assets" />
-      <recent name="$PROJECT_DIR$/src/widgets/admin-layout/ui" />
-      <recent name="$PROJECT_DIR$/src/user/hooks/data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/pages/thong-bao" />
@@ -82,7 +84,7 @@
       <recent name="$PROJECT_DIR$/src/shared" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.backend">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="backend" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/../member-management-be/package.json" />
       <command value="run" />
