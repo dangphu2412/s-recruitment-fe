@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button, useDisclosure } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useDisclosure } from '@chakra-ui/react';
 import { AddUserDrawer } from './AddUserDrawer';
+import { AddButton } from '../../../../../shared/ui/Button';
 
 export function AddUsersContainer(): React.ReactElement {
   const addNewUserButtonRef = React.useRef<HTMLButtonElement>(null);
@@ -12,10 +11,7 @@ export function AddUsersContainer(): React.ReactElement {
 
   return (
     <>
-      <Button ref={addNewUserButtonRef} colorScheme="pink" onClick={onOpen}>
-        <FontAwesomeIcon className="mr-2" icon={faPlus} />
-        Add
-      </Button>
+      <AddButton ref={addNewUserButtonRef} onClick={onOpen} />
 
       {isOpen && (
         <AddUserDrawer

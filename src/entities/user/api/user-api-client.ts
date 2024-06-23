@@ -42,10 +42,6 @@ export type PatchUserRolesPayload = {
   roleIds: string[];
 };
 
-export type ExtractNewEmailsDto = {
-  value: string[];
-};
-
 export type UserDetail = {
   id: string;
   username: string;
@@ -108,15 +104,6 @@ export const userApiClient = {
       method: 'post',
       url: '/users',
       data: createUserDto
-    });
-  },
-  extractNewEmails(
-    extractNewEmailsDto: ExtractNewEmailsDto
-  ): Promise<string[]> {
-    return authorizedHttpClient.request<string[]>({
-      method: 'get',
-      params: { value: extractNewEmailsDto.value.join(',') },
-      url: '/users/extract-new-values'
     });
   }
 };
