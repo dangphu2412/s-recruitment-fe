@@ -1,4 +1,4 @@
-import { authorizedHttpClient } from '../../../shared/api';
+import { authorizedHttpClient, httpClient } from '../../../shared/api';
 import { GetManyParams, Page } from '../../../shared/models';
 
 export type PostManagementView = {
@@ -6,6 +6,15 @@ export type PostManagementView = {
   title: string;
   slug: string;
   content: string;
+};
+
+export type CreatePostDto = {
+  title: string;
+  content: string;
+};
+
+export type EditPostDto = CreatePostDto & {
+  id: string;
 };
 
 export const postApiClient = {
@@ -17,6 +26,26 @@ export const postApiClient = {
         ...params.filters,
         ...params.pagination
       }
+    });
+  },
+  getDetail(id: string): Promise<PostManagementView> {
+    return httpClient.request({
+      url: `/posts/${id}`,
+      method: 'get'
+    });
+  },
+  createOne(body: CreatePostDto): Promise<void> {
+    return authorizedHttpClient.request({
+      url: '/posts',
+      method: 'post',
+      data: body
+    });
+  },
+  updateOne({ id, ...body }: EditPostDto): Promise<PostManagementView> {
+    return authorizedHttpClient.request({
+      url: `/posts/${id}`,
+      method: 'patch',
+      data: body
     });
   }
 };
