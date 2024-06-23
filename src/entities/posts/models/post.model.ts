@@ -8,7 +8,7 @@ import {
 } from '../../../shared/models/filter.api';
 import { isNil } from '../../../shared/models/utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { parsePagination } from '../../../shared/models/pagination';
 import { AppStorage, createStoreModel } from '../../../shared/models/store';
 import { postApiClient } from '../api';
@@ -126,6 +126,37 @@ export function useQueryPosts({ pagination, ...options }: QueryPostOptions) {
         filters: {}
       }),
     ...options
+  });
+
+  return { data, isLoading };
+}
+
+export function useMutateCreatePost() {
+  const { mutate, isLoading } = useMutation({
+    mutationKey: 'MUTATION_CREATE_POST',
+    mutationFn: postApiClient.createOne
+  });
+
+  return { createPost: mutate, isLoading };
+}
+
+export function useMutateEditPost() {
+  const { mutate, isLoading } = useMutation({
+    mutationKey: 'MUTATION_EDIT_POST',
+    mutationFn: postApiClient.updateOne
+  });
+
+  return { editPost: mutate, isLoading };
+}
+
+export function getQueryPostDetailKey(id: string) {
+  return ['QUERY_POST_DETAIL', id];
+}
+
+export function useQueryPostDetail(id: string) {
+  const { data, isLoading } = useQuery({
+    queryKey: getQueryPostDetailKey(id),
+    queryFn: () => postApiClient.getDetail(id)
   });
 
   return { data, isLoading };
