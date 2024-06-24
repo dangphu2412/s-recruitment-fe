@@ -1,8 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import { NextPageWithLayout } from 'src/shared/models/next.types';
-import { PublicLayout } from '../../widgets/public-layout/ui/PublicLayout/PublicLayout';
-import { RuleDetail } from '../../features/documents/rule-details/ui/RuleDetail';
+import { PublicLayout } from '../../../widgets/public-layout/ui/PublicLayout/PublicLayout';
+import { RuleDetail } from '../../../features/documents/rule-details/ui/RuleDetail';
 
 const RulePage: NextPageWithLayout = () => {
   return (
