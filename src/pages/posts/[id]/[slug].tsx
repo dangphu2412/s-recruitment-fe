@@ -23,11 +23,19 @@ export default function ViewPostDetailPage(): ReactElement {
   const ref = useRef<HTMLFormElement>(null);
 
   function renderContent() {
-    if (isEditable) {
+    if (isEditable && data) {
+      const defaultValues = {
+        title: data.title,
+        content: data.content,
+        categories: (data.categories ?? []).map(category => category.id),
+        previewImageURL: data.previewImage,
+        summary: data.summary
+      };
+
       return (
         <EditPostForm
           id={id}
-          defaultValues={data}
+          defaultValues={defaultValues}
           ref={ref}
           onSuccess={toggleEditable}
         />
@@ -37,7 +45,11 @@ export default function ViewPostDetailPage(): ReactElement {
     return (
       <>
         <TitleLabel>{data?.title}</TitleLabel>
-        {htmlParser.parse(data?.content)}
+        <img src={data?.previewImage} alt={'Fail to load preview'} />
+        {data?.categories?.map(category => (
+          <span key={category.id}>{category.name}</span>
+        ))}
+        <div>{htmlParser.parse(data?.content)}</div>
       </>
     );
   }

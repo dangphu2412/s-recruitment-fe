@@ -131,6 +131,39 @@ export function useQueryPosts({ pagination, ...options }: QueryPostOptions) {
   return { data, isLoading };
 }
 
+type QueryLatestPostOptions = {
+  pagination: Pagination;
+};
+export function useQueryLatestPosts({ pagination }: QueryLatestPostOptions) {
+  const { data, isLoading } = useQuery({
+    queryKey: 'QUERY_LATEST_POSTS',
+    queryFn: () =>
+      postApiClient.getMany({
+        pagination: parsePagination(pagination.page, pagination.size),
+        filters: {
+          type: 'latest'
+        }
+      })
+  });
+
+  return { data, isLoading };
+}
+
+export function useQueryPinPosts() {
+  const { data, isLoading } = useQuery({
+    queryKey: 'QUERY_PIN_POSTS',
+    queryFn: () =>
+      postApiClient.getMany({
+        pagination: parsePagination(1, 4),
+        filters: {
+          type: 'pin'
+        }
+      })
+  });
+
+  return { data, isLoading };
+}
+
 export function useMutateCreatePost() {
   const { mutate, isLoading } = useMutation({
     mutationKey: 'MUTATION_CREATE_POST',

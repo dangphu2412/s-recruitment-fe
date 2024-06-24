@@ -1,44 +1,51 @@
-import { Heading, Text } from '@chakra-ui/react';
+import { Heading, Image, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { TextContent } from '../../../../shared/ui/Text/TextContent';
-import Image from 'next/image';
 
 type DocumentCardProps = {
-  category: string;
+  id: string;
+  categories: string[];
   title: string;
-  titleSlug: string;
+  slug: string;
   author: string;
-  image?: string;
+  previewImage?: string;
   imageAlt?: string;
   isHot?: boolean;
 };
 
 export function DocumentCard({
-  category,
+  id,
+  categories,
   title,
-  titleSlug,
+  slug,
   author,
-  image,
+  previewImage,
   imageAlt,
   isHot
 }: DocumentCardProps) {
   return (
-    <article className="space-y-2 py-8">
+    <article className="space-y-4 py-8">
       <Text fontSize="xl" className="text-sprimary">
-        <Link href={'/quy-tac'}>{category}</Link>
+        <Link href={'/quy-tac'}>{categories?.toString()}</Link>
       </Text>
 
-      <Link href={`/thong-bao/${titleSlug}`}>
+      <Link href={`/thong-bao/${id}/${slug}`} className={'space-y-2'}>
         <Heading className={'hover:text-sprimary'} size={isHot ? 'xl' : 'md'}>
           {title}
         </Heading>
+
+        <TextContent>{author}</TextContent>
+
+        {previewImage && imageAlt && (
+          <Image
+            src={previewImage}
+            alt={imageAlt}
+            width={1024 / 2}
+            height={'auto'}
+            objectFit={'cover'}
+          />
+        )}
       </Link>
-
-      <TextContent>{author}</TextContent>
-
-      {image && imageAlt && (
-        <Image src={image} alt={imageAlt} width={1024 / 2} height={574 / 2} />
-      )}
     </article>
   );
 }

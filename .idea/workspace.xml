@@ -5,26 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
-      <change afterPath="$PROJECT_DIR$/src/features/posts/add-post/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/posts/add-post/ui/AddPostButton.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/posts/add-post/ui/AddPostForm.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/posts/add-post/ui/AddPostForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/posts/add-post/ui/EditPostForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/posts/add-post/ui/TextEditor.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/posts/add-post/ui/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/posts/add.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/ui/Button/AddButton.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/ui/Button/EditButton.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/ui/Button/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/posts/api/post-api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/posts/api/post-api-client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/posts/models/post.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/posts/models/post.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/posts-table/ui/UsersOverviewTable/PostOverviewTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/posts/posts-table/ui/UsersOverviewTable/PostOverviewTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUsersContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUsersContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/posts/overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/posts/overview.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +45,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;feature/build-create-post&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/features/posts/add-post/ui&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/features/documents/document-overviews/ui&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -85,13 +66,14 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/features/documents/document-overviews/ui" />
+      <recent name="$PROJECT_DIR$/src/entities/posts/api" />
+      <recent name="$PROJECT_DIR$/src/entities/posts/models" />
       <recent name="$PROJECT_DIR$/src/features/posts/add-post/ui" />
       <recent name="$PROJECT_DIR$/src/entities" />
-      <recent name="$PROJECT_DIR$/src/features/posts" />
-      <recent name="$PROJECT_DIR$/src/entities/posts/api" />
-      <recent name="$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/thong-bao/[id]" />
       <recent name="$PROJECT_DIR$/src/pages/thong-bao" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/src/widgets/admin-layout/ui/Header" />
@@ -302,7 +284,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="chore/update-height-admin-layout" />
+                        <option value="develop" />
                       </list>
                     </value>
                   </entry>
