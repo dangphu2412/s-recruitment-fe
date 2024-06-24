@@ -1,55 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useQueryCategories } from '../../../../../entities/posts/models/category.model';
+import { Search } from '../Search/Search';
+import { Text } from '@chakra-ui/react';
 
 export function PublicHeader() {
-  const categories = [
-    {
-      id: 'Rules',
-      label: 'Quy định',
-      link: '/thong-bao'
-    },
-    {
-      id: 'News',
-      label: 'Tin tức',
-      link: '/thong-bao'
-    }
-  ];
-  const [isOpenSearch, setIsOpenSearch] = useState(false);
-
-  function renderSearch() {
-    if (!isOpenSearch) {
-      return (
-        <span
-          className={'space-x-1 cursor-pointer'}
-          onClick={() => setIsOpenSearch(prev => !prev)}
-        >
-          <span>Tìm kiếm</span>
-          <FontAwesomeIcon icon={faSearch} />
-        </span>
-      );
-    }
-
-    return (
-      <InputGroup>
-        <InputLeftElement>
-          <FontAwesomeIcon
-            className={'cursor-pointer'}
-            icon={faSearch}
-            onClick={() => setIsOpenSearch(prev => !prev)}
-          />
-        </InputLeftElement>
-        <Input
-          type="text"
-          placeholder="Search"
-          onBlur={() => setIsOpenSearch(false)}
-        />
-      </InputGroup>
-    );
-  }
+  const { data: categories } = useQueryCategories();
 
   return (
     <header className="flex flex-col px-10 py-8 space-y-6 w-[13.125rem]">
@@ -60,12 +16,12 @@ export function PublicHeader() {
       </div>
 
       <div className={'flex flex-col gap-4'}>
-        {renderSearch()}
+        <Search />
 
-        {categories.map(({ id, label, link }) => {
+        {(categories ?? []).map(({ id, name }) => {
           return (
-            <Link key={id} href={link}>
-              {label}
+            <Link key={id} href={`/danh-muc/${id}`}>
+              <Text className={'hover:text-sprimary'}>{name}</Text>
             </Link>
           );
         })}

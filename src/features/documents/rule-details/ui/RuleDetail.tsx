@@ -1,31 +1,51 @@
-import { Parser } from 'html-to-react';
-import { Heading, Text } from '@chakra-ui/react';
-import { RULE_CONTENT } from './rule-example';
+import { Heading, Text, Image as ImageLoader } from '@chakra-ui/react';
 import Link from 'next/link';
 import Image from 'next/image';
-
-// @ts-ignore
-const htmlParser = new Parser();
+import { useRouter } from 'next/router';
+import { normalizeParam } from '../../../../shared/models/utils/router.utils';
+import { useQueryPostDetail } from '../../../../entities/posts/models';
+import React from 'react';
+import { formatDate } from '../../../../shared/models/utils/date.utils';
+import { htmlParser } from 'src/shared/models/html-parser/html-parser';
 
 export function RuleDetail() {
-  const {
-    content: rawHtml,
-    heading,
-    category
-  } = {
-    category: 'Quy tắc',
-    heading: 'Nội quy S-Group',
-    content: RULE_CONTENT
-  };
+  const { query } = useRouter();
+  const id = normalizeParam(query.id);
+
+  const { data } = useQueryPostDetail(id);
 
   return (
     <div className="flex flex-row space-x-12">
-      <div className="space-y-8">
-        <Text fontSize="xl" className="text-sprimary">
-          <Link href={'/quy-tac'}>{category}</Link>
+      <div className="space-y-4 grow">
+        <Text fontSize="lg" className="text-sprimary">
+          {data?.categories?.map(category => (
+            <Link key={category.id} href={`/danh-muc/${category.id}`}>
+              {category.name}
+            </Link>
+          ))}
         </Text>
-        <Heading className={'text-sprimary'}>{heading}</Heading>
-        <div>{htmlParser.parse(rawHtml)}</div>
+
+        <Heading>{data?.title ?? 'Loading'}</Heading>
+
+        <div>
+          <Text fontSize="sm" fontWeight="black" as={'span'}>
+            {data?.author?.fullName}
+          </Text>
+          {' / '}
+          <Text fontSize="sm" fontWeight="light" as={'span'}>
+            {data?.createdAt ? formatDate(new Date(data.createdAt)) : ''}
+          </Text>
+        </div>
+
+        <ImageLoader
+          src={data?.previewImage}
+          alt={'imageAlt'}
+          width={1024 / 1.5}
+          height={'auto'}
+          objectFit={'cover'}
+        />
+
+        <div>{htmlParser.parse(data?.content ?? '')}</div>
       </div>
 
       <div className={'min-w-[300px] flex flex-col space-y-8'}>
