@@ -50,8 +50,10 @@ export const MultipleCombobox = ({
 
   const filteredItems = filter();
 
-  function handleRemove(selectedItem: BoxItem) {
+  function handleRemove(selectedItem: BoxItem | undefined) {
     return () => {
+      if (!selectedItem) return;
+
       onChange(value.filter(item => item !== selectedItem.value));
     };
   }
@@ -61,11 +63,11 @@ export const MultipleCombobox = ({
       <div className={'relative space-y-2'}>
         <div className="space-x-2">
           {value.map(item => {
-            const valueItem = items.find(i => i.value === item) as BoxItem;
+            const valueItem = items.find(i => i.value === item);
 
             return (
-              <Tag key={valueItem.value} className="space-x-2">
-                <span>{valueItem.text}</span>
+              <Tag key={valueItem?.value} className="space-x-2">
+                <span>{valueItem?.text}</span>
                 <FontAwesomeIcon
                   cursor={'pointer'}
                   icon={faCircleXmark}
