@@ -4,15 +4,12 @@ import { Card, ContentHeader } from '../../../shared/ui';
 import { useQueryPostDetail } from '../../../entities/posts/models';
 import { useRouter } from 'next/router';
 import { normalizeParam } from '../../../shared/models/utils/router.utils';
-import { Parser } from 'html-to-react';
 import { EditButton } from '../../../shared/ui/Button';
 import { useToggle } from 'react-use';
 import { Button, Flex } from '@chakra-ui/react';
 import { EditPostForm } from '../../../features/posts/add-post/ui/EditPostForm';
 import { TitleLabel } from '../../../shared/ui/Text/TitleLabel';
-
-// @ts-ignore
-const htmlParser = new Parser();
+import { htmlParser } from '../../../shared/models/html-parser/html-parser';
 
 export default function ViewPostDetailPage(): ReactElement {
   const { query } = useRouter();
