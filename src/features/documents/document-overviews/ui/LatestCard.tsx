@@ -1,6 +1,7 @@
-import { Heading, Image, Text } from '@chakra-ui/react';
+import { Heading, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { TextContent } from '../../../../shared/ui/Text/TextContent';
+import Image from 'next/image';
 
 type LatestCardProps = {
   id: string;
@@ -46,7 +47,7 @@ export function LatestCard({
           src={previewImage}
           alt={imageAlt}
           width={1024 / 2}
-          height={'auto'}
+          height={1024 / 2}
           objectFit={'cover'}
         />
       )}
