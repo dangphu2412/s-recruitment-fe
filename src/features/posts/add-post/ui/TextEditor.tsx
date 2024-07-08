@@ -2,7 +2,10 @@ import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode, faImage } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
+import React, { useRef } from 'react';
+import { useMutateUploadFile } from '../../../../entities/files/models';
+import { API_URL } from '../../../../shared/config/constants/env';
+
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 type TextEditorProps = {
@@ -26,82 +29,6 @@ const formats = [
   'image',
   'color'
 ];
-
-function insertHTML(this: any) {
-  const html = prompt('Enter HTML code');
-  const range = this.quill.getSelection();
-
-  this.quill.clipboard.dangerouslyPasteHTML(range.index, html);
-}
-
-function insertImageLink(this: any) {
-  const url = prompt('Enter the URL of the image');
-
-  this.quill.insertEmbed(this.quill.getSelection().index, 'image', url);
-}
-
-const modules = {
-  toolbar: {
-    container: '#toolbar',
-    handlers: {
-      insertHTML,
-      insertImageLink
-    }
-
-    // container: [
-    //   [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    //   ['bold', 'italic', 'underline', 'strike'],
-    //   [
-    //     { list: 'ordered' },
-    //     { list: 'bullet' },
-    //     { indent: '-1' },
-    //     { indent: '+1' }
-    //   ],
-    //   ['image', 'link'],
-    //   [
-    //     {
-    //       color: [
-    //         '#000000',
-    //         '#e60000',
-    //         '#ff9900',
-    //         '#ffff00',
-    //         '#008a00',
-    //         '#0066cc',
-    //         '#9933ff',
-    //         '#ffffff',
-    //         '#facccc',
-    //         '#ffebcc',
-    //         '#ffffcc',
-    //         '#cce8cc',
-    //         '#cce0f5',
-    //         '#ebd6ff',
-    //         '#bbbbbb',
-    //         '#f06666',
-    //         '#ffc266',
-    //         '#ffff66',
-    //         '#66b966',
-    //         '#66a3e0',
-    //         '#c285ff',
-    //         '#888888',
-    //         '#a10000',
-    //         '#b26b00',
-    //         '#b2b200',
-    //         '#006100',
-    //         '#0047b2',
-    //         '#6b24b2',
-    //         '#444444',
-    //         '#5c0000',
-    //         '#663d00',
-    //         '#666600',
-    //         '#003700',
-    //         '#002966',
-    //         '#3d1466'
-    //       ]
-    //     }
-    //   ]
-    // ]
-  }
-};
 
 function Toolbar() {
   return (
@@ -150,13 +77,53 @@ function Toolbar() {
 }
 
 export function TextEditor(props: TextEditorProps) {
+  const { upload } = useMutateUploadFile();
+  function insertHTML(this: any) {
+    const html = prompt('Enter HTML code');
+    const range = this.quill.getSelection();
+
+    this.quill.clipboard.dangerouslyPasteHTML(range.index, html);
+  }
+
+  function insertImageLink(this: any) {
+    const quill = this.quill;
+
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files ? input.files[0] : null;
+
+      if (file) {
+        const response = await upload({ file });
+
+        const url = API_URL + '/files/' + response.path;
+
+        quill.insertEmbed(this.quill.getSelection().index, 'image', url);
+      }
+    };
+  }
+
+  const modulesRef = useRef({
+    toolbar: {
+      container: '#toolbar',
+      handlers: {
+        insertHTML,
+        insertImageLink
+      }
+    }
+  });
+
   return (
     <>
       <Toolbar />
       <ReactQuill
         theme="snow"
         formats={formats}
-        modules={modules}
+        modules={modulesRef.current}
         value={props.value}
         onChange={props.onChange}
       />

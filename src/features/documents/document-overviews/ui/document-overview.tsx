@@ -44,7 +44,7 @@ export function DocumentOverview() {
         title: item.title,
         content: item.content,
         slug: item.slug,
-        author: 'Dang Phu',
+        author: item.author.fullName,
         previewImage: item.previewImage,
         imageAlt: 'item.title',
         summary: item.summary

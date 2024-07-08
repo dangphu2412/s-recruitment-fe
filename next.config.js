@@ -43,6 +43,28 @@ const nextConfig = {
         ]
       }
     ];
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.gstatic.com',
+        port: ''
+      },
+      {
+        protocol: 'https',
+        hostname:
+          'https://sgroup-member-management-be-production.up.railway.app',
+        port: '',
+        pathname: '/files/**'
+      },
+      {
+        protocol: 'http',
+        hostname: 'http://127.0.0.1:3000',
+        port: '',
+        pathname: '/files/**'
+      }
+    ]
   }
 };
 
