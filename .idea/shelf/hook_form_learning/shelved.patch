@@ -1,0 +1,102 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"26f81a31-42df-4f68-a919-ffeb85c13fdf\" name=\"Changes\" comment=\"chore: update height admin layout\">\n      <change beforePath=\"$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitHubPullRequestSearchHistory\">{\n  &quot;lastFilter&quot;: {\n    &quot;state&quot;: &quot;OPEN&quot;,\n    &quot;assignee&quot;: &quot;phu-dangn-otsv&quot;\n  }\n}</component>\n  <component name=\"GithubPullRequestsUISettings\">{\n  &quot;selectedUrlAndAccountId&quot;: {\n    &quot;url&quot;: &quot;git@github.com:dangphu2412/sgroup-member-manage-fe.git&quot;,\n    &quot;accountId&quot;: &quot;ea2cc74c-2c34-43bd-a2db-f38e0ca27a3e&quot;\n  }\n}</component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;customColor&quot;: &quot;&quot;,\n  &quot;associatedIndex&quot;: 5\n}</component>\n  <component name=\"ProjectId\" id=\"2NvBhyL2C2lKE1o8wjT4Fa1N52F\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\n    &quot;git-widget-placeholder&quot;: &quot;feature/develop-upload-image&quot;,\n    &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/entities&quot;,\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\n    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\n    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\n    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,\n    &quot;npm.backend.executor&quot;: &quot;Run&quot;,\n    &quot;npm.build.executor&quot;: &quot;Run&quot;,\n    &quot;npm.dev.executor&quot;: &quot;Run&quot;,\n    &quot;npm.lint.executor&quot;: &quot;Run&quot;,\n    &quot;npm.pretty.executor&quot;: &quot;Run&quot;,\n    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/prettier&quot;,\n    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,\n    &quot;ts.external.directory.path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/typescript/lib&quot;,\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\n  }\n}</component>\n  <component name=\"RecentsManager\">\n    <key name=\"CopyFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/src/entities\" />\n      <recent name=\"$PROJECT_DIR$/src/features/documents/document-overviews/ui\" />\n      <recent name=\"$PROJECT_DIR$/src/entities/posts/api\" />\n      <recent name=\"$PROJECT_DIR$/src/entities/posts/models\" />\n      <recent name=\"$PROJECT_DIR$/src/features/posts/add-post/ui\" />\n    </key>\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/src/pages/thong-bao/[id]\" />\n      <recent name=\"$PROJECT_DIR$/src/pages/thong-bao\" />\n      <recent name=\"$PROJECT_DIR$/public\" />\n      <recent name=\"$PROJECT_DIR$/src/widgets/admin-layout/ui/Header\" />\n      <recent name=\"$PROJECT_DIR$/src/widgets/public-layout/ui/PublicLayout\" />\n      <recent name=\"$PROJECT_DIR$/src/features/documents/document-overviews/ui\" />\n      <recent name=\"$PROJECT_DIR$/src/shared/models/store\" />\n      <recent name=\"$PROJECT_DIR$/src/config\" />\n      <recent name=\"$PROJECT_DIR$/src/shared/config\" />\n      <recent name=\"$PROJECT_DIR$/src/shared\" />\n    </key>\n  </component>\n  <component name=\"RunManager\" selected=\"npm.dev\">\n    <configuration name=\"backend\" type=\"js.build_tools.npm\">\n      <package-json value=\"$PROJECT_DIR$/../member-management-be/package.json\" />\n      <command value=\"run\" />\n      <scripts>\n        <script value=\"start:dev\" />\n      </scripts>\n      <node-interpreter value=\"$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node\" />\n      <package-manager value=\"pnpm\" />\n      <envs />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"build\" type=\"js.build_tools.npm\" temporary=\"true\" nameIsGenerated=\"true\">\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\n      <command value=\"run\" />\n      <scripts>\n        <script value=\"build\" />\n      </scripts>\n      <node-interpreter value=\"$USER_HOME$/.nvm/versions/node/v20.12.2/bin/node\" />\n      <package-manager value=\"$USER_HOME$/.nvm/versions/node/v20.12.2/bin/npm\" />\n      <envs />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"dev\" type=\"js.build_tools.npm\" temporary=\"true\" nameIsGenerated=\"true\">\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\n      <command value=\"run\" />\n      <scripts>\n        <script value=\"dev\" />\n      </scripts>\n      <node-interpreter value=\"$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node\" />\n      <envs />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"lint\" type=\"js.build_tools.npm\" temporary=\"true\" nameIsGenerated=\"true\">\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\n      <command value=\"run\" />\n      <scripts>\n        <script value=\"lint\" />\n      </scripts>\n      <node-interpreter value=\"$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node\" />\n      <envs />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"pretty\" type=\"js.build_tools.npm\" temporary=\"true\" nameIsGenerated=\"true\">\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\n      <command value=\"run\" />\n      <scripts>\n        <script value=\"pretty\" />\n      </scripts>\n      <node-interpreter value=\"$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node\" />\n      <envs />\n      <method v=\"2\" />\n    </configuration>\n    <list>\n      <item itemvalue=\"npm.backend\" />\n      <item itemvalue=\"npm.build\" />\n      <item itemvalue=\"npm.dev\" />\n      <item itemvalue=\"npm.lint\" />\n      <item itemvalue=\"npm.pretty\" />\n    </list>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"npm.dev\" />\n        <item itemvalue=\"npm.build\" />\n        <item itemvalue=\"npm.pretty\" />\n        <item itemvalue=\"npm.lint\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"26f81a31-42df-4f68-a919-ffeb85c13fdf\" name=\"Changes\" comment=\"\" />\n      <created>1680534798801</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1680534798801</updated>\n      <workItem from=\"1680534800375\" duration=\"51000\" />\n      <workItem from=\"1680534958705\" duration=\"3526000\" />\n      <workItem from=\"1680573531415\" duration=\"1000\" />\n      <workItem from=\"1680955780918\" duration=\"144000\" />\n      <workItem from=\"1680956135845\" duration=\"424000\" />\n      <workItem from=\"1681110329227\" duration=\"618000\" />\n      <workItem from=\"1681401078964\" duration=\"508000\" />\n      <workItem from=\"1681437847723\" duration=\"54000\" />\n      <workItem from=\"1681458086237\" duration=\"793000\" />\n      <workItem from=\"1681485701478\" duration=\"1450000\" />\n      <workItem from=\"1681527245902\" duration=\"1950000\" />\n      <workItem from=\"1681535787107\" duration=\"616000\" />\n      <workItem from=\"1681614352906\" duration=\"397000\" />\n      <workItem from=\"1681700243727\" duration=\"22000\" />\n      <workItem from=\"1681700423133\" duration=\"1275000\" />\n      <workItem from=\"1681801675056\" duration=\"387000\" />\n      <workItem from=\"1681890431464\" duration=\"1667000\" />\n      <workItem from=\"1681953279646\" duration=\"2793000\" />\n      <workItem from=\"1681961357295\" duration=\"163000\" />\n      <workItem from=\"1682085386183\" duration=\"4481000\" />\n      <workItem from=\"1682089895901\" duration=\"522000\" />\n      <workItem from=\"1682325593988\" duration=\"7688000\" />\n      <workItem from=\"1682345616723\" duration=\"15000\" />\n      <workItem from=\"1682355014153\" duration=\"1136000\" />\n      <workItem from=\"1682356694968\" duration=\"4000\" />\n      <workItem from=\"1682384652897\" duration=\"4738000\" />\n      <workItem from=\"1682389744888\" duration=\"2855000\" />\n      <workItem from=\"1682396143781\" duration=\"323000\" />\n      <workItem from=\"1682398953375\" duration=\"16000\" />\n      <workItem from=\"1682412760631\" duration=\"310000\" />\n      <workItem from=\"1682760369163\" duration=\"1086000\" />\n      <workItem from=\"1683161939940\" duration=\"35000\" />\n      <workItem from=\"1683172128879\" duration=\"928000\" />\n      <workItem from=\"1683383470222\" duration=\"547000\" />\n      <workItem from=\"1683432688461\" duration=\"36000\" />\n      <workItem from=\"1683448794955\" duration=\"787000\" />\n      <workItem from=\"1683449629988\" duration=\"1843000\" />\n      <workItem from=\"1683879667831\" duration=\"1452000\" />\n      <workItem from=\"1684219089580\" duration=\"116000\" />\n      <workItem from=\"1685431175518\" duration=\"1134000\" />\n      <workItem from=\"1686587379052\" duration=\"243000\" />\n      <workItem from=\"1687436945838\" duration=\"707000\" />\n      <workItem from=\"1691809943527\" duration=\"7376000\" />\n      <workItem from=\"1691821519000\" duration=\"8737000\" />\n      <workItem from=\"1691910917299\" duration=\"5000\" />\n      <workItem from=\"1691914109182\" duration=\"7613000\" />\n      <workItem from=\"1691979287418\" duration=\"618000\" />\n      <workItem from=\"1691984340312\" duration=\"3135000\" />\n      <workItem from=\"1691991065273\" duration=\"368000\" />\n      <workItem from=\"1691994575073\" duration=\"695000\" />\n      <workItem from=\"1692067964773\" duration=\"41000\" />\n      <workItem from=\"1692095574063\" duration=\"1686000\" />\n      <workItem from=\"1692109715741\" duration=\"479000\" />\n      <workItem from=\"1692161383179\" duration=\"235000\" />\n      <workItem from=\"1692164207440\" duration=\"824000\" />\n      <workItem from=\"1692167568133\" duration=\"20000\" />\n      <workItem from=\"1692260486594\" duration=\"1616000\" />\n      <workItem from=\"1692284445104\" duration=\"1819000\" />\n      <workItem from=\"1692328827825\" duration=\"8000\" />\n      <workItem from=\"1692374633813\" duration=\"1514000\" />\n      <workItem from=\"1692430162041\" duration=\"12312000\" />\n      <workItem from=\"1692451308434\" duration=\"3374000\" />\n      <workItem from=\"1692460741031\" duration=\"3900000\" />\n      <workItem from=\"1692494734472\" duration=\"8000\" />\n      <workItem from=\"1692515657513\" duration=\"529000\" />\n      <workItem from=\"1692584508211\" duration=\"416000\" />\n      <workItem from=\"1692595323360\" duration=\"2931000\" />\n      <workItem from=\"1692599761561\" duration=\"554000\" />\n      <workItem from=\"1692626914960\" duration=\"2924000\" />\n      <workItem from=\"1692698989303\" duration=\"954000\" />\n      <workItem from=\"1693121276446\" duration=\"666000\" />\n      <workItem from=\"1693198574524\" duration=\"184000\" />\n      <workItem from=\"1693199875972\" duration=\"324000\" />\n      <workItem from=\"1693997604816\" duration=\"289000\" />\n      <workItem from=\"1694341378481\" duration=\"717000\" />\n      <workItem from=\"1694410293683\" duration=\"6000\" />\n      <workItem from=\"1694445657623\" duration=\"2116000\" />\n      <workItem from=\"1694688613275\" duration=\"414000\" />\n      <workItem from=\"1694745303708\" duration=\"4000\" />\n      <workItem from=\"1694765900424\" duration=\"6122000\" />\n      <workItem from=\"1694789925584\" duration=\"599000\" />\n      <workItem from=\"1694835320028\" duration=\"21000\" />\n      <workItem from=\"1694835691886\" duration=\"251000\" />\n      <workItem from=\"1694921932377\" duration=\"4306000\" />\n      <workItem from=\"1695004876086\" duration=\"7000\" />\n      <workItem from=\"1695101397639\" duration=\"10000\" />\n      <workItem from=\"1695101833218\" duration=\"2325000\" />\n      <workItem from=\"1695269161823\" duration=\"27000\" />\n      <workItem from=\"1695295323535\" duration=\"300000\" />\n      <workItem from=\"1695349148455\" duration=\"3000\" />\n      <workItem from=\"1695530826528\" duration=\"1274000\" />\n      <workItem from=\"1695915099266\" duration=\"845000\" />\n      <workItem from=\"1698117317575\" duration=\"325000\" />\n      <workItem from=\"1698287105158\" duration=\"35000\" />\n      <workItem from=\"1701240357667\" duration=\"640000\" />\n      <workItem from=\"1701577966626\" duration=\"577000\" />\n      <workItem from=\"1704522540083\" duration=\"408000\" />\n      <workItem from=\"1704769243929\" duration=\"580000\" />\n      <workItem from=\"1705984649517\" duration=\"1574000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State>\n              <option name=\"FILTERS\">\n                <map>\n                  <entry key=\"branch\">\n                    <value>\n                      <list>\n                        <option value=\"develop\" />\n                      </list>\n                    </value>\n                  </entry>\n                </map>\n              </option>\n            </State>\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"chore: update height admin layout\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"chore: update height admin layout\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 63bb9c4b2fdf00567cdbca0edecd17828eb062c5)
++++ b/.idea/workspace.xml	(date 1720575795478)
+@@ -5,7 +5,8 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
+-      <change beforePath="$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/pages/hook-form-learning.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+Index: src/pages/hook-form-learning.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/pages/hook-form-learning.tsx b/src/pages/hook-form-learning.tsx
+new file mode 100644
+--- /dev/null	(date 1720576571457)
++++ b/src/pages/hook-form-learning.tsx	(date 1720576571457)
+@@ -0,0 +1,72 @@
++import React from 'react';
++import Head from 'next/head';
++import { NextPageWithLayout } from 'src/shared/models/next.types';
++import { NoLayout } from '../shared/ui/NoLayout';
++import {
++  FormProvider,
++  useController,
++  useForm,
++  useFormContext,
++  useWatch
++} from 'react-hook-form';
++
++function SubInput1() {
++  const { register } = useFormContext();
++
++  return (
++    <>
++      <label>Name</label>
++      <input {...register('name')} />
++    </>
++  );
++}
++
++function SubInput2() {
++  const { control, setValue } = useFormContext();
++  const name = useWatch({
++    name: 'name',
++    control
++  });
++
++  const field = useController({
++    name: 'age',
++    control
++  });
++
++  const isSpecialName = name === 'special';
++
++  return (
++    <div>
++      <label>Age</label>
++      <input {...field.field} />
++      {isSpecialName && 'Special name!'}
++      <button type={'button'} onClick={() => setValue('name', 'undefined')}>
++        Reset name
++      </button>
++    </div>
++  );
++}
++
++const HookFormLearning: NextPageWithLayout = () => {
++  const form = useForm();
++
++  return (
++    <>
++      <Head>
++        <title>Login page S-Group</title>
++      </Head>
++
++      <FormProvider {...form}>
++        <form>
++          <SubInput1 />
++          <SubInput2 />
++          <input type="submit" />
++        </form>
++      </FormProvider>
++    </>
++  );
++};
++
++HookFormLearning.getLayout = NoLayout;
++
++export default HookFormLearning;

@@ -1,5 +1,5 @@
-import { authApiClient, Tokens } from '../../../entities/auth/api';
-import { persistentStorage } from './persistent.storage';
+import { authApiClient, Tokens } from '../../../api';
+import { persistentStorage } from '../../../../../shared/api/services/persistent.storage';
 
 let renewHandler: Promise<Tokens> | undefined;
 

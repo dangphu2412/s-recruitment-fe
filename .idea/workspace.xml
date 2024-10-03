@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
-      <change beforePath="$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/RecruitmentActionContainer/AddNewEventDrawer/AddNewEventDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/RecruitmentActionContainer/AddNewEventDrawer/AddNewEventDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/api/services/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/api/services/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,8 +45,8 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/develop-upload-image&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/entities&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;refactor/separate-model-to-independent-functional&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/features/documents/document-overviews/ui&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -66,13 +67,15 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/entities" />
       <recent name="$PROJECT_DIR$/src/features/documents/document-overviews/ui" />
       <recent name="$PROJECT_DIR$/src/entities/posts/api" />
       <recent name="$PROJECT_DIR$/src/entities/posts/models" />
       <recent name="$PROJECT_DIR$/src/features/posts/add-post/ui" />
+      <recent name="$PROJECT_DIR$/src/entities" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/entities/auth/models/authentication/services" />
+      <recent name="$PROJECT_DIR$/src/entities/auth/models/authentication" />
       <recent name="$PROJECT_DIR$/src/pages/thong-bao/[id]" />
       <recent name="$PROJECT_DIR$/src/pages/thong-bao" />
       <recent name="$PROJECT_DIR$/public" />
@@ -92,8 +95,7 @@
       <scripts>
         <script value="start:dev" />
       </scripts>
-      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node" />
-      <package-manager value="pnpm" />
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v16.16.0/bin/node" />
       <envs />
       <method v="2" />
     </configuration>
@@ -292,6 +294,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="chore: update height admin layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: update height admin layout" />
+    <MESSAGE value="hook form learning" />
+    <option name="LAST_COMMIT_MESSAGE" value="hook form learning" />
   </component>
 </project>

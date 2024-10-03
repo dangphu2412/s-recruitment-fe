@@ -12,7 +12,7 @@ import axios, {
 } from 'axios';
 import { ClientErrorCode } from '../../config/constants/client-code';
 import { persistentStorage } from 'src/shared/api/services/persistent.storage';
-import { tokenManager } from '../services';
+import { tokenManager } from '../../../entities/auth/models';
 
 const RenewTokenOnResponseInterceptor = async (error: AxiosError) => {
   const isUnauthorized =
