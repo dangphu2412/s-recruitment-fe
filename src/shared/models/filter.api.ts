@@ -1,6 +1,6 @@
 import { FilterKey } from '../config/constants';
 
-export type DateRange<T = string> = {
+export type DateRange<T = Date> = {
   fromDate: T;
   toDate: T;
 };
@@ -10,7 +10,7 @@ type EnumFilter<T> = {
   value: string;
 };
 
-type FilterKeeper<K extends FilterKey, V> = {
+export type FilterKeeper<K extends FilterKey, V> = {
   type: K;
   value: V;
 };
@@ -31,8 +31,9 @@ export type SearchFilter = {
 
 export type CombineSearchFilter<T> = T & SearchFilter;
 
-export type FilterParam<T extends Record<string, Filter<FilterKey>>> = Partial<{
-  [K in keyof T]: T[K]['value'];
-}>;
+export type FilterParam<T extends Record<string, { value: unknown }>> =
+  Partial<{
+    [K in keyof T]: T[K]['value'];
+  }>;
 
 export type FilterQuery = Record<string, unknown>;

@@ -1,15 +1,12 @@
 import { OperationFee } from '../../monthly-money/models';
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getFilterDateRange } from 'src/shared/models/utils/date.utils';
 import { FilterKey } from '../../../shared/config';
-import { formatDate } from '../../../shared/models/utils/date.utils';
 import { Pagination } from '../../../shared/models';
 import {
   CombineSearchFilter,
   Filter,
   FilterParam
 } from '../../../shared/models/filter.api';
-import { isNil } from '../../../shared/models/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNotify } from '../../../shared/models/notify';
@@ -18,8 +15,8 @@ import { ClientErrorCode } from '../../../shared/config/constants/client-code';
 import { useMutation, useQuery } from 'react-query';
 import { userApiClient } from '../api';
 import {
-  parsePagination,
-  parseFilterQuery
+  parseFilterQuery,
+  parsePagination
 } from '../../../shared/models/pagination';
 import { AppStorage, createStoreModel } from '../../../shared/models/store';
 
@@ -40,7 +37,7 @@ export type UserDetail = {
 };
 
 export type AdminFilter = CombineSearchFilter<{
-  joinedIn: Filter<FilterKey.RANGE>;
+  joinedIn: Filter<FilterKey.RANGE, Date | null>;
   memberType: Filter<FilterKey.EXACT>;
 }>;
 
@@ -65,8 +62,6 @@ export const selectMemberType = createSelector(
 );
 
 export function getInitialOverviewState(): AdminState {
-  const dateRange = getFilterDateRange();
-
   return {
     pagination: {
       page: 1,
@@ -80,8 +75,8 @@ export function getInitialOverviewState(): AdminState {
       joinedIn: {
         type: FilterKey.RANGE,
         value: {
-          fromDate: formatDate(dateRange.fromDate),
-          toDate: formatDate(dateRange.toDate)
+          fromDate: null,
+          toDate: null
         }
       },
       memberType: {
@@ -140,7 +135,7 @@ const userSlice = createSlice({
       action: PayloadAction<FilterParam<AdminFilter>>
     ) => {
       state.overview.isSubmitted = true;
-      if (isNil(action.payload.query)) {
+      if (action.payload.query !== undefined) {
         state.overview.filters.query = {
           type: FilterKey.LIKE,
           value: action.payload.query
@@ -320,24 +315,11 @@ export function useQueryUsers({
   pagination,
   ...options
 }: QueryUserOptions) {
-  const parsedFilters: AdminFilter = {
-    ...filters,
-    joinedIn: filters.joinedIn
-      ? {
-          ...filters.joinedIn,
-          value: {
-            fromDate: filters.joinedIn.value.fromDate,
-            toDate: filters.joinedIn.value.toDate
-          }
-        }
-      : getInitialOverviewState().filters.joinedIn
-  };
-
   const { data, isLoading } = useQuery({
     queryKey: QUERY_USERS_KEY,
     queryFn: () =>
       userApiClient.getMany({
-        filters: parseFilterQuery(parsedFilters),
+        filters: parseFilterQuery(filters),
         pagination: parsePagination(pagination.page, pagination.size)
       }),
     ...options
