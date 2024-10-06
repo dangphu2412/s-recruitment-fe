@@ -9,6 +9,16 @@ export type User = {
   username: string;
   email: string;
   avatar: string;
+  phoneNumber: string;
+  domain?: {
+    id: string;
+    name: string;
+  };
+  period?: {
+    id: string;
+    name: string;
+  };
+  birthday: string;
   createdAt: string;
   deletedAt: string;
   operationFee?: OperationFee;
@@ -30,6 +40,8 @@ export type UserRolesView = Pick<Partial<UserManagementView>, 'roles'>;
 export type CreateUsersDto = {
   email: string;
   fullName: string;
+  domainId: string;
+  periodId: string;
   birthday?: string;
   createUserType: CreateUserType;
   monthlyConfigId?: string;

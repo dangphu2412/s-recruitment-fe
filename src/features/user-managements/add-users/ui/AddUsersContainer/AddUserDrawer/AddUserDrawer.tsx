@@ -22,11 +22,17 @@ import { CreateUserType } from 'src/entities/user/config/admin-management.consta
 import { FullLoader } from '../../../../../../shared/ui/Loader/Full/FullLoader';
 import { useQueryMonthlyMoneyConfigs } from 'src/entities/monthly-money/models';
 import { useMutateCreateUser } from '../../../../../../entities/user/models';
+import {
+  useDomains,
+  usePeriods
+} from '../../../../../../entities/master-data/useMasteData';
 
 export type CreateUserInputs = {
   createType: CreateUserType;
   email: string;
   fullName: string;
+  domain: string;
+  period: string;
   birthday?: string;
   monthlyConfigId?: string;
 };
@@ -39,6 +45,8 @@ const validationSchema = object({
   createType: mixed<CreateUserType>()
     .oneOf(Object.values(CreateUserType))
     .required('Please select create type'),
+  domain: string().required(),
+  period: string().required(),
   email: string().email('Incorrect email format').required('Email is required'),
   fullName: string().optional(),
   birthday: string().optional(),
@@ -79,6 +87,8 @@ export function AddUserDrawer({
   });
 
   const { mutate: dispatchCreateUser, isLoading } = useMutateCreateUser();
+  const { data: domains } = useDomains();
+  const { data: periods } = usePeriods();
 
   const saveUser: SubmitHandler<CreateUserInputs> = createUserInputs => {
     dispatchCreateUser(
@@ -87,7 +97,9 @@ export function AddUserDrawer({
         email: createUserInputs.email,
         fullName: createUserInputs.fullName,
         birthday: createUserInputs.birthday,
-        monthlyConfigId: createUserInputs.monthlyConfigId
+        monthlyConfigId: createUserInputs.monthlyConfigId,
+        domainId: createUserInputs.domain,
+        periodId: createUserInputs.period
       },
       {
         onSuccess: () => {
@@ -130,6 +142,42 @@ export function AddUserDrawer({
 
             {errors.createType && (
               <FormErrorMessage>{errors.createType?.message}</FormErrorMessage>
+            )}
+          </FormControl>
+
+          <FormControl isInvalid={!!errors.domain}>
+            <FormLabel htmlFor="create-user-type">Domain</FormLabel>
+
+            <Select placeholder="Select domain" {...register('domain')}>
+              {domains?.map(domain => {
+                return (
+                  <option key={domain.id} value={domain.id}>
+                    {domain.name}
+                  </option>
+                );
+              })}
+            </Select>
+
+            {errors.domain && (
+              <FormErrorMessage>{errors.domain?.message}</FormErrorMessage>
+            )}
+          </FormControl>
+
+          <FormControl isInvalid={!!errors.period}>
+            <FormLabel htmlFor="create-user-type">Period</FormLabel>
+
+            <Select placeholder="Select period" {...register('period')}>
+              {periods?.map(period => {
+                return (
+                  <option key={period.id} value={period.id}>
+                    {period.name}
+                  </option>
+                );
+              })}
+            </Select>
+
+            {errors.period && (
+              <FormErrorMessage>{errors.period?.message}</FormErrorMessage>
             )}
           </FormControl>
 
