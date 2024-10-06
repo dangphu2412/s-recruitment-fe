@@ -8,20 +8,24 @@ export const tokenManager = {
     persistentStorage.cleanStorage();
   },
   async renew(): Promise<void> {
-    if (!renewHandler) {
-      const refreshToken = persistentStorage.getRefreshToken();
+    try {
+      if (!renewHandler) {
+        const refreshToken = persistentStorage.getRefreshToken();
 
-      if (!refreshToken) return;
+        if (!refreshToken) return;
 
-      renewHandler = authApiClient.renewTokens(refreshToken);
-    }
+        renewHandler = authApiClient.renewTokens(refreshToken);
+      }
 
-    const tokens: Tokens = await renewHandler;
+      const tokens: Tokens = await renewHandler;
 
-    persistentStorage.saveTokens(tokens);
-
-    if (renewHandler) {
-      renewHandler = undefined;
+      persistentStorage.saveTokens(tokens);
+    } catch (error: unknown) {
+      throw error;
+    } finally {
+      if (renewHandler) {
+        renewHandler = undefined;
+      }
     }
   }
 };

@@ -3,7 +3,8 @@ import {
   faBook,
   faCake,
   faHome,
-  faSuitcase
+  faSuitcase,
+  faMask
 } from '@fortawesome/free-solid-svg-icons';
 import { menuApiClient, MenuItem } from '../api';
 import { useQuery } from 'react-query';
@@ -28,7 +29,8 @@ const IconKeyByCode: Record<string, IconDefinition> = {
   USER_MANAGEMENT_ICON: faCake,
   CATEGORY_ICON: faHome,
   RECRUITMENT_ICON: faSuitcase,
-  POST_ICON: faBook
+  POST_ICON: faBook,
+  MASTER_ICON: faMask
 };
 
 export function mapMenuItemToSidebarMenus(

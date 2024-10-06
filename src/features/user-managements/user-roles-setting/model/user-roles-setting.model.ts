@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNotify } from '../../../../shared/models/notify';
 import {
+  QUERY_USERS_KEY,
   useMutateSaveUserRoles,
   useQueryControlList,
   useQueryUserRoles
 } from '../../../../entities/user/models';
+import { useQueryClient } from 'react-query';
 
 type RoleView = {
   name: string;
@@ -20,6 +22,7 @@ export function useRoleView({ userId }: RoleViewProps) {
   const [selectionViews, setSelectionViews] = useState<RoleView[]>([]);
   const [, setOwningRoles] = useState<string[]>([]);
   const notify = useNotify();
+  const queryClient = useQueryClient();
 
   const { userRoles } = useQueryUserRoles(userId);
   const { allRoles } = useQueryControlList();
@@ -33,6 +36,7 @@ export function useRoleView({ userId }: RoleViewProps) {
         { userId, roleIds: newRoles },
         {
           onSuccess() {
+            queryClient.invalidateQueries([QUERY_USERS_KEY]);
             notify({
               title: 'Save roles',
               status: 'success'

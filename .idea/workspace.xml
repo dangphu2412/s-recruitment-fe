@@ -5,7 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
-      <change beforePath="$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/entities/master-data/useMasteData.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/money-control/money-control-list/ui/MoneyControlList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/master-data/domains.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/ui/Button/BackButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/menu/models/sidebar-menu.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/menu/models/sidebar-menu.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/user/api/user-api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user/api/user-api-client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/user/models/user.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user/models/user.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/user-roles-setting/model/user-roles-setting.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/user-roles-setting/model/user-roles-setting.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-detail-view/ui/UserDetailSection/UserDetailSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-detail-view/ui/UserDetailSection/UserDetailSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/users/[userId]/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/[userId]/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/users/[userId]/role-settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/[userId]/role-settings.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/api/services/token-manager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/api/services/token-manager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/models/utils/date.utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/models/utils/date.utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +62,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/develop-upload-image&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/entities&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
