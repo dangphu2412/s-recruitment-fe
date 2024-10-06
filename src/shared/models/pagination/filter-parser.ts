@@ -1,8 +1,8 @@
-import { Filter, FilterQuery } from '../filter.api';
-import { FilterKey } from '../../config/constants';
+import { Filter, FilterKeeper, FilterQuery } from '../filter.api';
+import { FilterKey } from '../../config';
 
 export function isFilterType<T extends FilterKey>(
-  filter: Partial<Filter<any>>,
+  filter: Partial<FilterKeeper<T, any>>,
   typeCompare: T
 ): filter is Filter<T> {
   if (filter.type !== typeCompare) {
@@ -27,7 +27,7 @@ export function isFilterType<T extends FilterKey>(
 }
 
 export function parseFilterQuery(
-  filters: Record<string, Filter<any>>
+  filters: Record<string, FilterKeeper<FilterKey, unknown>>
 ): FilterQuery {
   const query: FilterQuery = {};
 

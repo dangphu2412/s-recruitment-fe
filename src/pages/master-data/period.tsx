@@ -1,19 +1,23 @@
 import React, { ReactElement } from 'react';
 import { Card, ContentHeader } from '../../shared/ui';
-import { useDomains } from '../../entities/master-data/useMasteData';
-import { List, ListIcon, ListItem, Text } from '@chakra-ui/react';
+import { Flex, List, ListIcon, ListItem, Text } from '@chakra-ui/react';
+import { usePeriods } from '../../entities/master-data/useMasteData';
+import { AddPeriodContainer } from '../../features/master-data/add-period';
 
-export default function DomainPage(): ReactElement {
-  const { data } = useDomains();
+export default function PeriodPage(): ReactElement {
+  const { data } = usePeriods();
 
   return (
     <Card className={'space-y-6'}>
-      <div>
-        <ContentHeader
-          main={'Domain management'}
-          brief={'Where you view our organization domain'}
-        />
-      </div>
+      <Flex justifyContent="space-between" className="pb-2">
+        <div>
+          <ContentHeader
+            main={'Period management'}
+            brief={'Where you view our organization period'}
+          />
+        </div>
+        <AddPeriodContainer />
+      </Flex>
 
       <List spacing={4}>
         {data &&
