@@ -4,7 +4,10 @@ const colors = require('tailwindcss/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    'node_modules/@zach.codes/react-calendar/dist/**/*.js'
+  ],
   theme: {
     extend: {
       boxShadow: {

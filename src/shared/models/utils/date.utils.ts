@@ -11,5 +11,5 @@ export function getFilterDateRange(): DateRange<Date> {
 }
 
 export function formatDate(date: Date): string {
-  return format(date, 'yyyy-MM-dd');
+  return format(date, 'dd-MM-yyyy');
 }

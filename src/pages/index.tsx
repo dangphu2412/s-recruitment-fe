@@ -1,9 +1,18 @@
 import * as React from 'react';
 import type { NextPage } from 'next';
-import { Card } from '../shared/ui';
+import { MyMonthlyCalendar } from '../features/money-control/money-control-list/ui/MoneyControlList';
+import { Card, ContentHeader } from '../shared/ui';
 
 const Home: NextPage = () => {
-  return <Card className="h-96">This is dashboard</Card>;
+  return (
+    <Card>
+      <ContentHeader
+        main={'Main Dashboard'}
+        brief={'Where Phu test features'}
+      />
+      <MyMonthlyCalendar />
+    </Card>
+  );
 };
 
 export default Home;

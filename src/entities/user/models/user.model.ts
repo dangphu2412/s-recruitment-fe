@@ -223,6 +223,12 @@ export function useMutateCreateUser() {
         description: message
       });
     }
+
+    notify({
+      title: 'System is facing issue',
+      status: 'error',
+      description: message
+    });
   }
 
   const handle = useHandleError({
