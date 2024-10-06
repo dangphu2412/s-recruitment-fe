@@ -1,14 +1,4 @@
-import { add, format, sub } from 'date-fns';
-import { DateRange } from '../filter.api';
-
-export function getFilterDateRange(): DateRange<Date> {
-  const today = new Date();
-
-  return {
-    fromDate: sub(today, { days: 30 }),
-    toDate: add(today, { days: 30 })
-  };
-}
+import { format } from 'date-fns';
 
 export function formatDate(date: Date): string {
   return format(date, 'dd-MM-yyyy');

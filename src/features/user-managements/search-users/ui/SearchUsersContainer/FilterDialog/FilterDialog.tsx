@@ -75,7 +75,7 @@ export function FilterDialog({
     dispatch(
       userActions.setFilter({
         joinedIn: {
-          fromDate: formatDate(date),
+          fromDate: date,
           toDate
         }
       })
@@ -87,7 +87,7 @@ export function FilterDialog({
       userActions.setFilter({
         joinedIn: {
           fromDate,
-          toDate: formatDate(date)
+          toDate: date
         }
       })
     );
@@ -141,7 +141,7 @@ export function FilterDialog({
                 <FormControl>
                   <FormLabel>From date</FormLabel>
                   <DatePicker
-                    value={fromDate ? new Date(fromDate) : new Date()}
+                    value={fromDate ? fromDate : new Date()}
                     onDateChange={handleFromDateChange}
                   />
                 </FormControl>
@@ -149,7 +149,7 @@ export function FilterDialog({
                 <FormControl>
                   <FormLabel>To date</FormLabel>
                   <DatePicker
-                    value={toDate ? new Date(toDate) : new Date()}
+                    value={toDate ? toDate : new Date()}
                     onDateChange={handleToDateChange}
                   />
                 </FormControl>
