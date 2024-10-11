@@ -5,10 +5,12 @@ import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { CellProps } from 'react-table';
 import styles from './Cell.module.scss';
 import { Router } from 'next/router';
-import { UserManagementView } from '../../../../../entities/user/models/user/user.type';
+import { UserManagementView } from '../../../models/useAdminColumns';
 
 type MoreActionCellProps = CellProps<UserManagementView, string> &
-  Pick<Router, 'push'>;
+  Pick<Router, 'push'> & {
+    onPaymentClick?: (id: string) => void;
+  };
 
 type ActionOnUserItem = {
   key: string;
@@ -18,13 +20,21 @@ type ActionOnUserItem = {
 
 export function MoreActionCell({
   row,
-  push
+  push,
+  onPaymentClick
 }: MoreActionCellProps): React.ReactElement {
   const actionItems: ActionOnUserItem[] = [
     {
       key: `UPDATE_ROLE_KEY${row.original.id}`,
       content: 'Update role',
       onClick: () => push(`/users/${row.original.id}/role-settings`)
+    },
+    {
+      key: `MANAGE_PAID_KEY${row.original.id}`,
+      content: 'Manage payment',
+      onClick: () => {
+        onPaymentClick?.(row.original.id);
+      }
     }
   ];
 

@@ -45,6 +45,7 @@ export type AdminState = {
   pagination: Pagination;
   filters: AdminFilter;
   isSubmitted: boolean;
+  selectedPaymentUserId?: string;
 };
 
 export const selectOverviewState = (
@@ -59,6 +60,11 @@ export const selectJoinedInDates = createSelector(
 export const selectMemberType = createSelector(
   selectOverviewState,
   state => state.filters.memberType
+);
+
+export const selectPaymentUserId = createSelector(
+  selectOverviewState,
+  state => state.selectedPaymentUserId
 );
 
 export function getInitialOverviewState(): AdminState {
@@ -84,7 +90,8 @@ export function getInitialOverviewState(): AdminState {
         value: ''
       }
     },
-    isSubmitted: true
+    isSubmitted: true,
+    selectedPaymentUserId: undefined
   };
 }
 
@@ -154,6 +161,12 @@ const userSlice = createSlice({
     },
     saveCurrentUser: (state, action: PayloadAction<UserDetail>) => {
       state.currentUser = action.payload;
+    },
+    setSelectedPaymentUserId: (
+      state,
+      action: PayloadAction<string | undefined>
+    ) => {
+      state.overview.selectedPaymentUserId = action.payload;
     }
   }
 });
