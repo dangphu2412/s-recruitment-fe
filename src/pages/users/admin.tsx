@@ -6,6 +6,7 @@ import { AddUsersContainer } from '../../features/user-managements/add-users';
 import { SearchUsersContainer } from '../../features/user-managements/search-users';
 import { PaginateUsersContainer } from '../../features/user-managements/paginate-users';
 import { UsersOverviewTable } from '../../features/user-managements/users-table';
+import { UserPaymentView } from '../../features/user-managements/user-payment-view/ui/UserPaymentView';
 
 export default function AdministratorPage(): ReactElement {
   return (
@@ -24,6 +25,7 @@ export default function AdministratorPage(): ReactElement {
       <SearchUsersContainer />
       <PaginateUsersContainer />
       <UsersOverviewTable />
+      <UserPaymentView />
     </Card>
   );
 }
