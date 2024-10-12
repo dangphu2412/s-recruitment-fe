@@ -8,10 +8,21 @@ export function RoleCell({
   value,
   row
 }: CellProps<UserManagementView, Role[]>): ReactElement {
+  if (!value?.length) {
+    return <Tag key={row.id}>Not Assigned</Tag>;
+  }
+
   return (
     <div key={row.id} className={'flex flex-col gap-2'}>
       {value.map(role => (
-        <Tag key={role.id}>{role.name}</Tag>
+        <Tag
+          key={role.id}
+          colorScheme="teal"
+          variant="solid"
+          className={'w-fit'}
+        >
+          {role.name}
+        </Tag>
       ))}
     </div>
   );

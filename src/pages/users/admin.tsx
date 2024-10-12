@@ -7,6 +7,8 @@ import { SearchUsersContainer } from '../../features/user-managements/search-use
 import { PaginateUsersContainer } from '../../features/user-managements/paginate-users';
 import { UsersOverviewTable } from '../../features/user-managements/users-table';
 import { UserPaymentView } from '../../features/user-managements/user-payment-view/ui/UserPaymentView';
+import { UpdateUserToMemberContainer } from '../../features/user-managements/update-to-member';
+import { ImportUsersContainer } from '../../features/user-managements/import-users';
 
 export default function AdministratorPage(): ReactElement {
   return (
@@ -19,7 +21,11 @@ export default function AdministratorPage(): ReactElement {
           />
         </div>
 
-        <AddUsersContainer />
+        <div className={'space-x-2'}>
+          <AddUsersContainer />
+          <UpdateUserToMemberContainer />
+          <ImportUsersContainer />
+        </div>
       </Flex>
 
       <SearchUsersContainer />

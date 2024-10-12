@@ -47,7 +47,7 @@ export function AdminLayout({
           onMouseLeave={handleMouseLeaveToggleItem}
         />
 
-        <Box flex={1}>
+        <Box flex={'auto'}>
           <Header isMenuHidden={isSideBarHidden} />
 
           <div className="p-6 pb-0 min-h-[calc(100vh-160px)]">{children}</div>

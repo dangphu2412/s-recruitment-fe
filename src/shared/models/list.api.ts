@@ -19,3 +19,8 @@ export type GetManyParams = {
   pagination: Pagination;
   filters: FilterQuery;
 };
+
+export type ProbationQuery = {
+  pagination: Pagination;
+  filters: FilterQuery;
+};

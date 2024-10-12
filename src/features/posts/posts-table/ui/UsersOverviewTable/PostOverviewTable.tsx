@@ -11,7 +11,7 @@ import { usePostOverview } from '../../../../../entities/posts/models';
 
 export function PostOverviewTable(): ReactElement {
   const { push } = useRouter();
-  const { data } = usePostOverview();
+  const { data, isLoading } = usePostOverview();
   const columns = usePostOverviewColumns();
 
   function handleNavigateDetail(row: Row<PostOverviewView>) {
@@ -23,6 +23,7 @@ export function PostOverviewTable(): ReactElement {
       columns={columns}
       items={data?.items ?? EMPTY_ARRAY}
       onRowClick={handleNavigateDetail}
+      isLoading={isLoading}
     />
   );
 }

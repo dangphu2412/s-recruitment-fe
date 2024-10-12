@@ -5,24 +5,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
-      <change afterPath="$PROJECT_DIR$/src/entities/monthly-money/api/payments-api.client.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/monthly-money/models/payment.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/user-payment-view/models/useUserPaymentColumns.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/user-payment-view/ui/AddUserPayment.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/user-payment-view/ui/UserPaymentList.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/user-payment-view/ui/UserPaymentView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/user-managements/import-users/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/user-managements/import-users/ui/ImportUsers/ImportUsersContainer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/user-managements/import-users/ui/ImportUsers/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/user-managements/import-users/ui/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/user-managements/update-to-member/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/user-managements/update-to-member/ui/UpdateUserToMemberContainer/AddUserDrawer/UpdateUserToMemberContainerDrawer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/user-managements/update-to-member/ui/UpdateUserToMemberContainer/AddUserDrawer/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/user-managements/update-to-member/ui/UpdateUserToMemberContainer/UpdateUserToMemberContainer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/user-managements/update-to-member/ui/UpdateUserToMemberContainer/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/user-managements/update-to-member/ui/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/user-managements/user-roles-setting/ui/RoleSettings/RoleSetting.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/monthly-money/api/monthly-money-api.client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monthly-money/api/monthly-money-api.client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/monthly-money/models/monthly-money.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monthly-money/models/monthly-money.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/master-data/useMasteData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/master-data/useMasteData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/posts/models/post.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/posts/models/post.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/user/api/user-api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user/api/user-api-client.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/user/models/user.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user/models/user.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/money-control/money-control-list/ui/MoneyControlList.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/master-data/add-period/ui/AddPeridContainer/AddUserDrawer/AddPeriodDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/master-data/add-period/ui/AddPeridContainer/AddUserDrawer/AddPeriodDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/menu/features-menu/ui/SideBar/SideBar.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/menu/features-menu/ui/SideBar/SideBar.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/paginate-posts/ui/PaginatePostsContainer/PaginatePostContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/posts/paginate-posts/ui/PaginatePostsContainer/PaginatePostContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/posts-table/ui/UsersOverviewTable/PostOverviewTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/posts/posts-table/ui/UsersOverviewTable/PostOverviewTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/paginate-users/ui/PaginateUsersContainer/PaginateUsersContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/paginate-users/ui/PaginateUsersContainer/PaginateUsersContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/SearchInput/SearchInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/SearchInput/SearchInput.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/SearchUsersContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/SearchUsersContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/user-roles-setting/model/user-roles-setting.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/user-roles-setting/model/user-roles-setting.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/user-roles-setting/ui/RoleSettings/RoleSettings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/user-roles-setting/ui/RoleSettings/RoleSettings.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-detail-view/ui/UserDetailSection/UserDetailSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-detail-view/ui/UserDetailSection/UserDetailSection.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/models/useAdminColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/models/useAdminColumns.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/MoreActionCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/MoreActionCell.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/PaidCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/PaidCell.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/RoleCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/RoleCell.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UsernameCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UsernameCell.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/UsersOverviewTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/UsersOverviewTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/master-data/domains.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/master-data/domains.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/master-data/period.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/master-data/period.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/users/[userId]/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/[userId]/profile.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/users/admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/admin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/models/list.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/models/list.api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/ui/Button/BackButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Button/BackButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/ui/Pagination/Paginator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Pagination/Paginator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/widgets/admin-layout/ui/AdminLayout/AdminLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/admin-layout/ui/AdminLayout/AdminLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/globals.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +84,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/entities&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/features/user-managements&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -83,11 +105,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/features/user-managements" />
       <recent name="$PROJECT_DIR$/src/entities" />
       <recent name="$PROJECT_DIR$/src/features/documents/document-overviews/ui" />
       <recent name="$PROJECT_DIR$/src/entities/posts/api" />
       <recent name="$PROJECT_DIR$/src/entities/posts/models" />
-      <recent name="$PROJECT_DIR$/src/features/posts/add-post/ui" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/pages/thong-bao/[id]" />
