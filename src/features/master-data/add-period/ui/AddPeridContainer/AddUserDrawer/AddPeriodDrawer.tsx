@@ -19,7 +19,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
 import { FullLoader } from 'src/shared/ui/Loader/Full/FullLoader';
-import { useMutatePeriod } from 'src/entities/master-data/useMasteData';
+import {
+  getPeriodKey,
+  useMutatePeriod
+} from 'src/entities/master-data/useMasteData';
+import { useQueryClient } from 'react-query';
+import { useNotify } from '../../../../../../shared/models/notify';
 
 export type CreatePeriodInputs = {
   name: string;
@@ -55,6 +60,8 @@ export function AddPeriodDrawer({
   });
 
   const { mutate: savePeriod, isLoading } = useMutatePeriod();
+  const queryClient = useQueryClient();
+  const notify = useNotify();
 
   const saveUser: SubmitHandler<CreatePeriodInputs> = createUserInputs => {
     savePeriod(
@@ -64,8 +71,21 @@ export function AddPeriodDrawer({
       },
       {
         onSuccess: () => {
+          notify({
+            title: 'Period created successfully',
+            status: 'success'
+          });
+          queryClient.invalidateQueries({
+            queryKey: getPeriodKey()
+          });
           reset();
           onClose();
+        },
+        onError: () => {
+          notify({
+            title: 'Period created failed',
+            status: 'error'
+          });
         }
       }
     );

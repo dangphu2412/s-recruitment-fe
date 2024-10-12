@@ -1,6 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
+  selectPagination,
   userActions,
   useUserOverview
 } from '../../../../../entities/user/models';
@@ -8,17 +9,32 @@ import { Paginator } from '../../../../../shared/ui/Pagination/Paginator';
 
 export function PaginateUsersContainer(): React.ReactElement {
   const dispatch = useDispatch();
+  const { page, size } = useSelector(selectPagination);
   const { data } = useUserOverview();
   const totalRecords = data?.metadata.totalRecords;
 
-  function handlePaginationChange(
-    currentPage: number,
-    currentPageSize: number
-  ) {
+  function handlePageChange(currentPage: number) {
     dispatch(
       userActions.setPagination({
-        page: currentPage,
-        size: currentPageSize
+        page: currentPage
+      })
+    );
+    dispatch(
+      userActions.submitWithFilter({
+        query: ''
+      })
+    );
+  }
+
+  function handleSizeChange(currentSize: number) {
+    dispatch(
+      userActions.setPagination({
+        size: currentSize
+      })
+    );
+    dispatch(
+      userActions.submitWithFilter({
+        query: ''
       })
     );
   }
@@ -27,7 +43,10 @@ export function PaginateUsersContainer(): React.ReactElement {
     <Paginator
       className="py-2"
       totalRecords={totalRecords ?? 0}
-      onPaginationChange={handlePaginationChange}
+      page={page}
+      size={size}
+      onPageChange={handlePageChange}
+      onSizeChange={handleSizeChange}
     />
   );
 }

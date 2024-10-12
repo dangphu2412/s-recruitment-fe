@@ -1,6 +1,13 @@
 import React, { ReactElement } from 'react';
 import { Card, ContentHeader } from '../../shared/ui';
-import { Flex, List, ListIcon, ListItem, Text } from '@chakra-ui/react';
+import {
+  Flex,
+  List,
+  ListIcon,
+  ListItem,
+  Text,
+  Tooltip
+} from '@chakra-ui/react';
 import { usePeriods } from '../../entities/master-data/useMasteData';
 import { AddPeriodContainer } from '../../features/master-data/add-period';
 
@@ -25,7 +32,9 @@ export default function PeriodPage(): ReactElement {
             return (
               <ListItem key={item.id}>
                 <div className={'flex items-center'}>
-                  <ListIcon color="green.500" />
+                  <Tooltip label={item.description}>
+                    <ListIcon color="green.500" />
+                  </Tooltip>
                   <Text fontSize="xl">{item.name}</Text>
                 </div>
 

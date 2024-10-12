@@ -4,6 +4,7 @@ import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import { useRouter } from 'next/router';
 import { normalizeParam } from '../../../../../shared/models/utils/router.utils';
 import { useRoleView } from '../../model';
+import classes from './RoleSetting.module.scss';
 
 export function RoleSettings(): ReactElement {
   const handleBarRef = useRef<HTMLDivElement>(null);
@@ -42,22 +43,18 @@ export function RoleSettings(): ReactElement {
   return (
     <Grid templateColumns="repeat(5, 1fr)" gap={6}>
       <GridItem colSpan={4} w="100%" ref={handleBarRef}>
-        <Box border={'1px'} height="400px">
+        <Box
+          border={'1px'}
+          height="400px"
+          className={'rounded-lg p-4 space-y-2'}
+        >
           {roleViews.map(view => {
             return (
               <Draggable
                 key={view.name}
                 onStop={createStopDragHandler(view.id)}
               >
-                <Box
-                  cursor={'pointer'}
-                  padding={'1rem'}
-                  border={'1px'}
-                  width="180px"
-                  height="40px"
-                >
-                  {view.name}
-                </Box>
+                <div className={classes['role-item']}>{view.name}</div>
               </Draggable>
             );
           })}
@@ -65,22 +62,14 @@ export function RoleSettings(): ReactElement {
       </GridItem>
 
       <GridItem colSpan={1} w="100%" h="10">
-        <List>
+        <List className={'space-y-2'}>
           {selectionViews.map(item => {
             return (
               <Draggable
                 key={item.name}
                 onStop={createStopDragHandler(item.id)}
               >
-                <Box
-                  cursor={'pointer'}
-                  padding={'1rem'}
-                  border={'1px'}
-                  width="180px"
-                  height="40px"
-                >
-                  {item.name}
-                </Box>
+                <div className={classes['role-item']}>{item.name}</div>
               </Draggable>
             );
           })}

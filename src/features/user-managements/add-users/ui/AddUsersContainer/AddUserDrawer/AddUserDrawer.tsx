@@ -17,10 +17,8 @@ import {
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { mixed, object, string } from 'yup';
-import { CreateUserType } from 'src/entities/user/config/admin-management.constants';
+import { object, string } from 'yup';
 import { FullLoader } from '../../../../../../shared/ui/Loader/Full/FullLoader';
-import { useQueryMonthlyMoneyConfigs } from 'src/entities/monthly-money/models';
 import { useMutateCreateUser } from '../../../../../../entities/user/models';
 import {
   useDomains,
@@ -28,7 +26,6 @@ import {
 } from '../../../../../../entities/master-data/useMasteData';
 
 export type CreateUserInputs = {
-  createType: CreateUserType;
   email: string;
   fullName: string;
   domain: string;
@@ -42,20 +39,11 @@ type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
 };
 
 const validationSchema = object({
-  createType: mixed<CreateUserType>()
-    .oneOf(Object.values(CreateUserType))
-    .required('Please select create type'),
   domain: string().required(),
   period: string().required(),
   email: string().email('Incorrect email format').required('Email is required'),
   fullName: string().optional(),
-  birthday: string().optional(),
-  monthlyConfigId: string()
-    .optional()
-    .when('createType', {
-      is: CreateUserType.NEW_MEMBERS,
-      then: string().required('Please provide monthly money config option')
-    })
+  birthday: string().optional()
 });
 
 export function AddUserDrawer({
@@ -66,7 +54,6 @@ export function AddUserDrawer({
   const {
     handleSubmit,
     register,
-    watch,
     formState: { errors },
     reset
   } = useForm<CreateUserInputs>({
@@ -75,15 +62,8 @@ export function AddUserDrawer({
     defaultValues: {
       email: '',
       fullName: '',
-      birthday: '',
-      createType: CreateUserType.NEWBIE
+      birthday: ''
     }
-  });
-
-  const createUserType = watch('createType');
-
-  const { monthlyMoneyConfigs } = useQueryMonthlyMoneyConfigs({
-    isEnabled: isOpen
   });
 
   const { mutate: dispatchCreateUser, isLoading } = useMutateCreateUser();
@@ -93,11 +73,9 @@ export function AddUserDrawer({
   const saveUser: SubmitHandler<CreateUserInputs> = createUserInputs => {
     dispatchCreateUser(
       {
-        createUserType: createUserInputs.createType,
         email: createUserInputs.email,
         fullName: createUserInputs.fullName,
         birthday: createUserInputs.birthday,
-        monthlyConfigId: createUserInputs.monthlyConfigId,
         domainId: createUserInputs.domain,
         periodId: createUserInputs.period
       },
@@ -127,24 +105,6 @@ export function AddUserDrawer({
         <DrawerHeader>Create new S-Group members</DrawerHeader>
 
         <DrawerBody className="space-y-4">
-          <FormControl isInvalid={!!errors.createType}>
-            <FormLabel htmlFor="create-user-type">Create type</FormLabel>
-
-            <Select placeholder="Select option" {...register('createType')}>
-              {Object.values(CreateUserType).map(type => {
-                return (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                );
-              })}
-            </Select>
-
-            {errors.createType && (
-              <FormErrorMessage>{errors.createType?.message}</FormErrorMessage>
-            )}
-          </FormControl>
-
           <FormControl isInvalid={!!errors.domain}>
             <FormLabel htmlFor="create-user-type">Domain</FormLabel>
 
@@ -213,25 +173,6 @@ export function AddUserDrawer({
               <FormErrorMessage>{errors.birthday.message}</FormErrorMessage>
             )}
           </FormControl>
-
-          {[CreateUserType.NEW_MEMBERS].includes(createUserType) && (
-            <FormControl>
-              <FormLabel htmlFor="monthly-configs">Monthly paid</FormLabel>
-
-              <Select
-                placeholder="Select option"
-                {...register('monthlyConfigId')}
-              >
-                {monthlyMoneyConfigs.map(config => {
-                  return (
-                    <option value={config.id} key={config.id}>
-                      {`${config.amount}K / ${config.monthRange} month`}
-                    </option>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          )}
         </DrawerBody>
 
         <DrawerFooter>
