@@ -9,20 +9,24 @@ import { RoleCell } from '../ui/UsersOverviewTable/Cell/RoleCell';
 import { StatusCell } from '../ui/UsersOverviewTable/Cell/StatusCell';
 import { OperationFee } from '../../../../entities/monthly-money/models';
 import { Role } from '../../../../entities/user/api';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../../../../entities/user/models';
 
 export type UserManagementView = {
   id: string;
   username: string;
   email: string;
-  avatar: string;
   createdAt: string;
   deletedAt: string;
   operationFee?: OperationFee;
+  remainMonths: number;
+  paidMonths: number;
   roles: Role[];
 };
 
 export function useAdminColumns(): Column<UserManagementView>[] {
   const { push } = useRouter();
+  const dispatch = useDispatch();
 
   return useMemo(
     () => [
@@ -32,16 +36,16 @@ export function useAdminColumns(): Column<UserManagementView>[] {
         Cell: UsernameCell
       },
       {
-        Header: 'Email',
-        accessor: 'email'
-      },
-      {
         Header: 'Employed At',
         accessor: row => format(new Date(row.createdAt), 'dd/MM/yyyy')
       },
       {
-        Header: 'Paid',
-        Cell: PaidCell
+        Header: 'Paid Months',
+        accessor: 'paidMonths'
+      },
+      {
+        Header: 'Remain Months',
+        accessor: 'remainMonths'
       },
       {
         Header: 'Roles',
@@ -56,10 +60,17 @@ export function useAdminColumns(): Column<UserManagementView>[] {
       {
         Header: 'Actions',
         Cell: (props: CellProps<UserManagementView, string>) => (
-          <MoreActionCell key={props.row.id} {...props} push={push} />
+          <MoreActionCell
+            key={props.row.id}
+            {...props}
+            push={push}
+            onPaymentClick={id =>
+              dispatch(userActions.setSelectedPaymentUserId(id))
+            }
+          />
         )
       }
     ],
-    [push]
+    [dispatch, push]
   );
 }

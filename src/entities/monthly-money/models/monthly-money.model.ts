@@ -1,16 +1,6 @@
-import { useMutation, useQuery } from 'react-query';
-import { monthlyMoneyApiClient, UpdateUserPaidMoneyRequest } from '../api';
+import { useQuery } from 'react-query';
+import { monthlyMoneyApiClient } from '../api';
 import { EMPTY_ARRAY } from '../../../shared/config/constants';
-
-export function useUpdatePaidMoney() {
-  const { mutate } = useMutation({
-    mutationFn: (request: UpdateUserPaidMoneyRequest) =>
-      monthlyMoneyApiClient.updatePaidMoney(request),
-    mutationKey: 'MUTATION_UPDATE_PAID'
-  });
-
-  return { mutate };
-}
 
 type QueryMonthlyMoneyConfigsProps = {
   isEnabled: boolean;
