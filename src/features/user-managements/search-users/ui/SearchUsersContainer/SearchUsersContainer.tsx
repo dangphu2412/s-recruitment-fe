@@ -19,7 +19,7 @@ export function SearchUsersContainer(): React.ReactElement {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   function handleSubmitFilter() {
-    dispatch(userActions.setIsSubmitted(true));
+    dispatch(userActions.setIsSubmitted());
   }
 
   return (

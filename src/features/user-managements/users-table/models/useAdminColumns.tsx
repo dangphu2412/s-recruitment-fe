@@ -11,6 +11,7 @@ import { OperationFee } from '../../../../entities/monthly-money/models';
 import { Role } from '../../../../entities/user/api';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../../../entities/user/models';
+import { Tag } from '@chakra-ui/react';
 
 export type UserManagementView = {
   id: string;
@@ -21,6 +22,7 @@ export type UserManagementView = {
   operationFee?: OperationFee;
   remainMonths: number;
   paidMonths: number;
+  isProbation: boolean;
   roles: Role[];
 };
 
@@ -41,11 +43,25 @@ export function useAdminColumns(): Column<UserManagementView>[] {
       },
       {
         Header: 'Paid Months',
-        accessor: 'paidMonths'
+        accessor: 'paidMonths',
+        Cell: props => {
+          if (props.row.original.isProbation) {
+            return <Tag>Probation</Tag>;
+          }
+
+          return <>{props.value}</>;
+        }
       },
       {
         Header: 'Remain Months',
-        accessor: 'remainMonths'
+        accessor: 'remainMonths',
+        Cell: props => {
+          if (props.row.original.isProbation) {
+            return <Tag>Probation</Tag>;
+          }
+
+          return <>{props.value}</>;
+        }
       },
       {
         Header: 'Roles',

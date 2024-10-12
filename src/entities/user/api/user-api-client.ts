@@ -1,7 +1,10 @@
-import { GetManyParams, Page } from 'src/shared/models/list.api';
+import {
+  GetManyParams,
+  Page,
+  ProbationQuery
+} from 'src/shared/models/list.api';
 import { authorizedHttpClient } from '../../../shared/api';
 import { OperationFee } from 'src/entities/monthly-money/models';
-import { CreateUserType } from '../config';
 import { Role } from './access-control.client';
 
 export type User = {
@@ -18,7 +21,9 @@ export type User = {
     id: string;
     name: string;
   };
+  roles: Role[];
   birthday: string;
+  isProbation: boolean;
   createdAt: string;
   deletedAt: string;
   operationFee?: OperationFee;
@@ -28,11 +33,20 @@ export type UserManagementView = {
   id: string;
   username: string;
   email: string;
-  avatar: string;
   createdAt: string;
   deletedAt: string;
   operationFee?: OperationFee;
   roles: Role[];
+  remainMonths: number;
+  paidMonths: number;
+  isProbation: boolean;
+};
+
+export type UserProbationView = {
+  id: string;
+  email: string;
+  probationEndDate: Date;
+  createdAt: Date;
 };
 
 export type UserRolesView = Pick<Partial<UserManagementView>, 'roles'>;
@@ -43,10 +57,11 @@ export type CreateUsersDto = {
   domainId: string;
   periodId: string;
   birthday?: string;
-  createUserType: CreateUserType;
-  monthlyConfigId?: string;
-  attachment?: File;
-  processSheetName?: string;
+};
+
+export type UploadUserDto = {
+  file: File;
+  fieldMappings: string;
 };
 
 export type PatchUserRolesPayload = {
@@ -61,6 +76,11 @@ export type UserDetail = {
   avatar: string;
   createdAt: string;
   deletedAt: string;
+};
+
+export type UpgradeMemberDto = {
+  ids: string[];
+  monthlyConfigId: number;
 };
 
 export const userApiClient = {
@@ -116,6 +136,37 @@ export const userApiClient = {
       method: 'post',
       url: '/users',
       data: createUserDto
+    });
+  },
+  uploadUserByFile(uploadUserDto: UploadUserDto): Promise<void> {
+    const formData = new FormData();
+    formData.append('file', uploadUserDto.file);
+    formData.append('fieldMappings', uploadUserDto.fieldMappings);
+
+    return authorizedHttpClient.request({
+      method: 'post',
+      url: '/users/upload',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  },
+  getProbationUsers(params: ProbationQuery): Promise<Page<UserProbationView>> {
+    return authorizedHttpClient.request<Page<UserProbationView>>({
+      url: '/users/probation',
+      method: 'get',
+      params: {
+        ...params.filters,
+        ...params.pagination
+      }
+    });
+  },
+  upgradeMembers(data: UpgradeMemberDto) {
+    return authorizedHttpClient.request({
+      url: '/users/members',
+      method: 'patch',
+      data
     });
   }
 };

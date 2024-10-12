@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FilterKey } from '../../../shared/config';
 import { Pagination } from '../../../shared/models';
 import {
@@ -31,6 +31,11 @@ export const selectOverviewState = (
   state: AppStorage<'PostDomain', PostDomain>
 ) => state.PostDomain.overview;
 
+export const selectPagination = createSelector(
+  selectOverviewState,
+  state => state.pagination
+);
+
 export function getInitialOverviewState(): PostOverviewState {
   return {
     pagination: {
@@ -61,9 +66,12 @@ const postSlice = createSlice({
   name: 'PostDomain',
   initialState: getInitialPostState(),
   reducers: {
-    setPagination: (state, action: PayloadAction<Pagination>) => {
+    setPagination: (state, action: PayloadAction<Partial<Pagination>>) => {
       state.overview.isSubmitted = true;
-      state.overview.pagination = action.payload;
+      state.overview.pagination = {
+        ...state.overview.pagination,
+        ...action.payload
+      };
     },
     setFilter: (
       state,

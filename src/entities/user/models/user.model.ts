@@ -44,7 +44,7 @@ export type AdminFilter = CombineSearchFilter<{
 export type AdminState = {
   pagination: Pagination;
   filters: AdminFilter;
-  isSubmitted: boolean;
+  submission: Pick<AdminState, 'pagination' | 'filters'>;
   selectedPaymentUserId?: string;
 };
 
@@ -55,6 +55,21 @@ export const selectOverviewState = (
 export const selectJoinedInDates = createSelector(
   selectOverviewState,
   state => state.filters.joinedIn
+);
+
+export const selectSubmission = createSelector(
+  selectOverviewState,
+  state => state.submission
+);
+
+export const selectPagination = createSelector(
+  selectOverviewState,
+  state => state.pagination
+);
+
+export const selectFilters = createSelector(
+  selectOverviewState,
+  state => state.filters
 );
 
 export const selectMemberType = createSelector(
@@ -90,7 +105,29 @@ export function getInitialOverviewState(): AdminState {
         value: ''
       }
     },
-    isSubmitted: true,
+    submission: {
+      pagination: {
+        page: 1,
+        size: 10
+      },
+      filters: {
+        query: {
+          type: FilterKey.LIKE,
+          value: ''
+        },
+        joinedIn: {
+          type: FilterKey.RANGE,
+          value: {
+            fromDate: null,
+            toDate: null
+          }
+        },
+        memberType: {
+          type: FilterKey.EXACT,
+          value: ''
+        }
+      }
+    },
     selectedPaymentUserId: undefined
   };
 }
@@ -107,12 +144,18 @@ const userSlice = createSlice({
   name: 'UserDomain',
   initialState: getInitialUserState(),
   reducers: {
-    setPagination: (state, action: PayloadAction<Pagination>) => {
-      state.overview.isSubmitted = true;
-      state.overview.pagination = action.payload;
+    setPagination: (state, action: PayloadAction<Partial<Pagination>>) => {
+      state.overview.pagination = {
+        ...state.overview.pagination,
+        ...action.payload
+      };
+      state.overview.submission = {
+        pagination: state.overview.pagination,
+        filters: state.overview.filters
+      };
     },
     setFilter: (state, action: PayloadAction<FilterParam<AdminFilter>>) => {
-      if (action.payload.query) {
+      if (action.payload.query !== undefined) {
         state.overview.filters.query = {
           type: FilterKey.LIKE,
           value: action.payload.query
@@ -134,14 +177,16 @@ const userSlice = createSlice({
         };
       }
     },
-    setIsSubmitted: (state, action: PayloadAction<boolean>) => {
-      state.overview.isSubmitted = action.payload;
+    setIsSubmitted: state => {
+      state.overview.submission = {
+        pagination: state.overview.pagination,
+        filters: state.overview.filters
+      };
     },
     submitWithFilter: (
       state,
       action: PayloadAction<FilterParam<AdminFilter>>
     ) => {
-      state.overview.isSubmitted = true;
       if (action.payload.query !== undefined) {
         state.overview.filters.query = {
           type: FilterKey.LIKE,
@@ -155,6 +200,11 @@ const userSlice = createSlice({
           value: action.payload.joinedIn
         };
       }
+
+      state.overview.submission = {
+        pagination: state.overview.pagination,
+        filters: state.overview.filters
+      };
     },
     resetFilter: state => {
       state.overview.filters = getInitialOverviewState().filters;
@@ -252,7 +302,7 @@ export function useMutateCreateUser() {
         status: 'success'
       });
 
-      dispatch(userActions.setIsSubmitted(true));
+      dispatch(userActions.setIsSubmitted());
     },
     onError: handle
   });
@@ -271,7 +321,7 @@ export function useMutateUserActive() {
         status: 'success'
       });
 
-      dispatch(userActions.setIsSubmitted(true));
+      dispatch(userActions.setIsSubmitted());
     }
   });
 }
@@ -288,17 +338,19 @@ export function useQueryMyProfile() {
     status
   };
 }
+export const QUERY_USER_DETAIL_KEY = 'QUERY_USER_DETAIL';
 
 export function useQueryUserProfile(id: string) {
-  const { data, status } = useQuery({
-    queryKey: 'QUERY_USER_DETAIL',
+  const { data, status, isLoading } = useQuery({
+    queryKey: [QUERY_USER_DETAIL_KEY, id],
     queryFn: () => userApiClient.getUserDetail(id),
     enabled: !!id
   });
 
   return {
     userDetail: data,
-    status
+    status,
+    isLoading
   };
 }
 
@@ -328,8 +380,9 @@ export function useQueryUsers({
   pagination,
   ...options
 }: QueryUserOptions) {
+  const { query, ...restFilters } = filters;
   const { data, isLoading } = useQuery({
-    queryKey: QUERY_USERS_KEY,
+    queryKey: [QUERY_USERS_KEY, pagination, restFilters, query],
     queryFn: () =>
       userApiClient.getMany({
         filters: parseFilterQuery(filters),
@@ -342,17 +395,41 @@ export function useQueryUsers({
 }
 
 export function useUserOverview() {
-  const dispatch = useDispatch();
-  const { isSubmitted, filters, pagination } = useSelector(selectOverviewState);
+  const { filters, pagination } = useSelector(selectSubmission);
 
   return useQueryUsers({
     filters,
-    pagination,
-    enabled: isSubmitted,
-    onSuccess() {
-      dispatch(userActions.setIsSubmitted(false));
-    }
+    pagination
   });
+}
+
+export function useProbationUsers({
+  domainId,
+  periodId
+}: {
+  domainId: string;
+  periodId: string;
+}) {
+  const { data, isLoading } = useQuery({
+    queryKey: ['users-probation', domainId, periodId],
+    queryFn: () =>
+      userApiClient.getProbationUsers({
+        filters: parseFilterQuery({
+          domainId: { type: FilterKey.EXACT, value: domainId },
+          periodId: { type: FilterKey.EXACT, value: periodId }
+        }),
+        pagination: {
+          page: 1,
+          size: 50
+        }
+      }),
+    enabled: !!periodId
+  });
+
+  return {
+    data,
+    isLoading
+  };
 }
 
 export function useMutateSaveUserRoles() {
@@ -362,4 +439,22 @@ export function useMutateSaveUserRoles() {
   });
 
   return { saveUserRoles: mutate, isLoading };
+}
+
+export function useMutateUpgradeMembers() {
+  const { mutate, isLoading } = useMutation({
+    mutationKey: 'MUTATION_UPDATE_MEMBERS',
+    mutationFn: userApiClient.upgradeMembers
+  });
+
+  return { upgradeToMembers: mutate, isLoading };
+}
+
+export function useMutateUploadUserByFile() {
+  const { mutate, isLoading } = useMutation({
+    mutationKey: 'MUTATION_UPLOAD_USER_BY_FILE',
+    mutationFn: userApiClient.uploadUserByFile
+  });
+
+  return { uploadUserByFile: mutate, isLoading };
 }

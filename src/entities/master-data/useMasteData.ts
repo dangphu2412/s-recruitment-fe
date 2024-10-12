@@ -38,6 +38,10 @@ export function usePeriods() {
   return useMasterData<Domain[]>(CommonCodes.PERIOD);
 }
 
+export function getPeriodKey() {
+  return ['master-data', CommonCodes.PERIOD];
+}
+
 export function useMutateCommon(code: string) {
   return useMutation({
     mutationKey: ['master-data', code],

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNotify } from '../../../../shared/models/notify';
 import {
+  QUERY_USER_DETAIL_KEY,
   QUERY_USERS_KEY,
   useMutateSaveUserRoles,
   useQueryControlList,
@@ -36,10 +37,22 @@ export function useRoleView({ userId }: RoleViewProps) {
         { userId, roleIds: newRoles },
         {
           onSuccess() {
-            queryClient.invalidateQueries([QUERY_USERS_KEY]);
+            queryClient.invalidateQueries({
+              queryKey: [QUERY_USERS_KEY]
+            });
+
+            queryClient.invalidateQueries({
+              queryKey: [QUERY_USER_DETAIL_KEY]
+            });
             notify({
-              title: 'Save roles',
+              title: 'Roles Saved',
               status: 'success'
+            });
+          },
+          onError() {
+            notify({
+              title: 'Roles Save Failed due to system error',
+              status: 'error'
             });
           }
         }
@@ -86,9 +99,11 @@ export function useRoleView({ userId }: RoleViewProps) {
     const selectionView = allRoles.access
       .map(role => ({
         id: role.id,
-        name: role.name
+        name: role.name,
+        isEditable: role.isEditable
       }))
-      .filter(view => !owningRoleIds.includes(view.id));
+      .filter(view => !owningRoleIds.includes(view.id))
+      .filter(view => view.isEditable);
 
     setRoleViews(owningViews);
     setOwningRoles(owningRoleIds);

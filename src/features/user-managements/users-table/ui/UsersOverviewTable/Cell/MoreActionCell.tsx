@@ -23,20 +23,32 @@ export function MoreActionCell({
   push,
   onPaymentClick
 }: MoreActionCellProps): React.ReactElement {
-  const actionItems: ActionOnUserItem[] = [
-    {
-      key: `UPDATE_ROLE_KEY${row.original.id}`,
-      content: 'Update role',
-      onClick: () => push(`/users/${row.original.id}/role-settings`)
-    },
-    {
-      key: `MANAGE_PAID_KEY${row.original.id}`,
-      content: 'Manage payment',
-      onClick: () => {
-        onPaymentClick?.(row.original.id);
-      }
+  function getActions(): ActionOnUserItem[] {
+    const actions: ActionOnUserItem[] = [];
+    if (!row.original.isProbation) {
+      actions.push({
+        key: `UPDATE_ROLE_KEY${row.original.id}`,
+        content: 'Manage role',
+        onClick: () => push(`/users/${row.original.id}/role-settings`)
+      });
+      actions.push({
+        key: `MANAGE_PAID_KEY${row.original.id}`,
+        content: 'Manage payment',
+        onClick: () => {
+          onPaymentClick?.(row.original.id);
+        }
+      });
     }
-  ];
+
+    actions.push({
+      key: `GO_TO_DETAIL${row.original.id}`,
+      content: 'Go to detail',
+      onClick: () => {
+        push(`/users/${row.original.id}/profile`);
+      }
+    });
+    return actions;
+  }
 
   return (
     <Menu>
@@ -44,7 +56,7 @@ export function MoreActionCell({
         <FontAwesomeIcon icon={faEllipsisVertical} />
       </MenuButton>
       <MenuList>
-        {actionItems.map(item => (
+        {getActions().map(item => (
           <MenuItem key={item.key} onClick={item.onClick}>
             {item.content}
           </MenuItem>
