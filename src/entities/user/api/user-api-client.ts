@@ -61,6 +61,8 @@ export type CreateUsersDto = {
 
 export type UploadUserDto = {
   file: File;
+  periodId: number;
+  monthlyConfigId?: number;
   fieldMappings: string;
 };
 
@@ -141,6 +143,7 @@ export const userApiClient = {
   uploadUserByFile(uploadUserDto: UploadUserDto): Promise<void> {
     const formData = new FormData();
     formData.append('file', uploadUserDto.file);
+    formData.append('periodId', uploadUserDto.periodId);
     formData.append('fieldMappings', uploadUserDto.fieldMappings);
 
     return authorizedHttpClient.request({
