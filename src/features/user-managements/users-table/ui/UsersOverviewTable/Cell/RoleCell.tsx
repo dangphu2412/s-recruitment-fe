@@ -1,4 +1,4 @@
-import { Fragment, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { CellProps } from 'react-table';
 import { Tag } from '@chakra-ui/react';
 import { UserManagementView } from '../../../models/useAdminColumns';

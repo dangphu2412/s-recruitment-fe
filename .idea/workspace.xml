@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/user/api/user-api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user/api/user-api-client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/import-users/ui/ImportUsers/ImportUsersModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/import-users/ui/ImportUsers/ImportUsersModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/user/models/user.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user/models/user.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/RoleCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/RoleCell.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +46,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/update-import-users",
+    "git-widget-placeholder": "feature/update-refresh-after-toggle-active-and-update-filter",
     "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/features/user-managements",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",

@@ -1,27 +1,30 @@
 import { CellProps, Column } from 'react-table';
-import { useMemo } from 'react';
-import { format } from 'date-fns';
+import { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { MoreActionCell } from '../ui/UsersOverviewTable/Cell/MoreActionCell';
 import { UsernameCell } from '../ui/UsersOverviewTable/Cell/UsernameCell';
-import { PaidCell } from '../ui/UsersOverviewTable/Cell/PaidCell';
 import { RoleCell } from '../ui/UsersOverviewTable/Cell/RoleCell';
 import { StatusCell } from '../ui/UsersOverviewTable/Cell/StatusCell';
 import { OperationFee } from '../../../../entities/monthly-money/models';
 import { Role } from '../../../../entities/user/api';
 import { useDispatch } from 'react-redux';
-import { userActions } from '../../../../entities/user/models';
-import { Tag } from '@chakra-ui/react';
+import { QUERY_USERS_KEY, userActions } from '../../../../entities/user/models';
+import { Box, Tag } from '@chakra-ui/react';
+import { useQueryClient } from 'react-query';
+import { formatDate } from '../../../../shared/models/utils/date.utils';
 
 export type UserManagementView = {
   id: string;
   username: string;
+  fullName: string;
   email: string;
   createdAt: string;
+  joinedAt: string;
   deletedAt: string;
   operationFee?: OperationFee;
   remainMonths: number;
   paidMonths: number;
+  debtMonths: number;
   isProbation: boolean;
   roles: Role[];
 };
@@ -29,6 +32,11 @@ export type UserManagementView = {
 export function useAdminColumns(): Column<UserManagementView>[] {
   const { push } = useRouter();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+  const handleRefresh = useCallback(() => {
+    queryClient.invalidateQueries(QUERY_USERS_KEY);
+  }, [queryClient]);
 
   return useMemo(
     () => [
@@ -38,8 +46,23 @@ export function useAdminColumns(): Column<UserManagementView>[] {
         Cell: UsernameCell
       },
       {
-        Header: 'Employed At',
-        accessor: row => format(new Date(row.createdAt), 'dd/MM/yyyy')
+        Header: 'Full Name',
+        accessor: 'fullName'
+      },
+      {
+        Header: 'Debt Months',
+        accessor: 'debtMonths',
+        Cell: props => {
+          if (props.row.original.isProbation) {
+            return <Tag>Probation</Tag>;
+          }
+
+          if (props.value > 0) {
+            return <Box color="red">-{props.value}</Box>;
+          }
+
+          return <Box color="green">+{Math.abs(props.value)}</Box>;
+        }
       },
       {
         Header: 'Paid Months',
@@ -64,6 +87,11 @@ export function useAdminColumns(): Column<UserManagementView>[] {
         }
       },
       {
+        Header: 'Joined At',
+        accessor: 'joinedAt',
+        Cell: props => <>{formatDate(new Date(props.row.original.joinedAt))}</>
+      },
+      {
         Header: 'Roles',
         accessor: 'roles',
         Cell: RoleCell
@@ -71,7 +99,13 @@ export function useAdminColumns(): Column<UserManagementView>[] {
       {
         Header: 'Status',
         accessor: 'deletedAt',
-        Cell: StatusCell
+        Cell: props => (
+          <StatusCell
+            key={props.row.id}
+            {...props}
+            onSwitchFinish={handleRefresh}
+          />
+        )
       },
       {
         Header: 'Actions',
@@ -87,6 +121,6 @@ export function useAdminColumns(): Column<UserManagementView>[] {
         )
       }
     ],
-    [dispatch, push]
+    [dispatch, handleRefresh, push]
   );
 }

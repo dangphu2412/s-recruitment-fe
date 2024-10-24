@@ -33,12 +33,15 @@ export type UserManagementView = {
   id: string;
   username: string;
   email: string;
+  fullName: string;
   createdAt: string;
+  joinedAt: string;
   deletedAt: string;
   operationFee?: OperationFee;
   roles: Role[];
   remainMonths: number;
   paidMonths: number;
+  debtMonths: number;
   isProbation: boolean;
 };
 
@@ -143,8 +146,7 @@ export const userApiClient = {
   uploadUserByFile(uploadUserDto: UploadUserDto): Promise<void> {
     const formData = new FormData();
     formData.append('file', uploadUserDto.file);
-    formData.append('periodId', uploadUserDto.periodId);
-    formData.append('fieldMappings', uploadUserDto.fieldMappings);
+    formData.append('periodId', uploadUserDto.periodId.toString());
 
     return authorizedHttpClient.request({
       method: 'post',

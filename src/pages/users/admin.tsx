@@ -28,9 +28,11 @@ export default function AdministratorPage(): ReactElement {
         </div>
       </Flex>
 
-      <SearchUsersContainer />
-      <PaginateUsersContainer />
-      <UsersOverviewTable />
+      <div className={'flex flex-col gap-2'}>
+        <SearchUsersContainer />
+        <PaginateUsersContainer />
+        <UsersOverviewTable />
+      </div>
       <UserPaymentView />
     </Card>
   );

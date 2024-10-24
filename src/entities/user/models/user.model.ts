@@ -19,6 +19,7 @@ import {
   parsePagination
 } from '../../../shared/models/pagination';
 import { AppStorage, createStoreModel } from '../../../shared/models/store';
+import { UserStatus } from '../config';
 
 export type UserDomain = {
   currentUser: UserDetail | null;
@@ -38,7 +39,7 @@ export type UserDetail = {
 
 export type AdminFilter = CombineSearchFilter<{
   joinedIn: Filter<FilterKey.RANGE, Date | null>;
-  memberType: Filter<FilterKey.EXACT>;
+  userStatus: Filter<FilterKey.EXACT, string[]>;
 }>;
 
 export type AdminState = {
@@ -72,9 +73,9 @@ export const selectFilters = createSelector(
   state => state.filters
 );
 
-export const selectMemberType = createSelector(
+export const selectUserStatus = createSelector(
   selectOverviewState,
-  state => state.filters.memberType
+  state => state.filters.userStatus
 );
 
 export const selectPaymentUserId = createSelector(
@@ -100,9 +101,9 @@ export function getInitialOverviewState(): AdminState {
           toDate: null
         }
       },
-      memberType: {
+      userStatus: {
         type: FilterKey.EXACT,
-        value: ''
+        value: []
       }
     },
     submission: {
@@ -122,9 +123,9 @@ export function getInitialOverviewState(): AdminState {
             toDate: null
           }
         },
-        memberType: {
+        userStatus: {
           type: FilterKey.EXACT,
-          value: ''
+          value: []
         }
       }
     },
@@ -170,10 +171,30 @@ const userSlice = createSlice({
         };
       }
 
-      if (action.payload.memberType !== undefined) {
-        state.overview.filters.memberType = {
+      if (action.payload.userStatus !== undefined) {
+        state.overview.filters.userStatus = {
           type: FilterKey.EXACT,
-          value: action.payload.memberType
+          value: action.payload.userStatus
+        };
+      }
+    },
+    toggleUserStatus: (state, action: PayloadAction<UserStatus>) => {
+      if (action.payload !== undefined) {
+        const currentStatus = state.overview.filters.userStatus;
+
+        if (currentStatus.value.includes(action.payload)) {
+          state.overview.filters.userStatus = {
+            type: FilterKey.EXACT,
+            value: currentStatus.value.filter(
+              status => status !== action.payload
+            )
+          };
+          return;
+        }
+
+        state.overview.filters.userStatus = {
+          type: FilterKey.EXACT,
+          value: [...currentStatus.value, action.payload]
         };
       }
     },
@@ -381,7 +402,7 @@ export function useQueryUsers({
   ...options
 }: QueryUserOptions) {
   const { query, ...restFilters } = filters;
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isFetching } = useQuery({
     queryKey: [QUERY_USERS_KEY, pagination, restFilters, query],
     queryFn: () =>
       userApiClient.getMany({
@@ -391,7 +412,7 @@ export function useQueryUsers({
     ...options
   });
 
-  return { data, isLoading };
+  return { data, isLoading, isFetching };
 }
 
 export function useUserOverview() {

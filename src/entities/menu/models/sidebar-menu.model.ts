@@ -1,7 +1,7 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
   faBook,
-  faCake,
+  faUser,
   faHome,
   faSuitcase,
   faMask
@@ -26,7 +26,7 @@ export type SidebarMenuItem = {
 };
 
 const IconKeyByCode: Record<string, IconDefinition> = {
-  USER_MANAGEMENT_ICON: faCake,
+  USER_MANAGEMENT_ICON: faUser,
   CATEGORY_ICON: faHome,
   RECRUITMENT_ICON: faSuitcase,
   POST_ICON: faBook,
