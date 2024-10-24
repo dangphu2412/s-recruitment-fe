@@ -38,17 +38,64 @@ export function Table<T extends object>({
     };
   }
 
+  function renderBody() {
+    if (isLoading) {
+      return null;
+    }
+
+    return (
+      <Tbody {...getTableBodyProps()}>
+        {rows.map(row => {
+          prepareRow(row);
+
+          const { key: rowKey, ...rowProps } = row.getRowProps();
+
+          return (
+            <Tr
+              key={rowKey}
+              {...rowProps}
+              backgroundColor={'white'}
+              onClick={rowClickHandler(row)}
+              cursor={onRowClick ? 'pointer' : 'auto'}
+            >
+              {row.cells.map(cell => {
+                const { key: keyCell, ...cellProps } = cell.getCellProps();
+                const cellInstance = cell.render('Cell');
+
+                return (
+                  <Td key={keyCell} {...cellProps}>
+                    {cellInstance ? (
+                      cellInstance
+                    ) : (
+                      <Text fontSize="md" fontStyle="italic" color="gray.500">
+                        No data
+                      </Text>
+                    )}
+                  </Td>
+                );
+              })}
+            </Tr>
+          );
+        })}
+      </Tbody>
+    );
+  }
+
   return (
     <TableContainer
       position="relative"
       overflowY={'auto'}
       overflowX={'auto'}
-      maxHeight="calc(100vh - 20rem)"
-      maxWidth="calc(100vw - 20rem)"
+      maxHeight="calc(100vh - 22rem)"
+      maxWidth="calc(100vw - 22rem)"
       minHeight="300px"
       backgroundColor={'white'}
     >
-      <BaseTable variant="simple" {...getTableProps()}>
+      <BaseTable
+        variant="simple"
+        {...getTableProps()}
+        className={'w-full overflow-auto'}
+      >
         {caption && <TableCaption>{caption}</TableCaption>}
 
         <Thead position="sticky" top="0" zIndex="1">
@@ -79,40 +126,7 @@ export function Table<T extends object>({
           })}
         </Thead>
 
-        <Tbody {...getTableBodyProps()}>
-          {rows.map(row => {
-            prepareRow(row);
-
-            const { key: rowKey, ...rowProps } = row.getRowProps();
-
-            return (
-              <Tr
-                key={rowKey}
-                {...rowProps}
-                backgroundColor={'white'}
-                onClick={rowClickHandler(row)}
-                cursor={onRowClick ? 'pointer' : 'auto'}
-              >
-                {row.cells.map(cell => {
-                  const { key: keyCell, ...cellProps } = cell.getCellProps();
-                  const cellInstance = cell.render('Cell');
-
-                  return (
-                    <Td key={keyCell} {...cellProps}>
-                      {cellInstance ? (
-                        cellInstance
-                      ) : (
-                        <Text fontSize="md" fontStyle="italic" color="gray.500">
-                          No data
-                        </Text>
-                      )}
-                    </Td>
-                  );
-                })}
-              </Tr>
-            );
-          })}
-        </Tbody>
+        {renderBody()}
       </BaseTable>
 
       {!isLoading && !items.length && <NoData />}

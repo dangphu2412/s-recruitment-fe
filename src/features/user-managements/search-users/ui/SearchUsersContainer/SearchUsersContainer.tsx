@@ -35,7 +35,7 @@ export function SearchUsersContainer(): React.ReactElement {
         <PopoverTrigger>
           <Button>
             <FontAwesomeIcon className="pr-2" icon={faFilter} />
-            Filter
+            Status
           </Button>
         </PopoverTrigger>
 

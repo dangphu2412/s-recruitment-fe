@@ -16,7 +16,7 @@ export type FilterKeeper<K extends FilterKey, V> = {
 };
 
 export type Filter<T extends FilterKey, V = string> = T extends FilterKey.EXACT
-  ? FilterKeeper<T, string>
+  ? FilterKeeper<T, V>
   : T extends FilterKey.RANGE
   ? FilterKeeper<T, DateRange<V>>
   : T extends FilterKey.BOOLEAN
