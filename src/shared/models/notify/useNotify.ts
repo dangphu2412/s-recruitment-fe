@@ -1,7 +1,6 @@
-import { ToastId, useToast } from '@chakra-ui/react';
-import { UseToastOptions } from '@chakra-ui/toast/dist/declarations/src/use-toast';
+import { ToastId, useToast, UseToastOptions } from '@chakra-ui/react';
 
-type NotifyProps = Omit<UseToastOptions, 'duration' | 'isClosable'>;
+type NotifyProps = Omit<UseToastOptions, 'isClosable'>;
 
 type Notifier = (props: NotifyProps) => ToastId;
 
