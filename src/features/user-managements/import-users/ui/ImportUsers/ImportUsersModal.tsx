@@ -27,6 +27,8 @@ import { useNotify } from '../../../../../shared/models/notify';
 import { useQueryClient } from 'react-query';
 import { usePeriods } from '../../../../../entities/master-data/useMasteData';
 import { useQueryMonthlyMoneyConfigs } from '../../../../../entities/monthly-money/models';
+import { MoneyOption } from '../../../../../entities/monthly-money/ui/MoneyOption/MoneyOption';
+import { createUserFileExample } from '../../../../../entities/user/models/create-user-file-example';
 
 export type Inputs = {
   file: FileList;
@@ -77,7 +79,20 @@ export function ImportUsersDrawer({
           : undefined
       },
       {
-        onSuccess: () => {
+        onSuccess: response => {
+          if (Array.isArray(response)) {
+            const dupEmails = response
+              .map(user => user.duplicatedEmails)
+              .flat()
+              .join(', ');
+            notify({
+              title: 'Duplicated Emails',
+              status: 'warning',
+              description: `Please remove emails: ${dupEmails}`,
+              duration: null
+            });
+            return;
+          }
           notify({
             title: 'Import successfully',
             status: 'success'
@@ -87,13 +102,6 @@ export function ImportUsersDrawer({
           });
           reset();
           onClose();
-        },
-        onError: () => {
-          notify({
-            title: 'Import failed',
-            description: 'Format should be: Họ và Tên, Email, Username',
-            status: 'error'
-          });
         }
       }
     );
@@ -112,14 +120,14 @@ export function ImportUsersDrawer({
       <DrawerContent>
         <DrawerCloseButton />
 
-        <DrawerHeader>Import new S-Group members</DrawerHeader>
+        <DrawerHeader>Import S-Group users</DrawerHeader>
 
         <DrawerBody className="space-y-4">
           <FormControl isInvalid={!!errors.periodId} isRequired>
             <FormLabel htmlFor="create-user-type">Period</FormLabel>
 
             <Select
-              placeholder="Select config"
+              placeholder="Select period"
               {...register('periodId', {
                 required: 'Period is required'
               })}
@@ -142,15 +150,11 @@ export function ImportUsersDrawer({
             <FormLabel htmlFor="monthlyConfigId">Monthly Config</FormLabel>
 
             <Select
-              placeholder="Select config"
+              placeholder="Select money config"
               {...register('monthlyConfigId')}
             >
               {monthlyMoneyConfigs?.map(config => {
-                return (
-                  <option key={config.id} value={config.id}>
-                    {config.amount} / {config.monthRange} months
-                  </option>
-                );
+                return <MoneyOption key={config.id} {...config} />;
               })}
             </Select>
 
@@ -174,6 +178,8 @@ export function ImportUsersDrawer({
               <FormErrorMessage>{errors.file?.message}</FormErrorMessage>
             )}
           </FormControl>
+
+          <Button onClick={createUserFileExample}>Download Example</Button>
         </DrawerBody>
 
         <DrawerFooter>

@@ -17,7 +17,7 @@ type Props = {
   closePopoverCallback(): void;
 };
 
-export function FilterDialog({
+export function StatusFilterDialog({
   closePopoverCallback
 }: Props): React.ReactElement {
   const dispatch = useDispatch();
