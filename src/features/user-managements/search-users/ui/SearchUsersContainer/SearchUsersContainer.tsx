@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
-import { FilterDialog } from './FilterDialog/FilterDialog';
+import { StatusFilterDialog } from './StatusFilterDialog/StatusFilterDialog';
 import { SearchInput } from './SearchInput/SearchInput';
 import { userActions } from 'src/entities/user/models';
 
@@ -40,7 +40,7 @@ export function SearchUsersContainer(): React.ReactElement {
         </PopoverTrigger>
 
         <PopoverContent>
-          <FilterDialog closePopoverCallback={onClose} />
+          <StatusFilterDialog closePopoverCallback={onClose} />
         </PopoverContent>
       </Popover>
 

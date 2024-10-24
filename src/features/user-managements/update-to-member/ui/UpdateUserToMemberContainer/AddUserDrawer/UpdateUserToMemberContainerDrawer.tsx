@@ -32,6 +32,7 @@ import { formatDate } from '../../../../../../shared/models/utils/date.utils';
 import { useNotify } from '../../../../../../shared/models/notify';
 import { useQueryMonthlyMoneyConfigs } from '../../../../../../entities/monthly-money/models';
 import { useQueryClient } from 'react-query';
+import { MoneyOption } from '../../../../../../entities/monthly-money/ui/MoneyOption/MoneyOption';
 
 export type MemberInputs = {
   domain: string;
@@ -221,11 +222,7 @@ export function UpdateUserToMemberContainerDrawer({
                 })}
               >
                 {monthlyMoneyConfigs?.map(config => {
-                  return (
-                    <option key={config.id} value={config.id}>
-                      {config.amount} / {config.monthRange} months
-                    </option>
-                  );
+                  return <MoneyOption key={config.id} {...config} />;
                 })}
               </Select>
 

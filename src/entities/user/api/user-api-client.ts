@@ -66,7 +66,6 @@ export type UploadUserDto = {
   file: File;
   periodId: number;
   monthlyConfigId?: number;
-  fieldMappings: string;
 };
 
 export type PatchUserRolesPayload = {
@@ -87,6 +86,10 @@ export type UpgradeMemberDto = {
   ids: string[];
   monthlyConfigId: number;
 };
+
+type FileCreationResponse = {
+  duplicatedEmails?: string[];
+}[];
 
 export const userApiClient = {
   getMyProfile(): Promise<UserDetail> {
@@ -143,7 +146,9 @@ export const userApiClient = {
       data: createUserDto
     });
   },
-  uploadUserByFile(uploadUserDto: UploadUserDto): Promise<void> {
+  uploadUserByFile(
+    uploadUserDto: UploadUserDto
+  ): Promise<FileCreationResponse> {
     const formData = new FormData();
     formData.append('file', uploadUserDto.file);
     formData.append('periodId', uploadUserDto.periodId.toString());
