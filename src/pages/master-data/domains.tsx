@@ -3,7 +3,7 @@ import { Card, ContentHeader } from '../../shared/ui';
 import { useDomains } from '../../entities/master-data/useMasteData';
 import { List, ListIcon, ListItem, Text, Tooltip } from '@chakra-ui/react';
 
-export default function DomainPage(): ReactElement {
+export default function DepartmentPage(): ReactElement {
   const { data } = useDomains();
 
   return (

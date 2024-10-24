@@ -74,12 +74,7 @@ export function ImportUsersDrawer({
         periodId: +inputs.periodId,
         monthlyConfigId: inputs.monthlyConfigId
           ? +inputs.monthlyConfigId
-          : undefined,
-        fieldMappings: JSON.stringify({
-          'Họ và Tên:': 'fullName',
-          Email: 'email',
-          Username: 'username'
-        })
+          : undefined
       },
       {
         onSuccess: () => {

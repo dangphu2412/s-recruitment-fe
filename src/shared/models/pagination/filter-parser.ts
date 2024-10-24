@@ -34,7 +34,15 @@ export function parseFilterQuery(
   Object.keys(filters).forEach(filterKey => {
     const filter = filters[filterKey];
     if (isFilterType(filter, FilterKey.EXACT)) {
-      query[filterKey] = filter.value;
+      if (filter.value) {
+        if (Array.isArray(filter.value)) {
+          if (filter.value.length > 0) {
+            query[filterKey] = filter.value.join(',');
+          }
+        } else {
+          query[filterKey] = filter.value;
+        }
+      }
     } else if (isFilterType(filter, FilterKey.LIKE)) {
       query.search = filter.value;
     } else if (isFilterType(filter, FilterKey.RANGE)) {

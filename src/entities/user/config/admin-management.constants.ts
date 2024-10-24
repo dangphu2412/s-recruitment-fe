@@ -1,10 +1,6 @@
-export enum CreateUserType {
-  NEWBIE = 'New bie',
-  NEW_MEMBERS = 'New members'
-}
-
-export enum MemberType {
+export enum UserStatus {
   DEBTOR = 'DEBTOR',
-  NON_MEMBER = 'NON_MEMBER',
-  ALL = 'ALL'
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  TEMPORARY_STOP = 'TEMPORARY_STOP'
 }
