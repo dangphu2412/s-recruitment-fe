@@ -1,9 +1,5 @@
 import React, { ReactNode } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { CellProps } from 'react-table';
-import styles from './Cell.module.scss';
 import { Router } from 'next/router';
 import { UserManagementView } from '../../../models/useAdminColumns';
 import { MoreActionCell } from '../../../../../../shared/ui/Table/Cell/MoreActionCell';
