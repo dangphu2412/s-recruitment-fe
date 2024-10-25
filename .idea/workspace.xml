@@ -5,32 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/DepartmentFilterDialog/DepartmentFilterDialog.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/DepartmentFilterDialog/DepartmentFilterDialog.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/PeriodFilterDialog/PeriodFilterDialog.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/PeriodFilterDialog/PeriodFilterDialog.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/models/debounce.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/master-data/useMasteData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/master-data/useMasteData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/models/recruitment-event.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/models/recruitment-event.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/user/api/user-api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user/api/user-api-client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/user/models/user.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user/models/user.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/user/ui/UserCombobox/UserCombobox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user/ui/UserCombobox/UserCombobox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/add-post/ui/AddPostForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/posts/add-post/ui/AddPostForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/add-post/ui/EditPostForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/posts/add-post/ui/EditPostForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/AddNewEventDrawer/AddNewEventDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/AddNewEventDrawer/AddNewEventDrawer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/AddUserGroupDrawer/AddUserGroupDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/AddUserGroupDrawer/AddUserGroupDrawer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/paginate-users/ui/PaginateUsersContainer/PaginateUsersContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/paginate-users/ui/PaginateUsersContainer/PaginateUsersContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/SearchUsersContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/SearchUsersContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/StatusFilterDialog/StatusFilterDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer/StatusFilterDialog/StatusFilterDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/user-groups-table/models/useUserGroupColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/user-groups-table/models/useUserGroupColumns.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-detail-view/ui/UserDetailSection/UserDetailSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-detail-view/ui/UserDetailSection/UserDetailSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/models/useAdminColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/models/useAdminColumns.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/master-data/departments.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/master-data/departments.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/models/list.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/models/list.api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/ui/Combobox/Combobox.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Combobox/Combobox.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/ui/Combobox/MultipleCombobox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Combobox/MultipleCombobox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +44,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "fix/remove-package-manager",
     "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/features/user-managements/search-users/ui/SearchUsersContainer",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
@@ -83,9 +58,10 @@
     "npm.dev.executor": "Run",
     "npm.lint.executor": "Run",
     "npm.pretty.executor": "Run",
+    "npm.start.executor": "Run",
     "prettierjs.PrettierConfiguration.Package": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/prettier",
     "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/typescript/lib",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -113,7 +89,7 @@
       <recent name="$PROJECT_DIR$/src/shared" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="npm.start">
     <configuration name="backend" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/../member-management-be/package.json" />
       <command value="run" />
@@ -166,8 +142,19 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v20.15.0/bin/node" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="npm.backend" />
+      <item itemvalue="npm.start" />
       <item itemvalue="npm.build" />
       <item itemvalue="npm.dev" />
       <item itemvalue="npm.lint" />
@@ -175,8 +162,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.start" />
         <item itemvalue="npm.build" />
+        <item itemvalue="npm.dev" />
         <item itemvalue="npm.pretty" />
         <item itemvalue="npm.lint" />
       </list>

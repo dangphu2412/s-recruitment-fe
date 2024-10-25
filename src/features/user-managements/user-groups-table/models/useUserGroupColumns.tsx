@@ -97,6 +97,6 @@ export function useUserGroupColumns(): Column<UserGroupView>[] {
         }
       }
     ],
-    []
+    [deleteUserGroup, notify, queryClient]
   );
 }
