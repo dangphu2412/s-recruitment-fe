@@ -6,6 +6,7 @@ import { CellProps } from 'react-table';
 import styles from './Cell.module.scss';
 import { Router } from 'next/router';
 import { UserManagementView } from '../../../models/useAdminColumns';
+import { MoreActionCell } from '../../../../../../shared/ui/Table/Cell/MoreActionCell';
 
 type MoreActionCellProps = CellProps<UserManagementView, string> &
   Pick<Router, 'push'> & {
@@ -18,7 +19,7 @@ type ActionOnUserItem = {
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 };
 
-export function MoreActionCell({
+export function UserOverviewAction({
   row,
   push,
   onPaymentClick
@@ -50,18 +51,5 @@ export function MoreActionCell({
     return actions;
   }
 
-  return (
-    <Menu>
-      <MenuButton className={styles['cell-more-option']} cursor="pointer">
-        <FontAwesomeIcon icon={faEllipsisVertical} />
-      </MenuButton>
-      <MenuList>
-        {getActions().map(item => (
-          <MenuItem key={item.key} onClick={item.onClick}>
-            {item.content}
-          </MenuItem>
-        ))}
-      </MenuList>
-    </Menu>
-  );
+  return <MoreActionCell renderActions={getActions} />;
 }

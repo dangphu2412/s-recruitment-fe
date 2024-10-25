@@ -18,7 +18,7 @@ import {
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
-  useDomains,
+  useDepartments,
   usePeriods
 } from '../../../../../../entities/master-data/useMasteData';
 import {
@@ -85,7 +85,7 @@ export function UpdateUserToMemberContainerDrawer({
     ];
   }, []);
 
-  const { data: domains } = useDomains();
+  const { data: domains } = useDepartments();
   const { data: periods } = usePeriods();
   const { monthlyMoneyConfigs } = useQueryMonthlyMoneyConfigs({
     isEnabled: true

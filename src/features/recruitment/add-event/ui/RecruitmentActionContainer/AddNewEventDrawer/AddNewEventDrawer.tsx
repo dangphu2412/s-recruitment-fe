@@ -16,20 +16,15 @@ import {
   Textarea
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   SubmitHandler,
   useController,
   useFieldArray,
   useForm
 } from 'react-hook-form';
-import { BoxItem } from 'src/shared/models/combobox.api';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
 import { array, number, object, string } from 'yup';
-import {
-  getInitialOverviewState,
-  useQueryUsers
-} from '../../../../../../entities/user/models';
 import { CreateRecruitmentEventPayload } from '../../../../../../entities/recruitment/api/recruitment.usecase';
 import {
   CreateRecruitmentEventFormModal,
@@ -41,7 +36,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { useQueryClient } from 'react-query';
 import { useNotify } from 'src/shared/models/notify';
 import { FullLoader } from '../../../../../../shared/ui/Loader/Full/FullLoader';
-import { MultipleCombobox } from '../../../../../../shared/ui/Combobox/MultipleCombobox';
+import { UserCombobox } from '../../../../../../entities/user/ui/UserCombobox/UserCombobox';
 
 type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
   finalFocusRef: React.RefObject<HTMLButtonElement>;
@@ -103,21 +98,6 @@ export function AddNewEventDrawer({
     control
   });
 
-  const { data } = useQueryUsers({
-    ...getInitialOverviewState()
-  });
-
-  const examinerItems: BoxItem[] = useMemo(() => {
-    if (!data) return [];
-
-    return data.items.map(user => {
-      return {
-        text: user.username,
-        value: user.id
-      };
-    });
-  }, [data]);
-
   const saveUser: SubmitHandler<
     CreateRecruitmentEventFormModal
   > = formInputs => {
@@ -173,11 +153,7 @@ export function AddNewEventDrawer({
 
           <FormControl isRequired isInvalid={!!errors.examiners}>
             <FormLabel>Examiners</FormLabel>
-            <MultipleCombobox
-              placeholder="Start entering in the ticket or company name ..."
-              items={examinerItems}
-              {...examinersProps}
-            />
+            <UserCombobox {...examinersProps} />
 
             {errors.examiners && (
               <FormErrorMessage>{errors.examiners.message}</FormErrorMessage>
