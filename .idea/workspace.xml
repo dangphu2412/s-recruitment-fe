@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/user-groups-table/models/useUserGroupColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/user-groups-table/models/useUserGroupColumns.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UserOverviewAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UserOverviewAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/ui/Table/Cell/MoreActionCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Table/Cell/MoreActionCell.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +44,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "bugfix/fix-broken-layout-on-prod",
+    "git-widget-placeholder": "fix/remove-package-manager",
     "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/features/user-managements/search-users/ui/SearchUsersContainer",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
@@ -64,7 +61,7 @@
     "npm.start.executor": "Run",
     "prettierjs.PrettierConfiguration.Package": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/prettier",
     "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/typescript/lib",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
