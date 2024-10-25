@@ -24,3 +24,8 @@ export type ProbationQuery = {
   pagination: Pagination;
   filters: FilterQuery;
 };
+
+export const DEFAULT_PAGINATION: Pagination = {
+  page: 1,
+  size: 10
+};

@@ -1,6 +1,5 @@
 import {
   Button,
-  Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
@@ -16,21 +15,16 @@ import {
   Textarea
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   SubmitHandler,
   useController,
   useFieldArray,
   useForm
 } from 'react-hook-form';
-import { BoxItem } from 'src/shared/models/combobox.api';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
 import { array, number, object, string } from 'yup';
-import {
-  getInitialOverviewState,
-  useQueryUsers
-} from '../../../../../../entities/user/models';
-import { CreateRecruitmentEventPayload } from '../../../../../../entities/recruitment/api/recruitment.usecase';
+import { CreateRecruitmentEventPayload } from '../../../../../entities/recruitment/api/recruitment.usecase';
 import {
   CreateRecruitmentEventFormModal,
   RECRUITMENT_EVENT_QUERY_KEY,
@@ -40,13 +34,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { useQueryClient } from 'react-query';
 import { useNotify } from 'src/shared/models/notify';
-import { FullLoader } from '../../../../../../shared/ui/Loader/Full/FullLoader';
-import { MultipleCombobox } from '../../../../../../shared/ui/Combobox/MultipleCombobox';
+import { UserCombobox } from '../../../../../entities/user/ui/UserCombobox/UserCombobox';
 
-type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
-  finalFocusRef: React.RefObject<HTMLButtonElement>;
-  isLoading: boolean;
-};
+type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 const defaultScoreStandard = {
   point: 0,
   standard: ''
@@ -71,10 +61,7 @@ const validationSchema = object({
 });
 
 export function AddNewEventDrawer({
-  isOpen,
-  isLoading,
-  onClose,
-  finalFocusRef
+  onClose
 }: AddUserDrawerProps): React.ReactElement {
   const {
     handleSubmit,
@@ -103,26 +90,11 @@ export function AddNewEventDrawer({
     control
   });
 
-  const { data } = useQueryUsers({
-    ...getInitialOverviewState()
-  });
-
-  const examinerItems: BoxItem[] = useMemo(() => {
-    if (!data) return [];
-
-    return data.items.map(user => {
-      return {
-        text: user.username,
-        value: user.id
-      };
-    });
-  }, [data]);
-
   const saveUser: SubmitHandler<
     CreateRecruitmentEventFormModal
   > = formInputs => {
     const payload: CreateRecruitmentEventPayload = {
-      examinerIds: formInputs.examiners,
+      examinerIds: formInputs.examiners.map(item => item.value),
       recruitmentRange: {
         fromDate: formInputs.recruitmentRange.fromDate,
         toDate: formInputs.recruitmentRange.toDate
@@ -143,15 +115,8 @@ export function AddNewEventDrawer({
   };
 
   return (
-    <Drawer
-      isOpen={isOpen}
-      placement="right"
-      onClose={onClose}
-      finalFocusRef={finalFocusRef}
-      size="lg"
-    >
+    <>
       <DrawerOverlay />
-      <FullLoader isLoading={isLoading} />
 
       <DrawerContent>
         <DrawerCloseButton />
@@ -173,11 +138,7 @@ export function AddNewEventDrawer({
 
           <FormControl isRequired isInvalid={!!errors.examiners}>
             <FormLabel>Examiners</FormLabel>
-            <MultipleCombobox
-              placeholder="Start entering in the ticket or company name ..."
-              items={examinerItems}
-              {...examinersProps}
-            />
+            <UserCombobox {...examinersProps} />
 
             {errors.examiners && (
               <FormErrorMessage>{errors.examiners.message}</FormErrorMessage>
@@ -299,6 +260,6 @@ export function AddNewEventDrawer({
           </Button>
         </DrawerFooter>
       </DrawerContent>
-    </Drawer>
+    </>
   );
 }

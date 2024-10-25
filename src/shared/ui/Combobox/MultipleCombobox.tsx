@@ -1,6 +1,6 @@
 import { FC, Fragment, ReactElement, useMemo, useState } from 'react';
 import { Combobox as HeadlessCombobox, Transition } from '@headlessui/react';
-import { Input, Tag } from '@chakra-ui/react';
+import { Input, Tag, Text } from '@chakra-ui/react';
 import classes from './Combobox.module.scss';
 import { ComboboxItem } from './ComboboxItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,11 +9,13 @@ import { BoxItem } from '../../models/combobox.api';
 
 type ItemProps = BoxItem;
 
-type ComboboxProps = {
+export type ComboboxProps = {
   name: string;
   items: BoxItem[];
-  value: string[];
-  onChange: (value: string[]) => void;
+  value: BoxItem[];
+  query?: string;
+  onChange: (value: BoxItem[]) => void;
+  onQueryChange?: (value: string) => void;
   renderItem?: FC<ItemProps>;
   placeholder?: string;
 };
@@ -24,18 +26,23 @@ export const MultipleCombobox = ({
   value,
   placeholder,
   onChange,
-  renderItem: Item = ComboboxItem
+  renderItem: Item = ComboboxItem,
+  query,
+  onQueryChange
 }: ComboboxProps): ReactElement => {
-  const [query, setQuery] = useState('');
+  const [internalQuery, setInternalQuery] = useState('');
+  const actualQuery = query !== undefined ? query : internalQuery;
+
   const selectedMap = useMemo(() => {
     return value.reduce<Record<string, boolean>>((map, curr) => {
-      map[curr] = true;
+      map[curr.value] = true;
       return map;
     }, {});
   }, [value]);
 
   function filter() {
-    const cleanedQuery = query.trim().toLowerCase();
+    const cleanedQuery = actualQuery.trim().toLowerCase();
+
     if ('' === cleanedQuery) {
       return items.filter(item => !selectedMap[item.value]);
     }
@@ -48,13 +55,22 @@ export const MultipleCombobox = ({
     });
   }
 
+  function changeQuery(value: string) {
+    if (onQueryChange) {
+      onQueryChange(value);
+      return;
+    }
+
+    setInternalQuery(value);
+  }
+
   const filteredItems = filter();
 
   function handleRemove(selectedItem: BoxItem | undefined) {
     return () => {
       if (!selectedItem) return;
 
-      onChange(value.filter(item => item !== selectedItem.value));
+      onChange(value.filter(item => item.value !== selectedItem.value));
     };
   }
 
@@ -63,15 +79,13 @@ export const MultipleCombobox = ({
       <div className={'relative space-y-2'}>
         <div className="space-x-2">
           {value.map(item => {
-            const valueItem = items.find(i => i.value === item);
-
             return (
-              <Tag key={valueItem?.value} className="space-x-2">
-                <span>{valueItem?.text}</span>
+              <Tag key={item?.value} className="space-x-2">
+                <span>{item?.text}</span>
                 <FontAwesomeIcon
                   cursor={'pointer'}
                   icon={faCircleXmark}
-                  onClick={handleRemove(valueItem)}
+                  onClick={handleRemove(item)}
                 />
               </Tag>
             );
@@ -80,9 +94,10 @@ export const MultipleCombobox = ({
 
         <HeadlessCombobox.Input
           as={Input}
-          onChange={event => setQuery(event.target.value)}
+          onChange={event => changeQuery(event.target.value)}
           placeholder={placeholder}
           displayValue={(item: BoxItem) => item.text}
+          required={false}
         />
 
         <Transition
@@ -90,11 +105,17 @@ export const MultipleCombobox = ({
           leave="transition ease-in duration-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
-          afterLeave={() => setQuery('')}
+          afterLeave={() => setInternalQuery('')}
         >
           <HeadlessCombobox.Options className={classes['option-container']}>
             {filteredItems.map(item => (
-              <HeadlessCombobox.Option key={item.value} value={item.value}>
+              <HeadlessCombobox.Option
+                key={item.value}
+                value={item}
+                as={Text}
+                fontSize="md"
+                fontWeight="semibold"
+              >
                 <Item text={item.text} value={item.value} />
               </HeadlessCombobox.Option>
             ))}

@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Button,
-  Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
@@ -19,11 +18,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
 import { FullLoader } from '../../../../../../shared/ui/Loader/Full/FullLoader';
-import { useMutateCreateUser } from '../../../../../../entities/user/models';
 import {
-  useDomains,
+  QUERY_USERS_KEY,
+  useMutateCreateUser
+} from '../../../../../../entities/user/models';
+import {
+  useDepartments,
   usePeriods
 } from '../../../../../../entities/master-data/useMasteData';
+import { useQueryClient } from 'react-query';
 
 export type CreateUserInputs = {
   email: string;
@@ -34,9 +37,7 @@ export type CreateUserInputs = {
   monthlyConfigId?: string;
 };
 
-type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
-  finalFocusRef: React.RefObject<HTMLButtonElement>;
-};
+type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 
 const validationSchema = object({
   domain: string().required(),
@@ -47,9 +48,7 @@ const validationSchema = object({
 });
 
 export function AddUserDrawer({
-  isOpen,
-  onClose,
-  finalFocusRef
+  onClose
 }: AddUserDrawerProps): React.ReactElement {
   const {
     handleSubmit,
@@ -67,8 +66,9 @@ export function AddUserDrawer({
   });
 
   const { mutate: dispatchCreateUser, isLoading } = useMutateCreateUser();
-  const { data: domains } = useDomains();
+  const { data: domains } = useDepartments();
   const { data: periods } = usePeriods();
+  const queryClient = useQueryClient();
 
   const saveUser: SubmitHandler<CreateUserInputs> = createUserInputs => {
     dispatchCreateUser(
@@ -81,6 +81,9 @@ export function AddUserDrawer({
       },
       {
         onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_USERS_KEY]
+          });
           reset();
           onClose();
         }
@@ -89,13 +92,7 @@ export function AddUserDrawer({
   };
 
   return (
-    <Drawer
-      isOpen={isOpen}
-      placement="right"
-      onClose={onClose}
-      finalFocusRef={finalFocusRef}
-      size="xl"
-    >
+    <>
       <DrawerOverlay />
       <FullLoader isLoading={isLoading} />
 
@@ -184,6 +181,6 @@ export function AddUserDrawer({
           </Button>
         </DrawerFooter>
       </DrawerContent>
-    </Drawer>
+    </>
   );
 }

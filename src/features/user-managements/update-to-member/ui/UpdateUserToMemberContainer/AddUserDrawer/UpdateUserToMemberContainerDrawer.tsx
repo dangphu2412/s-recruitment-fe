@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import {
   Button,
-  Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
@@ -18,7 +17,7 @@ import {
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
-  useDomains,
+  useDepartments,
   usePeriods
 } from '../../../../../../entities/master-data/useMasteData';
 import {
@@ -46,14 +45,10 @@ type UserProbation = {
   probationEndDate: string;
   createdAt: string;
 };
-type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
-  finalFocusRef: React.RefObject<HTMLButtonElement>;
-};
+type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 
 export function UpdateUserToMemberContainerDrawer({
-  isOpen,
-  onClose,
-  finalFocusRef
+  onClose
 }: AddUserDrawerProps): React.ReactElement {
   const {
     handleSubmit,
@@ -85,7 +80,7 @@ export function UpdateUserToMemberContainerDrawer({
     ];
   }, []);
 
-  const { data: domains } = useDomains();
+  const { data: domains } = useDepartments();
   const { data: periods } = usePeriods();
   const { monthlyMoneyConfigs } = useQueryMonthlyMoneyConfigs({
     isEnabled: true
@@ -136,13 +131,7 @@ export function UpdateUserToMemberContainerDrawer({
   };
 
   return (
-    <Drawer
-      isOpen={isOpen}
-      placement="right"
-      onClose={onClose}
-      finalFocusRef={finalFocusRef}
-      size="xl"
-    >
+    <>
       <DrawerOverlay />
 
       <DrawerContent>
@@ -246,6 +235,6 @@ export function UpdateUserToMemberContainerDrawer({
           </Button>
         </DrawerFooter>
       </DrawerContent>
-    </Drawer>
+    </>
   );
 }

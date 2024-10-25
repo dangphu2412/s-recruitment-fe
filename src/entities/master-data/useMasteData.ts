@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { authorizedHttpClient } from '../../shared/api';
 
-type Domain = {
+export type CommonData = {
   id: string;
   name: string;
   code: string;
@@ -14,7 +14,7 @@ type SaveDomainInputs = {
 };
 
 enum CommonCodes {
-  DOMAIN = 'SG0001',
+  DEPARTMENTS = 'SG0001',
   PERIOD = 'SG0002'
 }
 
@@ -30,12 +30,12 @@ export function useMasterData<T>(code: string) {
   });
 }
 
-export function useDomains() {
-  return useMasterData<Domain[]>(CommonCodes.DOMAIN);
+export function useDepartments() {
+  return useMasterData<CommonData[]>(CommonCodes.DEPARTMENTS);
 }
 
 export function usePeriods() {
-  return useMasterData<Domain[]>(CommonCodes.PERIOD);
+  return useMasterData<CommonData[]>(CommonCodes.PERIOD);
 }
 
 export function getPeriodKey() {

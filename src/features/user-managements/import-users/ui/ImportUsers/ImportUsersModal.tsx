@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Button,
-  Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
@@ -36,9 +35,7 @@ export type Inputs = {
   monthlyConfigId?: string;
 };
 
-type ImportUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
-  finalFocusRef: React.RefObject<HTMLButtonElement>;
-};
+type ImportUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 
 const validationSchema = object({
   file: mixed().nullable().required(),
@@ -47,9 +44,7 @@ const validationSchema = object({
 });
 
 export function ImportUsersDrawer({
-  isOpen,
-  onClose,
-  finalFocusRef
+  onClose
 }: ImportUserDrawerProps): React.ReactElement {
   const {
     handleSubmit,
@@ -80,7 +75,7 @@ export function ImportUsersDrawer({
       },
       {
         onSuccess: response => {
-          if (Array.isArray(response)) {
+          if (Array.isArray(response) && response.length > 0) {
             const dupEmails = response
               .map(user => user.duplicatedEmails)
               .flat()
@@ -108,13 +103,7 @@ export function ImportUsersDrawer({
   };
 
   return (
-    <Drawer
-      isOpen={isOpen}
-      placement="right"
-      onClose={onClose}
-      finalFocusRef={finalFocusRef}
-      size="xl"
-    >
+    <>
       <DrawerOverlay />
 
       <DrawerContent>
@@ -191,6 +180,6 @@ export function ImportUsersDrawer({
           </Button>
         </DrawerFooter>
       </DrawerContent>
-    </Drawer>
+    </>
   );
 }

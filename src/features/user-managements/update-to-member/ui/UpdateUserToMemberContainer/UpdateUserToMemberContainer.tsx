@@ -1,29 +1,21 @@
 import React from 'react';
-import { Button, useDisclosure } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import { UpdateUserToMemberContainerDrawer } from './AddUserDrawer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { HeaderAction } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 
 export function UpdateUserToMemberContainer(): React.ReactElement {
-  const btnRef = React.useRef<HTMLButtonElement>(null);
-  const { isOpen, onOpen, onClose } = useDisclosure({
-    id: 'UpdateUserToMemberContainer'
-  });
-
   return (
-    <>
-      <Button colorScheme="pink" ref={btnRef} onClick={onOpen}>
-        <FontAwesomeIcon className="mr-2" icon={faArrowUp} />
-        <span>Member</span>
-      </Button>
-
-      {isOpen && (
-        <UpdateUserToMemberContainerDrawer
-          isOpen={isOpen}
-          onClose={onClose}
-          finalFocusRef={btnRef}
-        />
+    <HeaderAction
+      id={'update-user-to-member'}
+      triggerButton={props => (
+        <Button colorScheme="pink" {...props}>
+          <FontAwesomeIcon className="mr-2" icon={faArrowUp} />
+          <span>Member</span>
+        </Button>
       )}
-    </>
+      content={UpdateUserToMemberContainerDrawer}
+    />
   );
 }

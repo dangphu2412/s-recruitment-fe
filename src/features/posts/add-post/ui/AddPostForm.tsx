@@ -21,7 +21,7 @@ type AddPostModel = {
   title: string;
   content: string;
   summary: string;
-  categories: string[];
+  categories: BoxItem[];
   previewImageURL: string;
 };
 
@@ -56,7 +56,7 @@ export function AddPostForm(): ReactElement {
     const createPostBody = {
       title: model.title,
       content: model.content,
-      categoryCodes: model.categories,
+      categoryCodes: model.categories.map(item => item.value),
       previewImage: model.previewImageURL,
       summary: model.summary
     };

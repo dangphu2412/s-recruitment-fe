@@ -110,8 +110,8 @@ export function LoginForm(): ReactElement {
 
           <Button
             variant="solid"
-            colorScheme="twitter"
             type="submit"
+            colorScheme="pink"
             className={classes['submit-btn']}
           >
             Sign In

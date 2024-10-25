@@ -61,7 +61,9 @@ export function UserDetailSection({ userId }: Props) {
             <Input
               readOnly
               value={
-                userDetail.domain ? userDetail.domain?.name : 'No information'
+                userDetail.department
+                  ? userDetail.department?.name
+                  : 'No information'
               }
             />
           </FormControl>

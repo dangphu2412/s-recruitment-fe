@@ -1,7 +1,7 @@
 import { CellProps, Column } from 'react-table';
 import { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { MoreActionCell } from '../ui/UsersOverviewTable/Cell/MoreActionCell';
+import { UserOverviewAction } from '../ui/UsersOverviewTable/Cell/UserOverviewAction';
 import { UsernameCell } from '../ui/UsersOverviewTable/Cell/UsernameCell';
 import { RoleCell } from '../ui/UsersOverviewTable/Cell/RoleCell';
 import { StatusCell } from '../ui/UsersOverviewTable/Cell/StatusCell';
@@ -12,6 +12,7 @@ import { QUERY_USERS_KEY, userActions } from '../../../../entities/user/models';
 import { Box, Tag } from '@chakra-ui/react';
 import { useQueryClient } from 'react-query';
 import { formatDate } from '../../../../shared/models/utils/date.utils';
+import { CommonData } from '../../../../entities/master-data/useMasteData';
 
 export type UserManagementView = {
   id: string;
@@ -26,6 +27,7 @@ export type UserManagementView = {
   paidMonths: number;
   debtMonths: number;
   isProbation: boolean;
+  domain: CommonData;
   roles: Role[];
 };
 
@@ -97,6 +99,11 @@ export function useAdminColumns(): Column<UserManagementView>[] {
         Cell: RoleCell
       },
       {
+        Header: 'Domain',
+        accessor: 'domain',
+        Cell: props => <>{props.value?.name}</>
+      },
+      {
         Header: 'Status',
         accessor: 'deletedAt',
         Cell: props => (
@@ -110,7 +117,7 @@ export function useAdminColumns(): Column<UserManagementView>[] {
       {
         Header: 'Actions',
         Cell: (props: CellProps<UserManagementView, string>) => (
-          <MoreActionCell
+          <UserOverviewAction
             key={props.row.id}
             {...props}
             push={push}

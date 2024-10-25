@@ -1,48 +1,25 @@
 import React from 'react';
-import {
-  Button,
-  Flex,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  useDisclosure
-} from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { Button, Flex } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { StatusFilterDialog } from './StatusFilterDialog/StatusFilterDialog';
 import { SearchInput } from './SearchInput/SearchInput';
 import { userActions } from 'src/entities/user/models';
+import { DepartmentFilterDialog } from './DepartmentFilterDialog/DepartmentFilterDialog';
+import { PeriodFilterDialog } from './PeriodFilterDialog/PeriodFilterDialog';
 
 export function SearchUsersContainer(): React.ReactElement {
   const dispatch = useDispatch();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   function handleSubmitFilter() {
     dispatch(userActions.setIsSubmitted());
   }
 
   return (
-    <Flex className="pb-2 space-x-2" justifyContent="space-between">
+    <Flex className="space-x-2">
       <SearchInput />
-
-      <Popover
-        placement="bottom-start"
-        isOpen={isOpen}
-        onClose={onClose}
-        onOpen={onOpen}
-      >
-        <PopoverTrigger>
-          <Button>
-            <FontAwesomeIcon className="pr-2" icon={faFilter} />
-            Status
-          </Button>
-        </PopoverTrigger>
-
-        <PopoverContent>
-          <StatusFilterDialog closePopoverCallback={onClose} />
-        </PopoverContent>
-      </Popover>
+      <DepartmentFilterDialog />
+      <PeriodFilterDialog />
+      <StatusFilterDialog />
 
       <Button onClick={handleSubmitFilter}>Search</Button>
     </Flex>
