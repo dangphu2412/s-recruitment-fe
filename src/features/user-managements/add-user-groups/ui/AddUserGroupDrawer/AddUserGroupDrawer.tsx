@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Button,
-  Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
@@ -19,10 +18,10 @@ import { SubmitHandler, useController, useForm } from 'react-hook-form';
 import {
   useCreateUserGroupMutation,
   USER_GROUPS_QUERY_KEY
-} from '../../../../../../entities/user/models/user-group.model';
-import { UserCombobox } from '../../../../../../entities/user/ui/UserCombobox/UserCombobox';
+} from '../../../../../entities/user/models/user-group.model';
+import { UserCombobox } from '../../../../../entities/user/ui/UserCombobox/UserCombobox';
 import { useQueryClient } from 'react-query';
-import { useNotify } from '../../../../../../shared/models/notify';
+import { useNotify } from '../../../../../shared/models/notify';
 
 export type CreateUserGroupInputs = {
   name: string;
@@ -30,14 +29,10 @@ export type CreateUserGroupInputs = {
   users: string[];
 };
 
-type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
-  finalFocusRef: React.RefObject<HTMLButtonElement>;
-};
+type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 
 export function AddUserGroupDrawer({
-  isOpen,
-  onClose,
-  finalFocusRef
+  onClose
 }: AddUserDrawerProps): React.ReactElement {
   const {
     handleSubmit,
@@ -81,13 +76,7 @@ export function AddUserGroupDrawer({
   };
 
   return (
-    <Drawer
-      isOpen={isOpen}
-      placement="right"
-      onClose={onClose}
-      finalFocusRef={finalFocusRef}
-      size="xl"
-    >
+    <>
       <DrawerOverlay />
 
       <DrawerContent>
@@ -144,6 +133,6 @@ export function AddUserGroupDrawer({
           </Button>
         </DrawerFooter>
       </DrawerContent>
-    </Drawer>
+    </>
   );
 }

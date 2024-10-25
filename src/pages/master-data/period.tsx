@@ -1,30 +1,33 @@
 import React, { ReactElement } from 'react';
 import { Card, ContentHeader } from '../../shared/ui';
-import {
-  Flex,
-  List,
-  ListIcon,
-  ListItem,
-  Text,
-  Tooltip
-} from '@chakra-ui/react';
+import { List, ListIcon, ListItem, Text, Tooltip } from '@chakra-ui/react';
 import { usePeriods } from '../../entities/master-data/useMasteData';
-import { AddPeriodContainer } from '../../features/master-data/add-period';
+import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
+import {
+  HeaderAction,
+  HeaderActionGroup
+} from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { AddButton } from '../../shared/ui/Button';
+import { AddPeriodDrawer } from '../../features/master-data/add-period/ui/AddPeridContainer/AddUserDrawer';
 
 export default function PeriodPage(): ReactElement {
   const { data } = usePeriods();
 
   return (
     <Card className={'space-y-6'}>
-      <Flex justifyContent="space-between" className="pb-2">
-        <div>
-          <ContentHeader
-            main={'Period management'}
-            brief={'Where you view our organization period'}
+      <ContentHeaderLayout>
+        <ContentHeader
+          main={'Period management'}
+          brief={'Where you view our organization period'}
+        />
+        <HeaderActionGroup>
+          <HeaderAction
+            id={'create-period'}
+            triggerButton={AddButton}
+            content={AddPeriodDrawer}
           />
-        </div>
-        <AddPeriodContainer />
-      </Flex>
+        </HeaderActionGroup>
+      </ContentHeaderLayout>
 
       <List spacing={4}>
         {data &&

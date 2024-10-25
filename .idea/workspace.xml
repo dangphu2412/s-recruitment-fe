@@ -5,46 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
-      <change afterPath="$PROJECT_DIR$/src/entities/user/api/user-group-api-client.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/user/models/user-group.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/user/ui/UserCombobox/UserCombobox.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/AddUsersContainer/AddUserGroupContainer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/AddUsersContainer/AddUserGroupDrawer/AddUserGroupDrawer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/AddUsersContainer/AddUserGroupDrawer/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/AddUsersContainer/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/user-groups-table/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/user-groups-table/models/useUserGroupColumns.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/user-groups-table/ui/UsersOverviewTable/UserGroupTable.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/user-groups-table/ui/UsersOverviewTable/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/user-groups-table/ui/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UserOverviewAction.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/master-data/departments.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/users/assessment.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/users/groups.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/models/aggregate-model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/ui/Header/ContentHeader/ContentHeaderLayout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/ui/Header/ContentHeader/HeaderActionGroup.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/ui/Table/Cell/Cell.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/ui/Table/Cell/MoreActionCell.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/master-data/useMasteData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/master-data/useMasteData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/login/ui/LoginForm/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/login/ui/LoginForm/LoginForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/menu/features-menu/ui/SideBar/SideBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/menu/features-menu/ui/SideBar/SideBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/RecruitmentActionContainer/AddNewEventDrawer/AddNewEventDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/RecruitmentActionContainer/AddNewEventDrawer/AddNewEventDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/master-data/add-period/ui/AddPeridContainer/AddUserDrawer/AddPeriodDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/master-data/add-period/ui/AddPeridContainer/AddUserDrawer/AddPeriodDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/RecruitmentActionContainer/AddNewEventDrawer/AddNewEventDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/AddNewEventDrawer/AddNewEventDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/RecruitmentActionContainer/RecruitmentActionContainer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/AddUsersContainer/AddUserGroupContainer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/AddUsersContainer/AddUserGroupDrawer/AddUserGroupDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/AddUserGroupDrawer/AddUserGroupDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/AddUsersContainer/AddUserGroupDrawer/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/AddUsersContainer/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui/index.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUsersContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUsersContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/import-users/ui/ImportUsers/ImportUsersContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/import-users/ui/ImportUsers/ImportUsersContainer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/user-managements/import-users/ui/ImportUsers/ImportUsersModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/import-users/ui/ImportUsers/ImportUsersModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/user-managements/update-to-member/ui/UpdateUserToMemberContainer/AddUserDrawer/UpdateUserToMemberContainerDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/update-to-member/ui/UpdateUserToMemberContainer/AddUserDrawer/UpdateUserToMemberContainerDrawer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/models/useAdminColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/models/useAdminColumns.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/MoreActionCell.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/master-data/domains.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/posts/overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/posts/overview.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/update-to-member/ui/UpdateUserToMemberContainer/UpdateUserToMemberContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/update-to-member/ui/UpdateUserToMemberContainer/UpdateUserToMemberContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/master-data/period.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/master-data/period.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/recruitments/overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/recruitments/overview.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/admin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/models/error/useHandleError.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/models/error/useHandleError.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/ui/Card/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Card/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/ui/Combobox/MultipleCombobox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Combobox/MultipleCombobox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/users/groups.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/groups.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/ui/Header/ContentHeader/HeaderActionGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Header/ContentHeader/HeaderActionGroup.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +63,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/build-user-groups",
+    "git-widget-placeholder": "develop",
     "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/shared/ui/Table/Cell",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
@@ -112,6 +92,8 @@
       <recent name="$PROJECT_DIR$/src/features/documents/document-overviews/ui" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/features/recruitment/add-event/ui" />
+      <recent name="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui" />
       <recent name="$PROJECT_DIR$/src/pages/users" />
       <recent name="$PROJECT_DIR$/src/pages/thong-bao/[id]" />
       <recent name="$PROJECT_DIR$/src/pages/thong-bao" />

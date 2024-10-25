@@ -1,6 +1,5 @@
 import {
   Button,
-  Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
@@ -25,7 +24,7 @@ import {
 } from 'react-hook-form';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
 import { array, number, object, string } from 'yup';
-import { CreateRecruitmentEventPayload } from '../../../../../../entities/recruitment/api/recruitment.usecase';
+import { CreateRecruitmentEventPayload } from '../../../../../entities/recruitment/api/recruitment.usecase';
 import {
   CreateRecruitmentEventFormModal,
   RECRUITMENT_EVENT_QUERY_KEY,
@@ -35,13 +34,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { useQueryClient } from 'react-query';
 import { useNotify } from 'src/shared/models/notify';
-import { FullLoader } from '../../../../../../shared/ui/Loader/Full/FullLoader';
-import { UserCombobox } from '../../../../../../entities/user/ui/UserCombobox/UserCombobox';
+import { UserCombobox } from '../../../../../entities/user/ui/UserCombobox/UserCombobox';
 
-type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
-  finalFocusRef: React.RefObject<HTMLButtonElement>;
-  isLoading: boolean;
-};
+type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 const defaultScoreStandard = {
   point: 0,
   standard: ''
@@ -66,10 +61,7 @@ const validationSchema = object({
 });
 
 export function AddNewEventDrawer({
-  isOpen,
-  isLoading,
-  onClose,
-  finalFocusRef
+  onClose
 }: AddUserDrawerProps): React.ReactElement {
   const {
     handleSubmit,
@@ -123,15 +115,8 @@ export function AddNewEventDrawer({
   };
 
   return (
-    <Drawer
-      isOpen={isOpen}
-      placement="right"
-      onClose={onClose}
-      finalFocusRef={finalFocusRef}
-      size="lg"
-    >
+    <>
       <DrawerOverlay />
-      <FullLoader isLoading={isLoading} />
 
       <DrawerContent>
         <DrawerCloseButton />
@@ -275,6 +260,6 @@ export function AddNewEventDrawer({
           </Button>
         </DrawerFooter>
       </DrawerContent>
-    </Drawer>
+    </>
   );
 }
