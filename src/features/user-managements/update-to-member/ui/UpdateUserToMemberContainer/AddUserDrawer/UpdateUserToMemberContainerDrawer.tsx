@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import {
   Button,
-  Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
@@ -46,14 +45,10 @@ type UserProbation = {
   probationEndDate: string;
   createdAt: string;
 };
-type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
-  finalFocusRef: React.RefObject<HTMLButtonElement>;
-};
+type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 
 export function UpdateUserToMemberContainerDrawer({
-  isOpen,
-  onClose,
-  finalFocusRef
+  onClose
 }: AddUserDrawerProps): React.ReactElement {
   const {
     handleSubmit,
@@ -136,13 +131,7 @@ export function UpdateUserToMemberContainerDrawer({
   };
 
   return (
-    <Drawer
-      isOpen={isOpen}
-      placement="right"
-      onClose={onClose}
-      finalFocusRef={finalFocusRef}
-      size="xl"
-    >
+    <>
       <DrawerOverlay />
 
       <DrawerContent>
@@ -246,6 +235,6 @@ export function UpdateUserToMemberContainerDrawer({
           </Button>
         </DrawerFooter>
       </DrawerContent>
-    </Drawer>
+    </>
   );
 }

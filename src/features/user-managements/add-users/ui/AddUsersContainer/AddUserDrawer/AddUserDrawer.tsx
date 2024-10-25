@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Button,
-  Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
@@ -34,9 +33,7 @@ export type CreateUserInputs = {
   monthlyConfigId?: string;
 };
 
-type AddUserDrawerProps = Omit<UseDisclosureApi, 'onOpen'> & {
-  finalFocusRef: React.RefObject<HTMLButtonElement>;
-};
+type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 
 const validationSchema = object({
   domain: string().required(),
@@ -47,9 +44,7 @@ const validationSchema = object({
 });
 
 export function AddUserDrawer({
-  isOpen,
-  onClose,
-  finalFocusRef
+  onClose
 }: AddUserDrawerProps): React.ReactElement {
   const {
     handleSubmit,
@@ -89,13 +84,7 @@ export function AddUserDrawer({
   };
 
   return (
-    <Drawer
-      isOpen={isOpen}
-      placement="right"
-      onClose={onClose}
-      finalFocusRef={finalFocusRef}
-      size="xl"
-    >
+    <>
       <DrawerOverlay />
       <FullLoader isLoading={isLoading} />
 
@@ -184,6 +173,6 @@ export function AddUserDrawer({
           </Button>
         </DrawerFooter>
       </DrawerContent>
-    </Drawer>
+    </>
   );
 }

@@ -1,11 +1,14 @@
 import React, { ReactElement } from 'react';
 import { FullLoader } from '../../shared/ui/Loader/Full/FullLoader';
-import { Card } from '../../shared/ui';
+import { Card, ContentHeader } from '../../shared/ui';
 import { RecruitmentEventTable } from '../../features/recruitment/recruitment-event-table';
-import { ContentHeader } from '../../shared/ui';
-import { RecruitmentActionContainer } from 'src/features/recruitment/add-event';
 import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
-import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import {
+  HeaderAction,
+  HeaderActionGroup
+} from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { AddButton } from '../../shared/ui/Button';
+import { AddNewEventDrawer } from '../../features/recruitment/add-event/ui/AddNewEventDrawer/AddNewEventDrawer';
 
 export default function RecruitmentOverviewPage(): ReactElement {
   return (
@@ -18,7 +21,11 @@ export default function RecruitmentOverviewPage(): ReactElement {
         />
 
         <HeaderActionGroup>
-          <RecruitmentActionContainer />
+          <HeaderAction
+            id={'create-recruitment'}
+            triggerButton={AddButton}
+            content={AddNewEventDrawer}
+          />
         </HeaderActionGroup>
       </ContentHeaderLayout>
       <RecruitmentEventTable />

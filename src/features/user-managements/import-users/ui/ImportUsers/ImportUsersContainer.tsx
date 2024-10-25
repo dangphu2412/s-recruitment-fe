@@ -1,29 +1,21 @@
 import React from 'react';
-import { Button, useDisclosure } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { ImportUsersDrawer } from './ImportUsersModal';
+import { HeaderAction } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 
 export function ImportUsersContainer(): React.ReactElement {
-  const btnRef = React.useRef<HTMLButtonElement>(null);
-  const { isOpen, onOpen, onClose } = useDisclosure({
-    id: 'ImportDrawer'
-  });
-
   return (
-    <>
-      <Button colorScheme="pink" onClick={onOpen} ref={btnRef}>
-        <FontAwesomeIcon className="mr-2" icon={faUpload} />
-        <span>Import</span>
-      </Button>
-
-      {isOpen && (
-        <ImportUsersDrawer
-          isOpen={isOpen}
-          onClose={onClose}
-          finalFocusRef={btnRef}
-        />
+    <HeaderAction
+      id={'import-users'}
+      triggerButton={props => (
+        <Button colorScheme="pink" {...props}>
+          <FontAwesomeIcon className="mr-2" icon={faUpload} />
+          <span>Import</span>
+        </Button>
       )}
-    </>
+      content={ImportUsersDrawer}
+    />
   );
 }

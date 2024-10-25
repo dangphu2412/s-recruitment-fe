@@ -2,8 +2,12 @@ import React, { ReactElement } from 'react';
 import { Card, ContentHeader } from '../../shared/ui';
 import { UserGroupTable } from '../../features/user-managements/user-groups-table';
 import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
-import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
-import { AddUserGroupContainer } from '../../features/user-managements/add-user-groups';
+import {
+  HeaderAction,
+  HeaderActionGroup
+} from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { AddButton } from '../../shared/ui/Button';
+import { AddUserGroupDrawer } from '../../features/user-managements/add-user-groups/ui/AddUserGroupDrawer/AddUserGroupDrawer';
 
 export default function UserGroupsPage(): ReactElement {
   return (
@@ -15,7 +19,11 @@ export default function UserGroupsPage(): ReactElement {
         />
 
         <HeaderActionGroup>
-          <AddUserGroupContainer />
+          <HeaderAction
+            id={'create-groups'}
+            triggerButton={AddButton}
+            content={AddUserGroupDrawer}
+          />
         </HeaderActionGroup>
       </ContentHeaderLayout>
 
