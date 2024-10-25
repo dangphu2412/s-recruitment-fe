@@ -12,6 +12,7 @@ import { QUERY_USERS_KEY, userActions } from '../../../../entities/user/models';
 import { Box, Tag } from '@chakra-ui/react';
 import { useQueryClient } from 'react-query';
 import { formatDate } from '../../../../shared/models/utils/date.utils';
+import { CommonData } from '../../../../entities/master-data/useMasteData';
 
 export type UserManagementView = {
   id: string;
@@ -26,6 +27,7 @@ export type UserManagementView = {
   paidMonths: number;
   debtMonths: number;
   isProbation: boolean;
+  domain: CommonData;
   roles: Role[];
 };
 
@@ -95,6 +97,11 @@ export function useAdminColumns(): Column<UserManagementView>[] {
         Header: 'Roles',
         accessor: 'roles',
         Cell: RoleCell
+      },
+      {
+        Header: 'Domain',
+        accessor: 'domain',
+        Cell: props => <>{props.value?.name}</>
       },
       {
         Header: 'Status',

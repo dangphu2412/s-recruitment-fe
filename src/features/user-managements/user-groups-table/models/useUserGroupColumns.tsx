@@ -7,11 +7,13 @@ import {
 } from '../../../../entities/user/models/user-group.model';
 import { useQueryClient } from 'react-query';
 import { useNotify } from '../../../../shared/models/notify';
+import { Tag, Tooltip } from '@chakra-ui/react';
 
 export type UserGroupView = {
   id: string;
   name: string;
   description: string;
+  users: { id: string; email: string }[];
 };
 
 export function useUserGroupColumns(): Column<UserGroupView>[] {
@@ -27,6 +29,41 @@ export function useUserGroupColumns(): Column<UserGroupView>[] {
       {
         Header: 'Description',
         accessor: 'description'
+      },
+      {
+        Header: 'Emails',
+        accessor: 'users',
+        Cell: props => {
+          return (
+            <div className={'flex flex-col gap-1'} key={props.row.id}>
+              {props.value.slice(0, 3).map(user => (
+                <Tag
+                  key={user.id}
+                  colorScheme="yellow"
+                  variant="solid"
+                  className={'w-fit'}
+                >
+                  {user.email}
+                </Tag>
+              ))}
+              {props.value.length > 3 && (
+                <span className={'w-fit'}>
+                  <Tooltip
+                    label={
+                      <div className={'space-y-1'}>
+                        {props.value.map(user => (
+                          <div key={user.id}>{user.email}</div>
+                        ))}
+                      </div>
+                    }
+                  >
+                    ...
+                  </Tooltip>
+                </span>
+              )}
+            </div>
+          );
+        }
       },
       {
         Header: 'Actions',

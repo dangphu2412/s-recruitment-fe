@@ -94,7 +94,7 @@ export function AddNewEventDrawer({
     CreateRecruitmentEventFormModal
   > = formInputs => {
     const payload: CreateRecruitmentEventPayload = {
-      examinerIds: formInputs.examiners,
+      examinerIds: formInputs.examiners.map(item => item.value),
       recruitmentRange: {
         fromDate: formInputs.recruitmentRange.fromDate,
         toDate: formInputs.recruitmentRange.toDate

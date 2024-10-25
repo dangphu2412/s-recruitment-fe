@@ -2,6 +2,7 @@ import { DateRange } from '../../../shared/models/filter.api';
 import { useMutation, useQuery } from 'react-query';
 import { recruitmentApiClient } from '../api';
 import { RecruitmentEventDetail } from '../api/recruitment.usecase';
+import { BoxItem } from '../../../shared/models/combobox.api';
 
 export type ScoreStandard = {
   standard: string;
@@ -11,7 +12,7 @@ export type CreateRecruitmentEventFormModal = {
   name: string;
   location: string;
   recruitmentRange: DateRange;
-  examiners: string[];
+  examiners: BoxItem[];
   scoreStandards: ScoreStandard[];
 };
 

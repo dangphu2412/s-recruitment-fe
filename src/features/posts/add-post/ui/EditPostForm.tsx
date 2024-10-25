@@ -24,7 +24,7 @@ type EditPostModel = {
   title: string;
   content: string;
   summary: string;
-  categories: string[];
+  categories: BoxItem[];
   previewImageURL: string;
 };
 
@@ -71,7 +71,7 @@ export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
         id,
         title: model.title,
         content: model.content,
-        categoryCodes: model.categories,
+        categoryCodes: model.categories.map(item => item.value),
         previewImage: model.previewImageURL,
         summary: model.summary
       };

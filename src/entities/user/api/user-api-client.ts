@@ -6,6 +6,7 @@ import {
 import { authorizedHttpClient } from '../../../shared/api';
 import { OperationFee } from 'src/entities/monthly-money/models';
 import { Role } from './access-control.client';
+import { CommonData } from '../../master-data/useMasteData';
 
 export type User = {
   id: string;
@@ -13,7 +14,7 @@ export type User = {
   email: string;
   avatar: string;
   phoneNumber: string;
-  domain?: {
+  department?: {
     id: string;
     name: string;
   };
@@ -39,6 +40,7 @@ export type UserManagementView = {
   deletedAt: string;
   operationFee?: OperationFee;
   roles: Role[];
+  domain: CommonData;
   remainMonths: number;
   paidMonths: number;
   debtMonths: number;
