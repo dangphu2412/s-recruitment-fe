@@ -24,7 +24,9 @@ export default function DepartmentPage(): ReactElement {
                   <Tooltip label={item.description}>
                     <ListIcon color="green.500" />
                   </Tooltip>
-                  <Text fontSize="xl">{item.name}</Text>
+                  <Text fontSize="xl">
+                    {item.name} - Code: {item.code}
+                  </Text>
                 </div>
 
                 <Text fontSize="sm">{item.description}</Text>

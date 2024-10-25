@@ -18,11 +18,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
 import { FullLoader } from '../../../../../../shared/ui/Loader/Full/FullLoader';
-import { useMutateCreateUser } from '../../../../../../entities/user/models';
+import {
+  QUERY_USERS_KEY,
+  useMutateCreateUser
+} from '../../../../../../entities/user/models';
 import {
   useDepartments,
   usePeriods
 } from '../../../../../../entities/master-data/useMasteData';
+import { useQueryClient } from 'react-query';
 
 export type CreateUserInputs = {
   email: string;
@@ -64,6 +68,7 @@ export function AddUserDrawer({
   const { mutate: dispatchCreateUser, isLoading } = useMutateCreateUser();
   const { data: domains } = useDepartments();
   const { data: periods } = usePeriods();
+  const queryClient = useQueryClient();
 
   const saveUser: SubmitHandler<CreateUserInputs> = createUserInputs => {
     dispatchCreateUser(
@@ -76,6 +81,9 @@ export function AddUserDrawer({
       },
       {
         onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_USERS_KEY]
+          });
           reset();
           onClose();
         }

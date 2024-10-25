@@ -22,11 +22,12 @@ import {
 import { UserCombobox } from '../../../../../entities/user/ui/UserCombobox/UserCombobox';
 import { useQueryClient } from 'react-query';
 import { useNotify } from '../../../../../shared/models/notify';
+import { BoxItem } from '../../../../../shared/models/combobox.api';
 
 export type CreateUserGroupInputs = {
   name: string;
   description: string;
-  users: string[];
+  users: BoxItem[];
 };
 
 type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
@@ -45,7 +46,10 @@ export function AddUserGroupDrawer({
   });
   const { field: userControllerProps } = useController({
     control,
-    name: 'users'
+    name: 'users',
+    rules: {
+      required: 'Users are required'
+    }
   });
 
   const { mutate: dispatchCreateUserGroup } = useCreateUserGroupMutation();
@@ -57,7 +61,7 @@ export function AddUserGroupDrawer({
       {
         name: createUserInputs.name,
         description: createUserInputs.description,
-        userIds: createUserInputs.users
+        userIds: createUserInputs.users.map(user => user.value)
       },
       {
         onSuccess: () => {
@@ -93,6 +97,7 @@ export function AddUserGroupDrawer({
               {...register('name', {
                 required: 'Name is required'
               })}
+              placeholder={'Enter group name'}
             />
 
             {errors.name && (
@@ -116,6 +121,7 @@ export function AddUserGroupDrawer({
               {...register('description', {
                 required: 'Description is required'
               })}
+              placeholder={'Enter group description'}
             />
 
             {errors.description && (

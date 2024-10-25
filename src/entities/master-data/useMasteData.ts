@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { authorizedHttpClient } from '../../shared/api';
 
-type Domain = {
+export type CommonData = {
   id: string;
   name: string;
   code: string;
@@ -31,11 +31,11 @@ export function useMasterData<T>(code: string) {
 }
 
 export function useDepartments() {
-  return useMasterData<Domain[]>(CommonCodes.DEPARTMENTS);
+  return useMasterData<CommonData[]>(CommonCodes.DEPARTMENTS);
 }
 
 export function usePeriods() {
-  return useMasterData<Domain[]>(CommonCodes.PERIOD);
+  return useMasterData<CommonData[]>(CommonCodes.PERIOD);
 }
 
 export function getPeriodKey() {

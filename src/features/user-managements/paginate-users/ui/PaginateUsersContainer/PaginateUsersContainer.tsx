@@ -7,7 +7,7 @@ import {
   useUserOverview
 } from '../../../../../entities/user/models';
 import { Paginator } from '../../../../../shared/ui/Pagination/Paginator';
-import { Text } from '@chakra-ui/react';
+import { Button, Text } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { useQueryClient } from 'react-query';
@@ -51,6 +51,10 @@ export function PaginateUsersContainer(): React.ReactElement {
     });
   }
 
+  function handleResetFilter() {
+    dispatch(userActions.resetFilter());
+  }
+
   return (
     <div className={'flex justify-between'}>
       <div className={'flex gap-2 items-center'}>
@@ -69,9 +73,14 @@ export function PaginateUsersContainer(): React.ReactElement {
         />
       </div>
 
-      <Text fontSize={'sm'} fontWeight={'medium'}>
-        Total: {totalRecords} users
-      </Text>
+      <div className={'flex gap-2 items-center'}>
+        <Text fontSize={'sm'} fontWeight={'medium'}>
+          Total: {totalRecords} users
+        </Text>
+        <Button variant={'ghost'} onClick={handleResetFilter}>
+          Clear
+        </Button>
+      </div>
     </div>
   );
 }

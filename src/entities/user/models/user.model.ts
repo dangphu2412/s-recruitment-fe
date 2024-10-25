@@ -1,7 +1,7 @@
 import { OperationFee } from '../../monthly-money/models';
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FilterKey } from '../../../shared/config';
-import { Pagination } from '../../../shared/models';
+import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
 import {
   CombineSearchFilter,
   Filter,
@@ -40,6 +40,8 @@ export type UserDetail = {
 export type AdminFilter = CombineSearchFilter<{
   joinedIn: Filter<FilterKey.RANGE, Date | null>;
   userStatus: Filter<FilterKey.EXACT, string[]>;
+  departmentIds: Filter<FilterKey.EXACT, string[]>;
+  periodIds: Filter<FilterKey.EXACT, string[]>;
 }>;
 
 export type AdminState = {
@@ -78,6 +80,15 @@ export const selectUserStatus = createSelector(
   state => state.filters.userStatus
 );
 
+export const selectDepartmentIds = createSelector(
+  selectOverviewState,
+  state => state.filters.departmentIds
+);
+export const selectPeriodIds = createSelector(
+  selectOverviewState,
+  state => state.filters.periodIds
+);
+
 export const selectPaymentUserId = createSelector(
   selectOverviewState,
   state => state.selectedPaymentUserId
@@ -85,10 +96,7 @@ export const selectPaymentUserId = createSelector(
 
 export function getInitialOverviewState(): AdminState {
   return {
-    pagination: {
-      page: 1,
-      size: 10
-    },
+    pagination: DEFAULT_PAGINATION,
     filters: {
       query: {
         type: FilterKey.LIKE,
@@ -102,6 +110,14 @@ export function getInitialOverviewState(): AdminState {
         }
       },
       userStatus: {
+        type: FilterKey.EXACT,
+        value: []
+      },
+      departmentIds: {
+        type: FilterKey.EXACT,
+        value: []
+      },
+      periodIds: {
         type: FilterKey.EXACT,
         value: []
       }
@@ -124,6 +140,14 @@ export function getInitialOverviewState(): AdminState {
           }
         },
         userStatus: {
+          type: FilterKey.EXACT,
+          value: []
+        },
+        departmentIds: {
+          type: FilterKey.EXACT,
+          value: []
+        },
+        periodIds: {
           type: FilterKey.EXACT,
           value: []
         }
@@ -177,6 +201,20 @@ const userSlice = createSlice({
           value: action.payload.userStatus
         };
       }
+
+      if (action.payload.departmentIds !== undefined) {
+        state.overview.filters.departmentIds = {
+          type: FilterKey.EXACT,
+          value: action.payload.departmentIds
+        };
+      }
+
+      if (action.payload.periodIds !== undefined) {
+        state.overview.filters.periodIds = {
+          type: FilterKey.EXACT,
+          value: action.payload.periodIds
+        };
+      }
     },
     toggleUserStatus: (state, action: PayloadAction<UserStatus>) => {
       if (action.payload !== undefined) {
@@ -195,6 +233,44 @@ const userSlice = createSlice({
         state.overview.filters.userStatus = {
           type: FilterKey.EXACT,
           value: [...currentStatus.value, action.payload]
+        };
+      }
+    },
+    toggleDepartment: (state, action: PayloadAction<string>) => {
+      if (action.payload !== undefined) {
+        const currentDepartmentIds = state.overview.filters.departmentIds;
+
+        if (currentDepartmentIds.value.includes(action.payload)) {
+          state.overview.filters.departmentIds = {
+            type: FilterKey.EXACT,
+            value: currentDepartmentIds.value.filter(
+              id => id !== action.payload
+            )
+          };
+          return;
+        }
+
+        state.overview.filters.departmentIds = {
+          type: FilterKey.EXACT,
+          value: [...currentDepartmentIds.value, action.payload]
+        };
+      }
+    },
+    togglePeriod: (state, action: PayloadAction<string>) => {
+      if (action.payload !== undefined) {
+        const currentPeriodIds = state.overview.filters.periodIds;
+
+        if (currentPeriodIds.value.includes(action.payload)) {
+          state.overview.filters.periodIds = {
+            type: FilterKey.EXACT,
+            value: currentPeriodIds.value.filter(id => id !== action.payload)
+          };
+          return;
+        }
+
+        state.overview.filters.periodIds = {
+          type: FilterKey.EXACT,
+          value: [...currentPeriodIds.value, action.payload]
         };
       }
     },
