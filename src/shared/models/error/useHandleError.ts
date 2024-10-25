@@ -18,14 +18,15 @@ function mapToAppError(error: AxiosError): AppError {
   if (!HttpError.isHttpError(error)) {
     return {
       clientCode: ClientErrorCode.UN_HANDLE_ERROR_CLIENT,
-      message: 'System is getting some problem'
+      message: 'Please contact admin to troubleshoot the issue'
     };
   }
 
   return {
     clientCode: error.code,
     message:
-      ErrorMessageManager.get(error.code) ?? 'System is getting some problem'
+      ErrorMessageManager.get(error.code) ??
+      'Please contact admin to troubleshoot the issue'
   };
 }
 

@@ -1,7 +1,7 @@
 import { CellProps, Column } from 'react-table';
 import { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { MoreActionCell } from '../ui/UsersOverviewTable/Cell/MoreActionCell';
+import { UserOverviewAction } from '../ui/UsersOverviewTable/Cell/UserOverviewAction';
 import { UsernameCell } from '../ui/UsersOverviewTable/Cell/UsernameCell';
 import { RoleCell } from '../ui/UsersOverviewTable/Cell/RoleCell';
 import { StatusCell } from '../ui/UsersOverviewTable/Cell/StatusCell';
@@ -110,7 +110,7 @@ export function useAdminColumns(): Column<UserManagementView>[] {
       {
         Header: 'Actions',
         Cell: (props: CellProps<UserManagementView, string>) => (
-          <MoreActionCell
+          <UserOverviewAction
             key={props.row.id}
             {...props}
             push={push}

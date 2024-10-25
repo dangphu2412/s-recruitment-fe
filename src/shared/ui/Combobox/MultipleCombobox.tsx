@@ -9,7 +9,7 @@ import { BoxItem } from '../../models/combobox.api';
 
 type ItemProps = BoxItem;
 
-type ComboboxProps = {
+export type ComboboxProps = {
   name: string;
   items: BoxItem[];
   value: string[];
@@ -83,6 +83,7 @@ export const MultipleCombobox = ({
           onChange={event => setQuery(event.target.value)}
           placeholder={placeholder}
           displayValue={(item: BoxItem) => item.text}
+          required={false}
         />
 
         <Transition

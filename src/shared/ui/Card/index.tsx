@@ -14,7 +14,7 @@ export const Card = forwardRef(function ContentLayout(
       borderRadius="1rem"
       paddingY="2rem"
       paddingX="2rem"
-      className={classNames('shadow-highlight', className)}
+      className={classNames('shadow-highlight space-y-2', className)}
       {...rest}
       ref={ref}
     >

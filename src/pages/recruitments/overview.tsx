@@ -1,25 +1,26 @@
 import React, { ReactElement } from 'react';
 import { FullLoader } from '../../shared/ui/Loader/Full/FullLoader';
 import { Card } from '../../shared/ui';
-import { RecruitmentEventTable } from '../../features/recruitment/recruitment-event-table/ui/RecruitmentEventTable/RecruitmentEventTable';
-import { ContentHeader } from '../../shared/ui/Header';
+import { RecruitmentEventTable } from '../../features/recruitment/recruitment-event-table';
+import { ContentHeader } from '../../shared/ui';
 import { RecruitmentActionContainer } from 'src/features/recruitment/add-event';
-import { Flex } from '@chakra-ui/react';
+import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
+import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 
 export default function RecruitmentOverviewPage(): ReactElement {
   return (
     <Card>
       <FullLoader isLoading={false} />
-      <Flex justifyContent="space-between" className="pb-2">
-        <div>
-          <ContentHeader
-            main={'Recruitment management'}
-            brief={'Where you can create, update and change recruitment events'}
-          />
-        </div>
+      <ContentHeaderLayout>
+        <ContentHeader
+          main={'Recruitment management'}
+          brief={'Where you can create, update and change recruitment events'}
+        />
 
-        <RecruitmentActionContainer />
-      </Flex>
+        <HeaderActionGroup>
+          <RecruitmentActionContainer />
+        </HeaderActionGroup>
+      </ContentHeaderLayout>
       <RecruitmentEventTable />
     </Card>
   );

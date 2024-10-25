@@ -14,7 +14,7 @@ type SaveDomainInputs = {
 };
 
 enum CommonCodes {
-  DOMAIN = 'SG0001',
+  DEPARTMENTS = 'SG0001',
   PERIOD = 'SG0002'
 }
 
@@ -30,8 +30,8 @@ export function useMasterData<T>(code: string) {
   });
 }
 
-export function useDomains() {
-  return useMasterData<Domain[]>(CommonCodes.DOMAIN);
+export function useDepartments() {
+  return useMasterData<Domain[]>(CommonCodes.DEPARTMENTS);
 }
 
 export function usePeriods() {

@@ -80,7 +80,7 @@ export function ImportUsersDrawer({
       },
       {
         onSuccess: response => {
-          if (Array.isArray(response)) {
+          if (Array.isArray(response) && response.length > 0) {
             const dupEmails = response
               .map(user => user.duplicatedEmails)
               .flat()

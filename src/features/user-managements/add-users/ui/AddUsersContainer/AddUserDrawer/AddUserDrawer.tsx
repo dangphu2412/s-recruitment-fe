@@ -21,7 +21,7 @@ import { object, string } from 'yup';
 import { FullLoader } from '../../../../../../shared/ui/Loader/Full/FullLoader';
 import { useMutateCreateUser } from '../../../../../../entities/user/models';
 import {
-  useDomains,
+  useDepartments,
   usePeriods
 } from '../../../../../../entities/master-data/useMasteData';
 
@@ -67,7 +67,7 @@ export function AddUserDrawer({
   });
 
   const { mutate: dispatchCreateUser, isLoading } = useMutateCreateUser();
-  const { data: domains } = useDomains();
+  const { data: domains } = useDepartments();
   const { data: periods } = usePeriods();
 
   const saveUser: SubmitHandler<CreateUserInputs> = createUserInputs => {

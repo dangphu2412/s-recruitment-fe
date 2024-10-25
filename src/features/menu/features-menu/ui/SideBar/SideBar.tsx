@@ -12,8 +12,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import styles from './SideBar.module.scss';
-import { useMenu, useSyncParamsToMenu } from 'src/entities/menu/models';
+import {
+  currentMenuSelector,
+  useMenu,
+  useSyncParamsToMenu
+} from 'src/entities/menu/models';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 
 type Props = Omit<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
@@ -28,6 +33,7 @@ export function SideBar({
   isHovering,
   ...rest
 }: Props): React.ReactElement {
+  const currentMenu = useSelector(currentMenuSelector);
   const { items, selectMenu, goToDashboard } = useMenu();
 
   useSyncParamsToMenu({
@@ -114,7 +120,11 @@ export function SideBar({
                                 key={subMenuItem.id}
                                 paddingY="0.675rem"
                                 paddingLeft={4}
-                                fontWeight="light"
+                                fontWeight={
+                                  currentMenu?.id === subMenuItem.id
+                                    ? 'medium'
+                                    : 'light'
+                                }
                                 cursor="pointer"
                                 onClick={() => selectMenu(subMenuItem)}
                               >
