@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
-import { CellProps } from 'react-table';
 import styles from './Cell.module.scss';
 
 type Props = {
