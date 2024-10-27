@@ -23,7 +23,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
-import { array, number, object, string } from 'yup';
+import { array, mixed, number, object, string } from 'yup';
 import { CreateRecruitmentEventPayload } from '../../../../../entities/recruitment/api/recruitment.usecase';
 import {
   CreateRecruitmentEventFormModal,
@@ -57,7 +57,8 @@ const validationSchema = object({
       point: number().required('Need to fill point'),
       standard: string().required('Standard is required')
     })
-  )
+  ),
+  file: mixed().nullable().required()
 });
 
 export function AddNewEventDrawer({
@@ -67,7 +68,8 @@ export function AddNewEventDrawer({
     handleSubmit,
     register,
     formState: { errors },
-    control
+    control,
+    reset
   } = useForm<CreateRecruitmentEventFormModal>({
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
@@ -101,15 +103,19 @@ export function AddNewEventDrawer({
       },
       location: formInputs.location,
       name: formInputs.name,
-      scoringStandards: formInputs.scoreStandards
+      scoringStandards: formInputs.scoreStandards,
+      file: formInputs.file[0]
     };
 
     createRecruitmentEvent(payload, {
       onSuccess: () => {
         notify({
-          title: 'Create event success'
+          title: 'Create event success',
+          status: 'success'
         });
         queryClient.refetchQueries(RECRUITMENT_EVENT_QUERY_KEY);
+        reset();
+        onClose();
       }
     });
   };
@@ -249,6 +255,16 @@ export function AddNewEventDrawer({
               </div>
             );
           })}
+
+          <FormControl isInvalid={!!errors.file}>
+            <FormLabel htmlFor="file">File</FormLabel>
+
+            <Input type={'file'} {...register('file')} />
+
+            {errors.file && (
+              <FormErrorMessage>{errors.file?.message}</FormErrorMessage>
+            )}
+          </FormControl>
         </DrawerBody>
 
         <DrawerFooter>

@@ -14,6 +14,7 @@ export type CreateRecruitmentEventFormModal = {
   recruitmentRange: DateRange;
   examiners: BoxItem[];
   scoreStandards: ScoreStandard[];
+  file: FileList;
 };
 
 export function useCreateRecruitmentEventMutation() {

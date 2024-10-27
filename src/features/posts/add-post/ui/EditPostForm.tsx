@@ -9,7 +9,6 @@ import {
 import { FormLabel } from 'src/shared/ui';
 import classes from './AddPostForm.module.scss';
 import { useNotify } from '../../../../shared/models/notify';
-import { TextEditor } from './TextEditor';
 import {
   getQueryPostDetailKey,
   useMutateEditPost
@@ -19,6 +18,7 @@ import { useRouter } from 'next/router';
 import { useQueryCategories } from '../../../../entities/posts/models/category.model';
 import { BoxItem } from '../../../../shared/models/combobox.api';
 import { MultipleCombobox } from '../../../../shared/ui/Combobox/MultipleCombobox';
+import { TextEditor } from '../../../../widgets/text-editor/TextEditor';
 
 type EditPostModel = {
   title: string;
@@ -196,9 +196,7 @@ export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
               <Controller
                 control={control}
                 render={({ field }) => {
-                  return (
-                    <TextEditor value={field.value} onChange={field.onChange} />
-                  );
+                  return <TextEditor onChange={field.onChange} />;
                 }}
                 name={'content'}
               />

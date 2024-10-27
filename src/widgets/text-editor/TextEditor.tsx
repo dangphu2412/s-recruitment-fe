@@ -3,13 +3,14 @@ import 'react-quill/dist/quill.snow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode, faImage } from '@fortawesome/free-solid-svg-icons';
 import React, { useRef } from 'react';
-import { useMutateUploadFile } from '../../../../entities/files/models';
-import { API_URL } from '../../../../shared/config/constants/env';
+import { useMutateUploadFile } from '../../entities/files/models';
+import { API_URL } from '../../shared/config/constants/env';
+import classes from './TextEditor.module.scss';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 type TextEditorProps = {
-  value: string;
+  defaultValue?: string;
   onChange: (v: string) => void;
 };
 
@@ -121,11 +122,13 @@ export function TextEditor(props: TextEditorProps) {
     <>
       <Toolbar />
       <ReactQuill
+        className={classes['container']}
+        defaultValue={props.defaultValue}
         theme="snow"
         formats={formats}
         modules={modulesRef.current}
-        value={props.value}
         onChange={props.onChange}
+        placeholder="Write something awesome..."
       />
     </>
   );

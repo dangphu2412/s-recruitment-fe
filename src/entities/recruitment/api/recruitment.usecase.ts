@@ -59,6 +59,7 @@ export type CreateRecruitmentEventPayload = {
   examinerIds: string[];
   recruitmentRange: DateRange;
   scoringStandards: ScoreStandard[];
+  file: File;
 };
 
 export type MarkEmployeePayload = {
