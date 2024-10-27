@@ -8,7 +8,6 @@ import {
   FormControl,
   FormLabel,
   Grid,
-  GridItem,
   Input,
   Modal,
   ModalBody,
@@ -16,54 +15,62 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
-  Textarea
+  Text
 } from '@chakra-ui/react';
-import { ScoringStandard } from '../../../../../entities/recruitment/api/recruitment.usecase';
+import {
+  Employee,
+  ScoringStandard
+} from '../../../../../entities/recruitment/api/recruitment.usecase';
 import { useQueryClient } from 'react-query';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useNotify } from '../../../../../shared/models/notify';
 import { TitleLabel } from '../../../../../shared/ui/Text/TitleLabel';
-import { TextContent } from '../../../../../shared/ui/Text/TextContent';
 import {
   RECRUITMENT_EVENT_DETAIL_QUERY_KEY,
   useMarkEmployeeMutation
 } from '../../../../../entities/recruitment/models';
+import { TextEditor } from '../../../../../widgets/text-editor/TextEditor';
+import {
+  getLastEdit,
+  saveLastEdit
+} from '../../../../../entities/recruitment/models/local-editor';
+import { useUserSession } from '../../../../../entities/user/models';
 
-type Props = {
-  employeeData: Record<string, unknown>;
+type Props = Employee & {
   standards: ScoringStandard[];
   eventId: number;
   onClose: () => void;
 };
 
-type Data = {
+type FormInputs = {
   point: string;
   note: string;
 };
 
 export function EmployeeMarkerModal({
   onClose,
-  employeeData,
+  data,
+  myVotedPoint,
+  myNote,
+  id,
   standards = [],
   eventId
 }: Props): ReactElement {
   const { markEmployee } = useMarkEmployeeMutation();
+  const { user } = useUserSession();
   const notify = useNotify();
   const queryClient = useQueryClient();
   const maxPoint = standards.reduce((res, curr) => {
     return res + curr.point;
   }, 0);
-  const { register, handleSubmit } = useForm<Data>({
+  const { register, handleSubmit, control } = useForm<FormInputs>({
     defaultValues: {
-      point: employeeData.myVotedPoint
-        ? String(employeeData.myVotedPoint)
-        : '0',
-      note: (employeeData?.myNote as string) ?? ''
+      point: myVotedPoint ? String(myVotedPoint) : '0',
+      note: (myNote as string) ?? ''
     }
   });
 
-  async function handleMark(data: Data) {
+  async function handleMark(data: FormInputs) {
     if (+data.point > maxPoint) {
       notify({
         title: `Your point exceed the max ${maxPoint}`,
@@ -75,7 +82,7 @@ export function EmployeeMarkerModal({
     markEmployee(
       {
         eventId,
-        employeeId: employeeData.id as string,
+        employeeId: id as string,
         point: +data.point,
         note: data.note
       },
@@ -103,7 +110,7 @@ export function EmployeeMarkerModal({
   }
 
   return (
-    <Modal isOpen={true} onClose={onClose} size="2xl">
+    <Modal isOpen={true} onClose={onClose} size="full">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Mark point for your employee</ModalHeader>
@@ -116,11 +123,13 @@ export function EmployeeMarkerModal({
               <AccordionButton>Click to view detail</AccordionButton>
               <AccordionPanel pb={4}>
                 <Grid templateColumns="repeat(2, 1fr)" gap={2}>
-                  {Object.keys(employeeData).map(prop => {
+                  {Object.keys(data).map(prop => {
                     return (
                       <div key={prop}>
                         <TitleLabel>{prop}</TitleLabel>
-                        <div>{employeeData[prop] as string}</div>
+                        <div>
+                          {(data as Record<string, string>)[prop] as string}
+                        </div>
                       </div>
                     );
                   })}
@@ -129,31 +138,29 @@ export function EmployeeMarkerModal({
             </AccordionItem>
           </Accordion>
 
-          <div>
-            <TitleLabel>This recruitment standard</TitleLabel>
+          <div className={'space-y-2'}>
+            <TitleLabel>Standards</TitleLabel>
 
-            {standards.map(standard => {
-              return (
-                <Grid
-                  key={standard.standard.slice(0, 5)}
-                  templateColumns="repeat(6, 1fr)"
-                  gap={2}
-                >
-                  <GridItem colSpan={1}>
-                    <TextContent>Point - {standard.point}: </TextContent>
-                  </GridItem>
+            <div className={'grid grid-cols-2 gap-2'}>
+              {standards.map(standard => {
+                return (
+                  <div key={standard.standard.slice(0, 5)}>
+                    <Text fontSize={'md'} fontWeight={'medium'}>
+                      Point {standard.point}
+                    </Text>
 
-                  <GridItem colSpan={5}>
-                    <Text>{standard.standard}</Text>
-                  </GridItem>
-                </Grid>
-              );
-            })}
+                    <Text fontSize={'sm'} className={'col-span-2'}>
+                      {standard.standard}
+                    </Text>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           <div className="space-y-4">
             <FormControl>
-              <FormLabel>Input your point:</FormLabel>
+              <FormLabel>Employee Point</FormLabel>
               <Input
                 {...register('point')}
                 type={'number'}
@@ -163,8 +170,33 @@ export function EmployeeMarkerModal({
             </FormControl>
 
             <FormControl>
-              <FormLabel>Note down:</FormLabel>
-              <Textarea {...register('note')} cols={4} />
+              <FormLabel>Remark</FormLabel>
+              <Controller
+                control={control}
+                render={({ field }) => {
+                  return (
+                    <TextEditor
+                      defaultValue={
+                        getLastEdit({
+                          employId: id,
+                          userId: user?.id as string
+                        }) ?? myNote
+                      }
+                      onChange={value => {
+                        field.onChange(value);
+                        saveLastEdit(
+                          {
+                            employId: id,
+                            userId: user?.id as string
+                          },
+                          value
+                        );
+                      }}
+                    />
+                  );
+                }}
+                name={'note'}
+              />
             </FormControl>
           </div>
         </ModalBody>

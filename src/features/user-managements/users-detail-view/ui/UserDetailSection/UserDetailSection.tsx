@@ -52,8 +52,18 @@ export function UserDetailSection({ userId }: Props) {
           </FormControl>
 
           <FormControl>
+            <FormLabel>Full name</FormLabel>
+            <Input readOnly value={userDetail.fullName} />
+          </FormControl>
+
+          <FormControl>
             <FormLabel>Email</FormLabel>
             <Input readOnly value={userDetail.email} />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Birthday</FormLabel>
+            <Input type={'date'} readOnly value={userDetail.birthday} />
           </FormControl>
 
           <FormControl>
@@ -61,9 +71,7 @@ export function UserDetailSection({ userId }: Props) {
             <Input
               readOnly
               value={
-                userDetail.department
-                  ? userDetail.department?.name
-                  : 'No information'
+                userDetail.domain ? userDetail.domain?.name : 'No information'
               }
             />
           </FormControl>
