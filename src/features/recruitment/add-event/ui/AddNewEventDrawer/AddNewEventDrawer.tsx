@@ -12,7 +12,8 @@ import {
   Grid,
   GridItem,
   Input,
-  Textarea
+  Textarea,
+  Text
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
@@ -31,7 +32,7 @@ import {
   useCreateRecruitmentEventMutation
 } from 'src/entities/recruitment/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useQueryClient } from 'react-query';
 import { useNotify } from 'src/shared/models/notify';
 import { UserCombobox } from '../../../../../entities/user/ui/UserCombobox/UserCombobox';
@@ -54,10 +55,39 @@ const validationSchema = object({
   examiners: array().min(1, 'At least 1 examiner must be selected'),
   scoreStandards: array(
     object({
-      point: number().required('Need to fill point'),
+      point: number()
+        .typeError('Point must not be empty')
+        .min(1, 'Min is 1')
+        .required('Need to fill point'),
       standard: string().required('Standard is required')
     })
   ),
+  passPoint: number()
+    .typeError('Pass point must not be empty')
+    .min(1, 'Min must be greater than 0')
+    .test({
+      name: 'passPoint',
+      test: (value, context) => {
+        const { scoreStandards } =
+          context.parent as CreateRecruitmentEventFormModal;
+        const maxPoint = scoreStandards.reduce((acc, item) => {
+          return acc + item.point;
+        }, 0);
+
+        if (!value) {
+          return true;
+        }
+
+        if (value <= maxPoint) {
+          return true;
+        }
+
+        return context.createError({
+          message: `Pass point must be less than or equal to the total point: ${maxPoint}`
+        });
+      }
+    })
+    .required('Pass point is required'),
   file: mixed().nullable().required()
 });
 
@@ -79,7 +109,7 @@ export function AddNewEventDrawer({
       scoreStandards: [defaultScoreStandard]
     }
   });
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: 'scoreStandards'
   });
@@ -104,7 +134,8 @@ export function AddNewEventDrawer({
       location: formInputs.location,
       name: formInputs.name,
       scoringStandards: formInputs.scoreStandards,
-      file: formInputs.file[0]
+      file: formInputs.file[0],
+      passPoint: +formInputs.passPoint
     };
 
     createRecruitmentEvent(payload, {
@@ -129,7 +160,7 @@ export function AddNewEventDrawer({
 
         <DrawerHeader>Create new S-Group Recruitment Event</DrawerHeader>
 
-        <DrawerBody className="space-y-4">
+        <DrawerBody className="space-y-6">
           <FormControl isRequired isInvalid={!!errors.name}>
             <FormLabel>Name</FormLabel>
             <Input
@@ -205,21 +236,31 @@ export function AddNewEventDrawer({
             </GridItem>
           </Grid>
 
-          <Button onClick={() => append(defaultScoreStandard)}>
-            <FontAwesomeIcon icon={faPlusCircle} />
-          </Button>
-          {fields.map((field, index) => {
-            return (
-              <div key={field.id}>
-                <Grid templateColumns="repeat(6, 1fr)">
-                  <GridItem colSpan={1}>
+          <FormControl isRequired className={'space-y-2'}>
+            <div className={'flex justify-between'}>
+              <FormLabel>Standard</FormLabel>
+
+              <Button
+                colorScheme={'pink'}
+                onClick={() => append(defaultScoreStandard)}
+              >
+                <FontAwesomeIcon icon={faPlusCircle} />
+              </Button>
+            </div>
+
+            {fields.map((field, index) => {
+              return (
+                <div key={field.id}>
+                  <div className="flex gap-2">
                     <FormControl
                       isRequired
                       isInvalid={!!errors.scoreStandards?.[index]?.point}
+                      className="space-y-2"
                     >
-                      <FormLabel>Point</FormLabel>
+                      <Text fontSize={'sm'}>Point</Text>
                       <Input
-                        placeholder={'Input your location organizing ...'}
+                        className={'max-w-12'}
+                        placeholder={'Input your point ...'}
                         type="number"
                         {...register(`scoreStandards.${index}.point`)}
                       />
@@ -230,16 +271,16 @@ export function AddNewEventDrawer({
                         </FormErrorMessage>
                       )}
                     </FormControl>
-                  </GridItem>
 
-                  <GridItem colSpan={5}>
                     <FormControl
                       isRequired
                       isInvalid={!!errors.scoreStandards?.[index]?.standard}
+                      className="space-y-2"
                     >
-                      <FormLabel>Standard</FormLabel>
+                      <Text fontSize={'sm'}>Standard</Text>
+
                       <Textarea
-                        placeholder={'Input your location organizing ...'}
+                        placeholder={'Input your standard ...'}
                         rows={1}
                         {...register(`scoreStandards.${index}.standard`)}
                       />
@@ -250,11 +291,33 @@ export function AddNewEventDrawer({
                         </FormErrorMessage>
                       )}
                     </FormControl>
-                  </GridItem>
-                </Grid>
-              </div>
-            );
-          })}
+
+                    <div className={'flex items-end'}>
+                      <Button
+                        onClick={() => remove(index)}
+                        disabled={fields.length === 1}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </FormControl>
+
+          <FormControl isRequired isInvalid={!!errors.passPoint}>
+            <FormLabel>Pass point</FormLabel>
+            <Input
+              placeholder={'Input your pass point ...'}
+              type={'number'}
+              {...register('passPoint')}
+            />
+
+            {errors.passPoint && (
+              <FormErrorMessage>{errors.passPoint.message}</FormErrorMessage>
+            )}
+          </FormControl>
 
           <FormControl isInvalid={!!errors.file}>
             <FormLabel htmlFor="file">File</FormLabel>

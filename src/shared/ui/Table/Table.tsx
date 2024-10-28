@@ -55,6 +55,7 @@ export function Table<T extends object>({
               key={rowKey}
               {...rowProps}
               backgroundColor={'white'}
+              _hover={{ backgroundColor: 'gray.200' }}
               onClick={rowClickHandler(row)}
               cursor={onRowClick ? 'pointer' : 'auto'}
             >
@@ -63,7 +64,7 @@ export function Table<T extends object>({
                 const cellInstance = cell.render('Cell');
 
                 return (
-                  <Td key={keyCell} {...cellProps}>
+                  <Td key={keyCell} {...cellProps} whiteSpace={'normal'}>
                     {cellInstance ? (
                       cellInstance
                     ) : (

@@ -1,13 +1,15 @@
 import { Page } from '../../../shared/models';
 import { DateRange } from '../../../shared/models/filter.api';
+import { User } from '../../user/api';
 
 export type RecruitmentEvent = {
   id: number;
   name: string;
   location: string;
+  passPoint: number;
   startDate: string;
   endDate: string;
-  examiners: string[];
+  examiners: User[];
 };
 
 export type Employee = {
@@ -16,12 +18,14 @@ export type Employee = {
   point: number;
   myVotedPoint: number;
   myNote: string;
+  [key: string]: unknown;
 };
 
 export type RecruitmentEventDetail = {
   id: number;
   name: string;
   location: string;
+  passPoint: number;
   startDate: string;
   endDate: string;
   authorId: string;
@@ -56,6 +60,7 @@ export type ScoreStandard = {
 export type CreateRecruitmentEventPayload = {
   name: string;
   location: string;
+  passPoint: number;
   examinerIds: string[];
   recruitmentRange: DateRange;
   scoringStandards: ScoreStandard[];
