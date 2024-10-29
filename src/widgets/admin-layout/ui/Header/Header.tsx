@@ -1,5 +1,7 @@
 import React from 'react';
 import {
+  Avatar,
+  AvatarBadge,
   Box,
   Breadcrumb,
   BreadcrumbItem,
@@ -39,10 +41,6 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
     {
       text: 'Profile',
       link: '/profile'
-    },
-    {
-      text: 'Settings',
-      link: '/settings'
     },
     {
       text: 'Log Out',
@@ -96,7 +94,7 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
         >
           <Menu>
             <MenuButton cursor="pointer">
-              <FontAwesomeIcon icon={faUser} className="text-body" />
+              <Avatar size={'sm'} />
             </MenuButton>
             <MenuList>
               {userActionItems.map(item => (

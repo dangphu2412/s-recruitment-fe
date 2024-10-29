@@ -11,6 +11,7 @@ export type ScoreStandard = {
 export type CreateRecruitmentEventFormModal = {
   name: string;
   location: string;
+  passPoint: number;
   recruitmentRange: DateRange;
   examiners: BoxItem[];
   scoreStandards: ScoreStandard[];

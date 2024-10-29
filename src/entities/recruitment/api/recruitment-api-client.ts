@@ -27,6 +27,7 @@ export const recruitmentApiClient: RecruitmentApiClient = {
 
     formData.append('name', payload.name);
     formData.append('location', payload.location);
+    formData.append('passPoint', payload.passPoint);
     formData.append(
       'recruitmentRange',
       JSON.stringify(payload.recruitmentRange)

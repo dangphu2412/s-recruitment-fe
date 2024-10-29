@@ -17,10 +17,7 @@ import {
   ModalOverlay,
   Text
 } from '@chakra-ui/react';
-import {
-  Employee,
-  ScoringStandard
-} from '../../../../../entities/recruitment/api/recruitment.usecase';
+import { ScoringStandard } from '../../../../../entities/recruitment/api/recruitment.usecase';
 import { useQueryClient } from 'react-query';
 import { Controller, useForm } from 'react-hook-form';
 import { useNotify } from '../../../../../shared/models/notify';
@@ -36,10 +33,14 @@ import {
 } from '../../../../../entities/recruitment/models/local-editor';
 import { useUserSession } from '../../../../../entities/user/models';
 
-type Props = Employee & {
+type Props = {
+  id: string;
   standards: ScoringStandard[];
   eventId: number;
+  myVotedPoint: number;
+  myNote: string;
   onClose: () => void;
+  [key: string]: unknown;
 };
 
 type FormInputs = {
@@ -123,7 +124,7 @@ export function EmployeeMarkerModal({
               <AccordionButton>Click to view detail</AccordionButton>
               <AccordionPanel pb={4}>
                 <Grid templateColumns="repeat(2, 1fr)" gap={2}>
-                  {Object.keys(data).map(prop => {
+                  {Object.keys(data as Record<string, unknown>).map(prop => {
                     return (
                       <div key={prop}>
                         <TitleLabel>{prop}</TitleLabel>

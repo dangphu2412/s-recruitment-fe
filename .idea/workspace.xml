@@ -5,21 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
-      <change afterPath="$PROJECT_DIR$/src/entities/recruitment/models/local-editor.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/widgets/text-editor/TextEditor.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/recruitment/employee-table/models/employee-table.model.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/recruitment/employee-table/ui/EmployeeTable.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/models/search-model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment-api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment-api-client.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment.usecase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment.usecase.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/recruitment/models/recruitment-event.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/models/recruitment-event.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/user/api/user-api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user/api/user-api-client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/add-post/ui/AddPostForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/posts/add-post/ui/AddPostForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/add-post/ui/EditPostForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/posts/add-post/ui/EditPostForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/add-post/ui/TextEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/text-editor/TextEditor.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/AddNewEventDrawer/AddNewEventDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/AddNewEventDrawer/AddNewEventDrawer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/recruitment/employee-maker/ui/EmployeeMarker/EmployeeMarkerModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/employee-maker/ui/EmployeeMarker/EmployeeMarkerModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-detail-view/ui/UserDetailSection/UserDetailSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-detail-view/ui/UserDetailSection/UserDetailSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/models/recruitment-event-table.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/models/recruitment-event-table.model.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/ui/RecruitmentEventTable/RecruitmentEventTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/ui/RecruitmentEventTable/RecruitmentEventTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UsernameCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UsernameCell.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/recruitments/[eventId].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/recruitments/[eventId].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/ui/Header/ContentHeader/ContentHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Header/ContentHeader/ContentHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/ui/Table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Table/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/widgets/admin-layout/ui/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/admin-layout/ui/Header/Header.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +59,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;fix/remove-package-manager&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/features/user-managements/search-users/ui/SearchUsersContainer&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
@@ -169,11 +170,11 @@
     </configuration>
     <list>
       <item itemvalue="npm.backend" />
-      <item itemvalue="npm.start" />
       <item itemvalue="npm.build" />
       <item itemvalue="npm.dev" />
       <item itemvalue="npm.lint" />
       <item itemvalue="npm.pretty" />
+      <item itemvalue="npm.start" />
     </list>
     <recent_temporary>
       <list>
