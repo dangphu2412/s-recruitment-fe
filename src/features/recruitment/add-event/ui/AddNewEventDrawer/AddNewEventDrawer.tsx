@@ -12,6 +12,7 @@ import {
   Grid,
   GridItem,
   Input,
+  Text,
   Textarea
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,42 +24,26 @@ import {
   useForm
 } from 'react-hook-form';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
-import { array, number, object, string } from 'yup';
-import { CreateRecruitmentEventPayload } from '../../../../../entities/recruitment/api/recruitment.usecase';
 import {
-  CreateRecruitmentEventFormModal,
   RECRUITMENT_EVENT_QUERY_KEY,
   useCreateRecruitmentEventMutation
 } from 'src/entities/recruitment/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useQueryClient } from 'react-query';
 import { useNotify } from 'src/shared/models/notify';
-import { UserCombobox } from '../../../../../entities/user/ui/UserCombobox/UserCombobox';
+import { UserCombobox } from 'src/entities/user/ui/UserCombobox/UserCombobox';
+import {
+  mapFormToApiRequest,
+  newEventValidationSchema,
+  NewRecruitmentEventFormModal
+} from '../../models/new-event.model';
 
 type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 const defaultScoreStandard = {
   point: 0,
   standard: ''
 };
-
-const validationSchema = object({
-  name: string().required('Name must not empty'),
-  location: string()
-    .required('Location must not empty')
-    .max(50, 'Max 50 characters allowed'),
-  recruitmentRange: object({
-    fromDate: string().required('From date is required for this event'),
-    toDate: string().required('To date is required for this event')
-  }),
-  examiners: array().min(1, 'At least 1 examiner must be selected'),
-  scoreStandards: array(
-    object({
-      point: number().required('Need to fill point'),
-      standard: string().required('Standard is required')
-    })
-  )
-});
 
 export function AddNewEventDrawer({
   onClose
@@ -67,17 +52,18 @@ export function AddNewEventDrawer({
     handleSubmit,
     register,
     formState: { errors },
-    control
-  } = useForm<CreateRecruitmentEventFormModal>({
+    control,
+    reset
+  } = useForm<NewRecruitmentEventFormModal>({
     mode: 'onChange',
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(newEventValidationSchema),
     defaultValues: {
       name: '',
       examiners: [],
       scoreStandards: [defaultScoreStandard]
     }
   });
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: 'scoreStandards'
   });
@@ -90,26 +76,16 @@ export function AddNewEventDrawer({
     control
   });
 
-  const saveUser: SubmitHandler<
-    CreateRecruitmentEventFormModal
-  > = formInputs => {
-    const payload: CreateRecruitmentEventPayload = {
-      examinerIds: formInputs.examiners.map(item => item.value),
-      recruitmentRange: {
-        fromDate: formInputs.recruitmentRange.fromDate,
-        toDate: formInputs.recruitmentRange.toDate
-      },
-      location: formInputs.location,
-      name: formInputs.name,
-      scoringStandards: formInputs.scoreStandards
-    };
-
-    createRecruitmentEvent(payload, {
+  const saveUser: SubmitHandler<NewRecruitmentEventFormModal> = formInputs => {
+    createRecruitmentEvent(mapFormToApiRequest(formInputs), {
       onSuccess: () => {
         notify({
-          title: 'Create event success'
+          title: 'Create event success',
+          status: 'success'
         });
         queryClient.refetchQueries(RECRUITMENT_EVENT_QUERY_KEY);
+        reset();
+        onClose();
       }
     });
   };
@@ -123,7 +99,7 @@ export function AddNewEventDrawer({
 
         <DrawerHeader>Create new S-Group Recruitment Event</DrawerHeader>
 
-        <DrawerBody className="space-y-4">
+        <DrawerBody className="space-y-6">
           <FormControl isRequired isInvalid={!!errors.name}>
             <FormLabel>Name</FormLabel>
             <Input
@@ -199,21 +175,31 @@ export function AddNewEventDrawer({
             </GridItem>
           </Grid>
 
-          <Button onClick={() => append(defaultScoreStandard)}>
-            <FontAwesomeIcon icon={faPlusCircle} />
-          </Button>
-          {fields.map((field, index) => {
-            return (
-              <div key={field.id}>
-                <Grid templateColumns="repeat(6, 1fr)">
-                  <GridItem colSpan={1}>
+          <FormControl isRequired className={'space-y-2'}>
+            <div className={'flex justify-between'}>
+              <FormLabel>Standard</FormLabel>
+
+              <Button
+                colorScheme={'pink'}
+                onClick={() => append(defaultScoreStandard)}
+              >
+                <FontAwesomeIcon icon={faPlusCircle} />
+              </Button>
+            </div>
+
+            {fields.map((field, index) => {
+              return (
+                <div key={field.id}>
+                  <div className="flex gap-2">
                     <FormControl
                       isRequired
                       isInvalid={!!errors.scoreStandards?.[index]?.point}
+                      className="space-y-2"
                     >
-                      <FormLabel>Point</FormLabel>
+                      <Text fontSize={'sm'}>Point</Text>
                       <Input
-                        placeholder={'Input your location organizing ...'}
+                        className={'max-w-12'}
+                        placeholder={'Input your point ...'}
                         type="number"
                         {...register(`scoreStandards.${index}.point`)}
                       />
@@ -224,16 +210,16 @@ export function AddNewEventDrawer({
                         </FormErrorMessage>
                       )}
                     </FormControl>
-                  </GridItem>
 
-                  <GridItem colSpan={5}>
                     <FormControl
                       isRequired
                       isInvalid={!!errors.scoreStandards?.[index]?.standard}
+                      className="space-y-2"
                     >
-                      <FormLabel>Standard</FormLabel>
+                      <Text fontSize={'sm'}>Standard</Text>
+
                       <Textarea
-                        placeholder={'Input your location organizing ...'}
+                        placeholder={'Input your standard ...'}
                         rows={1}
                         {...register(`scoreStandards.${index}.standard`)}
                       />
@@ -244,11 +230,43 @@ export function AddNewEventDrawer({
                         </FormErrorMessage>
                       )}
                     </FormControl>
-                  </GridItem>
-                </Grid>
-              </div>
-            );
-          })}
+
+                    <div className={'flex items-end'}>
+                      <Button
+                        onClick={() => remove(index)}
+                        disabled={fields.length === 1}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </FormControl>
+
+          <FormControl isRequired isInvalid={!!errors.passPoint}>
+            <FormLabel>Pass point</FormLabel>
+            <Input
+              placeholder={'Input your pass point ...'}
+              type={'number'}
+              {...register('passPoint')}
+            />
+
+            {errors.passPoint && (
+              <FormErrorMessage>{errors.passPoint.message}</FormErrorMessage>
+            )}
+          </FormControl>
+
+          <FormControl isInvalid={!!errors.file}>
+            <FormLabel htmlFor="file">File</FormLabel>
+
+            <Input type={'file'} {...register('file')} />
+
+            {errors.file && (
+              <FormErrorMessage>{errors.file?.message}</FormErrorMessage>
+            )}
+          </FormControl>
         </DrawerBody>
 
         <DrawerFooter>

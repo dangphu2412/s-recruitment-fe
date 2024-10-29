@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Avatar,
   Box,
   Breadcrumb,
   BreadcrumbItem,
@@ -11,8 +12,6 @@ import {
   MenuList,
   Text
 } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
@@ -39,10 +38,6 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
     {
       text: 'Profile',
       link: '/profile'
-    },
-    {
-      text: 'Settings',
-      link: '/settings'
     },
     {
       text: 'Log Out',
@@ -96,7 +91,7 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
         >
           <Menu>
             <MenuButton cursor="pointer">
-              <FontAwesomeIcon icon={faUser} className="text-body" />
+              <Avatar size={'sm'} />
             </MenuButton>
             <MenuList>
               {userActionItems.map(item => (

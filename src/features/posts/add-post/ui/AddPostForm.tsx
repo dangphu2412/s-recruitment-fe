@@ -11,7 +11,7 @@ import { FormLabel } from 'src/shared/ui';
 import classes from './AddPostForm.module.scss';
 import { useRouter } from 'next/router';
 import { useNotify } from '../../../../shared/models/notify';
-import { TextEditor } from './TextEditor';
+import { TextEditor } from '../../../../widgets/text-editor/TextEditor';
 import { useMutateCreatePost } from '../../../../entities/posts/models';
 import { MultipleCombobox } from '../../../../shared/ui/Combobox/MultipleCombobox';
 import { BoxItem } from '../../../../shared/models/combobox.api';
@@ -173,9 +173,7 @@ export function AddPostForm(): ReactElement {
             <Controller
               control={control}
               render={({ field }) => {
-                return (
-                  <TextEditor value={field.value} onChange={field.onChange} />
-                );
+                return <TextEditor onChange={field.onChange} />;
               }}
               name={'content'}
             />

@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,7 +42,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "fix/remove-package-manager",
+    "git-widget-placeholder": "feature/enhance-filter-employees",
     "last_opened_file_path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/features/user-managements/search-users/ui/SearchUsersContainer",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
@@ -61,7 +59,7 @@
     "npm.start.executor": "Run",
     "prettierjs.PrettierConfiguration.Package": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/prettier",
     "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "ts.external.directory.path": "/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -74,6 +72,7 @@
       <recent name="$PROJECT_DIR$/src/entities" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/widgets/text-editor" />
       <recent name="$PROJECT_DIR$/src/features/recruitment/add-event/ui" />
       <recent name="$PROJECT_DIR$/src/features/user-managements/add-user-groups/ui" />
       <recent name="$PROJECT_DIR$/src/pages/users" />
@@ -89,7 +88,7 @@
       <recent name="$PROJECT_DIR$/src/shared" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.start">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="backend" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/../member-management-be/package.json" />
       <command value="run" />
@@ -148,23 +147,23 @@
       <scripts>
         <script value="start" />
       </scripts>
-      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v20.15.0/bin/node" />
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.19.1/bin/node" />
       <envs />
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="npm.backend" />
-      <item itemvalue="npm.start" />
       <item itemvalue="npm.build" />
       <item itemvalue="npm.dev" />
       <item itemvalue="npm.lint" />
       <item itemvalue="npm.pretty" />
+      <item itemvalue="npm.start" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
         <item itemvalue="npm.start" />
         <item itemvalue="npm.build" />
-        <item itemvalue="npm.dev" />
         <item itemvalue="npm.pretty" />
         <item itemvalue="npm.lint" />
       </list>

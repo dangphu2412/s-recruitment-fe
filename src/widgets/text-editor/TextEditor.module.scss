@@ -1,0 +1,5 @@
+.container {
+  :global(.ql-container) {
+    @apply min-h-[300px];
+  }
+}

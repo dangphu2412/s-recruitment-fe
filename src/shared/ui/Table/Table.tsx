@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode } from 'react';
-import { Column, Row, useTable } from 'react-table';
+import { CellPropGetter, Column, Row, useTable } from 'react-table';
 import {
   Table as BaseTable,
   TableCaption,
@@ -19,6 +19,7 @@ type Props<D extends object> = {
   items?: D[];
   columns: Column<D>[];
   isLoading?: boolean;
+  cellPropGetter?: CellPropGetter<D>;
   onRowClick?: (row: Row<D>) => void;
 };
 
@@ -27,7 +28,8 @@ export function Table<T extends object>({
   columns,
   isLoading = false,
   onRowClick,
-  caption
+  caption,
+  cellPropGetter
 }: Props<T>): ReactElement {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: items });
@@ -55,11 +57,13 @@ export function Table<T extends object>({
               key={rowKey}
               {...rowProps}
               backgroundColor={'white'}
+              _hover={{ backgroundColor: 'gray.200' }}
               onClick={rowClickHandler(row)}
               cursor={onRowClick ? 'pointer' : 'auto'}
             >
               {row.cells.map(cell => {
-                const { key: keyCell, ...cellProps } = cell.getCellProps();
+                const { key: keyCell, ...cellProps } =
+                  cell.getCellProps(cellPropGetter);
                 const cellInstance = cell.render('Cell');
 
                 return (

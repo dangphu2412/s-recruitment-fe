@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { Text } from '@chakra-ui/react';
 import { TitleLabel } from '../../Text/TitleLabel';
 
 type Props = {
-  main: string;
-  brief: string;
+  main: ReactNode;
+  brief: ReactNode;
 };
 
 export function ContentHeader({ main, brief }: Props): ReactElement {
