@@ -1,7 +1,6 @@
 import { Input, Text } from '@chakra-ui/react';
 import { Table } from '../../../../shared/ui';
-import React, { useMemo, useState } from 'react';
-import { useDebounceValue } from '../../../../shared/models/debounce';
+import React, { useMemo } from 'react';
 import { Employee } from '../../../../entities/recruitment/api/recruitment.usecase';
 import {
   EmployeeColumnView,
@@ -9,6 +8,8 @@ import {
   useEmployeeColumns
 } from '../models/employee-table.model';
 import { useSearch } from '../../../../shared/models/search-model';
+import { EmployeeFilter } from './EmployeeFilter';
+import { useEventDetailStore } from '../../../../entities/recruitment/models/event-detail.store';
 
 type EmployeeTableProps = {
   employees: Employee[];
@@ -22,11 +23,17 @@ export function EmployeeTable({
   onSelect
 }: EmployeeTableProps) {
   const { search, setSearch } = useSearch();
+  const voteStatus = useEventDetailStore(state => state.voteStatus);
 
   const columns = useEmployeeColumns({ employees, passPoint });
   const employeeItems = useMemo(() => {
-    return mapToEmployeeTable(employees, search);
-  }, [employees, search]);
+    return mapToEmployeeTable({
+      employees,
+      searchValue: search,
+      voteStatus,
+      passPoint
+    });
+  }, [passPoint, employees, search, voteStatus]);
 
   return (
     <div className={'space-y-3'}>
@@ -39,6 +46,8 @@ export function EmployeeTable({
           placeholder={'Search employee ...'}
           onChange={e => setSearch(e.target.value)}
         />
+
+        <EmployeeFilter />
       </div>
 
       <Table
@@ -46,6 +55,9 @@ export function EmployeeTable({
         columns={columns}
         items={employeeItems}
         onRowClick={row => onSelect(row.original)}
+        cellPropGetter={{
+          className: 'whitespace-normal'
+        }}
       />
     </div>
   );
