@@ -23,6 +23,9 @@ export function RecruitmentEventTable(): ReactElement {
         onRowClick={row => {
           push(`/recruitments/${row.original.id}`);
         }}
+        cellPropGetter={{
+          className: 'whitespace-normal'
+        }}
       />
     </div>
   );

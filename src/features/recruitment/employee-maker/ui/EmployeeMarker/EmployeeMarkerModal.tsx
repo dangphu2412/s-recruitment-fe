@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import {
   Accordion,
   AccordionButton,
+  AccordionIcon,
   AccordionItem,
   AccordionPanel,
   Button,
@@ -121,7 +122,10 @@ export function EmployeeMarkerModal({
 
           <Accordion allowToggle>
             <AccordionItem>
-              <AccordionButton>Click to view detail</AccordionButton>
+              <AccordionButton>
+                <span className={'flex-1 text-left'}>View detail</span>
+                <AccordionIcon />
+              </AccordionButton>
               <AccordionPanel pb={4}>
                 <Grid templateColumns="repeat(2, 1fr)" gap={2}>
                   {Object.keys(data as Record<string, unknown>).map(prop => {
@@ -129,7 +133,9 @@ export function EmployeeMarkerModal({
                       <div key={prop}>
                         <TitleLabel>{prop}</TitleLabel>
                         <div>
-                          {(data as Record<string, string>)[prop] as string}
+                          {(
+                            (data as Record<string, string>)[prop] as string
+                          ).toString()}
                         </div>
                       </div>
                     );

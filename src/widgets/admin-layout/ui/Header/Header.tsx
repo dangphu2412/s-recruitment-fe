@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Avatar,
-  AvatarBadge,
   Box,
   Breadcrumb,
   BreadcrumbItem,
@@ -13,8 +12,6 @@ import {
   MenuList,
   Text
 } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 import styles from './Header.module.scss';

@@ -50,7 +50,8 @@
     "redux": "^4.2.0",
     "redux-saga": "^1.2.1",
     "xlsx": "^0.18.5",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^5.0.0"
   },
   "devDependencies": {
     "@babel/node": "7.16.8",

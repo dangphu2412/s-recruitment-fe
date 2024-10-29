@@ -3,6 +3,7 @@ import { Column } from 'react-table';
 import { Employee } from '../../../../entities/recruitment/api/recruitment.usecase';
 import { Link, Text, Tooltip } from '@chakra-ui/react';
 import { htmlParser } from '../../../../shared/models/html-parser/html-parser';
+import { VoteStatus } from '../../../../entities/recruitment/configs/event.constant';
 
 type EmployeeColumnProps = {
   employees: Employee[];
@@ -114,25 +115,63 @@ export function useEmployeeColumns({
       },
       ...dynamicColumns
     ];
-  }, [data]);
+  }, [data, passPoint]);
 }
 
-export function mapToEmployeeTable(
-  employees: Employee[],
-  searchValue: string
-): EmployeeColumnView[] {
-  const filterSearchPredicate = searchValue
-    ? (employee: Employee) => {
-        const { data } = employee;
-        const values = Object.values(data);
-        return values.some(value => {
-          if (typeof value === 'string') {
-            return value.toLowerCase().includes(searchValue.toLowerCase());
-          }
-          return false;
-        });
+type EmployeeTableInput = {
+  employees: Employee[];
+  searchValue: string;
+  voteStatus: VoteStatus | null;
+  passPoint: number;
+};
+
+export function mapToEmployeeTable({
+  employees,
+  voteStatus,
+  searchValue,
+  passPoint
+}: EmployeeTableInput): EmployeeColumnView[] {
+  const searchPredicate = (employee: Employee) => {
+    const { data } = employee;
+    const values = Object.values(data);
+    return values.some(value => {
+      if (typeof value === 'string') {
+        return value.toLowerCase().includes(searchValue.toLowerCase());
       }
-    : null;
+      return false;
+    });
+  };
+
+  const voteStatusPredicate = (employee: Employee) => {
+    const { point } = employee;
+    if (voteStatus === VoteStatus.Passed) {
+      return point >= passPoint;
+    }
+    if (voteStatus === VoteStatus.Failed) {
+      return point < passPoint && point !== 0;
+    }
+    if (voteStatus === VoteStatus.NotVoted) {
+      return point === 0;
+    }
+    return true;
+  };
+
+  const filterSearchPredicate =
+    searchValue || voteStatus
+      ? (employee: Employee) => {
+          const predicates = [];
+
+          if (searchValue) {
+            predicates.push(searchPredicate(employee));
+          }
+
+          if (voteStatus) {
+            predicates.push(voteStatusPredicate(employee));
+          }
+
+          return predicates.every(Boolean);
+        }
+      : null;
   const mapper = (employee: Employee) => ({
     data: employee.data,
     id: employee.id,

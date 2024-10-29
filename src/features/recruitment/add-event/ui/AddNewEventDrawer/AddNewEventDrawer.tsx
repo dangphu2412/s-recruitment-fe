@@ -12,8 +12,8 @@ import {
   Grid,
   GridItem,
   Input,
-  Textarea,
-  Text
+  Text,
+  Textarea
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
@@ -24,10 +24,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
-import { array, mixed, number, object, string } from 'yup';
-import { CreateRecruitmentEventPayload } from '../../../../../entities/recruitment/api/recruitment.usecase';
 import {
-  CreateRecruitmentEventFormModal,
   RECRUITMENT_EVENT_QUERY_KEY,
   useCreateRecruitmentEventMutation
 } from 'src/entities/recruitment/models';
@@ -35,61 +32,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useQueryClient } from 'react-query';
 import { useNotify } from 'src/shared/models/notify';
-import { UserCombobox } from '../../../../../entities/user/ui/UserCombobox/UserCombobox';
+import { UserCombobox } from 'src/entities/user/ui/UserCombobox/UserCombobox';
+import {
+  mapFormToApiRequest,
+  newEventValidationSchema,
+  NewRecruitmentEventFormModal
+} from '../../models/new-event.model';
 
 type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 const defaultScoreStandard = {
   point: 0,
   standard: ''
 };
-
-const validationSchema = object({
-  name: string().required('Name must not empty'),
-  location: string()
-    .required('Location must not empty')
-    .max(50, 'Max 50 characters allowed'),
-  recruitmentRange: object({
-    fromDate: string().required('From date is required for this event'),
-    toDate: string().required('To date is required for this event')
-  }),
-  examiners: array().min(1, 'At least 1 examiner must be selected'),
-  scoreStandards: array(
-    object({
-      point: number()
-        .typeError('Point must not be empty')
-        .min(1, 'Min is 1')
-        .required('Need to fill point'),
-      standard: string().required('Standard is required')
-    })
-  ),
-  passPoint: number()
-    .typeError('Pass point must not be empty')
-    .min(1, 'Min must be greater than 0')
-    .test({
-      name: 'passPoint',
-      test: (value, context) => {
-        const { scoreStandards } =
-          context.parent as CreateRecruitmentEventFormModal;
-        const maxPoint = scoreStandards.reduce((acc, item) => {
-          return acc + item.point;
-        }, 0);
-
-        if (!value) {
-          return true;
-        }
-
-        if (value <= maxPoint) {
-          return true;
-        }
-
-        return context.createError({
-          message: `Pass point must be less than or equal to the total point: ${maxPoint}`
-        });
-      }
-    })
-    .required('Pass point is required'),
-  file: mixed().nullable().required()
-});
 
 export function AddNewEventDrawer({
   onClose
@@ -100,9 +54,9 @@ export function AddNewEventDrawer({
     formState: { errors },
     control,
     reset
-  } = useForm<CreateRecruitmentEventFormModal>({
+  } = useForm<NewRecruitmentEventFormModal>({
     mode: 'onChange',
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(newEventValidationSchema),
     defaultValues: {
       name: '',
       examiners: [],
@@ -122,23 +76,8 @@ export function AddNewEventDrawer({
     control
   });
 
-  const saveUser: SubmitHandler<
-    CreateRecruitmentEventFormModal
-  > = formInputs => {
-    const payload: CreateRecruitmentEventPayload = {
-      examinerIds: formInputs.examiners.map(item => item.value),
-      recruitmentRange: {
-        fromDate: formInputs.recruitmentRange.fromDate,
-        toDate: formInputs.recruitmentRange.toDate
-      },
-      location: formInputs.location,
-      name: formInputs.name,
-      scoringStandards: formInputs.scoreStandards,
-      file: formInputs.file[0],
-      passPoint: +formInputs.passPoint
-    };
-
-    createRecruitmentEvent(payload, {
+  const saveUser: SubmitHandler<NewRecruitmentEventFormModal> = formInputs => {
+    createRecruitmentEvent(mapFormToApiRequest(formInputs), {
       onSuccess: () => {
         notify({
           title: 'Create event success',
