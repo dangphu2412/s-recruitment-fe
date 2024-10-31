@@ -9,7 +9,6 @@ import {
 } from '../models/employee-table.model';
 import { useSearch } from '../../../../shared/models/search-model';
 import { EmployeeFilter } from './EmployeeFilter';
-import { useEventDetailStore } from '../../../../entities/recruitment/models/event-detail.store';
 
 type EmployeeTableProps = {
   employees: Employee[];
@@ -23,17 +22,13 @@ export function EmployeeTable({
   onSelect
 }: EmployeeTableProps) {
   const { search, setSearch } = useSearch();
-  const voteStatus = useEventDetailStore(state => state.voteStatus);
-
   const columns = useEmployeeColumns({ employees, passPoint });
   const employeeItems = useMemo(() => {
     return mapToEmployeeTable({
       employees,
-      searchValue: search,
-      voteStatus,
-      passPoint
+      searchValue: search
     });
-  }, [passPoint, employees, search, voteStatus]);
+  }, [employees, search]);
 
   return (
     <div className={'space-y-3'}>

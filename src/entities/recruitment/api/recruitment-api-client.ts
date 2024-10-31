@@ -1,5 +1,6 @@
 import {
   CreateRecruitmentEventPayload,
+  GetEventDetailRequest,
   MarkEmployeePayload,
   RecruitmentApiClient,
   RecruitmentEvent,
@@ -7,6 +8,7 @@ import {
 } from './recruitment.usecase';
 import { authorizedHttpClient } from '../../../shared/api';
 import { Page } from '../../../shared/models';
+import { AggregateRoot } from '../../../shared/models/aggregate-model';
 
 export const recruitmentApiClient: RecruitmentApiClient = {
   markEmployeePoint(payload: MarkEmployeePayload): Promise<void> {
@@ -16,10 +18,16 @@ export const recruitmentApiClient: RecruitmentApiClient = {
       data: payload
     });
   },
-  getEventDetail(id: number): Promise<RecruitmentEventDetail> {
+  getEventDetail({
+    id,
+    voteStatus
+  }: GetEventDetailRequest): Promise<RecruitmentEventDetail> {
     return authorizedHttpClient.request({
       method: 'get',
-      url: `/recruitments/events/${id}`
+      url: `/recruitments/events/${id}`,
+      params: {
+        voteStatus
+      }
     });
   },
   createEvent(payload: CreateRecruitmentEventPayload): Promise<void> {
@@ -27,7 +35,7 @@ export const recruitmentApiClient: RecruitmentApiClient = {
 
     formData.append('name', payload.name);
     formData.append('location', payload.location);
-    formData.append('passPoint', payload.passPoint);
+    formData.append('passPoint', payload.passPoint.toString());
     formData.append(
       'recruitmentRange',
       JSON.stringify(payload.recruitmentRange)
