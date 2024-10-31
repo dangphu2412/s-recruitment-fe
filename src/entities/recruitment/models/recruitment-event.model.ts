@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { recruitmentApiClient } from '../api';
 import { RecruitmentEventDetail } from '../api/recruitment.usecase';
+import { AggregateRoot } from '../../../shared/models/aggregate-model';
 
 export function useCreateRecruitmentEventMutation() {
   const { mutate } = useMutation('useCreateRecruitmentEventMutation', {
@@ -25,10 +26,16 @@ export function useMarkEmployeeMutation() {
 export const RECRUITMENT_EVENT_DETAIL_QUERY_KEY =
   'useQueryRecruitmentEventDetail';
 
-export function useQueryRecruitmentEventDetail(id: number) {
-  const { data } = useQuery([RECRUITMENT_EVENT_DETAIL_QUERY_KEY, id], {
-    queryFn: () => recruitmentApiClient.getEventDetail(id),
-    enabled: !isNaN(id)
+type QueryRecruitmentEventDetailProps = AggregateRoot<number> & {
+  voteStatus: string | null;
+};
+
+export function useQueryRecruitmentEventDetail(
+  query: QueryRecruitmentEventDetailProps
+) {
+  const { data } = useQuery([RECRUITMENT_EVENT_DETAIL_QUERY_KEY, query], {
+    queryFn: () => recruitmentApiClient.getEventDetail(query),
+    enabled: !isNaN(query.id)
   });
 
   return {

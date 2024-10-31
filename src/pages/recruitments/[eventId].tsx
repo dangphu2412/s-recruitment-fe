@@ -10,12 +10,17 @@ import { useQueryRecruitmentEventDetail } from 'src/entities/recruitment/models'
 import { BackButton } from '../../shared/ui/Button/BackButton';
 import { EmployeeTable } from '../../features/recruitment/employee-table/ui/EmployeeTable';
 import { EmployeeColumnView } from '../../features/recruitment/employee-table/models/employee-table.model';
+import { useEventDetailStore } from '../../entities/recruitment/models/event-detail.store';
 
 export default function RecruitmentEventDetailPage(): ReactElement {
   const { query } = useRouter();
   const eventId = +normalizeParam(query.eventId);
+  const voteStatus = useEventDetailStore(state => state.voteStatus);
 
-  const { recruitmentEventDetail } = useQueryRecruitmentEventDetail(eventId);
+  const { recruitmentEventDetail } = useQueryRecruitmentEventDetail({
+    id: eventId,
+    voteStatus
+  });
   const {
     name,
     location,

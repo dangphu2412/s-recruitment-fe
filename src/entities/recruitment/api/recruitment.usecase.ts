@@ -1,6 +1,7 @@
 import { Page } from '../../../shared/models';
 import { DateRange } from '../../../shared/models/filter.api';
 import { User } from '../../user/api';
+import { AggregateRoot } from '../../../shared/models/aggregate-model';
 
 export type RecruitmentEvent = {
   id: number;
@@ -75,9 +76,13 @@ export type MarkEmployeePayload = {
   note: string;
 };
 
+export type GetEventDetailRequest = AggregateRoot<number> & {
+  voteStatus: string | null;
+};
+
 export type RecruitmentApiClient = {
   getEvents(): Promise<Page<RecruitmentEvent>>;
-  getEventDetail(id: number): Promise<RecruitmentEventDetail>;
+  getEventDetail(query: GetEventDetailRequest): Promise<RecruitmentEventDetail>;
   createEvent(payload: CreateRecruitmentEventPayload): Promise<void>;
   markEmployeePoint(payload: MarkEmployeePayload): Promise<void>;
 };
