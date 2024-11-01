@@ -1,19 +1,38 @@
-import { useQueryUserProfile } from '../../../../../entities/user/models';
+import {
+  QUERY_USER_DETAIL_KEY,
+  useMutateUpdateUser,
+  useQueryUserProfile
+} from '../../../../../entities/user/models';
 import {
   Box,
   Button,
   FormControl,
+  FormErrorMessage,
   Heading,
   Input,
+  Select,
   SkeletonCircle,
   SkeletonText,
   Tag
 } from '@chakra-ui/react';
-import { FormLabel } from '../../../../../shared/ui';
-import { formatDate } from '../../../../../shared/models/utils/date.utils';
+import { ContentHeader, FormLabel } from '../../../../../shared/ui';
 import React from 'react';
 import NotFound from 'next/dist/client/components/not-found-error';
 import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import {
+  EditUserForm,
+  mapFormToEditUserDto,
+  mapUserDetailToEditForm
+} from '../../models/edit-user.model';
+import { ContentHeaderLayout } from '../../../../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
+import { HeaderActionGroup } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import {
+  useDepartments,
+  usePeriods
+} from '../../../../../entities/master-data/useMasteData';
+import { useNotify } from '../../../../../shared/models/notify';
+import { useQueryClient } from 'react-query';
 
 type Props = {
   userId: string;
@@ -22,9 +41,38 @@ type Props = {
 export function UserDetailSection({ userId }: Props) {
   const { userDetail, isLoading } = useQueryUserProfile(userId);
   const { push } = useRouter();
+  const notify = useNotify();
+  const queryClient = useQueryClient();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<EditUserForm>({
+    values: userDetail
+      ? mapUserDetailToEditForm(userDetail)
+      : ({} as EditUserForm)
+  });
+  const { data: domains } = useDepartments();
+  const { data: periods } = usePeriods();
+  const { updateUser } = useMutateUpdateUser();
 
   function handleNavigateToRoleSettings() {
     push(`/users/${userId}/role-settings`);
+  }
+
+  function handleEdit(inputs: EditUserForm) {
+    updateUser(mapFormToEditUserDto(userId, inputs), {
+      onSuccess: () => {
+        notify({
+          title: 'User updated',
+          status: 'success'
+        });
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_USER_DETAIL_KEY, userId]
+        });
+      }
+    });
   }
 
   if (isLoading) {
@@ -43,22 +91,31 @@ export function UserDetailSection({ userId }: Props) {
   return (
     <div className={'space-y-4'}>
       <div className={'space-y-4'}>
-        <Heading size="sm">User Information</Heading>
+        <ContentHeaderLayout>
+          <ContentHeader
+            main={`Profile of ${userDetail.fullName}`}
+            brief={'User information'}
+          />
+
+          <HeaderActionGroup>
+            <Button onClick={handleSubmit(handleEdit)}>Save</Button>
+          </HeaderActionGroup>
+        </ContentHeaderLayout>
 
         <div className={'grid grid-cols-2 gap-4'}>
           <FormControl>
             <FormLabel>Username</FormLabel>
-            <Input readOnly value={userDetail.username} />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Full name</FormLabel>
-            <Input readOnly value={userDetail.fullName} />
+            <Input readOnly {...register('username')} />
           </FormControl>
 
           <FormControl>
             <FormLabel>Email</FormLabel>
-            <Input readOnly value={userDetail.email} />
+            <Input readOnly {...register('email')} />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Full name</FormLabel>
+            <Input {...register('fullName')} />
           </FormControl>
 
           <FormControl>
@@ -66,44 +123,51 @@ export function UserDetailSection({ userId }: Props) {
             <Input type={'date'} readOnly value={userDetail.birthday} />
           </FormControl>
 
-          <FormControl>
-            <FormLabel>Domain</FormLabel>
-            <Input
-              readOnly
-              value={
-                userDetail.domain ? userDetail.domain?.name : 'No information'
-              }
-            />
+          <FormControl isInvalid={!!errors.domain}>
+            <FormLabel htmlFor="create-user-type">Domain</FormLabel>
+
+            <Select placeholder="Select domain" {...register('domain')}>
+              {domains?.map(domain => {
+                return (
+                  <option key={domain.id} value={domain.id}>
+                    {domain.name}
+                  </option>
+                );
+              })}
+            </Select>
+
+            {errors.domain && (
+              <FormErrorMessage>{errors.domain?.message}</FormErrorMessage>
+            )}
           </FormControl>
 
-          <FormControl>
-            <FormLabel>Period</FormLabel>
-            <Input
-              readOnly
-              value={
-                userDetail.period ? userDetail.period?.name : 'No information'
-              }
-            />
+          <FormControl isInvalid={!!errors.period}>
+            <FormLabel htmlFor="create-user-type">Period</FormLabel>
+
+            <Select placeholder="Select period" {...register('period')}>
+              {periods?.map(period => {
+                return (
+                  <option key={period.id} value={period.id}>
+                    {period.name}
+                  </option>
+                );
+              })}
+            </Select>
+
+            {errors.period && (
+              <FormErrorMessage>{errors.period?.message}</FormErrorMessage>
+            )}
           </FormControl>
 
           <FormControl>
             <FormLabel>Phone</FormLabel>
-            <Input
-              readOnly
-              value={userDetail.phoneNumber ?? 'No information'}
-            />
+
+            <Input {...register('phoneNumber')} type={'number'} />
           </FormControl>
 
           <FormControl>
             <FormLabel>Birthday</FormLabel>
-            <Input
-              readOnly
-              value={
-                userDetail.birthday
-                  ? formatDate(new Date(userDetail.birthday))
-                  : 'No information'
-              }
-            />
+            <Input {...register('birthday')} type="date" />
           </FormControl>
         </div>
       </div>

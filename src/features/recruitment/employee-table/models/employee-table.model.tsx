@@ -67,7 +67,7 @@ export function useEmployeeColumns({
           if (props.value.toString().startsWith('http')) {
             return (
               <p className={'max-w-[12rem]'}>
-                <Link href={props.value} color="teal.500">
+                <Link href={props.value} target="_blank" color="teal.500">
                   {props.value}
                 </Link>
               </p>
@@ -85,7 +85,7 @@ export function useEmployeeColumns({
         accessor: 'point',
         // @ts-ignore
         Cell: props => {
-          const totalPoint = props.value;
+          const totalPoint = props.value ?? 0;
 
           if (0 === totalPoint) {
             return <Text>Not voted</Text>;
