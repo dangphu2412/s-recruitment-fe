@@ -555,3 +555,12 @@ export function useMutateUploadUserByFile() {
 
   return { uploadUserByFile: mutate, isLoading };
 }
+
+export function useMutateUpdateUser() {
+  const { mutate, isLoading } = useMutation({
+    mutationKey: 'MUTATION_UPDATE_USER',
+    mutationFn: userApiClient.updateUser
+  });
+
+  return { updateUser: mutate, isLoading };
+}

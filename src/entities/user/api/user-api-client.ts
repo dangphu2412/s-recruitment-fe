@@ -65,6 +65,15 @@ export type CreateUsersDto = {
   birthday?: string;
 };
 
+export type UpdateUserDto = {
+  id: string;
+  fullName: string;
+  domainId?: string;
+  periodId?: string;
+  birthday?: string;
+  phoneNumber?: string;
+};
+
 export type UploadUserDto = {
   file: File;
   periodId: number;
@@ -178,6 +187,13 @@ export const userApiClient = {
   upgradeMembers(data: UpgradeMemberDto) {
     return authorizedHttpClient.request({
       url: '/users/members',
+      method: 'patch',
+      data
+    });
+  },
+  updateUser(data: Partial<User>): Promise<void> {
+    return authorizedHttpClient.request({
+      url: `/users/${data.id}`,
       method: 'patch',
       data
     });
