@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { FullLoader } from '../../shared/ui/Loader/Full/FullLoader';
 import { Card, ContentHeader } from '../../shared/ui';
 import { RecruitmentEventTable } from '../../features/recruitment/recruitment-event-table';
 import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
@@ -13,7 +12,6 @@ import { AddNewEventDrawer } from '../../features/recruitment/add-event/ui/AddNe
 export default function RecruitmentOverviewPage(): ReactElement {
   return (
     <Card>
-      <FullLoader isLoading={false} />
       <ContentHeaderLayout>
         <ContentHeader
           main={'Recruitment management'}

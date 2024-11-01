@@ -89,7 +89,7 @@ export function AddPeriodDrawer({
   return (
     <>
       <DrawerOverlay />
-      <FullLoader isLoading={isLoading} />
+      {isLoading && <FullLoader />}
 
       <DrawerContent>
         <DrawerCloseButton />

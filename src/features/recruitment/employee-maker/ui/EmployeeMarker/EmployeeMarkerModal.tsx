@@ -94,10 +94,9 @@ export function EmployeeMarkerModal({
             title: 'Mark success',
             status: 'success'
           });
-          queryClient.refetchQueries([
-            RECRUITMENT_EVENT_DETAIL_QUERY_KEY,
-            eventId
-          ]);
+          queryClient.invalidateQueries({
+            queryKey: [RECRUITMENT_EVENT_DETAIL_QUERY_KEY]
+          });
           onClose();
         },
         onError: () => {

@@ -17,7 +17,7 @@ const LoginPage: NextPageWithLayout = () => {
         <title>Login page S-Group</title>
       </Head>
 
-      <FullLoader isLoading={isLoading} />
+      {isLoading && <FullLoader />}
 
       <Container maxW="container.xl">
         <Grid templateColumns="repeat(2, 1fr)" height="100vh">

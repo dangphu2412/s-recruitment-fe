@@ -4,6 +4,13 @@ export type HttpRequest = {
   data?: any;
   params?: any;
   headers?: any;
+  responseType?:
+    | 'arraybuffer'
+    | 'blob'
+    | 'document'
+    | 'json'
+    | 'text'
+    | 'stream';
 };
 
 export type HttpResponse<T = any> = T;

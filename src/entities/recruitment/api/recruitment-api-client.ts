@@ -1,5 +1,7 @@
 import {
   CreateRecruitmentEventPayload,
+  DownloadEmployeesPayload,
+  GetEventDetailRequest,
   MarkEmployeePayload,
   RecruitmentApiClient,
   RecruitmentEvent,
@@ -16,10 +18,16 @@ export const recruitmentApiClient: RecruitmentApiClient = {
       data: payload
     });
   },
-  getEventDetail(id: number): Promise<RecruitmentEventDetail> {
+  getEventDetail({
+    id,
+    voteStatus
+  }: GetEventDetailRequest): Promise<RecruitmentEventDetail> {
     return authorizedHttpClient.request({
       method: 'get',
-      url: `/recruitments/events/${id}`
+      url: `/recruitments/events/${id}`,
+      params: {
+        voteStatus
+      }
     });
   },
   createEvent(payload: CreateRecruitmentEventPayload): Promise<void> {
@@ -27,7 +35,7 @@ export const recruitmentApiClient: RecruitmentApiClient = {
 
     formData.append('name', payload.name);
     formData.append('location', payload.location);
-    formData.append('passPoint', payload.passPoint);
+    formData.append('passPoint', payload.passPoint.toString());
     formData.append(
       'recruitmentRange',
       JSON.stringify(payload.recruitmentRange)
@@ -52,6 +60,13 @@ export const recruitmentApiClient: RecruitmentApiClient = {
     return authorizedHttpClient.request({
       method: 'get',
       url: '/recruitments/events'
+    });
+  },
+  downloadEmployees(payload: DownloadEmployeesPayload): Promise<Blob> {
+    return authorizedHttpClient.request({
+      method: 'get',
+      url: `/recruitments/events/${payload.eventId}/download`,
+      responseType: 'blob'
     });
   }
 };
