@@ -94,7 +94,7 @@ export function AddUserDrawer({
   return (
     <>
       <DrawerOverlay />
-      <FullLoader isLoading={isLoading} />
+      {isLoading && <FullLoader />}
 
       <DrawerContent>
         <DrawerCloseButton />

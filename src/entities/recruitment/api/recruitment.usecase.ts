@@ -80,9 +80,14 @@ export type GetEventDetailRequest = AggregateRoot<number> & {
   voteStatus: string | null;
 };
 
+export type DownloadEmployeesPayload = {
+  eventId: number;
+};
+
 export type RecruitmentApiClient = {
   getEvents(): Promise<Page<RecruitmentEvent>>;
   getEventDetail(query: GetEventDetailRequest): Promise<RecruitmentEventDetail>;
   createEvent(payload: CreateRecruitmentEventPayload): Promise<void>;
   markEmployeePoint(payload: MarkEmployeePayload): Promise<void>;
+  downloadEmployees(payload: DownloadEmployeesPayload): Promise<Blob>;
 };

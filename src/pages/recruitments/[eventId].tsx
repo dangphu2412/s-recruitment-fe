@@ -11,16 +11,21 @@ import { BackButton } from '../../shared/ui/Button/BackButton';
 import { EmployeeTable } from '../../features/recruitment/employee-table/ui/EmployeeTable';
 import { EmployeeColumnView } from '../../features/recruitment/employee-table/models/employee-table.model';
 import { useEventDetailStore } from '../../entities/recruitment/models/event-detail.store';
+import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
+import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { DownloadEmployeesButton } from '../../features/recruitment/download-employees/ui/DownloadEmployeesButton';
 
 export default function RecruitmentEventDetailPage(): ReactElement {
   const { query } = useRouter();
   const eventId = +normalizeParam(query.eventId);
   const voteStatus = useEventDetailStore(state => state.voteStatus);
 
-  const { recruitmentEventDetail } = useQueryRecruitmentEventDetail({
-    id: eventId,
-    voteStatus
-  });
+  const { recruitmentEventDetail, isFetching } = useQueryRecruitmentEventDetail(
+    {
+      id: eventId,
+      voteStatus
+    }
+  );
   const {
     name,
     location,
@@ -38,12 +43,19 @@ export default function RecruitmentEventDetailPage(): ReactElement {
   return (
     <Card className={'space-y-4'}>
       <BackButton />
-      <ContentHeader
-        main={`Recruitment event: ${name}`}
-        brief={
-          <div>{`Located at ${location} from ${startDate} to ${endDate}`}</div>
-        }
-      />
+      <ContentHeaderLayout>
+        <ContentHeader
+          main={`Recruitment event: ${name}`}
+          brief={
+            <div>{`Located at ${location} from ${startDate} to ${endDate}`}</div>
+          }
+          isLoading={isFetching}
+        />
+
+        <HeaderActionGroup>
+          <DownloadEmployeesButton eventId={eventId} />
+        </HeaderActionGroup>
+      </ContentHeaderLayout>
 
       {selectedEmployee && (
         <EmployeeMarkerModal

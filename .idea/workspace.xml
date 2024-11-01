@@ -5,14 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
+      <change afterPath="$PROJECT_DIR$/src/features/recruitment/download-employees/ui/DownloadEmployeesButton.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment-api-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment-api-client.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment.usecase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment.usecase.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/recruitment/models/recruitment-event.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/models/recruitment-event.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/recruitment/employee-maker/ui/EmployeeMarker/EmployeeMarkerModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/employee-maker/ui/EmployeeMarker/EmployeeMarkerModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/recruitment/employee-table/models/employee-table.model.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/employee-table/models/employee-table.model.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/recruitment/employee-table/ui/EmployeeTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/employee-table/ui/EmployeeTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/master-data/add-period/ui/AddPeridContainer/AddUserDrawer/AddPeriodDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/master-data/add-period/ui/AddPeridContainer/AddUserDrawer/AddPeriodDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/add-users/ui/AddUsersContainer/AddUserDrawer/AddUserDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/posts/[id]/[slug].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/posts/add.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/posts/add.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/posts/overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/posts/overview.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/recruitments/[eventId].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/recruitments/[eventId].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/recruitments/overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/recruitments/overview.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/models/http-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/models/http-client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/ui/Header/ContentHeader/ContentHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Header/ContentHeader/ContentHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/ui/Loader/Full/FullLoader.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Loader/Full/FullLoader.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/ui/Loader/Full/FullLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Loader/Full/FullLoader.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,8 +60,8 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/enhance-filter-employees&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/features/user-managements/search-users/ui/SearchUsersContainer&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/phu.dangn/Projects/private/sgroup/sgroup-member-manage-fe/src/features/recruitment/download-employees/ui&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -74,11 +83,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/features/recruitment/download-employees/ui" />
       <recent name="$PROJECT_DIR$/src/features/user-managements/search-users/ui/SearchUsersContainer" />
       <recent name="$PROJECT_DIR$/src/shared/ui/Table/Cell" />
       <recent name="$PROJECT_DIR$/src/features/user-managements" />
       <recent name="$PROJECT_DIR$/src/pages/users" />
-      <recent name="$PROJECT_DIR$/src/entities" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/widgets/text-editor" />

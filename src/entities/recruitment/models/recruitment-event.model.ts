@@ -33,13 +33,17 @@ type QueryRecruitmentEventDetailProps = AggregateRoot<number> & {
 export function useQueryRecruitmentEventDetail(
   query: QueryRecruitmentEventDetailProps
 ) {
-  const { data } = useQuery([RECRUITMENT_EVENT_DETAIL_QUERY_KEY, query], {
-    queryFn: () => recruitmentApiClient.getEventDetail(query),
-    enabled: !isNaN(query.id)
-  });
+  const { data, isFetching } = useQuery(
+    [RECRUITMENT_EVENT_DETAIL_QUERY_KEY, query],
+    {
+      queryFn: () => recruitmentApiClient.getEventDetail(query),
+      enabled: !isNaN(query.id)
+    }
+  );
 
   return {
-    recruitmentEventDetail: data ?? ({} as RecruitmentEventDetail)
+    recruitmentEventDetail: data ?? ({} as RecruitmentEventDetail),
+    isFetching
   };
 }
 
@@ -49,4 +53,14 @@ export function useQueryRecruitmentEvents() {
   return useQuery(RECRUITMENT_EVENT_QUERY_KEY, {
     queryFn: recruitmentApiClient.getEvents
   });
+}
+
+export function useDownloadEmployeesMutation() {
+  const { mutate } = useMutation('useDownloadEmployeesMutation', {
+    mutationFn: recruitmentApiClient.downloadEmployees
+  });
+
+  return {
+    downloadEmployees: mutate
+  };
 }

@@ -1,5 +1,6 @@
 import {
   CreateRecruitmentEventPayload,
+  DownloadEmployeesPayload,
   GetEventDetailRequest,
   MarkEmployeePayload,
   RecruitmentApiClient,
@@ -8,7 +9,6 @@ import {
 } from './recruitment.usecase';
 import { authorizedHttpClient } from '../../../shared/api';
 import { Page } from '../../../shared/models';
-import { AggregateRoot } from '../../../shared/models/aggregate-model';
 
 export const recruitmentApiClient: RecruitmentApiClient = {
   markEmployeePoint(payload: MarkEmployeePayload): Promise<void> {
@@ -60,6 +60,13 @@ export const recruitmentApiClient: RecruitmentApiClient = {
     return authorizedHttpClient.request({
       method: 'get',
       url: '/recruitments/events'
+    });
+  },
+  downloadEmployees(payload: DownloadEmployeesPayload): Promise<Blob> {
+    return authorizedHttpClient.request({
+      method: 'get',
+      url: `/recruitments/events/${payload.eventId}/download`,
+      responseType: 'blob'
     });
   }
 };
