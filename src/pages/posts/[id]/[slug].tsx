@@ -15,7 +15,7 @@ export default function ViewPostDetailPage(): ReactElement {
   const { query } = useRouter();
   const id = normalizeParam(query.id);
 
-  const { data } = useQueryPostDetail(id);
+  const { data, isLoading } = useQueryPostDetail(id);
   const [isEditable, toggleEditable] = useToggle(false);
   const ref = useRef<HTMLFormElement>(null);
 
@@ -24,7 +24,10 @@ export default function ViewPostDetailPage(): ReactElement {
       const defaultValues = {
         title: data.title,
         content: data.content,
-        categories: (data.categories ?? []).map(category => category.id),
+        categories: (data.categories ?? []).map(category => ({
+          text: category.name,
+          value: category.id
+        })),
         previewImageURL: data.previewImage,
         summary: data.summary
       };
@@ -80,7 +83,7 @@ export default function ViewPostDetailPage(): ReactElement {
 
   return (
     <div className={'space-y-2'}>
-      <FullLoader isLoading={false} />
+      {isLoading && <FullLoader />}
 
       <Card className={'space-y-4'}>
         <Flex justifyContent={'space-between'}>

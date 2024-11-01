@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { Card, ContentHeader } from '../../shared/ui';
-import { FullLoader } from '../../shared/ui/Loader/Full/FullLoader';
 import { PostOverviewTable } from '../../features/posts/posts-table';
 import { PaginatePostContainer } from '../../features/posts/paginate-posts';
 import { AddPostButton } from '../../features/posts/add-post';
@@ -10,7 +9,6 @@ import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderAc
 export default function PostOverviewPage(): ReactElement {
   return (
     <Card className={'space-y-4'}>
-      <FullLoader isLoading={false} />
       <ContentHeaderLayout>
         <ContentHeader
           main={'Posts management'}
