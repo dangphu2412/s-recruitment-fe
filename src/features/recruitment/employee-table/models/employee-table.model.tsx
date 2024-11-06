@@ -120,11 +120,15 @@ export function useEmployeeColumns({
 type EmployeeTableInput = {
   employees: Employee[];
   searchValue: string;
+  page: number;
+  size: number;
 };
 
 export function mapToEmployeeTable({
   employees,
-  searchValue
+  searchValue,
+  page,
+  size
 }: EmployeeTableInput): EmployeeColumnView[] {
   const searchPredicate = (employee: Employee) => {
     const { data } = employee;
@@ -156,10 +160,13 @@ export function mapToEmployeeTable({
     myNote: employee.myNote,
     ...buildDynamicEmployeeColumnView(employee.data as DynamicEmployeeColumn)
   });
+  const paginator = (data: Employee[]) => {
+    return data.slice((page - 1) * size, page * size);
+  };
 
   if (!filterSearchPredicate) {
-    return employees.map(mapper);
+    return paginator(employees.map(mapper));
   }
 
-  return employees.filter(filterSearchPredicate).map(mapper);
+  return paginator(employees.filter(filterSearchPredicate).map(mapper));
 }

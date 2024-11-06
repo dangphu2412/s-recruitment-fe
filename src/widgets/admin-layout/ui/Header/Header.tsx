@@ -18,6 +18,9 @@ import styles from './Header.module.scss';
 import { useSelector } from 'react-redux';
 import { currentMenuSelector } from '../../../../entities/menu/models';
 import Link from 'next/link';
+import { selectCurrentUser } from '../../../../entities/user/models';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faSignOut } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   isMenuHidden: boolean;
@@ -26,22 +29,27 @@ type Props = {
 type UserActionItem = {
   text: React.ReactNode;
   link: string;
+  icon?: React.ReactNode;
 };
 
 export function Header({ isMenuHidden }: Props): React.ReactElement {
   const router = useRouter();
   const headerRef = React.useRef<HTMLDivElement>(null);
   const currentMenu = useSelector(currentMenuSelector);
+  const user = useSelector(selectCurrentUser);
+
   const menuName = currentMenu?.name ?? 'Main';
 
   const userActionItems: UserActionItem[] = [
     {
       text: 'Profile',
-      link: '/profile'
+      link: '/profile',
+      icon: <FontAwesomeIcon icon={faUser} />
     },
     {
       text: 'Log Out',
-      link: '/logout'
+      link: '/logout',
+      icon: <FontAwesomeIcon icon={faSignOut} />
     }
   ];
 
@@ -93,15 +101,22 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
             <MenuButton cursor="pointer">
               <Avatar size={'sm'} />
             </MenuButton>
-            <MenuList>
-              {userActionItems.map(item => (
-                <MenuItem
-                  key={item.link}
-                  onClick={() => router.push(item.link)}
-                >
-                  {item.text}
-                </MenuItem>
-              ))}
+            <MenuList className={'divide-y'}>
+              <Text className={'mx-3 my-2'} fontSize={'sm'} color={'pink.500'}>
+                {user?.username}
+              </Text>
+
+              <div>
+                {userActionItems.map(item => (
+                  <MenuItem
+                    key={item.link}
+                    onClick={() => router.push(item.link)}
+                    className={'space-x-2'}
+                  >
+                    {item.icon} <span>{item.text}</span>
+                  </MenuItem>
+                ))}
+              </div>
             </MenuList>
           </Menu>
         </Flex>

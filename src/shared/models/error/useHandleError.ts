@@ -55,7 +55,11 @@ export function useHandleError({
           push('/logout');
           break;
         case ClientErrorCode.FORBIDDEN:
-          push('/403');
+          showToast({
+            title: '403 Access Denied',
+            status: 'error',
+            description: message
+          });
           break;
         default:
           if (onHandleClientError) {

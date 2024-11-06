@@ -12,7 +12,6 @@ import { FormLabel } from 'src/shared/ui';
 import classes from './LoginForm.module.scss';
 import { useRouter } from 'next/router';
 import { persistentStorage } from '../../../../shared/api/services/persistent.storage';
-import { useNotify } from '../../../../shared/models/notify';
 import { useLoginMutation } from '../../../../entities/auth/models';
 
 type LoginModel = {
@@ -28,7 +27,6 @@ export function LoginForm(): ReactElement {
     reset
   } = useForm<LoginModel>();
   const { push } = useRouter();
-  const showNotify = useNotify();
 
   const { mutate } = useLoginMutation();
 
@@ -44,10 +42,6 @@ export function LoginForm(): ReactElement {
         push('/');
       },
       onError: () => {
-        showNotify({
-          title: 'Incorrect username or password',
-          status: 'error'
-        });
         reset();
       }
     });
