@@ -1,29 +1,40 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { authApiClient } from '../api';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
 import { persistentStorage } from '../../../shared/api/services/persistent.storage';
 import { tokenManager } from '../../../shared/api/services';
+import { useNotify } from '../../../shared/models/notify';
 
 export const LOGIN_KEY = 'POST_LOGIN';
 export function useLoginMutation() {
+  const showNotify = useNotify();
+
   return useMutation({
     mutationFn: authApiClient.login,
-    mutationKey: LOGIN_KEY
+    mutationKey: LOGIN_KEY,
+    onError: () => {
+      showNotify({
+        title: 'Incorrect username or password',
+        status: 'error'
+      });
+    }
   });
 }
 
 export const useLogOut = () => {
   const { push } = useRouter();
+  const queryClient = useQueryClient();
 
   return useCallback(async () => {
     const refreshToken = persistentStorage.getRefreshToken();
 
     refreshToken && (await authApiClient.logout(refreshToken));
     tokenManager.clean();
+    queryClient.clear();
 
     await push('/login');
-  }, [push]);
+  }, [queryClient, push]);
 };
 
 export function useAutoLogOut() {

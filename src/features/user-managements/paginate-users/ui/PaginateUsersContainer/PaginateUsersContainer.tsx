@@ -8,9 +8,8 @@ import {
 } from '../../../../../entities/user/models';
 import { Paginator } from '../../../../../shared/ui/Pagination/Paginator';
 import { Button, Text } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { useQueryClient } from 'react-query';
+import { RefreshButton } from '../../../../../shared/ui/Button/RefreshButton';
 
 export function PaginateUsersContainer(): React.ReactElement {
   const dispatch = useDispatch();
@@ -58,11 +57,7 @@ export function PaginateUsersContainer(): React.ReactElement {
   return (
     <div className={'flex justify-between'}>
       <div className={'flex gap-2 items-center'}>
-        <FontAwesomeIcon
-          className={'p-1 rounded border cursor-pointer'}
-          icon={faRefresh}
-          onClick={refresh}
-        />
+        <RefreshButton onClick={refresh} />
         <Paginator
           className="py-2"
           totalRecords={totalRecords ?? 0}
