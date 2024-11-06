@@ -55,10 +55,9 @@ export const selectOverviewState = (
   state: AppStorage<'UserDomain', UserDomain>
 ) => state.UserDomain.overview;
 
-export const selectJoinedInDates = createSelector(
-  selectOverviewState,
-  state => state.filters.joinedIn
-);
+export const selectCurrentUser = (
+  state: AppStorage<'UserDomain', UserDomain>
+) => state.UserDomain.currentUser;
 
 export const selectSubmission = createSelector(
   selectOverviewState,

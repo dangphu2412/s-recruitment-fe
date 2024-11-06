@@ -7,6 +7,7 @@ import {
   AccordionPanel,
   Button,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Grid,
   Input,
@@ -33,6 +34,8 @@ import {
   saveLastEdit
 } from '../../../../../entities/recruitment/models/local-editor';
 import { useUserSession } from '../../../../../entities/user/models';
+import { number, object, string } from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type Props = {
   id: string;
@@ -45,9 +48,37 @@ type Props = {
 };
 
 type FormInputs = {
-  point: string;
+  point: number;
+  maxPoint: number;
   note: string;
 };
+
+const formValidation = object({
+  maxPoint: number(),
+  point: number()
+    .typeError('Point must not be empty')
+    .min(1, 'Min is 1')
+    .required('Point must not be empty')
+    .test({
+      name: 'point',
+      test: (value, context) => {
+        const { maxPoint } = context.parent as FormInputs;
+
+        if (!value) {
+          return false;
+        }
+
+        if (value <= maxPoint) {
+          return true;
+        }
+
+        return context.createError({
+          message: `Point must not exceed the max point ${maxPoint}`
+        });
+      }
+    }),
+  note: string().optional()
+});
 
 export function EmployeeMarkerModal({
   onClose,
@@ -65,27 +96,28 @@ export function EmployeeMarkerModal({
   const maxPoint = standards.reduce((res, curr) => {
     return res + curr.point;
   }, 0);
-  const { register, handleSubmit, control } = useForm<FormInputs>({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm<FormInputs>({
     defaultValues: {
-      point: myVotedPoint ? String(myVotedPoint) : '0',
-      note: (myNote as string) ?? ''
-    }
+      point: myVotedPoint ? myVotedPoint : 0,
+      note: (myNote as string) ?? '',
+      maxPoint: standards.reduce((res, curr) => {
+        return res + curr.point;
+      }, 0)
+    },
+    resolver: yupResolver(formValidation)
   });
 
   async function handleMark(data: FormInputs) {
-    if (+data.point > maxPoint) {
-      notify({
-        title: `Your point exceed the max ${maxPoint}`,
-        status: 'error'
-      });
-      return;
-    }
-
     markEmployee(
       {
         eventId,
         employeeId: id as string,
-        point: +data.point,
+        point: data.point,
         note: data.note
       },
       {
@@ -165,7 +197,7 @@ export function EmployeeMarkerModal({
           </div>
 
           <div className="space-y-4">
-            <FormControl>
+            <FormControl isInvalid={!!errors.point}>
               <FormLabel>Employee Point</FormLabel>
               <Input
                 {...register('point')}
@@ -173,6 +205,10 @@ export function EmployeeMarkerModal({
                 min={0}
                 max={maxPoint}
               />
+
+              {errors.point && (
+                <FormErrorMessage>{errors.point.message}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl>

@@ -1,12 +1,19 @@
 import { create } from 'zustand/react';
 import { VoteStatus } from '../configs/event.constant';
+import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
 
-type EventDetailState = {
+type EventDetailState = Pagination & {
   voteStatus: VoteStatus | null;
-  toggleVoteStatus: (voteStatus: VoteStatus) => void;
 };
 
-export const useEventDetailStore = create<EventDetailState>(set => ({
+type EventDetailStore = Pagination & {
+  voteStatus: VoteStatus | null;
+  toggleVoteStatus: (voteStatus: VoteStatus) => void;
+  setValues: (values: Partial<EventDetailState>) => void;
+};
+
+export const useEventDetailStore = create<EventDetailStore>(set => ({
+  ...DEFAULT_PAGINATION,
   voteStatus: null,
   toggleVoteStatus: (voteStatus: VoteStatus) => {
     set(pre => {
@@ -16,5 +23,8 @@ export const useEventDetailStore = create<EventDetailState>(set => ({
 
       return { ...pre, voteStatus };
     });
+  },
+  setValues: (values: Partial<EventDetailState>) => {
+    set(pre => ({ ...pre, ...values }));
   }
 }));
