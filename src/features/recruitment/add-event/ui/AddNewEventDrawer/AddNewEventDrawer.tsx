@@ -241,7 +241,7 @@ export function AddNewEventDrawer({
 
                       <Textarea
                         placeholder={'Input your description ...'}
-                        rows={1}
+                        rows={3}
                         {...register(`scoreStandards.${index}.description`)}
                       />
 
@@ -286,6 +286,20 @@ export function AddNewEventDrawer({
 
             {errors.file && (
               <FormErrorMessage>{errors.file?.message}</FormErrorMessage>
+            )}
+          </FormControl>
+
+          <FormControl isRequired isInvalid={!!errors.remark}>
+            <Text fontSize={'sm'}>Remark</Text>
+
+            <Textarea
+              placeholder={'Input your remark ...'}
+              rows={5}
+              {...register('remark')}
+            />
+
+            {errors.remark && (
+              <FormErrorMessage>{errors.remark?.message}</FormErrorMessage>
             )}
           </FormControl>
         </DrawerBody>

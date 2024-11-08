@@ -1,4 +1,3 @@
-import { CellProps, Column } from 'react-table';
 import { useMemo } from 'react';
 import { MoreActionCell } from '../../../../shared/ui/Table/Cell/MoreActionCell';
 import {
@@ -30,73 +29,75 @@ export function useUserGroupColumns() {
       }),
       columnHelper.accessor('description', {
         header: 'Description'
+      }),
+      columnHelper.accessor('users', {
+        header: 'Emails',
+        cell: props => {
+          return (
+            <div className={'flex flex-col gap-1'} key={props.row.id}>
+              {props
+                .getValue()
+                .slice(0, 3)
+                .map(user => (
+                  <Tag
+                    key={user.id}
+                    colorScheme="yellow"
+                    variant="solid"
+                    className={'w-fit'}
+                  >
+                    {user.email}
+                  </Tag>
+                ))}
+              {props.getValue().length > 3 && (
+                <span className={'w-fit'}>
+                  <Tooltip
+                    label={
+                      <div className={'space-y-1'}>
+                        {props.getValue().map(user => (
+                          <div key={user.id}>{user.email}</div>
+                        ))}
+                      </div>
+                    }
+                  >
+                    ...
+                  </Tooltip>
+                </span>
+              )}
+            </div>
+          );
+        }
+      }),
+      columnHelper.display({
+        header: 'Actions',
+        cell: props => {
+          function renderActions() {
+            return [
+              {
+                key: `DELETE_GROUP${props.row.original.id}`,
+                content: 'Delete',
+                onClick: () => {
+                  deleteUserGroup(
+                    { id: props.row.original.id },
+                    {
+                      onSuccess: () => {
+                        notify({
+                          title: 'Delete user group successfully',
+                          status: 'success'
+                        });
+                        queryClient.invalidateQueries({
+                          queryKey: [USER_GROUPS_QUERY_KEY]
+                        });
+                      }
+                    }
+                  );
+                }
+              }
+            ];
+          }
+
+          return <MoreActionCell renderActions={renderActions} />;
+        }
       })
-      // {
-      //   Header: 'Emails',
-      //   accessor: 'users',
-      //   Cell: props => {
-      //     return (
-      //       <div className={'flex flex-col gap-1'} key={props.row.id}>
-      //         {props.value.slice(0, 3).map(user => (
-      //           <Tag
-      //             key={user.id}
-      //             colorScheme="yellow"
-      //             variant="solid"
-      //             className={'w-fit'}
-      //           >
-      //             {user.email}
-      //           </Tag>
-      //         ))}
-      //         {props.value.length > 3 && (
-      //           <span className={'w-fit'}>
-      //             <Tooltip
-      //               label={
-      //                 <div className={'space-y-1'}>
-      //                   {props.value.map(user => (
-      //                     <div key={user.id}>{user.email}</div>
-      //                   ))}
-      //                 </div>
-      //               }
-      //             >
-      //               ...
-      //             </Tooltip>
-      //           </span>
-      //         )}
-      //       </div>
-      //     );
-      //   }
-      // },
-      // {
-      //   Header: 'Actions',
-      //   Cell: (props: CellProps<UserGroupView, string>) => {
-      //     function renderActions() {
-      //       return [
-      //         {
-      //           key: `DELETE_GROUP${props.row.original.id}`,
-      //           content: 'Delete',
-      //           onClick: () => {
-      //             deleteUserGroup(
-      //               { id: props.row.original.id },
-      //               {
-      //                 onSuccess: () => {
-      //                   notify({
-      //                     title: 'Delete user group successfully',
-      //                     status: 'success'
-      //                   });
-      //                   queryClient.invalidateQueries({
-      //                     queryKey: [USER_GROUPS_QUERY_KEY]
-      //                   });
-      //                 }
-      //               }
-      //             );
-      //           }
-      //         }
-      //       ];
-      //     }
-      //
-      //     return <MoreActionCell renderActions={renderActions} />;
-      //   }
-      // }
     ],
     [deleteUserGroup, notify, queryClient]
   );

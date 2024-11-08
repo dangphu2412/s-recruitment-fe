@@ -2,10 +2,26 @@ import { useMutation, useQuery } from 'react-query';
 import { recruitmentApiClient } from '../api';
 import { RecruitmentEventDetail } from '../api/recruitment.usecase';
 import { AggregateRoot } from '../../../shared/models/aggregate-model';
+import { HttpError } from '../../../shared/models/http-client';
+import { useNotify } from '../../../shared/models/notify';
+import { useHandleError } from '../../../shared/models/error';
 
 export function useCreateRecruitmentEventMutation() {
+  const notify = useNotify();
+  const handleError = useHandleError();
   const { mutate } = useMutation('useCreateRecruitmentEventMutation', {
-    mutationFn: recruitmentApiClient.createEvent
+    mutationFn: recruitmentApiClient.createEvent,
+    onError: (error: HttpError) => {
+      if (error.code === 'RECRUITMENT__DUPLICATED_EVENT') {
+        notify({
+          title: 'Event name is duplicated',
+          status: 'error'
+        });
+        return;
+      }
+
+      handleError(error);
+    }
   });
 
   return {

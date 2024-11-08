@@ -29,3 +29,10 @@ export const DEFAULT_PAGINATION: Pagination = {
   page: 1,
   size: 10
 };
+
+export const paginator = <T>(
+  data: Array<T>,
+  { page, size }: Pagination
+): T[] => {
+  return data.slice((page - 1) * size, page * size);
+};

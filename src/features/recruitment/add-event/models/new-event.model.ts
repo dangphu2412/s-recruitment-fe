@@ -12,6 +12,7 @@ export type ScoreStandard = {
 export type NewRecruitmentEventFormModal = {
   name: string;
   location: string;
+  remark: string;
   passPoint: number;
   recruitmentRange: DateRange;
   examiners: BoxItem[];
@@ -78,6 +79,7 @@ export function mapFormToApiRequest(
       toDate: formInputs.recruitmentRange.toDate
     },
     location: formInputs.location,
+    remark: formInputs.remark,
     name: formInputs.name,
     scoringStandards: formInputs.scoreStandards,
     file: formInputs.file[0],
