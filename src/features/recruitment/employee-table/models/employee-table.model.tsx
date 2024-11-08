@@ -112,19 +112,16 @@ export function useEmployeeColumns({
 type EmployeeTableInput = {
   employees: Employee[];
   searchValue: string;
-  page: number;
-  size: number;
 };
 
 export function mapToEmployeeTable({
   employees,
-  searchValue,
-  page,
-  size
+  searchValue
 }: EmployeeTableInput): EmployeeColumnView[] {
   const searchPredicate = (employee: Employee) => {
     const { data } = employee;
     const values = Object.values(data);
+
     return values.some(value => {
       if (typeof value === 'string') {
         return value.toLowerCase().includes(searchValue.toLowerCase());
@@ -142,13 +139,9 @@ export function mapToEmployeeTable({
     ...buildDynamicEmployeeColumnView(employee.data as DynamicEmployeeColumn)
   });
 
-  const paginator = (data: Employee[]) => {
-    return data.slice((page - 1) * size, page * size);
-  };
-
   if (!searchValue) {
-    return paginator(employees).map(mapper);
+    return employees.map(mapper);
   }
 
-  return paginator(employees.filter(searchPredicate)).map(mapper);
+  return employees.filter(searchPredicate).map(mapper);
 }

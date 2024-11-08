@@ -27,6 +27,7 @@ export type RecruitmentEventDetail = {
   name: string;
   location: string;
   passPoint: number;
+  remark: string;
   startDate: string;
   endDate: string;
   authorId: string;
@@ -61,6 +62,7 @@ export type ScoreStandard = {
 
 export type CreateRecruitmentEventPayload = {
   name: string;
+  remark: string;
   location: string;
   passPoint: number;
   examinerIds: string[];

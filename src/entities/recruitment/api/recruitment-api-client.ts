@@ -35,6 +35,7 @@ export const recruitmentApiClient: RecruitmentApiClient = {
 
     formData.append('name', payload.name);
     formData.append('location', payload.location);
+    formData.append('remark', payload.remark);
     formData.append('passPoint', payload.passPoint.toString());
     formData.append(
       'recruitmentRange',
