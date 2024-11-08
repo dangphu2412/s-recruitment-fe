@@ -34,7 +34,8 @@ export default function RecruitmentEventDetailPage(): ReactElement {
     examiners = [],
     employees = [],
     scoringStandards,
-    passPoint
+    passPoint,
+    remark
   } = recruitmentEventDetail;
 
   const [selectedEmployee, setSelectedEmployee] =
@@ -91,6 +92,13 @@ export default function RecruitmentEventDetailPage(): ReactElement {
             );
           })}
         </div>
+      </div>
+
+      <div>
+        <Text fontSize={'md'} fontWeight={'medium'}>
+          Remark
+        </Text>
+        <Text>{remark}</Text>
       </div>
 
       <EmployeeTable

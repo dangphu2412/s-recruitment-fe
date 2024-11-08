@@ -1,15 +1,15 @@
 import React from 'react';
-import { CellProps } from 'react-table';
 import { Switch } from '@chakra-ui/react';
 import { UserManagementView } from '../../../models/useAdminColumns';
 import { useMutateUserActive } from '../../../../../../entities/user/models';
+import { CellContext } from '@tanstack/table-core/src/core/cell';
 
-type Props = CellProps<UserManagementView, string> & {
+type Props = CellContext<UserManagementView, string> & {
   onSwitchFinish?(): void;
 };
 
 export function StatusCell({
-  value,
+  cell,
   row,
   onSwitchFinish
 }: Props): React.ReactElement {
@@ -18,7 +18,7 @@ export function StatusCell({
   return (
     <Switch
       key={row.id}
-      isChecked={value === null}
+      isChecked={cell.getValue() === null}
       onChange={() =>
         toggleUserActive(row.original.id, {
           onSuccess: onSwitchFinish

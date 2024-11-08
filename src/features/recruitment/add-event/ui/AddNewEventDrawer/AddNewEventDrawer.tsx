@@ -42,7 +42,8 @@ import {
 type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 const defaultScoreStandard = {
   point: 0,
-  standard: ''
+  standard: '',
+  description: ''
 };
 
 export function AddNewEventDrawer({
@@ -190,11 +191,11 @@ export function AddNewEventDrawer({
             {fields.map((field, index) => {
               return (
                 <div key={field.id}>
-                  <div className="flex gap-2">
+                  <div className="grid grid-cols-3 gap-2">
                     <FormControl
                       isRequired
                       isInvalid={!!errors.scoreStandards?.[index]?.point}
-                      className="space-y-2"
+                      className="col-span-1 space-y-2"
                     >
                       <Text fontSize={'sm'}>Point</Text>
                       <Input
@@ -214,7 +215,7 @@ export function AddNewEventDrawer({
                     <FormControl
                       isRequired
                       isInvalid={!!errors.scoreStandards?.[index]?.standard}
-                      className="space-y-2"
+                      className="col-span-2 space-y-2"
                     >
                       <Text fontSize={'sm'}>Standard</Text>
 
@@ -227,6 +228,26 @@ export function AddNewEventDrawer({
                       {errors.scoreStandards?.[index]?.standard && (
                         <FormErrorMessage>
                           {errors.scoreStandards?.[index]?.standard?.message}
+                        </FormErrorMessage>
+                      )}
+                    </FormControl>
+
+                    <FormControl
+                      isRequired
+                      isInvalid={!!errors.scoreStandards?.[index]?.description}
+                      className="col-span-3 space-y-2"
+                    >
+                      <Text fontSize={'sm'}>Description</Text>
+
+                      <Textarea
+                        placeholder={'Input your description ...'}
+                        rows={3}
+                        {...register(`scoreStandards.${index}.description`)}
+                      />
+
+                      {errors.scoreStandards?.[index]?.description && (
+                        <FormErrorMessage>
+                          {errors.scoreStandards?.[index]?.description?.message}
                         </FormErrorMessage>
                       )}
                     </FormControl>
@@ -265,6 +286,20 @@ export function AddNewEventDrawer({
 
             {errors.file && (
               <FormErrorMessage>{errors.file?.message}</FormErrorMessage>
+            )}
+          </FormControl>
+
+          <FormControl isRequired isInvalid={!!errors.remark}>
+            <Text fontSize={'sm'}>Remark</Text>
+
+            <Textarea
+              placeholder={'Input your remark ...'}
+              rows={5}
+              {...register('remark')}
+            />
+
+            {errors.remark && (
+              <FormErrorMessage>{errors.remark?.message}</FormErrorMessage>
             )}
           </FormControl>
         </DrawerBody>

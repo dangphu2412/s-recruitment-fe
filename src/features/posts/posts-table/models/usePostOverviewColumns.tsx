@@ -1,5 +1,5 @@
-import { Column } from 'react-table';
 import { useMemo } from 'react';
+import { createColumnHelper } from '@tanstack/table-core';
 
 export type PostOverviewView = {
   id: string;
@@ -7,22 +7,20 @@ export type PostOverviewView = {
   slug: string;
   content: string;
 };
+const columnHelper = createColumnHelper<PostOverviewView>();
 
-export function usePostOverviewColumns(): Column<PostOverviewView>[] {
+export function usePostOverviewColumns() {
   return useMemo(
     () => [
-      {
-        Header: 'Id',
-        accessor: 'id'
-      },
-      {
-        Header: 'Title',
-        accessor: 'title'
-      },
-      {
-        Header: 'Slug',
-        accessor: 'slug'
-      }
+      columnHelper.accessor('id', {
+        header: 'Id'
+      }),
+      columnHelper.accessor('title', {
+        header: 'Title'
+      }),
+      columnHelper.accessor('slug', {
+        header: 'Slug'
+      })
     ],
     []
   );

@@ -14,6 +14,8 @@ import { useQueryClient } from 'react-query';
 import { RECRUITMENT_EVENT_DETAIL_QUERY_KEY } from '../../../../entities/recruitment/models';
 import { useEventDetailStore } from '../../../../entities/recruitment/models/event-detail.store';
 import { Paginator } from '../../../../shared/ui/Pagination/Paginator';
+import classes from './EmployeeTable.module.scss';
+import { DEFAULT_PAGINATION, paginator } from '../../../../shared/models';
 
 type EmployeeTableProps = {
   employees: Employee[];
@@ -35,17 +37,25 @@ export function EmployeeTable({
   const employeeItems = useMemo(() => {
     return mapToEmployeeTable({
       employees,
-      searchValue: search,
-      page,
-      size
+      searchValue: search
     });
-  }, [employees, search, page, size]);
+  }, [employees, search]);
+  const paginatedItems = useMemo(() => {
+    return paginator(employeeItems, { page, size });
+  }, [employeeItems, page, size]);
   const queryClient = useQueryClient();
-  const totalRecords = employees.length;
+  const totalRecords = employeeItems.length;
 
   function refresh() {
     queryClient.invalidateQueries({
       queryKey: [RECRUITMENT_EVENT_DETAIL_QUERY_KEY]
+    });
+  }
+
+  function handleSearch(value: string) {
+    setSearch(value);
+    setValues({
+      page: DEFAULT_PAGINATION.page
     });
   }
 
@@ -59,7 +69,7 @@ export function EmployeeTable({
         <div className={'flex gap-2'}>
           <Input
             placeholder={'Search employee ...'}
-            onChange={e => setSearch(e.target.value)}
+            onChange={e => handleSearch(e.target.value)}
           />
 
           <EmployeeFilter />
@@ -86,12 +96,11 @@ export function EmployeeTable({
 
       <Table
         caption={'Employee information'}
+        // @ts-ignore
         columns={columns}
-        items={employeeItems}
+        items={paginatedItems}
         onRowClick={row => onSelect(row.original)}
-        cellPropGetter={{
-          className: 'whitespace-normal'
-        }}
+        className={classes['container']}
       />
     </div>
   );

@@ -1,4 +1,3 @@
-import { CellProps, Column } from 'react-table';
 import { useMemo } from 'react';
 import { MoreActionCell } from '../../../../shared/ui/Table/Cell/MoreActionCell';
 import {
@@ -8,6 +7,7 @@ import {
 import { useQueryClient } from 'react-query';
 import { useNotify } from '../../../../shared/models/notify';
 import { Tag, Tooltip } from '@chakra-ui/react';
+import { createColumnHelper } from '@tanstack/table-core';
 
 export type UserGroupView = {
   id: string;
@@ -16,42 +16,44 @@ export type UserGroupView = {
   users: { id: string; email: string }[];
 };
 
-export function useUserGroupColumns(): Column<UserGroupView>[] {
+const columnHelper = createColumnHelper<UserGroupView>();
+
+export function useUserGroupColumns() {
   const { mutate: deleteUserGroup } = useDeleteUserGroupMutation();
   const notify = useNotify();
   const queryClient = useQueryClient();
   return useMemo(
     () => [
-      {
-        Header: 'Name',
-        accessor: 'name'
-      },
-      {
-        Header: 'Description',
-        accessor: 'description'
-      },
-      {
-        Header: 'Emails',
-        accessor: 'users',
-        Cell: props => {
+      columnHelper.accessor('name', {
+        header: 'Name'
+      }),
+      columnHelper.accessor('description', {
+        header: 'Description'
+      }),
+      columnHelper.accessor('users', {
+        header: 'Emails',
+        cell: props => {
           return (
             <div className={'flex flex-col gap-1'} key={props.row.id}>
-              {props.value.slice(0, 3).map(user => (
-                <Tag
-                  key={user.id}
-                  colorScheme="yellow"
-                  variant="solid"
-                  className={'w-fit'}
-                >
-                  {user.email}
-                </Tag>
-              ))}
-              {props.value.length > 3 && (
+              {props
+                .getValue()
+                .slice(0, 3)
+                .map(user => (
+                  <Tag
+                    key={user.id}
+                    colorScheme="yellow"
+                    variant="solid"
+                    className={'w-fit'}
+                  >
+                    {user.email}
+                  </Tag>
+                ))}
+              {props.getValue().length > 3 && (
                 <span className={'w-fit'}>
                   <Tooltip
                     label={
                       <div className={'space-y-1'}>
-                        {props.value.map(user => (
+                        {props.getValue().map(user => (
                           <div key={user.id}>{user.email}</div>
                         ))}
                       </div>
@@ -64,10 +66,10 @@ export function useUserGroupColumns(): Column<UserGroupView>[] {
             </div>
           );
         }
-      },
-      {
-        Header: 'Actions',
-        Cell: (props: CellProps<UserGroupView, string>) => {
+      }),
+      columnHelper.display({
+        header: 'Actions',
+        cell: props => {
           function renderActions() {
             return [
               {
@@ -95,7 +97,7 @@ export function useUserGroupColumns(): Column<UserGroupView>[] {
 
           return <MoreActionCell renderActions={renderActions} />;
         }
-      }
+      })
     ],
     [deleteUserGroup, notify, queryClient]
   );

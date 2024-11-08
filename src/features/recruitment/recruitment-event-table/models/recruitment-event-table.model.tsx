@@ -1,9 +1,9 @@
-import { Column } from 'react-table';
 import { useMemo } from 'react';
 import { useQueryRecruitmentEvents } from '../../../../entities/recruitment/models';
-import { EMPTY_ARRAY } from '../../../../shared/config/constants';
+import { EMPTY_ARRAY } from 'src/shared/config';
 import { Tag } from '@chakra-ui/react';
 import { RecruitmentEvent } from '../../../../entities/recruitment/api/recruitment.usecase';
+import { createColumnHelper } from '@tanstack/table-core';
 
 export type RecruitmentEventColumn = {
   id: number;
@@ -15,48 +15,32 @@ export type RecruitmentEventColumn = {
   examiners: string[];
 };
 
-export function useRecruitmentColumns(): Column<RecruitmentEventColumn>[] {
+const columnHelper = createColumnHelper<RecruitmentEventColumn>();
+
+export function useRecruitmentColumns() {
   return useMemo(() => {
     return [
-      {
-        Header: 'Name',
-        accessor: 'name',
-        maxWidth: 100,
-        minWidth: 80,
-        width: 80
-      },
-      {
-        Header: 'Location',
-        accessor: 'location',
-        maxWidth: 100,
-        minWidth: 80,
-        width: 80
-      },
-      {
-        Header: 'Pass Point',
-        accessor: 'passPoint'
-      },
-      {
-        Header: 'From date',
-        accessor: val => val.startDate,
-        maxWidth: 100,
-        minWidth: 80,
-        width: 80
-      },
-      {
-        Header: 'To date',
-        accessor: val => val.endDate,
-        maxWidth: 100,
-        minWidth: 80,
-        width: 80
-      },
-      {
-        Header: 'Examiners',
-        accessor: 'examiners',
-        Cell: props => {
+      columnHelper.accessor('name', {
+        header: 'Name'
+      }),
+      columnHelper.accessor('location', {
+        header: 'Location'
+      }),
+      columnHelper.accessor('passPoint', {
+        header: 'Pass Point'
+      }),
+      columnHelper.accessor('startDate', {
+        header: 'From date'
+      }),
+      columnHelper.accessor('endDate', {
+        header: 'To date'
+      }),
+      columnHelper.accessor('examiners', {
+        header: 'Examiners',
+        cell: props => {
           return (
             <div key={props.row.id} className={'flex flex-col gap-2'}>
-              {props.value.map(user => (
+              {props.getValue<string[]>().map(user => (
                 <Tag
                   key={user}
                   colorScheme="teal"
@@ -69,7 +53,7 @@ export function useRecruitmentColumns(): Column<RecruitmentEventColumn>[] {
             </div>
           );
         }
-      }
+      })
     ];
   }, []);
 }
