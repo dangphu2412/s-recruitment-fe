@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-  Accordion,
-  AccordionButton,
+  AccordionItemContent,
   AccordionItem,
-  AccordionPanel,
+  AccordionItemTrigger,
+  AccordionRoot,
   Box,
-  List,
-  ListItem,
-  Text
+  Text,
+  List
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -59,7 +58,7 @@ export function SideBar({
       >
         <Image src={'/logo.png'} alt={'logo'} width={'35'} height={'42'} />
 
-        <Text align="left" fontSize="lg">
+        <Text className={'text-left'} fontSize="lg">
           Admin
         </Text>
       </Box>
@@ -67,80 +66,76 @@ export function SideBar({
       <hr className="mb-4" />
 
       <Box display={{ base: 'none', md: 'block' }}>
-        <Accordion allowToggle>
+        <AccordionRoot allowToggle>
           {items?.map(item => {
             return (
               <AccordionItem borderY="none" key={item.id}>
-                {({ isExpanded }) => (
-                  <>
-                    <AccordionButton
-                      paddingY="0.675rem"
-                      paddingX="1rem"
-                      marginBottom="0.375rem"
-                      className={`${isExpanded ? styles['active-menu'] : ''}`}
-                      onClick={() => selectMenu(item)}
-                    >
-                      {!!item?.icon && (
-                        <Box
-                          backgroundColor="white"
-                          borderRadius="md"
-                          p="1"
-                          height="8"
-                          width="8"
-                          boxShadow="0 .3125rem .625rem 0 rgba(0,0,0,.12)"
-                          marginRight="1"
-                          className={`${
-                            isExpanded ? styles['active-icon'] : ''
-                          }`}
-                        >
-                          <FontAwesomeIcon
-                            width={12}
-                            height={12}
-                            icon={item.icon}
-                            color={isExpanded ? 'white' : 'black'}
-                          />
-                        </Box>
-                      )}
-                      <Text
-                        m={0}
-                        fontWeight={isExpanded ? 'semi-bold' : 'normal'}
-                        align="center"
-                        paddingLeft={1}
+                <>
+                  <AccordionItemTrigger
+                    paddingY="0.675rem"
+                    paddingX="1rem"
+                    marginBottom="0.375rem"
+                    className={styles['active-menu']}
+                    onClick={() => selectMenu(item)}
+                  >
+                    {!!item?.icon && (
+                      <Box
+                        backgroundColor="white"
+                        borderRadius="md"
+                        p="1"
+                        height="8"
+                        width="8"
+                        boxShadow="0 .3125rem .625rem 0 rgba(0,0,0,.12)"
+                        marginRight="1"
+                        className={styles['active-icon']}
                       >
-                        {item.name}
-                      </Text>
-                    </AccordionButton>
-
-                    {!!item.subMenus && item.subMenus.length > 0 && (
-                      <AccordionPanel p={0}>
-                        <List>
-                          {item.subMenus.map(subMenuItem => {
-                            return (
-                              <ListItem
-                                key={subMenuItem.id}
-                                paddingY="0.675rem"
-                                paddingLeft={4}
-                                fontWeight={
-                                  currentMenu?.id === subMenuItem.id
-                                    ? 'medium'
-                                    : 'light'
-                                }
-                                cursor="pointer"
-                                onClick={() => selectMenu(subMenuItem)}
-                              >
-                                {subMenuItem.name}
-                              </ListItem>
-                            );
-                          })}
-                        </List>
-                      </AccordionPanel>
+                        <FontAwesomeIcon
+                          width={12}
+                          height={12}
+                          icon={item.icon}
+                          color={'white'}
+                        />
+                      </Box>
                     )}
-                  </>
-                )}
+                    <Text
+                      m={0}
+                      fontWeight={'semi-bold'}
+                      paddingLeft={1}
+                      className={'text-center'}
+                    >
+                      {item.name}
+                    </Text>
+                  </AccordionItemTrigger>
+
+                  {!!item.subMenus && item.subMenus.length > 0 && (
+                    <AccordionItemContent p={0}>
+                      <List.Root>
+                        {item.subMenus.map(subMenuItem => {
+                          return (
+                            <List.Item
+                              key={subMenuItem.id}
+                              paddingY="0.675rem"
+                              paddingLeft={4}
+                              fontWeight={
+                                currentMenu?.id === subMenuItem.id
+                                  ? 'medium'
+                                  : 'light'
+                              }
+                              cursor="pointer"
+                              onClick={() => selectMenu(subMenuItem)}
+                            >
+                              {subMenuItem.name}
+                            </List.Item>
+                          );
+                        })}
+                      </List.Root>
+                    </AccordionItemContent>
+                  )}
+                </>
               </AccordionItem>
             );
           })}
-        </Accordion>
+        </AccordionRoot>
       </Box>
     </aside>
   );

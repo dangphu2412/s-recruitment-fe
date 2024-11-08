@@ -1,5 +1,5 @@
-import { Box as ChakraBox, BoxProps, forwardRef } from '@chakra-ui/react';
-import { ReactElement } from 'react';
+import { Box as ChakraBox, BoxProps } from '@chakra-ui/react';
+import { ReactElement, forwardRef } from 'react';
 import classNames from 'classnames';
 
 type Props = BoxProps;

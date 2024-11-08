@@ -1,6 +1,7 @@
-import { forwardRef, Spinner, SpinnerProps } from '@chakra-ui/react';
+import { Spinner, SpinnerProps } from '@chakra-ui/react';
+import { forwardRef } from 'react';
 
-export const TableLoading = forwardRef<SpinnerProps, 'div'>(
+export const TableLoading = forwardRef<HTMLDivElement, SpinnerProps>(
   function TableLoading(props, ref) {
     return (
       <div className="flex justify-center items-center h-[300px]">
