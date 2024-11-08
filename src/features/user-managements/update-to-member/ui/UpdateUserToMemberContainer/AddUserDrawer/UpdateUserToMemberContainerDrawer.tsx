@@ -26,12 +26,12 @@ import {
   useProbationUsers
 } from '../../../../../../entities/user/models';
 import { Table } from '../../../../../../shared/ui';
-import { Column } from 'react-table';
 import { formatDate } from '../../../../../../shared/models/utils/date.utils';
 import { useNotify } from '../../../../../../shared/models/notify';
 import { useQueryMonthlyMoneyConfigs } from '../../../../../../entities/monthly-money/models';
 import { useQueryClient } from 'react-query';
 import { MoneyOption } from '../../../../../../entities/monthly-money/ui/MoneyOption/MoneyOption';
+import { createColumnHelper } from '@tanstack/table-core';
 
 export type MemberInputs = {
   domain: string;
@@ -46,6 +46,8 @@ type UserProbation = {
   createdAt: string;
 };
 type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
+
+const columnHelper = createColumnHelper<UserProbation>();
 
 export function UpdateUserToMemberContainerDrawer({
   onClose
@@ -63,20 +65,17 @@ export function UpdateUserToMemberContainerDrawer({
   const domain = watch('domain');
   const notify = useNotify();
 
-  const columns: Column<UserProbation>[] = useMemo(() => {
+  const columns = useMemo(() => {
     return [
-      {
-        Header: 'Email',
-        accessor: 'email'
-      },
-      {
-        Header: 'Probation End Date',
-        accessor: 'probationEndDate'
-      },
-      {
-        Header: 'Created At',
-        accessor: 'createdAt'
-      }
+      columnHelper.accessor('email', {
+        header: 'Email'
+      }),
+      columnHelper.accessor('probationEndDate', {
+        header: 'Probation End Date'
+      }),
+      columnHelper.accessor('createdAt', {
+        header: 'Created At'
+      })
     ];
   }, []);
 
