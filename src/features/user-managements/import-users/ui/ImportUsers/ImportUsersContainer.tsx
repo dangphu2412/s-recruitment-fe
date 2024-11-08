@@ -8,7 +8,7 @@ import { HeaderAction } from '../../../../../shared/ui/Header/ContentHeader/Head
 export function ImportUsersContainer(): React.ReactElement {
   return (
     <HeaderAction
-      id={'import-users'}
+      id={'import-users-action'}
       triggerButton={props => (
         <Button colorScheme="pink" {...props}>
           <FontAwesomeIcon className="mr-2" icon={faUpload} />

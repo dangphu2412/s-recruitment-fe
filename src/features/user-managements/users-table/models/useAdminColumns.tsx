@@ -110,7 +110,6 @@ export function useAdminColumns() {
         header: 'Actions',
         cell: props => (
           <UserOverviewAction
-            key={props.row.id}
             {...props}
             push={push}
             onPaymentClick={id =>
