@@ -1,20 +1,20 @@
 import { ReactElement } from 'react';
-import { CellProps } from 'react-table';
 import { Tag } from '@chakra-ui/react';
 import { UserManagementView } from '../../../models/useAdminColumns';
 import { Role } from '../../../../../../entities/user/api';
+import { CellContext } from '@tanstack/table-core/src/core/cell';
 
 export function RoleCell({
-  value,
+  cell,
   row
-}: CellProps<UserManagementView, Role[]>): ReactElement {
-  if (!value?.length) {
+}: CellContext<UserManagementView, Role[]>): ReactElement {
+  if (!cell.getValue()?.length) {
     return <Tag key={row.id}>Not Assigned</Tag>;
   }
 
   return (
     <div key={row.id} className={'flex flex-col gap-2'}>
-      {value.map(role => (
+      {cell.getValue().map(role => (
         <Tag
           key={role.id}
           colorScheme="teal"

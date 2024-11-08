@@ -1,26 +1,33 @@
 import { ReactElement, ReactNode } from 'react';
-import { CellPropGetter, Column, Row, useTable } from 'react-table';
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  Row,
+  useReactTable
+} from '@tanstack/react-table';
 import {
   Table as BaseTable,
   TableCaption,
   TableContainer,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr
 } from '@chakra-ui/react';
 import { TableLoading } from './TableLoading';
 import { NoData } from './NoData';
+import classNames from 'classnames';
+import classes from './Table.module.scss';
 
 type Props<D extends object> = {
   caption?: ReactNode;
   items?: D[];
-  columns: Column<D>[];
+  columns: ColumnDef<D>[];
   isLoading?: boolean;
-  cellPropGetter?: CellPropGetter<D>;
   onRowClick?: (row: Row<D>) => void;
+  className?: string;
 };
 
 export function Table<T extends object>({
@@ -29,10 +36,13 @@ export function Table<T extends object>({
   isLoading = false,
   onRowClick,
   caption,
-  cellPropGetter
+  className
 }: Props<T>): ReactElement {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: items });
+  const tableInstance = useReactTable({
+    columns,
+    data: items,
+    getCoreRowModel: getCoreRowModel()
+  });
 
   function rowClickHandler(row: Row<T>) {
     return () => {
@@ -46,35 +56,24 @@ export function Table<T extends object>({
     }
 
     return (
-      <Tbody {...getTableBodyProps()}>
-        {rows.map(row => {
-          prepareRow(row);
-
-          const { key: rowKey, ...rowProps } = row.getRowProps();
-
+      <Tbody>
+        {tableInstance.getRowModel().rows.map(row => {
           return (
             <Tr
-              key={rowKey}
-              {...rowProps}
+              key={row.id}
               backgroundColor={'white'}
               _hover={{ backgroundColor: 'gray.200' }}
               onClick={rowClickHandler(row)}
               cursor={onRowClick ? 'pointer' : 'auto'}
             >
-              {row.cells.map(cell => {
-                const { key: keyCell, ...cellProps } =
-                  cell.getCellProps(cellPropGetter);
-                const cellInstance = cell.render('Cell');
-
+              {row.getAllCells().map(cell => {
+                const cellId = `${row.id}-${cell.column.id}`;
+                // <Text fontSize="md" fontStyle="italic" color="gray.500">
+                //   No data
+                // </Text>
                 return (
-                  <Td key={keyCell} {...cellProps}>
-                    {cellInstance ? (
-                      cellInstance
-                    ) : (
-                      <Text fontSize="md" fontStyle="italic" color="gray.500">
-                        No data
-                      </Text>
-                    )}
+                  <Td key={cellId}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Td>
                 );
               })}
@@ -87,41 +86,29 @@ export function Table<T extends object>({
 
   return (
     <TableContainer
-      position="relative"
-      overflowY={'auto'}
-      overflowX={'auto'}
-      maxHeight="calc(100vh - 22rem)"
-      maxWidth="calc(100vw - 22rem)"
-      minHeight="300px"
-      backgroundColor={'white'}
+      whiteSpace={'normal'}
+      className={classNames(classes['table-container'], className)}
     >
-      <BaseTable
-        variant="simple"
-        {...getTableProps()}
-        className={'w-full overflow-auto'}
-      >
+      <BaseTable variant="simple" className={'w-full overflow-auto'}>
         {caption && <TableCaption>{caption}</TableCaption>}
 
-        <Thead position="sticky" top="0" zIndex="1">
-          {headerGroups.map(headerGroup => {
-            const { key: headerKey, ...headerRowProps } =
-              headerGroup.getHeaderGroupProps();
-
+        <Thead>
+          {tableInstance.getHeaderGroups().map(headerGroup => {
             return (
-              <Tr key={headerKey} {...headerRowProps}>
-                {headerGroup.headers.map(column => {
-                  const { key: headerGroupKey, ...colProps } =
-                    column.getHeaderProps();
-
+              <Tr key={headerGroup.id}>
+                {headerGroup.headers.map(header => {
                   return (
                     <Th
-                      key={headerGroupKey}
-                      {...colProps}
+                      key={header.id}
+                      colSpan={header.colSpan}
                       color="grey"
                       backgroundColor={'white'}
-                      className="shadow-md"
+                      className="shadow-md sticky top-0"
                     >
-                      {column.render('Header')}
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                     </Th>
                   );
                 })}

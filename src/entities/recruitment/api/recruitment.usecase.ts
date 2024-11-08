@@ -38,6 +38,7 @@ export type RecruitmentEventDetail = {
 export type ScoringStandard = {
   standard: string;
   point: number;
+  description: number;
 };
 
 export type Examiner = {

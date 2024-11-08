@@ -1,4 +1,3 @@
-import { CellProps, Column } from 'react-table';
 import { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { UserOverviewAction } from '../ui/UsersOverviewTable/Cell/UserOverviewAction';
@@ -13,6 +12,7 @@ import { Box, Tag } from '@chakra-ui/react';
 import { useQueryClient } from 'react-query';
 import { formatDate } from '../../../../shared/models/utils/date.utils';
 import { CommonData } from '../../../../entities/master-data/useMasteData';
+import { createColumnHelper } from '@tanstack/table-core';
 
 export type UserManagementView = {
   id: string;
@@ -31,7 +31,9 @@ export type UserManagementView = {
   roles: Role[];
 };
 
-export function useAdminColumns(): Column<UserManagementView>[] {
+const columnHelper = createColumnHelper<UserManagementView>();
+
+export function useAdminColumns() {
   const { push } = useRouter();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -42,81 +44,71 @@ export function useAdminColumns(): Column<UserManagementView>[] {
 
   return useMemo(
     () => [
-      {
-        Header: 'Username',
-        accessor: 'username',
-        Cell: UsernameCell
-      },
-      {
-        Header: 'Full Name',
-        accessor: 'fullName'
-      },
-      {
-        Header: 'Debt Months',
-        accessor: 'debtMonths',
-        Cell: props => {
+      columnHelper.accessor('username', {
+        header: 'Username',
+        cell: UsernameCell
+      }),
+      columnHelper.accessor('fullName', {
+        header: 'Full Name'
+      }),
+      columnHelper.accessor('debtMonths', {
+        header: 'Debt Months',
+        cell: props => {
           if (props.row.original.isProbation) {
             return <Tag>Probation</Tag>;
           }
 
-          if (props.value > 0) {
-            return <Box color="red">-{props.value}</Box>;
+          if (props.getValue() > 0) {
+            return <Box color="red">-{props.getValue()}</Box>;
           }
 
-          return <Box color="green">+{Math.abs(props.value)}</Box>;
+          return <Box color="green">+{Math.abs(props.getValue())}</Box>;
         }
-      },
-      {
-        Header: 'Paid Months',
-        accessor: 'paidMonths',
-        Cell: props => {
+      }),
+      columnHelper.accessor('paidMonths', {
+        header: 'Paid Months',
+        cell: props => {
           if (props.row.original.isProbation) {
             return <Tag>Probation</Tag>;
           }
 
-          return <>{props.value}</>;
+          return <>{props.getValue()}</>;
         }
-      },
-      {
-        Header: 'Remain Months',
-        accessor: 'remainMonths',
-        Cell: props => {
+      }),
+      columnHelper.accessor('remainMonths', {
+        header: 'Remain Months',
+        cell: props => {
           if (props.row.original.isProbation) {
             return <Tag>Probation</Tag>;
           }
 
-          return <>{props.value}</>;
+          return <>{props.getValue()}</>;
         }
-      },
-      {
-        Header: 'Joined At',
-        accessor: 'joinedAt',
-        Cell: props => <>{formatDate(new Date(props.row.original.joinedAt))}</>
-      },
-      {
-        Header: 'Roles',
-        accessor: 'roles',
-        Cell: RoleCell
-      },
-      {
-        Header: 'Domain',
-        accessor: 'domain',
-        Cell: props => <>{props.value?.name}</>
-      },
-      {
-        Header: 'Status',
-        accessor: 'deletedAt',
-        Cell: props => (
+      }),
+      columnHelper.accessor('joinedAt', {
+        header: 'Joined At',
+        cell: props => <>{formatDate(new Date(props.getValue()))}</>
+      }),
+      columnHelper.accessor('roles', {
+        header: 'Roles',
+        cell: RoleCell
+      }),
+      columnHelper.accessor('domain.name', {
+        header: 'Domain'
+      }),
+      columnHelper.accessor('deletedAt', {
+        header: 'Status',
+        cell: props => (
           <StatusCell
             key={props.row.id}
             {...props}
             onSwitchFinish={handleRefresh}
           />
         )
-      },
-      {
-        Header: 'Actions',
-        Cell: (props: CellProps<UserManagementView, string>) => (
+      }),
+      columnHelper.display({
+        header: 'Actions',
+        cell: props => (
           <UserOverviewAction
             key={props.row.id}
             {...props}
@@ -126,7 +118,7 @@ export function useAdminColumns(): Column<UserManagementView>[] {
             }
           />
         )
-      }
+      })
     ],
     [dispatch, handleRefresh, push]
   );

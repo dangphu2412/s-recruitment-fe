@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
-import { Column } from 'react-table';
 import { Employee } from '../../../../entities/recruitment/api/recruitment.usecase';
 import { Link, Text, Tooltip } from '@chakra-ui/react';
-import { htmlParser } from '../../../../shared/models/html-parser/html-parser';
+import { createColumnHelper } from '@tanstack/table-core';
 
 type EmployeeColumnProps = {
   employees: Employee[];
@@ -10,6 +9,8 @@ type EmployeeColumnProps = {
 };
 
 type DynamicEmployeeColumn = Record<string, unknown>;
+
+const columnHelper = createColumnHelper<EmployeeColumnView>();
 
 export type EmployeeColumnView = {
   id: string;
@@ -39,7 +40,7 @@ function buildDynamicEmployeeColumnView(
 export function useEmployeeColumns({
   employees,
   passPoint
-}: EmployeeColumnProps): Column<EmployeeColumnView>[] {
+}: EmployeeColumnProps) {
   const { data = {} } = employees?.[0] ?? {};
 
   function renderGenericHeader(value: string = '') {
@@ -55,37 +56,37 @@ export function useEmployeeColumns({
 
   return useMemo(() => {
     const dynamicColumns = Object.keys(data).map(prop => {
-      return {
-        Header: () => renderGenericHeader(prop),
-        accessor: compactDynamicKey(prop),
+      return columnHelper.accessor(compactDynamicKey(prop), {
+        header: () => renderGenericHeader(prop),
         // @ts-ignore
-        Cell: props => {
-          if (props.value === undefined || props.value === '') {
+        cell: props => {
+          const value = props.getValue<string | undefined>();
+
+          if (value === undefined || value === '') {
             return <p>No information</p>;
           }
 
-          if (props.value.toString().startsWith('http')) {
+          if (value.toString().startsWith('http')) {
             return (
               <p className={'max-w-[12rem]'}>
-                <Link href={props.value} target="_blank" color="teal.500">
-                  {props.value}
+                <Link href={value} target="_blank" color="teal.500">
+                  {value}
                 </Link>
               </p>
             );
           }
 
-          return <p className={'max-w-[12rem]'}>{props.value?.toString()}</p>;
+          return <p className={'max-w-[12rem]'}>{value?.toString()}</p>;
         }
-      };
+      });
     });
 
     return [
-      {
-        Header: 'Total Points',
-        accessor: 'point',
+      columnHelper.accessor('point', {
+        header: 'Total Points',
         // @ts-ignore
-        Cell: props => {
-          const totalPoint = props.value ?? 0;
+        cell: props => {
+          const totalPoint = props.getValue<number>() ?? 0;
 
           if (0 === totalPoint) {
             return <Text>Not voted</Text>;
@@ -94,24 +95,15 @@ export function useEmployeeColumns({
           const isPassed = totalPoint >= passPoint;
           return (
             <Text color={isPassed ? 'green' : 'red'}>
-              {props.value}
+              {props.getValue<number>()}
               {isPassed ? ' (Passed)' : ' (Not passed)'}
             </Text>
           );
         }
-      },
-      {
-        Header: 'My Voted point',
-        accessor: 'myVotedPoint'
-      },
-      {
-        Header: () => <div>My Note</div>,
-        accessor: 'myNote',
-        // @ts-ignore
-        Cell: props => {
-          return <Text noOfLines={1}>{htmlParser.parse(props.value)}</Text>;
-        }
-      },
+      }),
+      columnHelper.accessor('myVotedPoint', {
+        header: 'My Voted'
+      }),
       ...dynamicColumns
     ];
   }, [data, passPoint]);
@@ -141,17 +133,6 @@ export function mapToEmployeeTable({
     });
   };
 
-  const filterSearchPredicate = searchValue
-    ? (employee: Employee) => {
-        const predicates = [];
-
-        if (searchValue) {
-          predicates.push(searchPredicate(employee));
-        }
-
-        return predicates.every(Boolean);
-      }
-    : null;
   const mapper = (employee: Employee) => ({
     data: employee.data,
     id: employee.id,
@@ -160,13 +141,14 @@ export function mapToEmployeeTable({
     myNote: employee.myNote,
     ...buildDynamicEmployeeColumnView(employee.data as DynamicEmployeeColumn)
   });
+
   const paginator = (data: Employee[]) => {
     return data.slice((page - 1) * size, page * size);
   };
 
-  if (!filterSearchPredicate) {
-    return paginator(employees.map(mapper));
+  if (!searchValue) {
+    return paginator(employees).map(mapper);
   }
 
-  return paginator(employees.filter(filterSearchPredicate).map(mapper));
+  return paginator(employees.filter(searchPredicate)).map(mapper);
 }

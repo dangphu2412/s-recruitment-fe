@@ -14,6 +14,7 @@ import { useQueryClient } from 'react-query';
 import { RECRUITMENT_EVENT_DETAIL_QUERY_KEY } from '../../../../entities/recruitment/models';
 import { useEventDetailStore } from '../../../../entities/recruitment/models/event-detail.store';
 import { Paginator } from '../../../../shared/ui/Pagination/Paginator';
+import classes from './EmployeeTable.module.scss';
 
 type EmployeeTableProps = {
   employees: Employee[];
@@ -86,12 +87,11 @@ export function EmployeeTable({
 
       <Table
         caption={'Employee information'}
+        // @ts-ignore
         columns={columns}
         items={employeeItems}
         onRowClick={row => onSelect(row.original)}
-        cellPropGetter={{
-          className: 'whitespace-normal'
-        }}
+        className={classes['container']}
       />
     </div>
   );

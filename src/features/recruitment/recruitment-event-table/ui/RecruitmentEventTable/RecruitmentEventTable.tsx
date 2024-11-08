@@ -18,6 +18,7 @@ export function RecruitmentEventTable(): ReactElement {
         onChange={e => setSearch(e.target.value)}
       />
       <Table
+        // @ts-ignore
         columns={columns}
         items={items}
         onRowClick={row => {
