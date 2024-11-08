@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
-import { CellProps } from 'react-table';
 import { Router } from 'next/router';
 import { UserManagementView } from '../../../models/useAdminColumns';
 import { MoreActionCell } from '../../../../../../shared/ui/Table/Cell/MoreActionCell';
+import { CellContext } from '@tanstack/table-core/src/core/cell';
 
-type MoreActionCellProps = CellProps<UserManagementView, string> &
+type MoreActionCellProps = CellContext<UserManagementView, unknown> &
   Pick<Router, 'push'> & {
     onPaymentClick?: (id: string) => void;
   };

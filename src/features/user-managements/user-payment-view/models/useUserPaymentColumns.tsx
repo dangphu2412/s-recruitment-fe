@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Column } from 'react-table';
+import { createColumnHelper } from '@tanstack/table-core';
 
 export type UseUserPaymentView = {
   paidAt: string;
@@ -7,12 +7,20 @@ export type UseUserPaymentView = {
   note: string;
 };
 
-export function useUserPaymentColumns(): Column<UseUserPaymentView>[] {
+const columnHelper = createColumnHelper<UseUserPaymentView>();
+
+export function useUserPaymentColumns() {
   return useMemo(() => {
     return [
-      { Header: 'Paid At', accessor: 'paidAt' },
-      { Header: 'Amount', accessor: 'amount' },
-      { Header: 'Note', accessor: 'note' }
+      columnHelper.accessor('paidAt', {
+        header: 'Paid At'
+      }),
+      columnHelper.accessor('amount', {
+        header: 'Amount'
+      }),
+      columnHelper.accessor('note', {
+        header: 'Note'
+      })
     ];
   }, []);
 }

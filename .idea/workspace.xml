@@ -5,18 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f81a31-42df-4f68-a919-ffeb85c13fdf" name="Changes" comment="chore: update height admin layout">
-      <change afterPath="$PROJECT_DIR$/src/shared/ui/Button/RefreshButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/recruitment/employee-table/ui/EmployeeTable.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/auth/models/authentication.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/auth/models/authentication.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/models/event-detail.store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/models/event-detail.store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/user/models/user.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user/models/user.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/login/ui/LoginForm/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/login/ui/LoginForm/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment.usecase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recruitment/api/recruitment.usecase.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/posts-table/models/usePostOverviewColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/posts/posts-table/models/usePostOverviewColumns.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/recruitment/add-event/models/new-event.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/models/new-event.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/AddNewEventDrawer/AddNewEventDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/add-event/ui/AddNewEventDrawer/AddNewEventDrawer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/recruitment/employee-maker/ui/EmployeeMarker/EmployeeMarkerModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/employee-maker/ui/EmployeeMarker/EmployeeMarkerModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/recruitment/employee-table/models/employee-table.model.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/employee-table/models/employee-table.model.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/recruitment/employee-table/ui/EmployeeTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/employee-table/ui/EmployeeTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user-managements/paginate-users/ui/PaginateUsersContainer/PaginateUsersContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/paginate-users/ui/PaginateUsersContainer/PaginateUsersContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/models/error/useHandleError.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/models/error/useHandleError.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/widgets/admin-layout/ui/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/admin-layout/ui/Header/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/models/recruitment-event-table.model.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/models/recruitment-event-table.model.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/ui/RecruitmentEventTable/RecruitmentEventTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/recruitment/recruitment-event-table/ui/RecruitmentEventTable/RecruitmentEventTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/user-groups-table/models/useUserGroupColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/user-groups-table/models/useUserGroupColumns.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/user-payment-view/models/useUserPaymentColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/user-payment-view/models/useUserPaymentColumns.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/models/useAdminColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/models/useAdminColumns.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/RoleCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/RoleCell.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/StatusCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/StatusCell.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UserOverviewAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UserOverviewAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UsernameCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/user-managements/users-table/ui/UsersOverviewTable/Cell/UsernameCell.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/ui/Table/Table.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Table/Table.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/ui/Table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/ui/Table/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

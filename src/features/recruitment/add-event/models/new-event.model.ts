@@ -6,6 +6,7 @@ import { CreateRecruitmentEventPayload } from '../../../../entities/recruitment/
 export type ScoreStandard = {
   standard: string;
   point: number;
+  description: string;
 };
 
 export type NewRecruitmentEventFormModal = {
@@ -34,7 +35,8 @@ export const newEventValidationSchema = object({
         .typeError('Point must not be empty')
         .min(1, 'Min is 1')
         .required('Need to fill point'),
-      standard: string().required('Standard is required')
+      standard: string().required('Standard is required'),
+      description: string().required('Description is required')
     })
   ),
   passPoint: number()

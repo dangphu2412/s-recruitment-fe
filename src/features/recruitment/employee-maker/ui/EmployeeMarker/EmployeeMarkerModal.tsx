@@ -183,12 +183,16 @@ export function EmployeeMarkerModal({
               {standards.map(standard => {
                 return (
                   <div key={standard.standard.slice(0, 5)}>
-                    <Text fontSize={'md'} fontWeight={'medium'}>
+                    <Text fontSize={'lg'} fontWeight={'medium'}>
                       Point {standard.point}
                     </Text>
 
-                    <Text fontSize={'sm'} className={'col-span-2'}>
+                    <Text fontSize={'md'} className={'col-span-2'}>
                       {standard.standard}
+                    </Text>
+
+                    <Text fontSize={'sm'} className={'col-span-2'}>
+                      {standard.description}
                     </Text>
                   </div>
                 );
