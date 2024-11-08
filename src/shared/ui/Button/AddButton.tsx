@@ -1,9 +1,9 @@
-import React from 'react';
-import { Button, forwardRef, ButtonProps } from '@chakra-ui/react';
+import React, { forwardRef } from 'react';
+import { Button, ButtonProps } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-export const AddButton = forwardRef<ButtonProps, 'button'>(function (
+export const AddButton = forwardRef<HTMLButtonElement, ButtonProps>(function (
   props,
   ref
 ) {

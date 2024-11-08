@@ -1,15 +1,15 @@
 import React from 'react';
 import {
-  Avatar,
+  AvatarRoot,
   Box,
-  Breadcrumb,
-  BreadcrumbItem,
+  BreadcrumbCurrentLink,
   BreadcrumbLink,
+  BreadcrumbRoot,
   Flex,
-  Menu,
-  MenuButton,
+  MenuContent,
   MenuItem,
-  MenuList,
+  MenuRoot,
+  MenuTrigger,
   Text
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
@@ -20,7 +20,7 @@ import { currentMenuSelector } from '../../../../entities/menu/models';
 import Link from 'next/link';
 import { selectCurrentUser } from '../../../../entities/user/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   isMenuHidden: boolean;
@@ -64,24 +64,23 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
       zIndex="998"
     >
       <div>
-        <Breadcrumb
+        <BreadcrumbRoot
           fontWeight="medium"
           fontSize="sm"
           marginLeft={isMenuHidden ? '2rem' : 0}
         >
-          <BreadcrumbItem>
-            <BreadcrumbLink href="#">Pages</BreadcrumbLink>
-          </BreadcrumbItem>
+          <BreadcrumbLink href="#">Pages</BreadcrumbLink>
 
-          <BreadcrumbItem>
-            <BreadcrumbLink href={currentMenu?.accessLink ?? '/'} as={Link}>
-              {menuName}
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
+          <BreadcrumbCurrentLink
+            href={currentMenu?.accessLink ?? '/'}
+            as={Link}
+          >
+            {menuName}
+          </BreadcrumbCurrentLink>
+        </BreadcrumbRoot>
 
         <Text
-          align="left"
+          className={'text-left'}
           fontSize="md"
           fontWeight="semibold"
           marginTop="0.5rem"
@@ -91,35 +90,29 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
       </div>
 
       <Box p="4">
-        <Flex
-          justifyContent="space-between"
-          alignItems="center"
-          className="space-x-4"
-          flexDirection="row"
-        >
-          <Menu>
-            <MenuButton cursor="pointer">
-              <Avatar size={'sm'} />
-            </MenuButton>
-            <MenuList className={'divide-y'}>
-              <Text className={'mx-3 my-2'} fontSize={'sm'} color={'pink.500'}>
-                {user?.username}
-              </Text>
+        <MenuRoot>
+          <MenuTrigger cursor="pointer" asChild>
+            {/*<AvatarRoot size={'sm'} />*/}
+            <div>Avatar</div>
+          </MenuTrigger>
+          <MenuContent className={'divide-y'}>
+            {/*<Text className={'mx-3 my-2'} fontSize={'sm'} color={'pink.500'}>*/}
+            {/*  {user?.username}*/}
+            {/*</Text>*/}
 
-              <div>
-                {userActionItems.map(item => (
-                  <MenuItem
-                    key={item.link}
-                    onClick={() => router.push(item.link)}
-                    className={'space-x-2'}
-                  >
-                    {item.icon} <span>{item.text}</span>
-                  </MenuItem>
-                ))}
-              </div>
-            </MenuList>
-          </Menu>
-        </Flex>
+            {/*<div>*/}
+            {userActionItems.map(item => (
+              <MenuItem
+                key={item.link}
+                onClick={() => router.push(item.link)}
+                className={'space-x-2'}
+              >
+                {item.icon} <span>{item.text}</span>
+              </MenuItem>
+            ))}
+            {/*</div>*/}
+          </MenuContent>
+        </MenuRoot>
       </Box>
     </Flex>
   );
