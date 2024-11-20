@@ -86,10 +86,11 @@ export function Table<T extends object>({
 
   return (
     <TableContainer
-      whiteSpace={'normal'}
+      overflow={'scroll'}
+      maxWidth={'auto'}
       className={classNames(classes['table-container'], className)}
     >
-      <BaseTable variant="simple" className={'w-full overflow-auto'}>
+      <BaseTable variant="simple" className={'w-full'}>
         {caption && <TableCaption>{caption}</TableCaption>}
 
         <Thead>
