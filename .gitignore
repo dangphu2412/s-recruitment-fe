@@ -35,4 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 .gitconfig.*
 .gitconfig
-.idea/
+.idea/*
