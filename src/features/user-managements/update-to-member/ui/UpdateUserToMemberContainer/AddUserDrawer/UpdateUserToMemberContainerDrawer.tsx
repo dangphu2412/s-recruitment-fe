@@ -19,7 +19,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   useDepartments,
   usePeriods
-} from '../../../../../../entities/master-data/useMasteData';
+} from '../../../../../../entities/user/models/user-master-data.model';
 import {
   QUERY_USERS_KEY,
   useMutateUpgradeMembers,
@@ -34,7 +34,7 @@ import { MoneyOption } from '../../../../../../entities/monthly-money/ui/MoneyOp
 import { createColumnHelper } from '@tanstack/table-core';
 
 export type MemberInputs = {
-  domain: string;
+  department: string;
   period: string;
   monthlyMoneyConfig: number;
 };
@@ -62,7 +62,7 @@ export function UpdateUserToMemberContainerDrawer({
   });
 
   const period = watch('period');
-  const domain = watch('domain');
+  const department = watch('department');
   const notify = useNotify();
 
   const columns = useMemo(() => {
@@ -79,13 +79,13 @@ export function UpdateUserToMemberContainerDrawer({
     ];
   }, []);
 
-  const { data: domains } = useDepartments();
+  const { data: departments } = useDepartments();
   const { data: periods } = usePeriods();
   const { monthlyMoneyConfigs } = useQueryMonthlyMoneyConfigs({
     isEnabled: true
   });
   const { data: probationUsers, isLoading } = useProbationUsers({
-    domainId: domain,
+    departmentId: department,
     periodId: period
   });
   const { upgradeToMembers } = useMutateUpgradeMembers();
@@ -173,21 +173,26 @@ export function UpdateUserToMemberContainerDrawer({
                 )}
               </FormControl>
 
-              <FormControl isInvalid={!!errors.domain}>
-                <FormLabel htmlFor="create-user-type">Domain</FormLabel>
+              <FormControl isInvalid={!!errors.department}>
+                <FormLabel htmlFor="create-user-type">Department</FormLabel>
 
-                <Select placeholder="Select domain" {...register('domain')}>
-                  {domains?.map(domain => {
+                <Select
+                  placeholder="Select department"
+                  {...register('department')}
+                >
+                  {departments?.map(department => {
                     return (
-                      <option key={domain.id} value={domain.id}>
-                        {domain.name}
+                      <option key={department.id} value={department.id}>
+                        {department.name}
                       </option>
                     );
                   })}
                 </Select>
 
-                {errors.domain && (
-                  <FormErrorMessage>{errors.domain?.message}</FormErrorMessage>
+                {errors.department && (
+                  <FormErrorMessage>
+                    {errors.department?.message}
+                  </FormErrorMessage>
                 )}
               </FormControl>
             </div>

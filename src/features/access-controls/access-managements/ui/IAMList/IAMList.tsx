@@ -20,7 +20,7 @@ import {
 } from '../../../../../entities/user/models';
 import { useRBACView } from '../../model';
 
-export function AccessControlList(): ReactElement {
+export function IAMList(): ReactElement {
   const notify = useNotify();
   const { allRoles } = useQueryControlList();
   const { saveRoles, isLoading } = useMutateSaveRoles();
@@ -67,8 +67,8 @@ export function AccessControlList(): ReactElement {
   return (
     <div className="space-y-4">
       <ContentHeader
-        main={'Access Rights management'}
-        brief={'Where you manipulate application access rights'}
+        main={'Identity And Access Management'}
+        brief={'Where you manipulate application identity & access managements'}
       />
 
       <Accordion defaultIndex={[0]} allowMultiple className="py-2">

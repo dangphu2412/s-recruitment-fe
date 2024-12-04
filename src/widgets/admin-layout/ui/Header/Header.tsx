@@ -43,7 +43,7 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
   const userActionItems: UserActionItem[] = [
     {
       text: 'Profile',
-      link: '/profile',
+      link: `/users/${user?.id}/profile`,
       icon: <FontAwesomeIcon icon={faUser} />
     },
     {

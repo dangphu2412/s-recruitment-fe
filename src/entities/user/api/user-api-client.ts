@@ -6,7 +6,7 @@ import {
 import { authorizedHttpClient } from '../../../shared/api';
 import { OperationFee } from 'src/entities/monthly-money/models';
 import { Role } from './access-control.client';
-import { CommonData } from '../../master-data/useMasteData';
+import { CommonData } from '../models/user-master-data.model';
 
 export type User = {
   id: string;
@@ -15,7 +15,7 @@ export type User = {
   fullName: string;
   avatar: string;
   phoneNumber: string;
-  domain?: {
+  department?: {
     id: string;
     name: string;
   };
@@ -41,7 +41,7 @@ export type UserManagementView = {
   deletedAt: string;
   operationFee?: OperationFee;
   roles: Role[];
-  domain: CommonData;
+  department: CommonData;
   remainMonths: number;
   paidMonths: number;
   debtMonths: number;
@@ -60,7 +60,7 @@ export type UserRolesView = Pick<Partial<UserManagementView>, 'roles'>;
 export type CreateUsersDto = {
   email: string;
   fullName: string;
-  domainId: string;
+  departmentId: string;
   periodId: string;
   birthday?: string;
 };
@@ -68,7 +68,7 @@ export type CreateUsersDto = {
 export type UpdateUserDto = {
   id: string;
   fullName: string;
-  domainId?: string;
+  departmentId?: string;
   periodId?: string;
   birthday?: string;
   phoneNumber?: string;
@@ -76,7 +76,7 @@ export type UpdateUserDto = {
 
 export type UploadUserDto = {
   file: File;
-  periodId: number;
+  periodId: string;
   monthlyConfigId?: number;
 };
 

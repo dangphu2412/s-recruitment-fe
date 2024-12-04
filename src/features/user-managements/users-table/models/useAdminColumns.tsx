@@ -11,7 +11,7 @@ import { QUERY_USERS_KEY, userActions } from '../../../../entities/user/models';
 import { Box, Tag } from '@chakra-ui/react';
 import { useQueryClient } from 'react-query';
 import { formatDate } from '../../../../shared/models/utils/date.utils';
-import { CommonData } from '../../../../entities/master-data/useMasteData';
+import { CommonData } from '../../../../entities/user/models/user-master-data.model';
 import { createColumnHelper } from '@tanstack/table-core';
 
 export type UserManagementView = {
@@ -27,7 +27,7 @@ export type UserManagementView = {
   paidMonths: number;
   debtMonths: number;
   isProbation: boolean;
-  domain: CommonData;
+  department: CommonData;
   roles: Role[];
 };
 
@@ -93,8 +93,8 @@ export function useAdminColumns() {
         header: 'Roles',
         cell: RoleCell
       }),
-      columnHelper.accessor('domain.name', {
-        header: 'Domain'
+      columnHelper.accessor('department.name', {
+        header: 'Department'
       }),
       columnHelper.accessor('deletedAt', {
         header: 'Status',

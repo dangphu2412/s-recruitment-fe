@@ -24,7 +24,7 @@ import {
 } from '../../../../../entities/user/models';
 import { useNotify } from '../../../../../shared/models/notify';
 import { useQueryClient } from 'react-query';
-import { usePeriods } from '../../../../../entities/master-data/useMasteData';
+import { usePeriods } from '../../../../../entities/user/models/user-master-data.model';
 import { useQueryMonthlyMoneyConfigs } from '../../../../../entities/monthly-money/models';
 import { MoneyOption } from '../../../../../entities/monthly-money/ui/MoneyOption/MoneyOption';
 import { createUserFileExample } from '../../../../../entities/user/models/create-user-file-example';
@@ -68,7 +68,7 @@ export function ImportUsersDrawer({
     uploadUserByFile(
       {
         file: inputs.file[0],
-        periodId: +inputs.periodId,
+        periodId: inputs.periodId,
         monthlyConfigId: inputs.monthlyConfigId
           ? +inputs.monthlyConfigId
           : undefined
@@ -101,6 +101,12 @@ export function ImportUsersDrawer({
           });
           reset();
           onClose();
+        },
+        onError: () => {
+          notify({
+            title: 'Import got incorrect column definition',
+            status: 'error'
+          });
         }
       }
     );
