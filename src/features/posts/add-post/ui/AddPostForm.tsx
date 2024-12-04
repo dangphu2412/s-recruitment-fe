@@ -12,10 +12,14 @@ import classes from './AddPostForm.module.scss';
 import { useRouter } from 'next/router';
 import { useNotify } from '../../../../shared/models/notify';
 import { TextEditor } from '../../../../widgets/text-editor/TextEditor';
-import { useMutateCreatePost } from '../../../../entities/posts/models';
+import {
+  QUERY_POSTS_KEY,
+  useMutateCreatePost
+} from '../../../../entities/posts/models';
 import { MultipleCombobox } from '../../../../shared/ui/Combobox/MultipleCombobox';
 import { BoxItem } from '../../../../shared/models/combobox.api';
 import { useQueryCategories } from '../../../../entities/posts/models/category.model';
+import { useQueryClient } from 'react-query';
 
 type AddPostModel = {
   title: string;
@@ -41,6 +45,7 @@ export function AddPostForm(): ReactElement {
   const showNotify = useNotify();
   const { createPost } = useMutateCreatePost();
   const { data } = useQueryCategories();
+  const queryClient = useQueryClient();
 
   const categoryBoxItems: BoxItem[] = useMemo(() => {
     return (
@@ -52,6 +57,7 @@ export function AddPostForm(): ReactElement {
   }, [data]);
 
   const previewImageURL = watch('previewImageURL');
+
   function submitResolver(model: AddPostModel) {
     const createPostBody = {
       title: model.title,
@@ -66,6 +72,9 @@ export function AddPostForm(): ReactElement {
         showNotify({
           title: 'Post created successfully',
           status: 'success'
+        });
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_POSTS_KEY]
         });
         push('/posts/overview');
       },
@@ -181,7 +190,6 @@ export function AddPostForm(): ReactElement {
 
           <Button
             variant="solid"
-            colorScheme="twitter"
             type="submit"
             className={classes['submit-btn']}
           >

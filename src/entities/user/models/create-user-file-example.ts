@@ -3,7 +3,7 @@ import { downloadFile } from '../../../shared/models/file';
 
 export function createUserFileExample() {
   const newBook = utils.book_new();
-  const data = [['Họ và Tên:', 'Email', 'Username', 'Join At']];
+  const data = [['Họ và Tên:', 'Email', 'Username', 'Join At', 'Department']];
 
   const newSheet = utils.aoa_to_sheet(data);
   utils.book_append_sheet(newBook, newSheet, 'Sheet1');

@@ -1,1 +1,1 @@
-export * from './AccessControlList/AccessControlList';
+export * from './IAMList/IAMList';

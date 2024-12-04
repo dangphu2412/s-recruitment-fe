@@ -24,7 +24,7 @@ import classes from './Table.module.scss';
 type Props<D extends object> = {
   caption?: ReactNode;
   items?: D[];
-  columns: ColumnDef<D>[];
+  columns: ColumnDef<D, any>[];
   isLoading?: boolean;
   onRowClick?: (row: Row<D>) => void;
   className?: string;
@@ -44,12 +44,6 @@ export function Table<T extends object>({
     getCoreRowModel: getCoreRowModel()
   });
 
-  function rowClickHandler(row: Row<T>) {
-    return () => {
-      onRowClick?.(row);
-    };
-  }
-
   function renderBody() {
     if (isLoading) {
       return null;
@@ -63,7 +57,9 @@ export function Table<T extends object>({
               key={row.id}
               backgroundColor={'white'}
               _hover={{ backgroundColor: 'gray.200' }}
-              onClick={rowClickHandler(row)}
+              onClick={() => {
+                onRowClick?.(row);
+              }}
               cursor={onRowClick ? 'pointer' : 'auto'}
             >
               {row.getAllCells().map(cell => {
@@ -87,6 +83,7 @@ export function Table<T extends object>({
   return (
     <TableContainer
       overflow={'scroll'}
+      overflowY={'scroll'}
       maxWidth={'auto'}
       className={classNames(classes['table-container'], className)}
     >

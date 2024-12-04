@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Flex } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { StatusFilterDialog } from './StatusFilterDialog/StatusFilterDialog';
 import { SearchInput } from './SearchInput/SearchInput';
@@ -15,13 +15,15 @@ export function SearchUsersContainer(): React.ReactElement {
   }
 
   return (
-    <Flex className="space-x-2">
+    <div className={'flex flex-row gap-2'}>
       <SearchInput />
       <DepartmentFilterDialog />
       <PeriodFilterDialog />
       <StatusFilterDialog />
 
-      <Button onClick={handleSubmitFilter}>Search</Button>
-    </Flex>
+      <div>
+        <Button onClick={handleSubmitFilter}>Search</Button>
+      </div>
+    </div>
   );
 }

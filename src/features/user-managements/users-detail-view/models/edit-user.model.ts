@@ -7,7 +7,7 @@ export function mapUserDetailToEditForm(userDetail: User): EditUserForm {
     fullName: userDetail.fullName,
     birthday: userDetail.birthday,
     phoneNumber: userDetail.phoneNumber,
-    domain: userDetail.domain?.id,
+    department: userDetail.department?.id,
     period: userDetail.period?.id
   };
 }
@@ -16,7 +16,7 @@ export type EditUserForm = {
   email: string;
   username: string;
   fullName: string;
-  domain?: string;
+  department?: string;
   period?: string;
   birthday?: string;
   phoneNumber: string;
@@ -30,7 +30,7 @@ export function mapFormToEditUserDto(
   return {
     id,
     fullName: form.fullName,
-    domainId: form.domain,
+    departmentId: form.department,
     periodId: form.period,
     birthday: form.birthday,
     phoneNumber: form.phoneNumber
