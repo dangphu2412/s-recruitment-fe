@@ -1,10 +1,10 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { Text, SkeletonText } from '@chakra-ui/react';
+import { SkeletonText, Text } from '@chakra-ui/react';
 import { TitleLabel } from '../../Text/TitleLabel';
 
 type Props = {
   main: ReactNode;
-  brief: ReactNode;
+  brief?: ReactNode;
   isLoading?: boolean;
 };
 
@@ -17,9 +17,11 @@ export function ContentHeader({ main, brief, isLoading }: Props): ReactElement {
     <div>
       <TitleLabel>{main}</TitleLabel>
 
-      <Text fontSize="sm" fontWeight="light">
-        {brief}
-      </Text>
+      {brief && (
+        <Text fontSize="sm" fontWeight="light">
+          {brief}
+        </Text>
+      )}
     </div>
   );
 }

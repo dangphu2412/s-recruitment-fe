@@ -500,18 +500,18 @@ export function useUserOverview() {
 }
 
 export function useProbationUsers({
-  domainId,
+  departmentId,
   periodId
 }: {
-  domainId: string;
+  departmentId: string;
   periodId: string;
 }) {
   const { data, isLoading } = useQuery({
-    queryKey: ['users-probation', domainId, periodId],
+    queryKey: ['users-probation', departmentId, periodId],
     queryFn: () =>
       userApiClient.getProbationUsers({
         filters: parseFilterQuery({
-          domainId: { type: FilterKey.EXACT, value: domainId },
+          departmentId: { type: FilterKey.EXACT, value: departmentId },
           periodId: { type: FilterKey.EXACT, value: periodId }
         }),
         pagination: {

@@ -18,7 +18,6 @@ import {
 import { ContentHeader, FormLabel } from '../../../../../shared/ui';
 import React from 'react';
 import NotFound from 'next/dist/client/components/not-found-error';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import {
   EditUserForm,
@@ -30,9 +29,10 @@ import { HeaderActionGroup } from '../../../../../shared/ui/Header/ContentHeader
 import {
   useDepartments,
   usePeriods
-} from '../../../../../entities/master-data/useMasteData';
+} from '../../../../../entities/user/models/user-master-data.model';
 import { useNotify } from '../../../../../shared/models/notify';
 import { useQueryClient } from 'react-query';
+import { RoleSettingDrawer } from '../../../user-roles-setting/ui/RoleSettings/RoleSettingDrawer';
 
 type Props = {
   userId: string;
@@ -40,7 +40,6 @@ type Props = {
 
 export function UserDetailSection({ userId }: Props) {
   const { userDetail, isLoading } = useQueryUserProfile(userId);
-  const { push } = useRouter();
   const notify = useNotify();
   const queryClient = useQueryClient();
 
@@ -53,13 +52,9 @@ export function UserDetailSection({ userId }: Props) {
       ? mapUserDetailToEditForm(userDetail)
       : ({} as EditUserForm)
   });
-  const { data: domains } = useDepartments();
+  const { data: departments } = useDepartments();
   const { data: periods } = usePeriods();
   const { updateUser } = useMutateUpdateUser();
-
-  function handleNavigateToRoleSettings() {
-    push(`/users/${userId}/role-settings`);
-  }
 
   function handleEdit(inputs: EditUserForm) {
     updateUser(mapFormToEditUserDto(userId, inputs), {
@@ -92,16 +87,16 @@ export function UserDetailSection({ userId }: Props) {
     <div className={'space-y-4'}>
       <div className={'space-y-4'}>
         <ContentHeaderLayout>
-          <ContentHeader
-            main={`Profile of ${userDetail.fullName}`}
-            brief={'User information'}
-          />
+          <ContentHeader main={`Profile of ${userDetail.fullName}`} />
 
           <HeaderActionGroup>
             <Button onClick={handleSubmit(handleEdit)}>Save</Button>
           </HeaderActionGroup>
         </ContentHeaderLayout>
 
+        <Heading size="sm" className={'flex gap-2 items-center'}>
+          Basic information
+        </Heading>
         <div className={'grid grid-cols-2 gap-4'}>
           <FormControl>
             <FormLabel>Username</FormLabel>
@@ -113,67 +108,72 @@ export function UserDetailSection({ userId }: Props) {
             <Input readOnly {...register('email')} />
           </FormControl>
 
-          <FormControl>
-            <FormLabel>Full name</FormLabel>
-            <Input {...register('fullName')} />
-          </FormControl>
+          <div className={'grid grid-cols-2 gap-4'}>
+            <FormControl>
+              <FormLabel>Full name</FormLabel>
+              <Input {...register('fullName')} />
+            </FormControl>
 
-          <FormControl>
-            <FormLabel>Birthday</FormLabel>
-            <Input type={'date'} readOnly value={userDetail.birthday} />
-          </FormControl>
+            <FormControl>
+              <FormLabel>Birthday</FormLabel>
+              <Input {...register('birthday')} type="date" />
+            </FormControl>
+          </div>
 
-          <FormControl isInvalid={!!errors.domain}>
-            <FormLabel htmlFor="create-user-type">Domain</FormLabel>
+          <div className={'grid grid-cols-2 gap-4'}>
+            <FormControl isInvalid={!!errors.department}>
+              <FormLabel htmlFor="create-user-type">Department</FormLabel>
 
-            <Select placeholder="Select domain" {...register('domain')}>
-              {domains?.map(domain => {
-                return (
-                  <option key={domain.id} value={domain.id}>
-                    {domain.name}
-                  </option>
-                );
-              })}
-            </Select>
+              <Select placeholder="Select domain" {...register('department')}>
+                {departments?.map(department => {
+                  return (
+                    <option key={department.id} value={department.id}>
+                      {department.name}
+                    </option>
+                  );
+                })}
+              </Select>
 
-            {errors.domain && (
-              <FormErrorMessage>{errors.domain?.message}</FormErrorMessage>
-            )}
-          </FormControl>
+              {errors.department && (
+                <FormErrorMessage>
+                  {errors.department?.message}
+                </FormErrorMessage>
+              )}
+            </FormControl>
 
-          <FormControl isInvalid={!!errors.period}>
-            <FormLabel htmlFor="create-user-type">Period</FormLabel>
+            <FormControl isInvalid={!!errors.period}>
+              <FormLabel htmlFor="create-user-type">Period</FormLabel>
 
-            <Select placeholder="Select period" {...register('period')}>
-              {periods?.map(period => {
-                return (
-                  <option key={period.id} value={period.id}>
-                    {period.name}
-                  </option>
-                );
-              })}
-            </Select>
+              <Select placeholder="Select period" {...register('period')}>
+                {periods?.map(period => {
+                  return (
+                    <option key={period.id} value={period.id}>
+                      {period.name}
+                    </option>
+                  );
+                })}
+              </Select>
 
-            {errors.period && (
-              <FormErrorMessage>{errors.period?.message}</FormErrorMessage>
-            )}
-          </FormControl>
+              {errors.period && (
+                <FormErrorMessage>{errors.period?.message}</FormErrorMessage>
+              )}
+            </FormControl>
+          </div>
 
           <FormControl>
             <FormLabel>Phone</FormLabel>
 
             <Input {...register('phoneNumber')} type={'number'} />
           </FormControl>
-
-          <FormControl>
-            <FormLabel>Birthday</FormLabel>
-            <Input {...register('birthday')} type="date" />
-          </FormControl>
         </div>
       </div>
 
       <div className={'space-y-4'}>
-        <Heading size="sm">Role Information</Heading>
+        <Heading size="sm" className={'flex gap-2 items-center'}>
+          <div>Role Information</div>
+
+          <RoleSettingDrawer isDisabled={userDetail.isProbation} />
+        </Heading>
 
         <div className={'space-x-2'}>
           {userDetail.roles.length ? (
@@ -193,15 +193,6 @@ export function UserDetailSection({ userId }: Props) {
             <Tag>Not assigned</Tag>
           )}
         </div>
-
-        <Button
-          onClick={handleNavigateToRoleSettings}
-          variant={'outline'}
-          color={'primary'}
-          disabled={userDetail.isProbation}
-        >
-          Go to role settings
-        </Button>
       </div>
     </div>
   );

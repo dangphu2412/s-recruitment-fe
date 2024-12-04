@@ -25,13 +25,13 @@ import {
 import {
   useDepartments,
   usePeriods
-} from '../../../../../../entities/master-data/useMasteData';
+} from '../../../../../../entities/user/models/user-master-data.model';
 import { useQueryClient } from 'react-query';
 
 export type CreateUserInputs = {
   email: string;
   fullName: string;
-  domain: string;
+  department: string;
   period: string;
   birthday?: string;
   monthlyConfigId?: string;
@@ -40,7 +40,7 @@ export type CreateUserInputs = {
 type AddUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 
 const validationSchema = object({
-  domain: string().required(),
+  department: string().required(),
   period: string().required(),
   email: string().email('Incorrect email format').required('Email is required'),
   fullName: string().optional(),
@@ -66,7 +66,7 @@ export function AddUserDrawer({
   });
 
   const { mutate: dispatchCreateUser, isLoading } = useMutateCreateUser();
-  const { data: domains } = useDepartments();
+  const { data: departments } = useDepartments();
   const { data: periods } = usePeriods();
   const queryClient = useQueryClient();
 
@@ -76,7 +76,7 @@ export function AddUserDrawer({
         email: createUserInputs.email,
         fullName: createUserInputs.fullName,
         birthday: createUserInputs.birthday,
-        domainId: createUserInputs.domain,
+        departmentId: createUserInputs.department,
         periodId: createUserInputs.period
       },
       {
@@ -102,21 +102,21 @@ export function AddUserDrawer({
         <DrawerHeader>Create new S-Group members</DrawerHeader>
 
         <DrawerBody className="space-y-4">
-          <FormControl isInvalid={!!errors.domain}>
+          <FormControl isInvalid={!!errors.department}>
             <FormLabel htmlFor="create-user-type">Domain</FormLabel>
 
-            <Select placeholder="Select domain" {...register('domain')}>
-              {domains?.map(domain => {
+            <Select placeholder="Select department" {...register('department')}>
+              {departments?.map(department => {
                 return (
-                  <option key={domain.id} value={domain.id}>
-                    {domain.name}
+                  <option key={department.id} value={department.id}>
+                    {department.name}
                   </option>
                 );
               })}
             </Select>
 
-            {errors.domain && (
-              <FormErrorMessage>{errors.domain?.message}</FormErrorMessage>
+            {errors.department && (
+              <FormErrorMessage>{errors.department?.message}</FormErrorMessage>
             )}
           </FormControl>
 

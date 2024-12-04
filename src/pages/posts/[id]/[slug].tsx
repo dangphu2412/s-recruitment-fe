@@ -10,6 +10,7 @@ import { Button, Flex } from '@chakra-ui/react';
 import { EditPostForm } from '../../../features/posts/add-post/ui/EditPostForm';
 import { TitleLabel } from '../../../shared/ui/Text/TitleLabel';
 import { htmlParser } from '../../../shared/models/html-parser/html-parser';
+import { BackButton } from '../../../shared/ui/Button/BackButton';
 
 export default function ViewPostDetailPage(): ReactElement {
   const { query } = useRouter();
@@ -86,6 +87,8 @@ export default function ViewPostDetailPage(): ReactElement {
       {isLoading && <FullLoader />}
 
       <Card className={'space-y-4'}>
+        <BackButton />
+
         <Flex justifyContent={'space-between'}>
           <ContentHeader
             main={'Post Detail'}
