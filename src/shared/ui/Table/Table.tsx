@@ -82,8 +82,8 @@ export function Table<T extends object>({
 
   return (
     <TableContainer
-      overflow={'scroll'}
-      overflowY={'scroll'}
+      overflow={'auto'}
+      overflowY={'auto'}
       maxWidth={'auto'}
       className={classNames(classes['table-container'], className)}
     >
