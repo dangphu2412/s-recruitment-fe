@@ -3,6 +3,8 @@ import {
   ButtonProps,
   Drawer as DrawerContainer,
   DrawerProps,
+  Modal,
+  ModalProps,
   useDisclosure
 } from '@chakra-ui/react';
 import { UseDisclosureApi } from '../../../models/disclosure.api';
@@ -37,6 +39,33 @@ export function HeaderAction({
       <Drawer placement="right" size="xl" onClose={onClose} isOpen={isOpen}>
         <Content onClose={onClose} />
       </Drawer>
+    </>
+  );
+}
+
+type HeaderModalActionProps = {
+  id: string;
+  triggerButton: ComponentWithAs<'button', ButtonProps>;
+  modal?: FC<ModalProps>;
+  content: FC<Pick<UseDisclosureApi, 'onClose'>>;
+};
+
+export function HeaderModalAction({
+  id,
+  content: Content,
+  triggerButton: TriggerButton,
+  modal: ModalContainer = Modal
+}: HeaderModalActionProps) {
+  const { isOpen, onOpen, onClose } = useDisclosure({
+    id
+  });
+
+  return (
+    <>
+      <TriggerButton onClick={onOpen} />
+      <ModalContainer onClose={onClose} isOpen={isOpen}>
+        <Content onClose={onClose} />
+      </ModalContainer>
     </>
   );
 }
