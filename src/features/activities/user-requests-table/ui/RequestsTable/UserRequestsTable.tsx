@@ -1,12 +1,12 @@
 import { Table } from '../../../../../shared/ui';
-import { useRequestsColumns } from '../../models/useRequestsColumns';
+import { useUserRequestsColumns } from '../../models/useUserRequestsColumns';
 import { useActivityRequestsQuery } from '../../../../../entities/activities/models/activity-request.model';
 import { useMemo } from 'react';
 
-export function RequestsTable() {
+export function UserRequestsTable() {
   const { data, isLoading } = useActivityRequestsQuery();
   const items = useMemo(() => data?.items ?? [], [data]);
-  const columns = useRequestsColumns();
+  const columns = useUserRequestsColumns();
 
   return <Table columns={columns} items={items} isLoading={isLoading} />;
 }

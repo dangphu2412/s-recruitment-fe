@@ -24,6 +24,11 @@ import {
   useCreateActivityRequestMutation
 } from '../../../../../../entities/activities/models/activity-request.model';
 import { useNotify } from '../../../../../../shared/models/notify';
+import {
+  DAY_OF_WEEKS,
+  REQUEST_TYPES,
+  TIME_OF_DAYS
+} from '../../../../../../entities/activities/config/constants/request-activity-metadata.constant';
 
 export type CreateActivityInputs = {
   requestType: string;
@@ -38,23 +43,6 @@ const validationSchema = object({
   timeOfDay: string().required(),
   dayOfWeek: string().required()
 });
-
-const REQUEST_TYPES = [{ id: 'occurrence', name: 'Occurrence' }];
-
-const TIME_OF_DAYS = [
-  { id: 'morning', name: 'Morning' },
-  { id: 'afternoon', name: 'Afternoon' },
-  { id: 'evening', name: 'Evening' }
-];
-const DAY_OF_WEEKS = [
-  { id: 'Mon', name: 'Mon' },
-  { id: 'Tue', name: 'Tue' },
-  { id: 'Wed', name: 'Wed' },
-  { id: 'Thu', name: 'Thu' },
-  { id: 'Fri', name: 'Fri' },
-  { id: 'Sat', name: 'Sat' },
-  { id: 'Sun', name: 'Sun' }
-];
 
 export function AddActivityRequestModal({
   onClose
@@ -73,7 +61,7 @@ export function AddActivityRequestModal({
   const queryClient = useQueryClient();
   const { mutate } = useCreateActivityRequestMutation();
 
-  const saveUser: SubmitHandler<CreateActivityInputs> = inputs => {
+  const createRequest: SubmitHandler<CreateActivityInputs> = inputs => {
     mutate(inputs, {
       onSuccess: () => {
         notify({
@@ -174,7 +162,7 @@ export function AddActivityRequestModal({
           <Button variant="outline" mr={3} onClick={onClose}>
             Cancel
           </Button>
-          <Button colorScheme="blue" onClick={handleSubmit(saveUser)}>
+          <Button colorScheme="blue" onClick={handleSubmit(createRequest)}>
             Save
           </Button>
         </ModalFooter>

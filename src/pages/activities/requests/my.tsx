@@ -4,6 +4,7 @@ import { ContentHeaderLayout } from '../../../shared/ui/Header/ContentHeader/Con
 import { MyRequestsTable } from '../../../features/activities/my-requests-table/ui/MyRequestsTable/MyRequestsTable';
 import { AddActivityRequestContainer } from '../../../features/activities/add-activity-request';
 import { HeaderActionGroup } from '../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { MyDetailRequest } from '../../../features/activities/my-detail-request/ui/MyDetailRequest';
 
 export default function MyRequestActivityPage() {
   return (
@@ -19,6 +20,7 @@ export default function MyRequestActivityPage() {
       </ContentHeaderLayout>
 
       <MyRequestsTable />
+      <MyDetailRequest />
     </Card>
   );
 }

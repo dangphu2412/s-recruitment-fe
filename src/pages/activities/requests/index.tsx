@@ -1,7 +1,8 @@
 import { Card, ContentHeader } from '../../../shared/ui';
 import { ContentHeaderLayout } from '../../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import React from 'react';
-import { RequestsTable } from '../../../features/activities/requests-table/ui/RequestsTable/RequestsTable';
+import { UserRequestsTable } from '../../../features/activities/user-requests-table/ui/RequestsTable/UserRequestsTable';
+import { ApprovalUserRequest } from '../../../features/activities/approval-modal/ui/ApprovalUserRequest';
 
 export default function RequestsPage() {
   return (
@@ -13,7 +14,8 @@ export default function RequestsPage() {
         />
       </ContentHeaderLayout>
 
-      <RequestsTable />
+      <UserRequestsTable />
+      <ApprovalUserRequest />
     </Card>
   );
 }
