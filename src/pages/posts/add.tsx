@@ -13,9 +13,6 @@ export default function AddPostPage(): ReactElement {
           main={'Add Post'}
           brief={'Where you can add your post'}
         />
-      </Card>
-
-      <Card className={'space-y-4'}>
         <AddPostForm />
       </Card>
     </div>

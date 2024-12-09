@@ -1,14 +1,20 @@
 import { authorizedHttpClient } from '../../../shared/api';
 import { Page } from '../../../shared/models';
 import { User } from '../../user/api';
-import { ApprovalRequestAction } from '../config/constants/request-activity-status.enum';
+import {
+  ApprovalRequestAction,
+  RequestActivityStatus
+} from '../config/constants/request-activity-status.enum';
 
 type ActivityRequest = {
   id: number;
   requestType: string;
   timeOfDay: string;
   dayOfWeek: string;
-  createdAt: Date;
+  createdAt: string;
+  approvalStatus: RequestActivityStatus;
+  rejectReason: string;
+  reviseNote: string;
   author: User;
 };
 
@@ -21,6 +27,14 @@ type CreateRequestActivityDTO = {
 type UpdateRequestActivityDTO = {
   action: ApprovalRequestAction;
   id: number;
+  rejectReason?: string;
+  reviseNote?: string;
+};
+
+type UpdateMyRequestActivityDTO = {
+  id: number;
+  timeOfDay: string;
+  dayOfWeek: string;
 };
 
 export const activityRequestApiClient = {
@@ -34,6 +48,12 @@ export const activityRequestApiClient = {
     return authorizedHttpClient.request<Page<ActivityRequest>>({
       method: 'get',
       url: '/activities/my-requests'
+    });
+  },
+  getMyRequestedActivity: async (id: number) => {
+    return authorizedHttpClient.request<ActivityRequest>({
+      method: 'get',
+      url: `/activities/my-requests/${id}`
     });
   },
   createRequestActivities: async (data: CreateRequestActivityDTO) => {
@@ -50,6 +70,16 @@ export const activityRequestApiClient = {
     return authorizedHttpClient.request<void>({
       method: 'patch',
       url: `/activities/requests/${id}`,
+      data
+    });
+  },
+  updateMyRequestActivity: async ({
+    id,
+    ...data
+  }: UpdateMyRequestActivityDTO) => {
+    return authorizedHttpClient.request<void>({
+      method: 'patch',
+      url: `/activities/my-requests/${id}`,
       data
     });
   }

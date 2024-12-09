@@ -196,7 +196,12 @@ export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
               <Controller
                 control={control}
                 render={({ field }) => {
-                  return <TextEditor onChange={field.onChange} />;
+                  return (
+                    <TextEditor
+                      onChange={field.onChange}
+                      defaultValue={field.value}
+                    />
+                  );
                 }}
                 name={'content'}
               />

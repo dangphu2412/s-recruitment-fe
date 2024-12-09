@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/table-core';
-import { Button, Tag } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import {
   ACTIVITY_REQUESTS_QUERY_KEY,
+  useMyActivityStore,
   useUpdateApprovalActivityRequestMutation
 } from '../../../../entities/activities/models/activity-request.model';
 import { useQueryClient } from 'react-query';
@@ -11,6 +12,9 @@ import {
   ApprovalRequestAction,
   RequestActivityStatus
 } from '../../../../entities/activities/config/constants/request-activity-status.enum';
+import { formatDate } from '../../../../shared/models/utils/date.utils';
+import { ActivityStatusTag } from '../../../../entities/activities/ui/ActivityStatusTag/ActivityStatusTag';
+import { TIME_OF_DAYS } from '../../../../entities/activities/config/constants/request-activity-metadata.constant';
 
 export type RequestsColumn = {
   id: number;
@@ -20,13 +24,15 @@ export type RequestsColumn = {
   requestType: string;
   dayOfWeek: string;
   timeOfDay: string;
+  createdAt: string;
   approvalStatus: RequestActivityStatus;
 };
 
-export function useRequestsColumns() {
+export function useUserRequestsColumns() {
   const { mutate } = useUpdateApprovalActivityRequestMutation();
   const queryClient = useQueryClient();
   const notify = useNotify();
+  const setApprovalModel = useMyActivityStore(state => state.setApprovalModel);
 
   return useMemo(() => {
     const columnHelper = createColumnHelper<RequestsColumn>();
@@ -42,43 +48,42 @@ export function useRequestsColumns() {
         header: 'Day of week'
       }),
       columnHelper.accessor('timeOfDay', {
-        header: 'Time of day'
+        header: 'Time of day',
+        cell: ({ getValue }) => {
+          return TIME_OF_DAYS.find(({ id }) => id === getValue())?.name;
+        }
+      }),
+      columnHelper.accessor('createdAt', {
+        header: 'Submitted at',
+        cell: props => <>{formatDate(new Date(props.getValue()))}</>
       }),
       columnHelper.accessor('approvalStatus', {
         header: 'Status',
         cell: ({ getValue }) => {
-          const valueMapToLabel = {
-            [RequestActivityStatus.PENDING]: <Tag>Pending</Tag>,
-            [RequestActivityStatus.APPROVED]: (
-              <Tag colorScheme={'green'}>Approved</Tag>
-            ),
-            [RequestActivityStatus.REJECTED]: (
-              <Tag colorScheme={'red'}>Rejected</Tag>
-            )
-          };
-          const value = getValue();
-
-          return <>{valueMapToLabel[value as RequestActivityStatus]}</>;
+          return <ActivityStatusTag value={getValue()} />;
         }
       }),
       columnHelper.display({
         header: 'Actions',
         cell: ({ row }) => {
-          const nextStateButton = {
+          const nextStateButton: Record<
+            RequestActivityStatus,
+            ApprovalRequestAction[]
+          > = {
             [RequestActivityStatus.PENDING]: [
               ApprovalRequestAction.APPROVE,
-              ApprovalRequestAction.REJECT
+              ApprovalRequestAction.REJECT,
+              ApprovalRequestAction.REVISE
             ],
-            [RequestActivityStatus.APPROVED]: [ApprovalRequestAction.REVISE],
-            [RequestActivityStatus.REJECTED]: [ApprovalRequestAction.REVISE]
+            [RequestActivityStatus.APPROVED]: [],
+            [RequestActivityStatus.REJECTED]: [ApprovalRequestAction.REVISE],
+            [RequestActivityStatus.REVISE]: []
           };
-          const buttons = nextStateButton[
-            row.original.approvalStatus
-          ] as ApprovalRequestAction[];
+          const actions = nextStateButton[row.original.approvalStatus];
 
           return (
             <div className={'flex gap-2'}>
-              {buttons.includes(ApprovalRequestAction.APPROVE) && (
+              {actions.includes(ApprovalRequestAction.APPROVE) && (
                 <Button
                   colorScheme={'green'}
                   onClick={() => {
@@ -105,55 +110,27 @@ export function useRequestsColumns() {
                   Approve
                 </Button>
               )}
-              {buttons.includes(ApprovalRequestAction.REJECT) && (
+              {actions.includes(ApprovalRequestAction.REJECT) && (
                 <Button
                   colorScheme={'red'}
                   onClick={() => {
-                    mutate(
-                      {
-                        id: row.original.id,
-                        action: ApprovalRequestAction.REJECT
-                      },
-                      {
-                        onSuccess: () => {
-                          notify({
-                            title: 'Success',
-                            description: 'Request rejected',
-                            status: 'success'
-                          });
-                          queryClient.invalidateQueries(
-                            ACTIVITY_REQUESTS_QUERY_KEY
-                          );
-                        }
-                      }
-                    );
+                    setApprovalModel({
+                      id: row.original.id,
+                      action: ApprovalRequestAction.REJECT
+                    });
                   }}
                 >
                   Reject
                 </Button>
               )}
-              {buttons.includes(ApprovalRequestAction.REVISE) && (
+              {actions.includes(ApprovalRequestAction.REVISE) && (
                 <Button
                   colorScheme={'purple'}
                   onClick={() => {
-                    mutate(
-                      {
-                        id: row.original.id,
-                        action: ApprovalRequestAction.REVISE
-                      },
-                      {
-                        onSuccess: () => {
-                          notify({
-                            title: 'Success',
-                            description: 'Request revised',
-                            status: 'success'
-                          });
-                          queryClient.invalidateQueries(
-                            ACTIVITY_REQUESTS_QUERY_KEY
-                          );
-                        }
-                      }
-                    );
+                    setApprovalModel({
+                      id: row.original.id,
+                      action: ApprovalRequestAction.REVISE
+                    });
                   }}
                 >
                   Revise
@@ -164,5 +141,5 @@ export function useRequestsColumns() {
         }
       })
     ];
-  }, [mutate, notify, queryClient]);
+  }, [mutate, notify, queryClient, setApprovalModel]);
 }
