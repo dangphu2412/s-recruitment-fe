@@ -24,11 +24,11 @@ import {
   useCreateActivityRequestMutation
 } from '../../../../../../entities/activities/models/activity-request.model';
 import { useNotify } from '../../../../../../shared/models/notify';
+import { REQUEST_TYPES } from '../../../../../../entities/activities/config/constants/request-activity-metadata.constant';
 import {
-  DAY_OF_WEEKS,
-  REQUEST_TYPES,
-  TIME_OF_DAYS
-} from '../../../../../../entities/activities/config/constants/request-activity-metadata.constant';
+  useDayOfWeeksQuery,
+  useTimeOfDayQuery
+} from '../../../../../../entities/activities/models/activity-master-data.model';
 
 export type CreateActivityInputs = {
   requestType: string;
@@ -60,18 +60,27 @@ export function AddActivityRequestModal({
 
   const queryClient = useQueryClient();
   const { mutate } = useCreateActivityRequestMutation();
+  const { data: DAY_OF_WEEKS } = useDayOfWeeksQuery();
+  const { data: TIME_OF_DAYS } = useTimeOfDayQuery();
 
   const createRequest: SubmitHandler<CreateActivityInputs> = inputs => {
-    mutate(inputs, {
-      onSuccess: () => {
-        notify({
-          title: 'Activity request created',
-          status: 'success'
-        });
-        queryClient.invalidateQueries(MY_ACTIVITY_REQUESTS_QUERY_KEY);
-        onClose();
+    mutate(
+      {
+        requestType: inputs.requestType,
+        timeOfDayId: inputs.timeOfDay,
+        dayOfWeekId: inputs.dayOfWeek
+      },
+      {
+        onSuccess: () => {
+          notify({
+            title: 'Activity request created',
+            status: 'success'
+          });
+          queryClient.invalidateQueries(MY_ACTIVITY_REQUESTS_QUERY_KEY);
+          onClose();
+        }
       }
-    });
+    );
   };
 
   return (
