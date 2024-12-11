@@ -20,11 +20,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CreateActivityInputs } from '../../add-activity-request/ui/AddUsersContainer/AddUserDrawer';
 import React from 'react';
-import {
-  DAY_OF_WEEKS,
-  REQUEST_TYPES,
-  TIME_OF_DAYS
-} from '../../../../entities/activities/config/constants/request-activity-metadata.constant';
+import { REQUEST_TYPES } from '../../../../entities/activities/config/constants/request-activity-metadata.constant';
 import { RequestActivityStatus } from '../../../../entities/activities/config/constants/request-activity-status.enum';
 import { ActivityStatusTag } from '../../../../entities/activities/ui/ActivityStatusTag/ActivityStatusTag';
 import {
@@ -34,6 +30,10 @@ import {
 } from '../../../../entities/activities/models/activity-request.model';
 import { useNotify } from '../../../../shared/models/notify';
 import { useQueryClient } from 'react-query';
+import {
+  useDayOfWeeksQuery,
+  useTimeOfDayQuery
+} from '../../../../entities/activities/models/activity-master-data.model';
 
 export type EditActivityInputs = {
   requestType: string;
@@ -79,6 +79,9 @@ export function MyDetailRequestDrawer({
   const notify = useNotify();
   const { mutate } = useUpdateMyActivityRequestMutation();
   const queryClient = useQueryClient();
+  const { data: DAY_OF_WEEKS } = useDayOfWeeksQuery();
+  const { data: TIME_OF_DAYS } = useTimeOfDayQuery();
+
   const disabled = [
     RequestActivityStatus.APPROVED,
     RequestActivityStatus.REJECTED
@@ -87,8 +90,8 @@ export function MyDetailRequestDrawer({
   function submit(inputs: EditActivityInputs) {
     const dto = {
       id,
-      timeOfDay: inputs.timeOfDay,
-      dayOfWeek: inputs.dayOfWeek
+      timeOfDayId: inputs.timeOfDay,
+      dayOfWeekId: inputs.dayOfWeek
     };
     mutate(dto, {
       onSuccess: () => {

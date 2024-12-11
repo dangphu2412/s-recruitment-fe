@@ -6,11 +6,17 @@ import {
   RequestActivityStatus
 } from '../config/constants/request-activity-status.enum';
 
-type ActivityRequest = {
+type ActivityRequestResponse = {
   id: number;
   requestType: string;
-  timeOfDay: string;
-  dayOfWeek: string;
+  timeOfDay: {
+    id: string;
+    name: string;
+  };
+  dayOfWeek: {
+    id: string;
+    name: string;
+  };
   createdAt: string;
   approvalStatus: RequestActivityStatus;
   rejectReason: string;
@@ -20,8 +26,8 @@ type ActivityRequest = {
 
 type CreateRequestActivityDTO = {
   requestType: string;
-  timeOfDay: string;
-  dayOfWeek: string;
+  timeOfDayId: string;
+  dayOfWeekId: string;
 };
 
 type UpdateRequestActivityDTO = {
@@ -33,25 +39,25 @@ type UpdateRequestActivityDTO = {
 
 type UpdateMyRequestActivityDTO = {
   id: number;
-  timeOfDay: string;
-  dayOfWeek: string;
+  timeOfDayId: string;
+  dayOfWeekId: string;
 };
 
 export const activityRequestApiClient = {
   getRequestedActivities: async () => {
-    return authorizedHttpClient.request<Page<ActivityRequest>>({
+    return authorizedHttpClient.request<Page<ActivityRequestResponse>>({
       method: 'get',
       url: '/activities/requests'
     });
   },
   getMyRequestedActivities: async () => {
-    return authorizedHttpClient.request<Page<ActivityRequest>>({
+    return authorizedHttpClient.request<Page<ActivityRequestResponse>>({
       method: 'get',
       url: '/activities/my-requests'
     });
   },
   getMyRequestedActivity: async (id: number) => {
-    return authorizedHttpClient.request<ActivityRequest>({
+    return authorizedHttpClient.request<ActivityRequestResponse>({
       method: 'get',
       url: `/activities/my-requests/${id}`
     });
