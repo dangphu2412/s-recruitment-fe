@@ -1,10 +1,10 @@
 import { Table } from '../../../../../shared/ui';
 import { useUserRequestsColumns } from '../../models/useUserRequestsColumns';
-import { useActivityRequestsQuery } from '../../../../../entities/activities/models/activity-request.model';
+import { useActivityRequests } from '../../../../../entities/activities/models/activity-request.model';
 import { useMemo } from 'react';
 
 export function UserRequestsTable() {
-  const { data, isLoading } = useActivityRequestsQuery();
+  const { data, isLoading } = useActivityRequests();
   const items = useMemo(() => data?.items ?? [], [data]);
   const columns = useUserRequestsColumns();
 

@@ -43,11 +43,18 @@ type UpdateMyRequestActivityDTO = {
   dayOfWeekId: string;
 };
 
+export type GetActivityRequestQuery = {
+  page: number;
+  size: number;
+  query: string;
+};
+
 export const activityRequestApiClient = {
-  getRequestedActivities: async () => {
+  getRequestedActivities: async (params: GetActivityRequestQuery) => {
     return authorizedHttpClient.request<Page<ActivityRequestResponse>>({
       method: 'get',
-      url: '/activities/requests'
+      url: '/activities/requests',
+      params
     });
   },
   getMyRequestedActivities: async () => {

@@ -1,14 +1,18 @@
 import { useMutation, useQuery } from 'react-query';
-import { activityRequestApiClient } from '../api/activity-request-api.client';
+import {
+  activityRequestApiClient,
+  GetActivityRequestQuery
+} from '../api/activity-request-api.client';
 import { create } from 'zustand/react';
 import { ApprovalRequestAction } from '../config/constants/request-activity-status.enum';
+import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
 
 export const ACTIVITY_REQUESTS_QUERY_KEY = 'ACTIVIIY_REQUESTS_QUERY_KEY';
 
-export function useActivityRequestsQuery() {
+export function useActivityRequestsQuery(params: GetActivityRequestQuery) {
   return useQuery({
-    queryKey: [ACTIVITY_REQUESTS_QUERY_KEY],
-    queryFn: () => activityRequestApiClient.getRequestedActivities()
+    queryKey: [ACTIVITY_REQUESTS_QUERY_KEY, params],
+    queryFn: () => activityRequestApiClient.getRequestedActivities(params)
   });
 }
 
@@ -74,3 +78,71 @@ export const useMyActivityStore = create<MyActivityStore>(set => ({
   setApprovalModel: (model: ApprovalModel | null) =>
     set(state => ({ ...state, approvalModel: model }))
 }));
+
+type ActivityRequestStore = Pagination & {
+  query: string;
+  searchValues: Pagination & {
+    query: string;
+  };
+  submitValues: (
+    values: Partial<Pick<ActivityRequestStore, 'page' | 'size' | 'query'>>
+  ) => void;
+  setValue: (key: keyof ActivityRequestStore, value: any) => void;
+  reset: () => void;
+  submitSearch: () => void;
+};
+
+const DEFAULT_SEARCH = {
+  ...DEFAULT_PAGINATION,
+  query: ''
+};
+
+export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
+  ...DEFAULT_SEARCH,
+  searchValues: {
+    ...DEFAULT_SEARCH
+  },
+  setValue: (key, value) => {
+    set(state => ({ ...state, [key]: value }));
+  },
+  submitValues: (
+    values: Partial<Pick<ActivityRequestStore, 'page' | 'size' | 'query'>>
+  ) => {
+    set(state => {
+      return {
+        ...state,
+        ...values,
+        searchValues: {
+          page: state.page,
+          size: state.size,
+          query: state.query,
+          ...values
+        }
+      };
+    });
+  },
+  submitSearch: () => {
+    set(state => {
+      return {
+        ...state,
+        searchValues: {
+          page: state.page,
+          size: state.size,
+          query: state.query
+        }
+      };
+    });
+  },
+  reset: () => {
+    set(state => ({
+      ...state,
+      ...DEFAULT_SEARCH
+    }));
+  }
+}));
+
+export function useActivityRequests() {
+  const searchValues = useActivityRequestStore(state => state.searchValues);
+
+  return useActivityRequestsQuery(searchValues);
+}
