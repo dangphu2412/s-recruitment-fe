@@ -23,9 +23,10 @@ export function MyDetailRequest() {
     <MyDetailRequestDrawer
       defaultValues={{
         requestType: data.requestType,
-        timeOfDay: data.timeOfDay.id,
-        dayOfWeek: data.dayOfWeek.id
+        timeOfDay: data.timeOfDay?.id,
+        dayOfWeek: data.dayOfWeek?.id
       }}
+      requestType={data.requestType}
       isOpen={selectedId !== null}
       onClose={handleClose}
       approvalStatus={data.approvalStatus}

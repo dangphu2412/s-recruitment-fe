@@ -24,16 +24,24 @@ import {
   useCreateActivityRequestMutation
 } from '../../../../../../entities/activities/models/activity-request.model';
 import { useNotify } from '../../../../../../shared/models/notify';
-import { REQUEST_TYPES } from '../../../../../../entities/activities/config/constants/request-activity-metadata.constant';
+import {
+  REQUEST_TYPES,
+  RequestTypes
+} from '../../../../../../entities/activities/config/constants/request-activity-metadata.constant';
 import {
   useDayOfWeeksQuery,
   useTimeOfDayQuery
 } from '../../../../../../entities/activities/models/activity-master-data.model';
+import { HookFormTextarea } from '../../../../../../shared/ui/Form/HookFormTextarea/HookFormInput';
+import { HookFormInput } from '../../../../../../shared/ui/Form/HookFormInput/HookFormInput';
 
 export type CreateActivityInputs = {
   requestType: string;
   timeOfDay: string;
   dayOfWeek: string;
+  reason?: string;
+  requestChangeDay?: string;
+  compensatoryDay?: string;
 };
 
 type AddActivityModalProps = Pick<UseDisclosureApi, 'onClose'>;
@@ -41,7 +49,10 @@ type AddActivityModalProps = Pick<UseDisclosureApi, 'onClose'>;
 const validationSchema = object({
   requestType: string().required(),
   timeOfDay: string().required(),
-  dayOfWeek: string().required()
+  dayOfWeek: string().optional(),
+  reason: string().optional(),
+  requestChangeDay: string().optional(),
+  compensatoryDay: string().optional()
 });
 
 export function AddActivityRequestModal({
@@ -51,24 +62,33 @@ export function AddActivityRequestModal({
     handleSubmit,
     register,
     formState: { errors },
-    control
+    control,
+    watch
   } = useForm<CreateActivityInputs>({
     mode: 'onChange',
-    resolver: yupResolver(validationSchema)
+    resolver: yupResolver(validationSchema),
+    defaultValues: {
+      requestType: RequestTypes.WORKING
+    }
   });
+  const requestType = watch('requestType');
+
   const notify = useNotify();
 
   const queryClient = useQueryClient();
   const { mutate } = useCreateActivityRequestMutation();
-  const { data: DAY_OF_WEEKS } = useDayOfWeeksQuery();
-  const { data: TIME_OF_DAYS } = useTimeOfDayQuery();
+  const { data: dayOfWeeks } = useDayOfWeeksQuery();
+  const { data: timeOfDays } = useTimeOfDayQuery();
 
   const createRequest: SubmitHandler<CreateActivityInputs> = inputs => {
     mutate(
       {
         requestType: inputs.requestType,
         timeOfDayId: inputs.timeOfDay,
-        dayOfWeekId: inputs.dayOfWeek
+        dayOfWeekId: inputs.dayOfWeek,
+        requestChangeDay: inputs.requestChangeDay,
+        compensatoryDay: inputs.compensatoryDay,
+        reason: inputs.reason
       },
       {
         onSuccess: () => {
@@ -93,7 +113,7 @@ export function AddActivityRequestModal({
 
         <ModalBody className="space-y-4">
           <FormControl isInvalid={!!errors.requestType}>
-            <FormLabel htmlFor="requestType">Title</FormLabel>
+            <FormLabel htmlFor="requestType">Request type</FormLabel>
 
             <Select
               placeholder="Select request type"
@@ -124,7 +144,7 @@ export function AddActivityRequestModal({
                 required: 'Time of day is required'
               })}
             >
-              {TIME_OF_DAYS?.map(timeOfDay => {
+              {timeOfDays?.map(timeOfDay => {
                 return (
                   <option key={timeOfDay.id} value={timeOfDay.id}>
                     {timeOfDay.name}
@@ -138,33 +158,83 @@ export function AddActivityRequestModal({
             )}
           </FormControl>
 
-          <FormControl isInvalid={!!errors.dayOfWeek}>
-            <FormLabel htmlFor="dayOfWeek">Day of week</FormLabel>
+          {RequestTypes.WORKING === requestType && (
+            <FormControl isInvalid={!!errors.dayOfWeek}>
+              <FormLabel htmlFor="dayOfWeek">Day of week</FormLabel>
 
-            <Controller
-              control={control}
-              name={'dayOfWeek'}
-              render={({ field }) => {
-                return (
-                  <RadioGroup onChange={field.onChange} value={field.value}>
-                    <div className={'flex row gap-2'}>
-                      {DAY_OF_WEEKS.map(dayOfWeek => {
-                        return (
-                          <Radio key={dayOfWeek.id} value={dayOfWeek.id}>
-                            {dayOfWeek.name}
-                          </Radio>
-                        );
-                      })}
-                    </div>
-                  </RadioGroup>
-                );
-              }}
+              <Controller
+                control={control}
+                name={'dayOfWeek'}
+                render={({ field }) => {
+                  return (
+                    <RadioGroup onChange={field.onChange} value={field.value}>
+                      <div className={'flex row gap-2'}>
+                        {dayOfWeeks.map(dayOfWeek => {
+                          return (
+                            <Radio key={dayOfWeek.id} value={dayOfWeek.id}>
+                              {dayOfWeek.name}
+                            </Radio>
+                          );
+                        })}
+                      </div>
+                    </RadioGroup>
+                  );
+                }}
+              />
+
+              {errors.dayOfWeek && (
+                <FormErrorMessage>{errors.dayOfWeek?.message}</FormErrorMessage>
+              )}
+            </FormControl>
+          )}
+
+          {[RequestTypes.ABSENCE, RequestTypes.LATE].includes(
+            requestType as RequestTypes
+          ) && (
+            <HookFormInput
+              name={'requestChangeDay'}
+              errors={errors}
+              register={register}
+              label={
+                {
+                  [RequestTypes.ABSENCE]: 'Absense Day',
+                  [RequestTypes.LATE]: 'Late Day'
+                }[requestType]
+              }
+              type={'date'}
+              isRequired
             />
+          )}
 
-            {errors.dayOfWeek && (
-              <FormErrorMessage>{errors.dayOfWeek?.message}</FormErrorMessage>
-            )}
-          </FormControl>
+          {RequestTypes.LATE === requestType && (
+            <blockquote>
+              Late policy: 15 minutes late only. If any exceed, it will be count
+              as absence.
+            </blockquote>
+          )}
+
+          {RequestTypes.ABSENCE === requestType && (
+            <HookFormInput
+              name={'compensatoryDay'}
+              errors={errors}
+              register={register}
+              label={'Compensatory Day'}
+              type={'date'}
+              isRequired
+            />
+          )}
+
+          {[RequestTypes.ABSENCE, RequestTypes.LATE].includes(
+            requestType as RequestTypes
+          ) && (
+            <HookFormTextarea
+              name={'reason'}
+              errors={errors}
+              register={register}
+              label={'Reason'}
+              isRequired
+            />
+          )}
         </ModalBody>
 
         <ModalFooter>

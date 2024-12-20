@@ -10,7 +10,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input,
   Select
 } from '@chakra-ui/react';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
@@ -27,6 +26,7 @@ import {
   usePeriods
 } from '../../../../../../entities/user/models/user-master-data.model';
 import { useQueryClient } from 'react-query';
+import { HookFormInput } from '../../../../../../shared/ui/Form/HookFormInput/HookFormInput';
 
 export type CreateUserInputs = {
   email: string;
@@ -138,38 +138,29 @@ export function AddUserDrawer({
             )}
           </FormControl>
 
-          <FormControl isInvalid={!!errors.email} isRequired>
-            <FormLabel>Email</FormLabel>
+          <HookFormInput
+            name={'email'}
+            label={'Email'}
+            type={'email'}
+            errors={errors}
+            register={register}
+          />
 
-            <Input type={'email'} {...register('email')} />
+          <HookFormInput
+            name={'fullName'}
+            label={'Full name'}
+            errors={errors}
+            register={register}
+          />
 
-            {errors.email && (
-              <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
-            )}
-          </FormControl>
-
-          <FormControl isInvalid={!!errors.fullName}>
-            <FormLabel>Full name</FormLabel>
-
-            <Input {...register('fullName')} />
-
-            {errors.fullName && (
-              <FormErrorMessage>{errors.fullName.message}</FormErrorMessage>
-            )}
-          </FormControl>
-
-          <FormControl isInvalid={!!errors.birthday}>
-            <FormLabel>Birth day</FormLabel>
-            <Input
-              placeholder={'Recruit from date'}
-              {...register('birthday')}
-              type="date"
-            />
-
-            {errors.birthday && (
-              <FormErrorMessage>{errors.birthday.message}</FormErrorMessage>
-            )}
-          </FormControl>
+          <HookFormInput
+            name={'birthday'}
+            label={'Birth day'}
+            errors={errors}
+            register={register}
+            type="date"
+            placeholder={'Recruit from date'}
+          />
         </DrawerBody>
 
         <DrawerFooter>
