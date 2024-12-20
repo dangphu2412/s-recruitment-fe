@@ -4,9 +4,9 @@ import { useActivityRequests } from '../../../../../entities/activities/models/a
 import { useMemo } from 'react';
 
 export function UserRequestsTable() {
-  const { data, isLoading } = useActivityRequests();
+  const { data, isFetching } = useActivityRequests();
   const items = useMemo(() => data?.items ?? [], [data]);
   const columns = useUserRequestsColumns();
 
-  return <Table columns={columns} items={items} isLoading={isLoading} />;
+  return <Table columns={columns} items={items} isLoading={isFetching} />;
 }

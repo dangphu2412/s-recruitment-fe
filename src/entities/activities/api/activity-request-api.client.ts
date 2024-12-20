@@ -21,6 +21,9 @@ type ActivityRequestResponse = {
   approvalStatus: RequestActivityStatus;
   rejectReason: string;
   reviseNote: string;
+  requestChangeDay?: string;
+  compensatoryDay?: string;
+  reason?: string;
   author: User;
 };
 
@@ -28,6 +31,9 @@ type CreateRequestActivityDTO = {
   requestType: string;
   timeOfDayId: string;
   dayOfWeekId: string;
+  requestChangeDay?: string;
+  compensatoryDay?: string;
+  reason?: string;
 };
 
 type UpdateRequestActivityDTO = {

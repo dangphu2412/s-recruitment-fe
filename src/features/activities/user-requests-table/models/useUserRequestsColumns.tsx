@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/table-core';
-import { Button } from '@chakra-ui/react';
+import { Button, Tag } from '@chakra-ui/react';
 import {
   ACTIVITY_REQUESTS_QUERY_KEY,
   useMyActivityStore,
@@ -14,6 +14,7 @@ import {
 } from '../../../../entities/activities/config/constants/request-activity-status.enum';
 import { formatDate } from '../../../../shared/models/utils/date.utils';
 import { ActivityStatusTag } from '../../../../entities/activities/ui/ActivityStatusTag/ActivityStatusTag';
+import { RequestTypes } from '../../../../entities/activities/config/constants/request-activity-metadata.constant';
 
 export type RequestsColumn = {
   id: number;
@@ -31,6 +32,9 @@ export type RequestsColumn = {
   };
   createdAt: string;
   approvalStatus: RequestActivityStatus;
+  requestChangeDay?: string;
+  compensatoryDay?: string;
+  reason?: string;
 };
 
 export function useUserRequestsColumns() {
@@ -47,7 +51,32 @@ export function useUserRequestsColumns() {
         header: 'Requester'
       }),
       columnHelper.accessor('requestType', {
-        header: 'Request type'
+        header: 'Request type',
+        cell: props => {
+          const valueToTags = {
+            [RequestTypes.WORKING]: <Tag colorScheme={'pink'}>Working</Tag>,
+            [RequestTypes.ABSENCE]: <Tag colorScheme={'cyan'}>Absense</Tag>,
+            [RequestTypes.LATE]: <Tag colorScheme={'teal'}>Late</Tag>
+          };
+
+          return <>{valueToTags[props.getValue() as RequestTypes]}</>;
+        }
+      }),
+      columnHelper.accessor('requestChangeDay', {
+        header: 'Request change day',
+        cell: props => {
+          const value = props.getValue();
+
+          return <>{value ? formatDate(new Date(value)) : ''}</>;
+        }
+      }),
+      columnHelper.accessor('compensatoryDay', {
+        header: 'Compensatory day',
+        cell: props => {
+          const value = props.getValue();
+
+          return <>{value ? formatDate(new Date(value)) : ''}</>;
+        }
       }),
       columnHelper.accessor('dayOfWeek.name', {
         header: 'Day of week'

@@ -55,6 +55,7 @@ type MyDetailRequestDrawerProps = {
   rejectReason?: string;
   reviseNote?: string;
   id: number;
+  requestType: string;
 };
 
 export function MyDetailRequestDrawer({
