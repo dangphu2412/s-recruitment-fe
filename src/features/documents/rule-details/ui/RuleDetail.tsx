@@ -1,4 +1,4 @@
-import { Heading, Text, Image as ImageLoader } from '@chakra-ui/react';
+import { Heading, Image as ImageLoader, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -33,7 +33,7 @@ export function RuleDetail() {
           </Text>
           {' / '}
           <Text fontSize="sm" fontWeight="light" as={'span'}>
-            {data?.createdAt ? formatDate(new Date(data.createdAt)) : ''}
+            {formatDate(data?.createdAt)}
           </Text>
         </div>
 

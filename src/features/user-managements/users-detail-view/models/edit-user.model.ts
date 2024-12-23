@@ -1,11 +1,12 @@
 import { UpdateUserDto, User } from '../../../../entities/user/api';
+import { formatToInputDate } from '../../../../shared/models/utils/date.utils';
 
 export function mapUserDetailToEditForm(userDetail: User): EditUserForm {
   return {
     email: userDetail.email,
     username: userDetail.username,
     fullName: userDetail.fullName,
-    birthday: userDetail.birthday,
+    birthday: formatToInputDate(userDetail.birthday),
     phoneNumber: userDetail.phoneNumber,
     department: userDetail.department?.id,
     period: userDetail.period?.id

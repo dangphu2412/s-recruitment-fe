@@ -96,8 +96,8 @@ export function UpdateUserToMemberContainerDrawer({
     return probationUsers?.items.map(item => {
       return {
         ...item,
-        probationEndDate: formatDate(new Date(item.probationEndDate)),
-        createdAt: formatDate(new Date(item.createdAt))
+        probationEndDate: formatDate(item.probationEndDate),
+        createdAt: formatDate(item.createdAt)
       };
     });
   }, [probationUsers]);

@@ -12,7 +12,6 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
-  Select,
   Tag
 } from '@chakra-ui/react';
 import { object, string } from 'yup';
@@ -20,7 +19,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CreateActivityInputs } from '../../add-activity-request/ui/AddUsersContainer/AddUserDrawer';
 import React from 'react';
-import { REQUEST_TYPES } from '../../../../entities/activities/config/constants/request-activity-metadata.constant';
+import {
+  REQUEST_TYPES,
+  RequestTypes
+} from '../../../../entities/activities/config/constants/request-activity-metadata.constant';
 import { RequestActivityStatus } from '../../../../entities/activities/config/constants/request-activity-status.enum';
 import { ActivityStatusTag } from '../../../../entities/activities/ui/ActivityStatusTag/ActivityStatusTag';
 import {
@@ -34,28 +36,36 @@ import {
   useDayOfWeeksQuery,
   useTimeOfDayQuery
 } from '../../../../entities/activities/models/activity-master-data.model';
+import { HookFormSelect } from '../../../../shared/ui/Form/HookFormSelect/HookFormSelect';
+import { HookFormInput } from '../../../../shared/ui/Form/HookFormInput/HookFormInput';
+import { HookFormTextarea } from '../../../../shared/ui/Form/HookFormTextarea/HookFormInput';
 
 export type EditActivityInputs = {
   requestType: string;
   timeOfDay: string;
   dayOfWeek: string;
+  reason?: string;
+  requestChangeDay?: string;
+  compensatoryDay?: string;
 };
 
 const validationSchema = object({
   requestType: string().required(),
   timeOfDay: string().required(),
-  dayOfWeek: string().required()
+  dayOfWeek: string().optional(),
+  reason: string().optional(),
+  requestChangeDay: string().optional(),
+  compensatoryDay: string().optional()
 });
 
 type MyDetailRequestDrawerProps = {
   defaultValues: EditActivityInputs;
   isOpen: boolean;
   onClose: () => void;
+  id: number;
   approvalStatus: RequestActivityStatus;
   rejectReason?: string;
   reviseNote?: string;
-  id: number;
-  requestType: string;
 };
 
 export function MyDetailRequestDrawer({
@@ -77,6 +87,7 @@ export function MyDetailRequestDrawer({
     resolver: yupResolver(validationSchema),
     defaultValues
   });
+  const { requestType } = defaultValues;
   const notify = useNotify();
   const { mutate } = useUpdateMyActivityRequestMutation();
   const queryClient = useQueryClient();
@@ -85,7 +96,8 @@ export function MyDetailRequestDrawer({
 
   const disabled = [
     RequestActivityStatus.APPROVED,
-    RequestActivityStatus.REJECTED
+    RequestActivityStatus.REJECTED,
+    RequestActivityStatus.PENDING
   ].includes(approvalStatus);
 
   function submit(inputs: EditActivityInputs) {
@@ -115,6 +127,7 @@ export function MyDetailRequestDrawer({
     <>
       <Drawer isOpen={isOpen} placement="right" size={'md'} onClose={onClose}>
         <DrawerOverlay />
+
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader className={'flex items-center space-x-2'}>
@@ -126,97 +139,116 @@ export function MyDetailRequestDrawer({
             {RequestActivityStatus.REVISE === approvalStatus && reviseNote && (
               <Tag colorScheme={'yellow'}>Revise note: {reviseNote}</Tag>
             )}
-
             {RequestActivityStatus.REJECTED === approvalStatus &&
               rejectReason && (
                 <Tag colorScheme={'red'}>Reject reason: {rejectReason}</Tag>
               )}
-            <FormControl isInvalid={!!errors.requestType}>
-              <FormLabel htmlFor="requestType">Title</FormLabel>
+            <HookFormSelect
+              name={'requestType'}
+              errors={errors}
+              register={register}
+              label={'Request type'}
+              options={REQUEST_TYPES}
+              isDisabled
+            />
+            <HookFormSelect
+              name={'timeOfDay'}
+              errors={errors}
+              register={register}
+              label={'Time of day'}
+              options={TIME_OF_DAYS}
+              isDisabled={disabled}
+            />
+            {RequestTypes.WORKING === requestType && (
+              <FormControl isInvalid={!!errors.dayOfWeek} isDisabled={disabled}>
+                <FormLabel htmlFor="dayOfWeek">Day of week</FormLabel>
 
-              <Select
-                placeholder="Select request type"
-                {...register('requestType', {
-                  required: 'title is required'
-                })}
-                disabled
-              >
-                {REQUEST_TYPES?.map(timeOfDay => {
-                  return (
-                    <option key={timeOfDay.id} value={timeOfDay.id}>
-                      {timeOfDay.name}
-                    </option>
-                  );
-                })}
-              </Select>
+                <Controller
+                  control={control}
+                  name={'dayOfWeek'}
+                  render={({ field }) => {
+                    return (
+                      <RadioGroup
+                        onChange={field.onChange}
+                        value={field.value}
+                        isDisabled={disabled}
+                      >
+                        <div className={'flex row gap-2'}>
+                          {DAY_OF_WEEKS.map(dayOfWeek => {
+                            return (
+                              <Radio key={dayOfWeek.id} value={dayOfWeek.id}>
+                                {dayOfWeek.name}
+                              </Radio>
+                            );
+                          })}
+                        </div>
+                      </RadioGroup>
+                    );
+                  }}
+                />
 
-              {errors.requestType && (
-                <FormErrorMessage>
-                  {errors.requestType?.message}
-                </FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl isInvalid={!!errors.timeOfDay}>
-              <FormLabel htmlFor="timeOfDay">Time of day</FormLabel>
+                {errors.dayOfWeek && (
+                  <FormErrorMessage>
+                    {errors.dayOfWeek?.message}
+                  </FormErrorMessage>
+                )}
+              </FormControl>
+            )}
 
-              <Select
-                placeholder="Select Time of day"
-                {...register('timeOfDay', {
-                  required: 'Time of day is required'
-                })}
-                disabled={disabled}
-              >
-                {TIME_OF_DAYS?.map(timeOfDay => {
-                  return (
-                    <option key={timeOfDay.id} value={timeOfDay.id}>
-                      {timeOfDay.name}
-                    </option>
-                  );
-                })}
-              </Select>
-
-              {errors.timeOfDay && (
-                <FormErrorMessage>{errors.timeOfDay?.message}</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl isInvalid={!!errors.dayOfWeek}>
-              <FormLabel htmlFor="dayOfWeek">Day of week</FormLabel>
-
-              <Controller
-                control={control}
-                name={'dayOfWeek'}
-                render={({ field }) => {
-                  return (
-                    <RadioGroup
-                      onChange={field.onChange}
-                      value={field.value}
-                      isDisabled={disabled}
-                    >
-                      <div className={'flex row gap-2'}>
-                        {DAY_OF_WEEKS.map(dayOfWeek => {
-                          return (
-                            <Radio key={dayOfWeek.id} value={dayOfWeek.id}>
-                              {dayOfWeek.name}
-                            </Radio>
-                          );
-                        })}
-                      </div>
-                    </RadioGroup>
-                  );
-                }}
+            {[RequestTypes.ABSENCE, RequestTypes.LATE].includes(
+              requestType as RequestTypes
+            ) && (
+              <HookFormInput
+                name={'requestChangeDay'}
+                errors={errors}
+                register={register}
+                label={
+                  {
+                    [RequestTypes.ABSENCE]: 'Absense Day',
+                    [RequestTypes.LATE]: 'Late Day'
+                  }[requestType]
+                }
+                type={'date'}
+                isRequired
+                isDisabled={disabled}
               />
+            )}
 
-              {errors.dayOfWeek && (
-                <FormErrorMessage>{errors.dayOfWeek?.message}</FormErrorMessage>
-              )}
-            </FormControl>
+            {RequestTypes.LATE === requestType && (
+              <blockquote>
+                Late policy: 15 minutes late only. If any exceed, it will be
+                count as absence.
+              </blockquote>
+            )}
+
+            {RequestTypes.ABSENCE === requestType && (
+              <HookFormInput
+                name={'compensatoryDay'}
+                errors={errors}
+                register={register}
+                label={'Compensatory Day'}
+                type={'date'}
+                isRequired
+                isDisabled={disabled}
+              />
+            )}
+
+            {[RequestTypes.ABSENCE, RequestTypes.LATE].includes(
+              requestType as RequestTypes
+            ) && (
+              <HookFormTextarea
+                name={'reason'}
+                errors={errors}
+                register={register}
+                label={'Reason'}
+                isRequired
+                isDisabled={disabled}
+              />
+            )}
           </DrawerBody>
 
           <DrawerFooter>
-            {![
-              RequestActivityStatus.REJECTED,
-              RequestActivityStatus.APPROVED
-            ].includes(approvalStatus) && (
+            {!disabled && (
               <Button colorScheme="blue" onClick={handleSubmit(submit)}>
                 Submit
               </Button>

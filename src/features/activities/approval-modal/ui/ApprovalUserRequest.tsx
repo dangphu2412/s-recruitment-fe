@@ -76,7 +76,7 @@ export function ApprovalUserRequest() {
       <ModalContent>
         <ModalHeader>Reason modal</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody className={'space-y-2'}>
           <Text>
             {approvalModel.action === ApprovalRequestAction.REJECT
               ? 'Reject reason'

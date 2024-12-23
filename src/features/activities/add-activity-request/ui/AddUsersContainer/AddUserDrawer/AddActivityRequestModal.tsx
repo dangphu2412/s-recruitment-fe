@@ -11,8 +11,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Radio,
-  RadioGroup,
-  Select
+  RadioGroup
 } from '@chakra-ui/react';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -34,6 +33,7 @@ import {
 } from '../../../../../../entities/activities/models/activity-master-data.model';
 import { HookFormTextarea } from '../../../../../../shared/ui/Form/HookFormTextarea/HookFormInput';
 import { HookFormInput } from '../../../../../../shared/ui/Form/HookFormInput/HookFormInput';
+import { HookFormSelect } from '../../../../../../shared/ui/Form/HookFormSelect/HookFormSelect';
 
 export type CreateActivityInputs = {
   requestType: string;
@@ -112,51 +112,21 @@ export function AddActivityRequestModal({
         <ModalHeader>Create your activity request</ModalHeader>
 
         <ModalBody className="space-y-4">
-          <FormControl isInvalid={!!errors.requestType}>
-            <FormLabel htmlFor="requestType">Request type</FormLabel>
+          <HookFormSelect
+            name={'requestType'}
+            errors={errors}
+            register={register}
+            label={'Request type'}
+            options={REQUEST_TYPES}
+          />
 
-            <Select
-              placeholder="Select request type"
-              {...register('requestType', {
-                required: 'title is required'
-              })}
-            >
-              {REQUEST_TYPES?.map(timeOfDay => {
-                return (
-                  <option key={timeOfDay.id} value={timeOfDay.id}>
-                    {timeOfDay.name}
-                  </option>
-                );
-              })}
-            </Select>
-
-            {errors.requestType && (
-              <FormErrorMessage>{errors.requestType?.message}</FormErrorMessage>
-            )}
-          </FormControl>
-
-          <FormControl isInvalid={!!errors.timeOfDay}>
-            <FormLabel htmlFor="timeOfDay">Time of day</FormLabel>
-
-            <Select
-              placeholder="Select Time of day"
-              {...register('timeOfDay', {
-                required: 'Time of day is required'
-              })}
-            >
-              {timeOfDays?.map(timeOfDay => {
-                return (
-                  <option key={timeOfDay.id} value={timeOfDay.id}>
-                    {timeOfDay.name}
-                  </option>
-                );
-              })}
-            </Select>
-
-            {errors.timeOfDay && (
-              <FormErrorMessage>{errors.timeOfDay?.message}</FormErrorMessage>
-            )}
-          </FormControl>
+          <HookFormSelect
+            name={'timeOfDay'}
+            errors={errors}
+            register={register}
+            label={'Time of day'}
+            options={timeOfDays}
+          />
 
           {RequestTypes.WORKING === requestType && (
             <FormControl isInvalid={!!errors.dayOfWeek}>
