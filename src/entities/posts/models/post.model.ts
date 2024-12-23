@@ -100,7 +100,7 @@ const postSlice = createSlice({
       action: PayloadAction<FilterParam<PostOverviewFilter>>
     ) => {
       state.overview.isSubmitted = true;
-      if (isNil(action.payload.query)) {
+      if (!isNil(action.payload.query)) {
         state.overview.filters.query = {
           type: FilterKey.LIKE,
           value: action.payload.query

@@ -87,7 +87,7 @@ export function useAdminColumns() {
       }),
       columnHelper.accessor('joinedAt', {
         header: 'Joined At',
-        cell: props => <>{formatDate(new Date(props.getValue()))}</>
+        cell: props => <>{formatDate(props.getValue())}</>
       }),
       columnHelper.accessor('roles', {
         header: 'Roles',
