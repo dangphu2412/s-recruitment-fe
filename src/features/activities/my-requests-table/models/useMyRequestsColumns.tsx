@@ -3,6 +3,8 @@ import { createColumnHelper } from '@tanstack/table-core';
 import { formatDate } from '../../../../shared/models/utils/date.utils';
 import { ActivityStatusTag } from '../../../../entities/activities/ui/ActivityStatusTag/ActivityStatusTag';
 import { RequestActivityStatus } from '../../../../entities/activities/config/constants/request-activity-status.enum';
+import { RequestTypeTag } from '../../../../entities/activities/ui/RequestTypeTag/RequestTypeTag';
+import { RequestTypes } from '../../../../entities/activities/config/constants/request-activity-metadata.constant';
 
 export type RequestsColumn = {
   id: number;
@@ -25,7 +27,10 @@ export function useMyRequestsColumns() {
 
     return [
       columnHelper.accessor('requestType', {
-        header: 'Request type'
+        header: 'Request type',
+        cell: props => {
+          return <RequestTypeTag value={props.getValue() as RequestTypes} />;
+        }
       }),
       columnHelper.accessor('dayOfWeek.name', {
         header: 'Day of week'
@@ -35,7 +40,7 @@ export function useMyRequestsColumns() {
       }),
       columnHelper.accessor('createdAt', {
         header: 'Submitted at',
-        cell: props => <>{formatDate(new Date(props.getValue()))}</>
+        cell: props => <>{formatDate(props.getValue())}</>
       }),
       columnHelper.accessor('approvalStatus', {
         header: 'Status',

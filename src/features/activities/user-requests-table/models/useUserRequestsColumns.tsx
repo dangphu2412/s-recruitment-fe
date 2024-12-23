@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/table-core';
-import { Button, Tag } from '@chakra-ui/react';
+import { Button, Tooltip } from '@chakra-ui/react';
 import {
   ACTIVITY_REQUESTS_QUERY_KEY,
   useMyActivityStore,
@@ -15,6 +15,10 @@ import {
 import { formatDate } from '../../../../shared/models/utils/date.utils';
 import { ActivityStatusTag } from '../../../../entities/activities/ui/ActivityStatusTag/ActivityStatusTag';
 import { RequestTypes } from '../../../../entities/activities/config/constants/request-activity-metadata.constant';
+import { RequestTypeTag } from '../../../../entities/activities/ui/RequestTypeTag/RequestTypeTag';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faRotateBack, faX } from '@fortawesome/free-solid-svg-icons';
+import { RequestDayText } from '../../../../entities/activities/ui/RequestDayText/RequestDayText';
 
 export type RequestsColumn = {
   id: number;
@@ -53,36 +57,22 @@ export function useUserRequestsColumns() {
       columnHelper.accessor('requestType', {
         header: 'Request type',
         cell: props => {
-          const valueToTags = {
-            [RequestTypes.WORKING]: <Tag colorScheme={'pink'}>Working</Tag>,
-            [RequestTypes.ABSENCE]: <Tag colorScheme={'cyan'}>Absense</Tag>,
-            [RequestTypes.LATE]: <Tag colorScheme={'teal'}>Late</Tag>
-          };
-
-          return <>{valueToTags[props.getValue() as RequestTypes]}</>;
+          return <RequestTypeTag value={props.getValue() as RequestTypes} />;
         }
       }),
-      columnHelper.accessor('requestChangeDay', {
-        header: 'Request change day',
+      columnHelper.display({
+        header: 'Request day',
         cell: props => {
-          const value = props.getValue();
-
-          return <>{value ? formatDate(new Date(value)) : ''}</>;
+          return (
+            <RequestDayText
+              requestType={props.row.original.requestType}
+              dayOfWeekName={props.row.original.dayOfWeek?.name}
+              timeOfDayName={props.row.original.timeOfDay.name}
+              requestChangeDay={props.row.original.requestChangeDay}
+              compensatoryDay={props.row.original.compensatoryDay}
+            />
+          );
         }
-      }),
-      columnHelper.accessor('compensatoryDay', {
-        header: 'Compensatory day',
-        cell: props => {
-          const value = props.getValue();
-
-          return <>{value ? formatDate(new Date(value)) : ''}</>;
-        }
-      }),
-      columnHelper.accessor('dayOfWeek.name', {
-        header: 'Day of week'
-      }),
-      columnHelper.accessor('timeOfDay.name', {
-        header: 'Time of day'
       }),
       columnHelper.accessor('createdAt', {
         header: 'Submitted at',
@@ -115,57 +105,63 @@ export function useUserRequestsColumns() {
           return (
             <div className={'flex gap-2'}>
               {actions.includes(ApprovalRequestAction.APPROVE) && (
-                <Button
-                  colorScheme={'green'}
-                  onClick={() => {
-                    mutate(
-                      {
-                        id: row.original.id,
-                        action: ApprovalRequestAction.APPROVE
-                      },
-                      {
-                        onSuccess: () => {
-                          notify({
-                            title: 'Success',
-                            description: 'Request approved',
-                            status: 'success'
-                          });
-                          queryClient.invalidateQueries(
-                            ACTIVITY_REQUESTS_QUERY_KEY
-                          );
+                <Tooltip label="Approve">
+                  <Button
+                    colorScheme={'green'}
+                    onClick={() => {
+                      mutate(
+                        {
+                          id: row.original.id,
+                          action: ApprovalRequestAction.APPROVE
+                        },
+                        {
+                          onSuccess: () => {
+                            notify({
+                              title: 'Success',
+                              description: 'Request approved',
+                              status: 'success'
+                            });
+                            queryClient.invalidateQueries(
+                              ACTIVITY_REQUESTS_QUERY_KEY
+                            );
+                          }
                         }
-                      }
-                    );
-                  }}
-                >
-                  Approve
-                </Button>
+                      );
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faCheck} />
+                  </Button>
+                </Tooltip>
               )}
               {actions.includes(ApprovalRequestAction.REJECT) && (
-                <Button
-                  colorScheme={'red'}
-                  onClick={() => {
-                    setApprovalModel({
-                      id: row.original.id,
-                      action: ApprovalRequestAction.REJECT
-                    });
-                  }}
-                >
-                  Reject
-                </Button>
+                <Tooltip label="Reject">
+                  <Button
+                    colorScheme={'red'}
+                    onClick={() => {
+                      setApprovalModel({
+                        id: row.original.id,
+                        action: ApprovalRequestAction.REJECT
+                      });
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faX} />
+                  </Button>
+                </Tooltip>
               )}
               {actions.includes(ApprovalRequestAction.REVISE) && (
-                <Button
-                  colorScheme={'purple'}
-                  onClick={() => {
-                    setApprovalModel({
-                      id: row.original.id,
-                      action: ApprovalRequestAction.REVISE
-                    });
-                  }}
-                >
-                  Revise
-                </Button>
+                <Tooltip label="Revise">
+                  <Button
+                    colorScheme={'purple'}
+                    onClick={() => {
+                      setApprovalModel({
+                        id: row.original.id,
+                        action: ApprovalRequestAction.REVISE
+                      });
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faRotateBack} />
+                  </Button>
+                </Tooltip>
               )}
             </div>
           );

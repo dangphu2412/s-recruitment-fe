@@ -4,6 +4,7 @@ import {
 } from '../../../../entities/activities/models/activity-request.model';
 import React from 'react';
 import { MyDetailRequestDrawer } from './MyDetailRequestDrawer';
+import { formatToInputDate } from '../../../../shared/models/utils/date.utils';
 
 export function MyDetailRequest() {
   const selectedId = useMyActivityStore(state => state.selectedId);
@@ -24,9 +25,15 @@ export function MyDetailRequest() {
       defaultValues={{
         requestType: data.requestType,
         timeOfDay: data.timeOfDay?.id,
-        dayOfWeek: data.dayOfWeek?.id
+        dayOfWeek: data.dayOfWeek?.id,
+        reason: data.reason,
+        requestChangeDay: data.requestChangeDay
+          ? formatToInputDate(data.requestChangeDay)
+          : undefined,
+        compensatoryDay: data.compensatoryDay
+          ? formatToInputDate(data.compensatoryDay)
+          : undefined
       }}
-      requestType={data.requestType}
       isOpen={selectedId !== null}
       onClose={handleClose}
       approvalStatus={data.approvalStatus}
