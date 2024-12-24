@@ -78,3 +78,17 @@ export function accumulateTotalActivities(
     { working: 0, late: 0, absence: 0 }
   );
 }
+
+export function groupCalendarItemsByRequestType(
+  items: CalendarItem[]
+): Record<string, CalendarItem[]> {
+  return items.reduce((acc, item) => {
+    if (!acc[item.requestType]) {
+      acc[item.requestType] = [];
+    }
+
+    acc[item.requestType].push(item);
+
+    return acc;
+  }, {} as Record<string, CalendarItem[]>);
+}

@@ -16,18 +16,8 @@ import {
   CalendarItem,
   mapToCalendarItems
 } from '../../models/user-activities-calendar.model';
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text
-} from '@chakra-ui/react';
-import { RequestDayText } from '../../../../../entities/activities/ui/RequestDayText/RequestDayText';
+import { Text } from '@chakra-ui/react';
+import { UserActivitiesDetailModal } from '../UserActivitiesDetailModal/UserActivitiesDetailModal';
 
 export function UserActivitiesCalendar() {
   const fromDate = useActivityStore(state => state.fromDate);
@@ -46,10 +36,6 @@ export function UserActivitiesCalendar() {
       fromDate: date,
       toDate: endOfDay(date)
     });
-  }
-
-  function handleClose() {
-    setSelectedDays(null);
   }
 
   return (
@@ -83,37 +69,10 @@ export function UserActivitiesCalendar() {
         </MonthlyBody>
       </MonthlyCalendar>
 
-      <Modal isOpen={selectedDays !== null} onClose={handleClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Registered detail</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <ul>
-              {selectedDays?.map((item, index) => {
-                return (
-                  <li key={index}>
-                    <p>
-                      {item.requestType} - {item?.author?.email}
-                    </p>
-                    <RequestDayText
-                      {...item}
-                      dayOfWeekName={item.dayOfWeek?.name}
-                      timeOfDayName={item.timeOfDay?.name}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <UserActivitiesDetailModal
+        selectedDays={selectedDays}
+        onClose={() => setSelectedDays(null)}
+      />
     </>
   );
 }
