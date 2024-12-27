@@ -16,9 +16,10 @@ import {
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { object, string } from 'yup';
 import { useQueryClient } from 'react-query';
 import {
+  ActivityRequestInputs,
+  activityRequestValidationSchema,
   MY_ACTIVITY_REQUESTS_QUERY_KEY,
   useCreateActivityRequestMutation
 } from '../../../../../../entities/activities/models/activity-request.model';
@@ -35,25 +36,7 @@ import { HookFormTextarea } from '../../../../../../shared/ui/Form/HookFormTexta
 import { HookFormInput } from '../../../../../../shared/ui/Form/HookFormInput/HookFormInput';
 import { HookFormSelect } from '../../../../../../shared/ui/Form/HookFormSelect/HookFormSelect';
 
-export type CreateActivityInputs = {
-  requestType: string;
-  timeOfDay: string;
-  dayOfWeek: string;
-  reason?: string;
-  requestChangeDay?: string;
-  compensatoryDay?: string;
-};
-
 type AddActivityModalProps = Pick<UseDisclosureApi, 'onClose'>;
-
-const validationSchema = object({
-  requestType: string().required(),
-  timeOfDay: string().required(),
-  dayOfWeek: string().optional(),
-  reason: string().optional(),
-  requestChangeDay: string().optional(),
-  compensatoryDay: string().optional()
-});
 
 export function AddActivityRequestModal({
   onClose
@@ -64,9 +47,9 @@ export function AddActivityRequestModal({
     formState: { errors },
     control,
     watch
-  } = useForm<CreateActivityInputs>({
+  } = useForm<ActivityRequestInputs>({
     mode: 'onChange',
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(activityRequestValidationSchema),
     defaultValues: {
       requestType: RequestTypes.WORKING
     }
@@ -80,7 +63,7 @@ export function AddActivityRequestModal({
   const { data: dayOfWeeks } = useDayOfWeeksQuery();
   const { data: timeOfDays } = useTimeOfDayQuery();
 
-  const createRequest: SubmitHandler<CreateActivityInputs> = inputs => {
+  const createRequest: SubmitHandler<ActivityRequestInputs> = inputs => {
     mutate(
       {
         requestType: inputs.requestType,
@@ -118,6 +101,7 @@ export function AddActivityRequestModal({
             register={register}
             label={'Request type'}
             options={REQUEST_TYPES}
+            isRequired
           />
 
           <HookFormSelect
@@ -126,10 +110,11 @@ export function AddActivityRequestModal({
             register={register}
             label={'Time of day'}
             options={timeOfDays}
+            isRequired
           />
 
           {RequestTypes.WORKING === requestType && (
-            <FormControl isInvalid={!!errors.dayOfWeek}>
+            <FormControl isInvalid={!!errors.dayOfWeek} isRequired>
               <FormLabel htmlFor="dayOfWeek">Day of week</FormLabel>
 
               <Controller

@@ -14,10 +14,8 @@ import {
   RadioGroup,
   Tag
 } from '@chakra-ui/react';
-import { object, string } from 'yup';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { CreateActivityInputs } from '../../add-activity-request/ui/AddUsersContainer/AddUserDrawer';
 import React from 'react';
 import {
   REQUEST_TYPES,
@@ -27,6 +25,8 @@ import { RequestActivityStatus } from '../../../../entities/activities/config/co
 import { ActivityStatusTag } from '../../../../entities/activities/ui/ActivityStatusTag/ActivityStatusTag';
 import {
   ACTIVITY_REQUESTS_QUERY_KEY,
+  ActivityRequestInputs,
+  activityRequestValidationSchema,
   MY_ACTIVITY_REQUESTS_QUERY_KEY,
   useUpdateMyActivityRequestMutation
 } from '../../../../entities/activities/models/activity-request.model';
@@ -40,26 +40,8 @@ import { HookFormSelect } from '../../../../shared/ui/Form/HookFormSelect/HookFo
 import { HookFormInput } from '../../../../shared/ui/Form/HookFormInput/HookFormInput';
 import { HookFormTextarea } from '../../../../shared/ui/Form/HookFormTextarea/HookFormInput';
 
-export type EditActivityInputs = {
-  requestType: string;
-  timeOfDay: string;
-  dayOfWeek: string;
-  reason?: string;
-  requestChangeDay?: string;
-  compensatoryDay?: string;
-};
-
-const validationSchema = object({
-  requestType: string().required(),
-  timeOfDay: string().required(),
-  dayOfWeek: string().optional(),
-  reason: string().optional(),
-  requestChangeDay: string().optional(),
-  compensatoryDay: string().optional()
-});
-
 type MyDetailRequestDrawerProps = {
-  defaultValues: EditActivityInputs;
+  defaultValues: ActivityRequestInputs;
   isOpen: boolean;
   onClose: () => void;
   id: number;
@@ -82,9 +64,9 @@ export function MyDetailRequestDrawer({
     register,
     formState: { errors },
     control
-  } = useForm<CreateActivityInputs>({
+  } = useForm<ActivityRequestInputs>({
     mode: 'onChange',
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(activityRequestValidationSchema),
     defaultValues
   });
   const { requestType } = defaultValues;
@@ -100,7 +82,7 @@ export function MyDetailRequestDrawer({
     RequestActivityStatus.PENDING
   ].includes(approvalStatus);
 
-  function submit(inputs: EditActivityInputs) {
+  function submit(inputs: ActivityRequestInputs) {
     const dto = {
       id,
       timeOfDayId: inputs.timeOfDay,
@@ -160,7 +142,11 @@ export function MyDetailRequestDrawer({
               isDisabled={disabled}
             />
             {RequestTypes.WORKING === requestType && (
-              <FormControl isInvalid={!!errors.dayOfWeek} isDisabled={disabled}>
+              <FormControl
+                isInvalid={!!errors.dayOfWeek}
+                isDisabled={disabled}
+                isRequired
+              >
                 <FormLabel htmlFor="dayOfWeek">Day of week</FormLabel>
 
                 <Controller

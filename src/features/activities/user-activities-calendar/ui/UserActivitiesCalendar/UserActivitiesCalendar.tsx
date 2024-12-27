@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useMemo, useState } from 'react';
-import { endOfDay, startOfMonth } from 'date-fns';
+import { endOfMonth, startOfMonth } from 'date-fns';
 import {
   MonthlyBody,
   MonthlyCalendar,
@@ -18,11 +18,12 @@ import {
 } from '../../models/user-activities-calendar.model';
 import { Tag, Text } from '@chakra-ui/react';
 import { UserActivitiesDetailModal } from '../UserActivitiesDetailModal/UserActivitiesDetailModal';
+import classNames from 'classnames';
 
 export function UserActivitiesCalendar() {
   const fromDate = useActivityStore(state => state.fromDate);
-  const submitValues = useActivityStore(state => state.submitValues);
   const currentMonth = startOfMonth(fromDate);
+
   const [selectedDays, setSelectedDays] = useState<CalendarItem[] | null>(null);
 
   const { data } = useActivityQuery();
@@ -31,10 +32,12 @@ export function UserActivitiesCalendar() {
     [data, currentMonth]
   );
 
+  const submitValues = useActivityStore(state => state.submitValues);
+
   function handleChangeMonth(date: Date) {
     submitValues({
-      fromDate: date,
-      toDate: endOfDay(date)
+      fromDate: startOfMonth(date),
+      toDate: endOfMonth(date)
     });
   }
 
@@ -47,6 +50,7 @@ export function UserActivitiesCalendar() {
         onCurrentMonthChange={handleChangeMonth}
       >
         <MonthlyNav />
+
         <MonthlyBody events={events}>
           <MonthlyDay<CalendarItem>
             renderDay={items => {
@@ -72,7 +76,9 @@ export function UserActivitiesCalendar() {
 
               return (
                 <div
-                  className={'cursor-pointer flex flex-col gap-2 py-2'}
+                  className={classNames(
+                    'cursor-pointer flex flex-col gap-2 py-2'
+                  )}
                   onClick={() => setSelectedDays(items)}
                 >
                   {renderTag(working, 'workings', 'green')}
