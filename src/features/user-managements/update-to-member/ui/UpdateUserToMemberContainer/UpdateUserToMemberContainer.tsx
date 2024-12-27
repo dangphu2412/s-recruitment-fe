@@ -3,11 +3,11 @@ import { Button } from '@chakra-ui/react';
 import { UpdateUserToMemberContainerDrawer } from './AddUserDrawer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { HeaderAction } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { HeaderDrawerAction } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 
 export function UpdateUserToMemberContainer(): React.ReactElement {
   return (
-    <HeaderAction
+    <HeaderDrawerAction
       id={'update-user-to-member'}
       triggerButton={props => (
         <Button colorScheme="pink" {...props}>

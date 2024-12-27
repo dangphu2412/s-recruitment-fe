@@ -16,7 +16,7 @@ import {
   CalendarItem,
   mapToCalendarItems
 } from '../../models/user-activities-calendar.model';
-import { Text } from '@chakra-ui/react';
+import { Tag, Text } from '@chakra-ui/react';
 import { UserActivitiesDetailModal } from '../UserActivitiesDetailModal/UserActivitiesDetailModal';
 
 export function UserActivitiesCalendar() {
@@ -53,15 +53,31 @@ export function UserActivitiesCalendar() {
               const { absence, late, working } =
                 accumulateTotalActivities(items);
 
+              function renderTag(
+                value: number,
+                text: string,
+                colorScheme: string
+              ) {
+                if (!value) {
+                  return null;
+                }
+
+                return (
+                  <Tag colorScheme={colorScheme} className={'space-x-2'}>
+                    <strong>{value}</strong>
+                    <span>{text}</span>
+                  </Tag>
+                );
+              }
+
               return (
                 <div
-                  className={'cursor-pointer'}
+                  className={'cursor-pointer flex flex-col gap-2 py-2'}
                   onClick={() => setSelectedDays(items)}
                 >
-                  <hr />
-                  <p>{working ? <strong>{working}</strong> : 0} workings</p>
-                  <p>{late ? <strong>{late}</strong> : 0} late</p>
-                  <p>{absence ? <strong>{absence}</strong> : 0} absence</p>
+                  {renderTag(working, 'workings', 'green')}
+                  {renderTag(late, 'late', 'red')}
+                  {renderTag(absence, 'absence', 'yellow')}
                 </div>
               );
             }}

@@ -1,11 +1,5 @@
-import { ReactElement, ReactNode } from 'react';
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  Row,
-  useReactTable
-} from '@tanstack/react-table';
+import { CSSProperties, ReactElement } from 'react';
+import { flexRender } from '@tanstack/react-table';
 import {
   Table as BaseTable,
   TableCaption,
@@ -20,29 +14,86 @@ import { TableLoading } from './TableLoading';
 import { NoData } from './NoData';
 import classNames from 'classnames';
 import classes from './Table.module.scss';
-
-type Props<D extends object> = {
-  caption?: ReactNode;
-  items?: D[];
-  columns: ColumnDef<D, any>[];
-  isLoading?: boolean;
-  onRowClick?: (row: Row<D>) => void;
-  className?: string;
-};
+import { ActionColumnIds, BaseTableProps } from './models/table.model';
+import { SortIcon } from './SortIcon';
+import { MoreAction } from './MoreAction';
+import { Column } from '@tanstack/table-core';
 
 export function Table<T extends object>({
   items = [],
-  columns,
   isLoading = false,
   onRowClick,
   caption,
-  className
-}: Props<T>): ReactElement {
-  const tableInstance = useReactTable({
-    columns,
-    data: items,
-    getCoreRowModel: getCoreRowModel()
-  });
+  className,
+  table
+}: BaseTableProps<T>): ReactElement {
+  function getPinStyle(column: Column<T>): CSSProperties {
+    const isPinned = column.getIsPinned();
+    const isLastLeftPinnedColumn =
+      isPinned === 'left' && column.getIsLastColumn('left');
+    const isFirstRightPinnedColumn =
+      isPinned === 'right' && column.getIsFirstColumn('right');
+
+    return {
+      minWidth: column.id !== 'select' ? column.getSize() : undefined,
+      boxShadow: isLastLeftPinnedColumn
+        ? '-4px 0 4px -4px gray inset'
+        : isFirstRightPinnedColumn
+        ? '4px 0 4px -4px gray inset'
+        : undefined,
+      left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
+      right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
+      position: isPinned ? 'sticky' : 'relative',
+      width: column.getSize(),
+      zIndex: isPinned ? 1 : 0
+    };
+  }
+
+  function renderHeader() {
+    return (
+      <Thead className={'sticky top-0'}>
+        {table.getHeaderGroups().map(headerGroup => {
+          return (
+            <Tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <Th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    color="grey"
+                    backgroundColor={'white'}
+                    className={classNames('shadow-md')}
+                    style={getPinStyle(header.column)}
+                  >
+                    <div className={'flex flex-row  items-center'}>
+                      <span>
+                        {header.isPlaceholder
+                          ? ''
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </span>
+
+                      {header.column.getCanSort() && (
+                        <SortIcon column={header.column} />
+                      )}
+
+                      {!ActionColumnIds[
+                        header.id
+                          .toString()
+                          .toUpperCase() as keyof typeof ActionColumnIds
+                      ] && <MoreAction column={header.column} />}
+                    </div>
+                  </Th>
+                );
+              })}
+            </Tr>
+          );
+        })}
+      </Thead>
+    );
+  }
 
   function renderBody() {
     if (isLoading) {
@@ -50,8 +101,8 @@ export function Table<T extends object>({
     }
 
     return (
-      <Tbody>
-        {tableInstance.getRowModel().rows.map(row => {
+      <Tbody className={'relative'}>
+        {table.getRowModel().rows.map(row => {
           return (
             <Tr
               key={row.id}
@@ -62,13 +113,15 @@ export function Table<T extends object>({
               }}
               cursor={onRowClick ? 'pointer' : 'auto'}
             >
-              {row.getAllCells().map(cell => {
+              {row.getVisibleCells().map(cell => {
                 const cellId = `${row.id}-${cell.column.id}`;
-                // <Text fontSize="md" fontStyle="italic" color="gray.500">
-                //   No data
-                // </Text>
+
                 return (
-                  <Td key={cellId}>
+                  <Td
+                    key={cellId}
+                    className={classNames('bg-white')}
+                    style={getPinStyle(cell.column)}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Td>
                 );
@@ -90,31 +143,7 @@ export function Table<T extends object>({
       <BaseTable variant="simple" className={'w-full'}>
         {caption && <TableCaption>{caption}</TableCaption>}
 
-        <Thead>
-          {tableInstance.getHeaderGroups().map(headerGroup => {
-            return (
-              <Tr key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <Th
-                      key={header.id}
-                      colSpan={header.colSpan}
-                      color="grey"
-                      backgroundColor={'white'}
-                      className="shadow-md sticky top-0"
-                    >
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                    </Th>
-                  );
-                })}
-              </Tr>
-            );
-          })}
-        </Thead>
-
+        {renderHeader()}
         {renderBody()}
       </BaseTable>
 

@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         main={'Overview Dashboard'}
         brief={'Overall members activities'}
       />
-      <UserActivitiesCalendar />;
+      <UserActivitiesCalendar />
     </Card>
   );
 };

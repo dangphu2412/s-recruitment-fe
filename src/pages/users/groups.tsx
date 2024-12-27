@@ -3,7 +3,7 @@ import { Card, ContentHeader } from '../../shared/ui';
 import { UserGroupTable } from '../../features/user-managements/user-groups-table';
 import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import {
-  HeaderAction,
+  HeaderDrawerAction,
   HeaderActionGroup
 } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { AddButton } from '../../shared/ui/Button';
@@ -19,7 +19,7 @@ export default function UserGroupsPage(): ReactElement {
         />
 
         <HeaderActionGroup>
-          <HeaderAction
+          <HeaderDrawerAction
             id={'create-groups'}
             triggerButton={AddButton}
             content={AddUserGroupDrawer}

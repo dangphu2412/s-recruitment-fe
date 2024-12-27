@@ -1,4 +1,4 @@
-import { Table } from '../../../../../shared/ui';
+import { BasicTable } from '../../../../../shared/ui';
 import { useMyRequestsColumns } from '../../models/useMyRequestsColumns';
 import {
   useMyActivityRequestsQuery,
@@ -13,7 +13,7 @@ export function MyRequestsTable() {
   const selectId = useMyActivityStore(state => state.setSelectedId);
 
   return (
-    <Table
+    <BasicTable
       columns={columns}
       items={items}
       isLoading={isLoading}

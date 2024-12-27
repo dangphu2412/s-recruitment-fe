@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { useUserGroupColumns } from '../../models/useUserGroupColumns';
-import { Table } from '../../../../../shared/ui';
+import { BasicTable } from '../../../../../shared/ui';
 import { EMPTY_ARRAY } from '../../../../../shared/config';
 import { useUserGroupQuery } from '../../../../../entities/user/models/user-group.model';
 
@@ -9,7 +9,7 @@ export function UserGroupTable(): ReactElement {
   const columns = useUserGroupColumns();
 
   return (
-    <Table
+    <BasicTable
       columns={columns}
       items={data?.items ?? EMPTY_ARRAY}
       isLoading={isFetching}

@@ -44,6 +44,17 @@ export function useAdminColumns() {
 
   return useMemo(
     () => [
+      columnHelper.accessor('deletedAt', {
+        header: 'Status',
+        cell: props => (
+          <StatusCell
+            key={props.row.id}
+            {...props}
+            onSwitchFinish={handleRefresh}
+          />
+        ),
+        enableSorting: false
+      }),
       columnHelper.accessor('username', {
         header: 'Username',
         cell: UsernameCell
@@ -95,16 +106,6 @@ export function useAdminColumns() {
       }),
       columnHelper.accessor('department.name', {
         header: 'Department'
-      }),
-      columnHelper.accessor('deletedAt', {
-        header: 'Status',
-        cell: props => (
-          <StatusCell
-            key={props.row.id}
-            {...props}
-            onSwitchFinish={handleRefresh}
-          />
-        )
       }),
       columnHelper.display({
         header: 'Actions',

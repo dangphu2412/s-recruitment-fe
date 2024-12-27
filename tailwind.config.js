@@ -19,6 +19,7 @@ module.exports = {
       'footer-height': '6rem'
     },
     colors: {
+      ...colors,
       success: 'var(--bs-success)',
       primary: 'var(--bs-primary)',
       disable: 'var(--bs-gray)',

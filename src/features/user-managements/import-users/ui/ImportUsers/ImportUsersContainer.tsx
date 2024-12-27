@@ -3,11 +3,11 @@ import { Button } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { ImportUsersDrawer } from './ImportUsersModal';
-import { HeaderAction } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { HeaderDrawerAction } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 
 export function ImportUsersContainer(): React.ReactElement {
   return (
-    <HeaderAction
+    <HeaderDrawerAction
       id={'import-users-action'}
       triggerButton={props => (
         <Button colorScheme="pink" {...props}>

@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { useRouter } from 'next/router';
-import { Table } from '../../../../../shared/ui/Table';
+import { BasicTable } from '../../../../../shared/ui/Table';
 import { useRecruitmentColumns, useRecruitmentEventItems } from '../../models';
 import { useSearch } from '../../../../../shared/models/search-model';
 import { Input } from '@chakra-ui/react';
@@ -17,7 +17,7 @@ export function RecruitmentEventTable(): ReactElement {
         placeholder={'Search by name, location ...'}
         onChange={e => setSearch(e.target.value)}
       />
-      <Table
+      <BasicTable
         // @ts-ignore
         columns={columns}
         items={items}
