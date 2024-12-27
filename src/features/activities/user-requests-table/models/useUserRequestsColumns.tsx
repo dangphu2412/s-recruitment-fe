@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/table-core';
-import { Button, Tooltip } from '@chakra-ui/react';
+import { Checkbox } from '@chakra-ui/react';
 import {
   ACTIVITY_REQUESTS_QUERY_KEY,
   useMyActivityStore,
@@ -16,9 +16,10 @@ import { formatDate } from '../../../../shared/models/utils/date.utils';
 import { ActivityStatusTag } from '../../../../entities/activities/ui/ActivityStatusTag/ActivityStatusTag';
 import { RequestTypes } from '../../../../entities/activities/config/constants/request-activity-metadata.constant';
 import { RequestTypeTag } from '../../../../entities/activities/ui/RequestTypeTag/RequestTypeTag';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faRotateBack, faX } from '@fortawesome/free-solid-svg-icons';
 import { RequestDayText } from '../../../../entities/activities/ui/RequestDayText/RequestDayText';
+import { MoreActionCell } from '../../../../shared/ui/Table/Cell/MoreActionCell';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faX, faRotateBack } from '@fortawesome/free-solid-svg-icons';
 
 export type RequestsColumn = {
   id: number;
@@ -51,6 +52,31 @@ export function useUserRequestsColumns() {
     const columnHelper = createColumnHelper<RequestsColumn>();
 
     return [
+      columnHelper.display({
+        id: 'select',
+        header: ({ table }) => {
+          return (
+            <Checkbox
+              isChecked={table.getIsAllRowsSelected()}
+              isIndeterminate={table.getIsSomeRowsSelected()}
+              onChange={
+                table.getIsSomeRowsSelected()
+                  ? () => table.setRowSelection(() => ({}))
+                  : table.getToggleAllRowsSelectedHandler()
+              }
+            />
+          );
+        },
+        cell: ({ row }) => {
+          return (
+            <Checkbox
+              isChecked={row.getIsSelected()}
+              onChange={row.getToggleSelectedHandler()}
+            />
+          );
+        },
+        enableSorting: false
+      }),
       columnHelper.accessor('author.fullName', {
         header: 'Requester'
       }),
@@ -85,6 +111,7 @@ export function useUserRequestsColumns() {
         }
       }),
       columnHelper.display({
+        id: 'Actions',
         header: 'Actions',
         cell: ({ row }) => {
           const nextStateButton: Record<
@@ -102,69 +129,80 @@ export function useUserRequestsColumns() {
           };
           const actions = nextStateButton[row.original.approvalStatus];
 
-          return (
-            <div className={'flex gap-2'}>
-              {actions.includes(ApprovalRequestAction.APPROVE) && (
-                <Tooltip label="Approve">
-                  <Button
-                    colorScheme={'green'}
-                    onClick={() => {
-                      mutate(
-                        {
-                          id: row.original.id,
-                          action: ApprovalRequestAction.APPROVE
-                        },
-                        {
-                          onSuccess: () => {
-                            notify({
-                              title: 'Success',
-                              description: 'Request approved',
-                              status: 'success'
-                            });
-                            queryClient.invalidateQueries(
-                              ACTIVITY_REQUESTS_QUERY_KEY
-                            );
-                          }
-                        }
-                      );
-                    }}
-                  >
+          function renderActions() {
+            const btnActions = [];
+            if (actions.includes(ApprovalRequestAction.APPROVE)) {
+              btnActions.push({
+                key: 'approve',
+                content: (
+                  <p className={'space-x-1'}>
                     <FontAwesomeIcon icon={faCheck} />
-                  </Button>
-                </Tooltip>
-              )}
-              {actions.includes(ApprovalRequestAction.REJECT) && (
-                <Tooltip label="Reject">
-                  <Button
-                    colorScheme={'red'}
-                    onClick={() => {
-                      setApprovalModel({
-                        id: row.original.id,
-                        action: ApprovalRequestAction.REJECT
-                      });
-                    }}
-                  >
+                    <span>Approve</span>
+                  </p>
+                ),
+                onClick: () => {
+                  mutate(
+                    {
+                      id: row.original.id,
+                      action: ApprovalRequestAction.APPROVE
+                    },
+                    {
+                      onSuccess: () => {
+                        notify({
+                          title: 'Success',
+                          description: 'Request approved',
+                          status: 'success'
+                        });
+                        queryClient.invalidateQueries(
+                          ACTIVITY_REQUESTS_QUERY_KEY
+                        );
+                      }
+                    }
+                  );
+                }
+              });
+            }
+
+            if (actions.includes(ApprovalRequestAction.REJECT)) {
+              btnActions.push({
+                key: 'reject',
+                content: (
+                  <p className={'space-x-1'}>
                     <FontAwesomeIcon icon={faX} />
-                  </Button>
-                </Tooltip>
-              )}
-              {actions.includes(ApprovalRequestAction.REVISE) && (
-                <Tooltip label="Revise">
-                  <Button
-                    colorScheme={'purple'}
-                    onClick={() => {
-                      setApprovalModel({
-                        id: row.original.id,
-                        action: ApprovalRequestAction.REVISE
-                      });
-                    }}
-                  >
+                    <span>Reject</span>
+                  </p>
+                ),
+                onClick: () => {
+                  setApprovalModel({
+                    id: row.original.id,
+                    action: ApprovalRequestAction.REJECT
+                  });
+                }
+              });
+            }
+
+            if (actions.includes(ApprovalRequestAction.REVISE)) {
+              btnActions.push({
+                key: 'revise',
+                content: (
+                  <p className={'space-x-1'}>
                     <FontAwesomeIcon icon={faRotateBack} />
-                  </Button>
-                </Tooltip>
-              )}
-            </div>
-          );
+                    <span>Revise</span>
+                  </p>
+                ),
+                onClick: () => {
+                  setApprovalModel({
+                    id: row.original.id,
+                    action: ApprovalRequestAction.REVISE
+                  });
+                }
+              });
+            }
+
+            return btnActions;
+          }
+
+          return <MoreActionCell renderActions={renderActions} />;
         }
       })
     ];

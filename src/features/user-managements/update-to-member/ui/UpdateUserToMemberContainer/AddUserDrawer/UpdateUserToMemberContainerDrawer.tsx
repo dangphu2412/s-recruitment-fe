@@ -25,7 +25,7 @@ import {
   useMutateUpgradeMembers,
   useProbationUsers
 } from '../../../../../../entities/user/models';
-import { Table } from '../../../../../../shared/ui';
+import { BasicTable } from '../../../../../../shared/ui';
 import { formatDate } from '../../../../../../shared/models/utils/date.utils';
 import { useNotify } from '../../../../../../shared/models/notify';
 import { useQueryMonthlyMoneyConfigs } from '../../../../../../entities/monthly-money/models';
@@ -226,7 +226,7 @@ export function UpdateUserToMemberContainerDrawer({
               )}
             </FormControl>
 
-            <Table columns={columns} items={items} isLoading={isLoading} />
+            <BasicTable columns={columns} items={items} isLoading={isLoading} />
           </div>
         </DrawerBody>
 

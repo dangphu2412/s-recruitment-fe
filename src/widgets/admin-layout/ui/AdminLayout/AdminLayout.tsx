@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from 'react';
-import { Box, Flex } from '@chakra-ui/react';
 import { AuthenticatedGuard } from '../../../../entities/user/ui/AuthenticatedGuard/AuthenticatedGuard';
 import { Footer } from '../../../../shared/ui/Footer';
 import { SideBar } from '../../../../features/menu/features-menu';
@@ -39,7 +38,7 @@ export function AdminLayout({
         onMouseLeave={handleMouseLeaveToggleItem}
       />
 
-      <Flex h="100vh" gap={4}>
+      <div className={'flex gap-8'}>
         <SideBar
           isSideBarHidden={isSideBarHidden}
           isHovering={isSideBarHovering}
@@ -47,14 +46,14 @@ export function AdminLayout({
           onMouseLeave={handleMouseLeaveToggleItem}
         />
 
-        <Box flexGrow={1}>
+        <div className={'flex-1'}>
           <Header isMenuHidden={isSideBarHidden} />
 
-          <div className="p-6 pb-0 min-h-[calc(100vh-160px)]">{children}</div>
+          <div className="min-h-[calc(100vh-160px)]">{children}</div>
 
           <Footer />
-        </Box>
-      </Flex>
+        </div>
+      </div>
     </AuthenticatedGuard>
   );
 }

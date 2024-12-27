@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch } from '@chakra-ui/react';
 import { UserManagementView } from '../../../models/useAdminColumns';
 import { useMutateUserActive } from '../../../../../../entities/user/models';
-import { CellContext } from '@tanstack/table-core/src/core/cell';
+import { CellContext } from '@tanstack/table-core';
 
 type Props = CellContext<UserManagementView, string> & {
   onSwitchFinish?(): void;

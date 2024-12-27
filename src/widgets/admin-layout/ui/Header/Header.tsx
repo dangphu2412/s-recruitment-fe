@@ -59,8 +59,6 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
       className={classNames(styles['header-wrapper'])}
       justifyContent="space-between"
       alignItems="center"
-      paddingX="1rem"
-      paddingY="0.5rem"
       zIndex="998"
     >
       <div>

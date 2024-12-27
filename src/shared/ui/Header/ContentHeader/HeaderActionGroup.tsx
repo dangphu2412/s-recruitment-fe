@@ -23,7 +23,7 @@ type HeaderActionProps = {
   content: FC<Pick<UseDisclosureApi, 'onClose'>>;
 };
 
-export function HeaderAction({
+export function HeaderDrawerAction({
   id,
   content: Content,
   triggerButton: TriggerButton,
