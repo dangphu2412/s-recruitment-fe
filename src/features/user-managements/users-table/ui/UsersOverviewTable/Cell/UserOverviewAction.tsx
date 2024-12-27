@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { Router } from 'next/router';
 import { UserManagementView } from '../../../models/useAdminColumns';
 import { MoreActionCell } from '../../../../../../shared/ui/Table/Cell/MoreActionCell';
-import { CellContext } from '@tanstack/table-core/src/core/cell';
+import { CellContext } from '@tanstack/table-core';
 
 type MoreActionCellProps = CellContext<UserManagementView, unknown> &
   Pick<Router, 'push'> & {

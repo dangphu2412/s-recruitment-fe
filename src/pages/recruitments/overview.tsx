@@ -3,7 +3,7 @@ import { Card, ContentHeader } from '../../shared/ui';
 import { RecruitmentEventTable } from '../../features/recruitment/recruitment-event-table';
 import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import {
-  HeaderAction,
+  HeaderDrawerAction,
   HeaderActionGroup
 } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { AddButton } from '../../shared/ui/Button';
@@ -19,7 +19,7 @@ export default function RecruitmentOverviewPage(): ReactElement {
         />
 
         <HeaderActionGroup>
-          <HeaderAction
+          <HeaderDrawerAction
             id={'create-recruitment'}
             triggerButton={AddButton}
             content={AddNewEventDrawer}

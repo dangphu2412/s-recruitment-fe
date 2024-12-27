@@ -1,5 +1,5 @@
 import { Input, Text } from '@chakra-ui/react';
-import { Table } from '../../../../shared/ui';
+import { BasicTable } from '../../../../shared/ui';
 import React, { useMemo } from 'react';
 import { Employee } from '../../../../entities/recruitment/api/recruitment.usecase';
 import {
@@ -94,7 +94,7 @@ export function EmployeeTable({
         </div>
       </div>
 
-      <Table
+      <BasicTable
         caption={'Employee information'}
         // @ts-ignore
         columns={columns}

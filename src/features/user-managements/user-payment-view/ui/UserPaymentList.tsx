@@ -1,5 +1,5 @@
 import { Input } from '@chakra-ui/react';
-import { Table } from '../../../../shared/ui';
+import { BasicTable } from '../../../../shared/ui';
 import React, { useMemo } from 'react';
 import { AddButton } from '../../../../shared/ui/Button';
 import {
@@ -35,7 +35,7 @@ export function UserPaymentList({ onAddClick, userId }: UserPaymentViewProps) {
         <AddButton onClick={onAddClick} />
       </div>
 
-      <Table columns={userPaymentCols} items={rows} />
+      <BasicTable columns={userPaymentCols} items={rows} />
     </div>
   );
 }

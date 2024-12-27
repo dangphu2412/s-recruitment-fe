@@ -2,7 +2,7 @@ import { Fragment, ReactElement } from 'react';
 import NextLink from 'next/link';
 import { Link } from '@chakra-ui/react';
 import { UserManagementView } from '../../../models/useAdminColumns';
-import { CellContext } from '@tanstack/table-core/src/core/cell';
+import { CellContext } from '@tanstack/table-core';
 
 export function UsernameCell({
   row,
