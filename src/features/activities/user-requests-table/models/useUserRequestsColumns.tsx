@@ -135,7 +135,7 @@ export function useUserRequestsColumns() {
               btnActions.push({
                 key: 'approve',
                 content: (
-                  <p className={'space-x-1'}>
+                  <p className={'space-x-2'}>
                     <FontAwesomeIcon icon={faCheck} />
                     <span>Approve</span>
                   </p>
@@ -167,7 +167,7 @@ export function useUserRequestsColumns() {
               btnActions.push({
                 key: 'reject',
                 content: (
-                  <p className={'space-x-1'}>
+                  <p className={'space-x-2'}>
                     <FontAwesomeIcon icon={faX} />
                     <span>Reject</span>
                   </p>
@@ -185,7 +185,7 @@ export function useUserRequestsColumns() {
               btnActions.push({
                 key: 'revise',
                 content: (
-                  <p className={'space-x-1'}>
+                  <p className={'space-x-2'}>
                     <FontAwesomeIcon icon={faRotateBack} />
                     <span>Revise</span>
                   </p>

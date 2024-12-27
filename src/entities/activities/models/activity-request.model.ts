@@ -6,6 +6,8 @@ import {
 import { create } from 'zustand/react';
 import { ApprovalRequestAction } from '../config/constants/request-activity-status.enum';
 import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
+import { object, string } from 'yup';
+import { RequestTypes } from '../config/constants/request-activity-metadata.constant';
 
 export const ACTIVITY_REQUESTS_QUERY_KEY = 'ACTIVIIY_REQUESTS_QUERY_KEY';
 
@@ -146,3 +148,47 @@ export function useActivityRequests() {
 
   return useActivityRequestsQuery(searchValues);
 }
+
+export type ActivityRequestInputs = {
+  requestType: string;
+  timeOfDay: string;
+  dayOfWeek: string;
+  reason?: string;
+  requestChangeDay?: string;
+  compensatoryDay?: string;
+};
+
+export const activityRequestValidationSchema = object({
+  requestType: string().required(),
+  timeOfDay: string().required(),
+  dayOfWeek: string()
+    .when('requestType', {
+      is: RequestTypes.WORKING,
+      then: string().required()
+    })
+    .nullable(),
+  reason: string()
+    .when('requestType', (value, schema) => {
+      if ([RequestTypes.LATE, RequestTypes.ABSENCE].includes(value)) {
+        return schema.required();
+      }
+
+      return schema;
+    })
+    .nullable(),
+  requestChangeDay: string()
+    .when('requestType', (value, schema) => {
+      if ([RequestTypes.LATE, RequestTypes.ABSENCE].includes(value)) {
+        return schema.required();
+      }
+
+      return schema;
+    })
+    .nullable(),
+  compensatoryDay: string()
+    .when('requestType', {
+      is: RequestTypes.ABSENCE,
+      then: string().required()
+    })
+    .nullable()
+});
