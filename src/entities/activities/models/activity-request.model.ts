@@ -83,20 +83,24 @@ export const useMyActivityStore = create<MyActivityStore>(set => ({
 
 type ActivityRequestStore = Pagination & {
   query: string;
+  departmentIds: string[];
   searchValues: Pagination & {
     query: string;
+    departmentIds: string[];
   };
   submitValues: (
     values: Partial<Pick<ActivityRequestStore, 'page' | 'size' | 'query'>>
   ) => void;
   setValue: (key: keyof ActivityRequestStore, value: any) => void;
+  toggleValues: (key: 'departmentIds', value: any) => void;
   reset: () => void;
   submitSearch: () => void;
 };
 
 const DEFAULT_SEARCH = {
   ...DEFAULT_PAGINATION,
-  query: ''
+  query: '',
+  departmentIds: []
 };
 
 export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
@@ -108,7 +112,9 @@ export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
     set(state => ({ ...state, [key]: value }));
   },
   submitValues: (
-    values: Partial<Pick<ActivityRequestStore, 'page' | 'size' | 'query'>>
+    values: Partial<
+      Pick<ActivityRequestStore, 'page' | 'size' | 'query' | 'departmentIds'>
+    >
   ) => {
     set(state => {
       return {
@@ -118,6 +124,7 @@ export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
           page: state.page,
           size: state.size,
           query: state.query,
+          departmentIds: state.departmentIds,
           ...values
         }
       };
@@ -130,7 +137,8 @@ export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
         searchValues: {
           page: state.page,
           size: state.size,
-          query: state.query
+          query: state.query,
+          departmentIds: state.departmentIds
         }
       };
     });
@@ -140,6 +148,18 @@ export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
       ...state,
       ...DEFAULT_SEARCH
     }));
+  },
+  toggleValues: (key, value) => {
+    set(state => {
+      return {
+        ...state,
+        [key]: Array.isArray(state[key])
+          ? state[key].includes(value)
+            ? state[key].filter(item => item !== value)
+            : [...state[key], value]
+          : value
+      };
+    });
   }
 }));
 
