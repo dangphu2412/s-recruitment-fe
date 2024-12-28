@@ -1,5 +1,8 @@
 import { ActivityResponse } from '../../../../entities/activities/api/activity-api.client';
-import { RequestTypes } from '../../../../entities/activities/config/constants/request-activity-metadata.constant';
+import {
+  ExtraRequestTypes,
+  RequestTypes
+} from '../../../../entities/activities/config/constants/request-activity-metadata.constant';
 import { addWeeks, endOfMonth, setDay } from 'date-fns';
 
 export type CalendarItem = {
@@ -40,10 +43,17 @@ export function mapToCalendarItems(
     }
 
     if (RequestTypes.ABSENCE === item.requestType) {
-      results.push({
-        date: new Date(item.compensatoryDay as string),
-        ...item
-      });
+      results.push(
+        {
+          date: new Date(item.requestChangeDay as string),
+          ...item
+        },
+        {
+          date: new Date(item.compensatoryDay as string),
+          ...item,
+          requestType: ExtraRequestTypes.COMPENSATORY
+        }
+      );
       return;
     }
   });
@@ -55,6 +65,7 @@ export type TotalActivities = {
   working: number;
   late: number;
   absence: number;
+  compensatory: number;
 };
 export function accumulateTotalActivities(
   items: CalendarItem[]
@@ -73,9 +84,13 @@ export function accumulateTotalActivities(
         acc.absence++;
       }
 
+      if (ExtraRequestTypes.COMPENSATORY === item.requestType) {
+        acc.compensatory++;
+      }
+
       return acc;
     },
-    { working: 0, late: 0, absence: 0 }
+    { working: 0, late: 0, absence: 0, compensatory: 0 }
   );
 }
 

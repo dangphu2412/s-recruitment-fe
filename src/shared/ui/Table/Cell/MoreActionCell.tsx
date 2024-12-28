@@ -14,7 +14,13 @@ export type CellAction = {
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 };
 
-export function MoreActionCell({ renderActions }: Props): React.ReactElement {
+export function MoreActionCell({ renderActions }: Props) {
+  const actions = renderActions();
+
+  if (!actions.length) {
+    return null;
+  }
+
   return (
     <Menu>
       <MenuButton className={styles['cell-more-option']} cursor="pointer">
@@ -22,7 +28,7 @@ export function MoreActionCell({ renderActions }: Props): React.ReactElement {
       </MenuButton>
       <Portal>
         <MenuList>
-          {renderActions().map(item => (
+          {actions.map(item => (
             <MenuItem className={'z-10'} key={item.key} onClick={item.onClick}>
               {item.content}
             </MenuItem>

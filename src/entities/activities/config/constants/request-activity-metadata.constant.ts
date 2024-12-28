@@ -4,6 +4,10 @@ export enum RequestTypes {
   ABSENCE = 'Absence'
 }
 
+export enum ExtraRequestTypes {
+  COMPENSATORY = 'Compensatory'
+}
+
 export const REQUEST_TYPES = Object.values(RequestTypes).map(val => {
   return {
     id: val,

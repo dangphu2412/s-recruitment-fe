@@ -68,7 +68,7 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
           marginLeft={isMenuHidden ? '2rem' : 0}
         >
           <BreadcrumbItem>
-            <BreadcrumbLink href="#">Pages</BreadcrumbLink>
+            <BreadcrumbLink href="/">Pages</BreadcrumbLink>
           </BreadcrumbItem>
 
           <BreadcrumbItem>

@@ -4,8 +4,7 @@ import { endOfMonth, startOfMonth } from 'date-fns';
 import {
   MonthlyBody,
   MonthlyCalendar,
-  MonthlyDay,
-  MonthlyNav
+  MonthlyDay
 } from '@zach.codes/react-calendar';
 import {
   useActivityQuery,
@@ -16,9 +15,10 @@ import {
   CalendarItem,
   mapToCalendarItems
 } from '../../models/user-activities-calendar.model';
-import { Tag, Text } from '@chakra-ui/react';
+import { Tag } from '@chakra-ui/react';
 import { UserActivitiesDetailModal } from '../UserActivitiesDetailModal/UserActivitiesDetailModal';
 import classNames from 'classnames';
+import { UserActivitiesMonthlyNav } from './UserActivitiesMonthlyNav';
 
 export function UserActivitiesCalendar() {
   const fromDate = useActivityStore(state => state.fromDate);
@@ -43,52 +43,57 @@ export function UserActivitiesCalendar() {
 
   return (
     <>
-      <Text variant="h1">Registered working hours</Text>
-
       <MonthlyCalendar
         currentMonth={currentMonth}
         onCurrentMonthChange={handleChangeMonth}
       >
-        <MonthlyNav />
+        <section className={'flex flex-col gap-4'}>
+          <UserActivitiesMonthlyNav />
 
-        <MonthlyBody events={events}>
-          <MonthlyDay<CalendarItem>
-            renderDay={items => {
-              const { absence, late, working } =
-                accumulateTotalActivities(items);
+          <MonthlyBody events={events}>
+            <MonthlyDay<CalendarItem>
+              renderDay={items => {
+                const { absence, late, working, compensatory } =
+                  accumulateTotalActivities(items);
 
-              function renderTag(
-                value: number,
-                text: string,
-                colorScheme: string
-              ) {
-                if (!value) {
+                function renderTag(
+                  value: number,
+                  text: string,
+                  colorScheme: string
+                ) {
+                  if (!value) {
+                    return null;
+                  }
+
+                  return (
+                    <Tag colorScheme={colorScheme} className={'space-x-2'}>
+                      <strong>{value}</strong>
+                      <span>{text}</span>
+                    </Tag>
+                  );
+                }
+
+                if (!items.length) {
                   return null;
                 }
 
                 return (
-                  <Tag colorScheme={colorScheme} className={'space-x-2'}>
-                    <strong>{value}</strong>
-                    <span>{text}</span>
-                  </Tag>
+                  <div
+                    className={classNames(
+                      'cursor-pointer flex flex-col gap-2 py-2'
+                    )}
+                    onClick={() => setSelectedDays(items)}
+                  >
+                    {renderTag(working, 'workings', 'green')}
+                    {renderTag(late, 'late', 'red')}
+                    {renderTag(absence, 'absence', 'gray')}
+                    {renderTag(compensatory, 'compensatory', 'yellow')}
+                  </div>
                 );
-              }
-
-              return (
-                <div
-                  className={classNames(
-                    'cursor-pointer flex flex-col gap-2 py-2'
-                  )}
-                  onClick={() => setSelectedDays(items)}
-                >
-                  {renderTag(working, 'workings', 'green')}
-                  {renderTag(late, 'late', 'red')}
-                  {renderTag(absence, 'absence', 'yellow')}
-                </div>
-              );
-            }}
-          />
-        </MonthlyBody>
+              }}
+            />
+          </MonthlyBody>
+        </section>
       </MonthlyCalendar>
 
       <UserActivitiesDetailModal

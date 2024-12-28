@@ -35,6 +35,7 @@ import {
 import { HookFormTextarea } from '../../../../../../shared/ui/Form/HookFormTextarea/HookFormInput';
 import { HookFormInput } from '../../../../../../shared/ui/Form/HookFormInput/HookFormInput';
 import { HookFormSelect } from '../../../../../../shared/ui/Form/HookFormSelect/HookFormSelect';
+import Link from 'next/link';
 
 type AddActivityModalProps = Pick<UseDisclosureApi, 'onClose'>;
 
@@ -77,6 +78,17 @@ export function AddActivityRequestModal({
         onSuccess: () => {
           notify({
             title: 'Activity request created',
+            description: (
+              <p>
+                Your request has been created successfully. View it{' '}
+                <Link
+                  href={'/activities/requests/my'}
+                  className={'underline text-black'}
+                >
+                  here
+                </Link>
+              </p>
+            ),
             status: 'success'
           });
           queryClient.invalidateQueries(MY_ACTIVITY_REQUESTS_QUERY_KEY);
