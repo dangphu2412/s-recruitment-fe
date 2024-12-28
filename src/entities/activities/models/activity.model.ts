@@ -11,6 +11,8 @@ type ActivityStore = DateRange & {
   ) => void;
 };
 
+export const ACTIVITY_QUERY_KEY = 'activities';
+
 export function useActivityQuery() {
   const fromDate = useActivityStore(state => state.fromDate);
   const toDate = useActivityStore(state => state.toDate);
@@ -21,7 +23,7 @@ export function useActivityQuery() {
   };
 
   const { data, isFetching } = useQuery({
-    queryKey: ['activities', params],
+    queryKey: [ACTIVITY_QUERY_KEY, params],
     queryFn: () => activityApiClient.findActivities(params)
   });
 
