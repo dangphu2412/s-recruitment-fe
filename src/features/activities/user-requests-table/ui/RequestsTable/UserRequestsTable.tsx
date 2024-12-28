@@ -21,7 +21,7 @@ export function UserRequestsTable() {
     state: { sorting },
     initialState: {
       columnPinning: {
-        right: ['Actions']
+        right: ['approvalStatus', 'Actions']
       }
     },
     onSortingChange: setSorting,
