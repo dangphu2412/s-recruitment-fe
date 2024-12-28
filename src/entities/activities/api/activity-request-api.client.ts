@@ -5,6 +5,7 @@ import {
   ApprovalRequestAction,
   RequestActivityStatus
 } from '../config/constants/request-activity-status.enum';
+import { encodeMultiQueryParams } from '../../../shared/models/pagination';
 
 type ActivityRequestResponse = {
   id: number;
@@ -53,6 +54,7 @@ export type GetActivityRequestQuery = {
   page: number;
   size: number;
   query: string;
+  departmentIds: string[];
 };
 
 export const activityRequestApiClient = {
@@ -60,7 +62,10 @@ export const activityRequestApiClient = {
     return authorizedHttpClient.request<Page<ActivityRequestResponse>>({
       method: 'get',
       url: '/activities/requests',
-      params
+      params: {
+        ...params,
+        departmentIds: encodeMultiQueryParams(params.departmentIds)
+      }
     });
   },
   getMyRequestedActivities: async () => {
