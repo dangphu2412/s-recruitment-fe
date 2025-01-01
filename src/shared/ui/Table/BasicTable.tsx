@@ -11,7 +11,10 @@ export function BasicTable<T extends object>({
   const tableInstance = useReactTable({
     columns,
     data: items,
-    getCoreRowModel: getCoreRowModel()
+    getCoreRowModel: getCoreRowModel(),
+    enableSorting: false,
+    enableColumnPinning: false,
+    enableHiding: false
   });
 
   return <Table table={tableInstance} items={items} {...rest} />;

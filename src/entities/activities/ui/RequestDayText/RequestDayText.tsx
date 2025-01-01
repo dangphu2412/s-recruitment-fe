@@ -21,7 +21,7 @@ export function RequestDayText({
   if (RequestTypes.WORKING === requestType) {
     return (
       <>
-        {dayOfWeekName} - {timeOfDayName}
+        {timeOfDayName} {dayOfWeekName}
       </>
     );
   }
@@ -29,7 +29,7 @@ export function RequestDayText({
   if (RequestTypes.LATE === requestType) {
     return (
       <p>
-        {timeOfDayName} / {formatDate(requestChangeDay)}
+        {timeOfDayName} {formatDate(requestChangeDay)}
       </p>
     );
   }

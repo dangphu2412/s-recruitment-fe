@@ -8,6 +8,7 @@ import { ApprovalRequestAction } from '../config/constants/request-activity-stat
 import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
 import { object, string } from 'yup';
 import { RequestTypes } from '../config/constants/request-activity-metadata.constant';
+import { DateRange } from '../../../shared/models/filter.api';
 
 export const ACTIVITY_REQUESTS_QUERY_KEY = 'ACTIVIIY_REQUESTS_QUERY_KEY';
 
@@ -81,26 +82,33 @@ export const useMyActivityStore = create<MyActivityStore>(set => ({
     set(state => ({ ...state, approvalModel: model }))
 }));
 
-type ActivityRequestStore = Pagination & {
-  query: string;
-  departmentIds: string[];
-  searchValues: Pagination & {
+type ActivityRequestStore = Pagination &
+  DateRange<string | ''> & {
     query: string;
     departmentIds: string[];
+    status: string[];
+    searchValues: Pagination &
+      DateRange<string | ''> & {
+        query: string;
+        departmentIds: string[];
+        status: string[];
+      };
+    submitValues: (
+      values: Partial<Pick<ActivityRequestStore, 'page' | 'size' | 'query'>>
+    ) => void;
+    setValue: (key: keyof ActivityRequestStore, value: any) => void;
+    toggleValues: (key: 'departmentIds' | 'status', value: any) => void;
+    reset: () => void;
+    submitSearch: () => void;
   };
-  submitValues: (
-    values: Partial<Pick<ActivityRequestStore, 'page' | 'size' | 'query'>>
-  ) => void;
-  setValue: (key: keyof ActivityRequestStore, value: any) => void;
-  toggleValues: (key: 'departmentIds', value: any) => void;
-  reset: () => void;
-  submitSearch: () => void;
-};
 
 const DEFAULT_SEARCH = {
   ...DEFAULT_PAGINATION,
   query: '',
-  departmentIds: []
+  departmentIds: [],
+  fromDate: '',
+  toDate: '',
+  status: []
 };
 
 export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
@@ -113,7 +121,16 @@ export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
   },
   submitValues: (
     values: Partial<
-      Pick<ActivityRequestStore, 'page' | 'size' | 'query' | 'departmentIds'>
+      Pick<
+        ActivityRequestStore,
+        | 'page'
+        | 'size'
+        | 'query'
+        | 'departmentIds'
+        | 'fromDate'
+        | 'toDate'
+        | 'status'
+      >
     >
   ) => {
     set(state => {
@@ -125,6 +142,9 @@ export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
           size: state.size,
           query: state.query,
           departmentIds: state.departmentIds,
+          fromDate: state.fromDate,
+          toDate: state.toDate,
+          status: state.status,
           ...values
         }
       };
@@ -138,7 +158,10 @@ export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
           page: state.page,
           size: state.size,
           query: state.query,
-          departmentIds: state.departmentIds
+          departmentIds: state.departmentIds,
+          fromDate: state.fromDate,
+          toDate: state.toDate,
+          status: state.status
         }
       };
     });
@@ -210,5 +233,16 @@ export const activityRequestValidationSchema = object({
       is: RequestTypes.ABSENCE,
       then: string().required()
     })
+    .test(
+      'compensatoryDay',
+      'Compensatory day must be after request day',
+      function (value, context) {
+        if (context.parent.requestChangeDay && value) {
+          return new Date(value) > new Date(context.parent.requestChangeDay);
+        }
+
+        return true;
+      }
+    )
     .nullable()
 });
