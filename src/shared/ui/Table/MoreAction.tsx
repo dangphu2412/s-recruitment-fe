@@ -15,6 +15,65 @@ type Props<T> = {
 };
 
 export function MoreAction<T>({ column }: Props<T>) {
+  function renderSortSection() {
+    if (!column.getCanSort()) {
+      return null;
+    }
+
+    return (
+      <>
+        {column.getIsSorted() && (
+          <MenuItem onClick={column.clearSorting}>Clear sort</MenuItem>
+        )}
+        {column.getIsSorted() !== 'asc' && (
+          <MenuItem onClick={() => column.toggleSorting(false)}>
+            Sort by ascending
+          </MenuItem>
+        )}
+        {column.getIsSorted() !== 'desc' && (
+          <MenuItem onClick={() => column.toggleSorting(true)}>
+            Sort by descending
+          </MenuItem>
+        )}
+        <Divider />
+      </>
+    );
+  }
+
+  function renderPinSection() {
+    if (!column.getCanPin()) {
+      return null;
+    }
+
+    return (
+      <>
+        <MenuItem onClick={() => column.pin('right')}>Pin right</MenuItem>
+        <MenuItem onClick={() => column.pin('left')}>Pin left</MenuItem>
+        <MenuItem onClick={() => column.pin(false)}>Unpin</MenuItem>
+        <Divider />
+      </>
+    );
+  }
+
+  function renderHideSection() {
+    if (!column.getCanHide()) {
+      return null;
+    }
+
+    return (
+      <>
+        <MenuItem onClick={column.getToggleVisibilityHandler()}>
+          {column.getIsVisible() ? 'Hide column' : 'Show column'}
+        </MenuItem>
+        <Divider />
+      </>
+    );
+  }
+
+  if (!column.getCanSort() && !column.getCanPin() && !column.getCanHide()) {
+    return null;
+  }
+
   return (
     <Menu>
       <MenuButton
@@ -27,27 +86,9 @@ export function MoreAction<T>({ column }: Props<T>) {
 
       <Portal>
         <MenuList>
-          {column.getIsSorted() && (
-            <MenuItem onClick={column.clearSorting}>Clear sort</MenuItem>
-          )}
-          {column.getIsSorted() !== 'asc' && (
-            <MenuItem onClick={() => column.toggleSorting(false)}>
-              Sort by ascending
-            </MenuItem>
-          )}
-          {column.getIsSorted() !== 'desc' && (
-            <MenuItem onClick={() => column.toggleSorting(true)}>
-              Sort by descending
-            </MenuItem>
-          )}
-          <Divider />
-          <MenuItem onClick={() => column.pin('right')}>Pin right</MenuItem>
-          <MenuItem onClick={() => column.pin('left')}>Pin left</MenuItem>
-          <MenuItem onClick={() => column.pin(false)}>Unpin</MenuItem>
-          <Divider />
-          <MenuItem onClick={column.getToggleVisibilityHandler()}>
-            {column.getCanHide() ? 'Hide column' : 'Show column'}
-          </MenuItem>
+          {renderSortSection()}
+          {renderPinSection()}
+          {renderHideSection()}
         </MenuList>
       </Portal>
     </Menu>

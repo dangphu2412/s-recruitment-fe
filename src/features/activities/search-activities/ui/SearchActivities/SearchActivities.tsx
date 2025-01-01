@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, Input } from '@chakra-ui/react';
 import { useActivityRequestStore } from '../../../../../entities/activities/models/activity-request.model';
 import { DepartmentFilterDialog } from '../DepartmentFilterDialog/DepartmentFilterDialog';
+import { LastChangedAtFilterDialog } from '../RequestRangeFilterDialog/LastChangedAtFilterDialog';
+import { StatusFilterDialog } from '../StatusFilterDialog/DepartmentFilterDialog';
 
 export function SearchActivities(): React.ReactElement {
   const query = useActivityRequestStore(state => state.query);
@@ -29,6 +31,8 @@ export function SearchActivities(): React.ReactElement {
       />
 
       <DepartmentFilterDialog />
+      <StatusFilterDialog />
+      <LastChangedAtFilterDialog />
 
       <div>
         <Button onClick={submitSearch}>Search</Button>

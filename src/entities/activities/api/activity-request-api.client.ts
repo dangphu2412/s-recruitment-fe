@@ -19,6 +19,7 @@ type ActivityRequestResponse = {
     name: string;
   };
   createdAt: string;
+  updatedAt: string;
   approvalStatus: RequestActivityStatus;
   rejectReason: string;
   reviseNote: string;
@@ -55,6 +56,9 @@ export type GetActivityRequestQuery = {
   size: number;
   query: string;
   departmentIds: string[];
+  fromDate: string;
+  toDate: string;
+  status: string[];
 };
 
 export const activityRequestApiClient = {
@@ -64,7 +68,8 @@ export const activityRequestApiClient = {
       url: '/activities/requests',
       params: {
         ...params,
-        departmentIds: encodeMultiQueryParams(params.departmentIds)
+        departmentIds: encodeMultiQueryParams(params.departmentIds),
+        status: encodeMultiQueryParams(params.status)
       }
     });
   },

@@ -36,6 +36,7 @@ export type RequestsColumn = {
     name: string;
   };
   createdAt: string;
+  updatedAt: string;
   approvalStatus: RequestActivityStatus;
   requestChangeDay?: string;
   compensatoryDay?: string;
@@ -100,9 +101,13 @@ export function useUserRequestsColumns() {
           );
         }
       }),
+      columnHelper.accessor('updatedAt', {
+        header: 'Last changed at',
+        cell: props => formatDate(props.getValue())
+      }),
       columnHelper.accessor('createdAt', {
-        header: 'Submitted at',
-        cell: props => <>{formatDate(new Date(props.getValue()))}</>
+        header: 'Created at',
+        cell: props => formatDate(props.getValue())
       }),
       columnHelper.accessor('approvalStatus', {
         header: 'Status',
