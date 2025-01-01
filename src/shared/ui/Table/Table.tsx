@@ -1,4 +1,4 @@
-import { CSSProperties, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { flexRender } from '@tanstack/react-table';
 import {
   Table as BaseTable,
@@ -17,7 +17,7 @@ import classes from './Table.module.scss';
 import { ActionColumnIds, BaseTableProps } from './models/table.model';
 import { SortIcon } from './SortIcon';
 import { MoreAction } from './MoreAction';
-import { Column } from '@tanstack/table-core';
+import { getPinStyle } from './models/pin.model';
 
 export function Table<T extends object>({
   items = [],
@@ -27,31 +27,9 @@ export function Table<T extends object>({
   className,
   table
 }: BaseTableProps<T>): ReactElement {
-  function getPinStyle(column: Column<T>): CSSProperties {
-    const isPinned = column.getIsPinned();
-    const isLastLeftPinnedColumn =
-      isPinned === 'left' && column.getIsLastColumn('left');
-    const isFirstRightPinnedColumn =
-      isPinned === 'right' && column.getIsFirstColumn('right');
-
-    return {
-      minWidth: column.id !== 'select' ? column.getSize() : undefined,
-      boxShadow: isLastLeftPinnedColumn
-        ? '-4px 0 4px -4px gray inset'
-        : isFirstRightPinnedColumn
-        ? '4px 0 4px -4px gray inset'
-        : undefined,
-      left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
-      right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
-      position: isPinned ? 'sticky' : 'relative',
-      width: column.getSize(),
-      zIndex: isPinned ? 1 : 0
-    };
-  }
-
   function renderHeader() {
     return (
-      <Thead className={'sticky top-0'}>
+      <Thead className={'sticky top-0 z-[3] shadow'}>
         {table.getHeaderGroups().map(headerGroup => {
           return (
             <Tr key={headerGroup.id}>

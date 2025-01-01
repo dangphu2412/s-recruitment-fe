@@ -20,6 +20,20 @@ export function formatDate(date: Date | string | null | undefined): string {
   return format(date, DATE_FORMAT);
 }
 
-export function formatToInputDate(date: string): string {
-  return format(new Date(date), INPUT_DATE_FORMAT);
+export function formatToInputDate(
+  date: Date | string | null | undefined
+): string {
+  if (isNil(date)) {
+    return '';
+  }
+
+  if ('' === date) {
+    return '';
+  }
+
+  if (typeof date === 'string') {
+    return format(new Date(date), INPUT_DATE_FORMAT);
+  }
+
+  return format(date, INPUT_DATE_FORMAT);
 }

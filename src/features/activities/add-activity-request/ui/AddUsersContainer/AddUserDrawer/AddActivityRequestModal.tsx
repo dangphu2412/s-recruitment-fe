@@ -36,6 +36,8 @@ import { HookFormTextarea } from '../../../../../../shared/ui/Form/HookFormTexta
 import { HookFormInput } from '../../../../../../shared/ui/Form/HookFormInput/HookFormInput';
 import { HookFormSelect } from '../../../../../../shared/ui/Form/HookFormSelect/HookFormSelect';
 import Link from 'next/link';
+import { addDays } from 'date-fns';
+import { formatToInputDate } from '../../../../../../shared/models/utils/date.utils';
 
 type AddActivityModalProps = Pick<UseDisclosureApi, 'onClose'>;
 
@@ -56,6 +58,10 @@ export function AddActivityRequestModal({
     }
   });
   const requestType = watch('requestType');
+  const requestChangeDay = watch('requestChangeDay');
+  const minCompensatoryDay = requestChangeDay
+    ? formatToInputDate(addDays(new Date(requestChangeDay), 1))
+    : undefined;
 
   const notify = useNotify();
 
@@ -188,6 +194,7 @@ export function AddActivityRequestModal({
               label={'Compensatory Day'}
               type={'date'}
               isRequired
+              min={minCompensatoryDay}
             />
           )}
 

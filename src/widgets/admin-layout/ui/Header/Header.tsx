@@ -20,7 +20,7 @@ import { currentMenuSelector } from '../../../../entities/menu/models';
 import Link from 'next/link';
 import { selectCurrentUser } from '../../../../entities/user/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   isMenuHidden: boolean;
@@ -56,17 +56,13 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
   return (
     <Flex
       ref={headerRef}
-      className={classNames(styles['header-wrapper'])}
+      className={classNames(styles['header-wrapper'], isMenuHidden && styles['header-bloated'])}
       justifyContent="space-between"
       alignItems="center"
       zIndex="998"
     >
       <div>
-        <Breadcrumb
-          fontWeight="medium"
-          fontSize="sm"
-          marginLeft={isMenuHidden ? '2rem' : 0}
-        >
+        <Breadcrumb fontWeight="medium" fontSize="sm">
           <BreadcrumbItem>
             <BreadcrumbLink href="/">Pages</BreadcrumbLink>
           </BreadcrumbItem>
