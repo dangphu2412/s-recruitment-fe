@@ -56,7 +56,10 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
   return (
     <Flex
       ref={headerRef}
-      className={classNames(styles['header-wrapper'], isMenuHidden && styles['header-bloated'])}
+      className={classNames(
+        styles['header-wrapper'],
+        isMenuHidden && styles['header-bloated']
+      )}
       justifyContent="space-between"
       alignItems="center"
       zIndex="998"

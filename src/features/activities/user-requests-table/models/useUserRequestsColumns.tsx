@@ -2,11 +2,9 @@ import { useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/table-core';
 import { Checkbox } from '@chakra-ui/react';
 import {
-  ACTIVITY_REQUESTS_QUERY_KEY,
   useMyActivityStore,
   useUpdateApprovalActivityRequestMutation
 } from '../../../../entities/activities/models/activity-request.model';
-import { useQueryClient } from 'react-query';
 import { useNotify } from '../../../../shared/models/notify';
 import {
   ApprovalRequestAction,
@@ -19,7 +17,7 @@ import { RequestTypeTag } from '../../../../entities/activities/ui/RequestTypeTa
 import { RequestDayText } from '../../../../entities/activities/ui/RequestDayText/RequestDayText';
 import { MoreActionCell } from '../../../../shared/ui/Table/Cell/MoreActionCell';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faX, faRotateBack } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faRotateBack, faX } from '@fortawesome/free-solid-svg-icons';
 
 export type RequestsColumn = {
   id: number;
@@ -45,7 +43,6 @@ export type RequestsColumn = {
 
 export function useUserRequestsColumns() {
   const { mutate } = useUpdateApprovalActivityRequestMutation();
-  const queryClient = useQueryClient();
   const notify = useNotify();
   const setApprovalModel = useMyActivityStore(state => state.setApprovalModel);
 
@@ -148,7 +145,7 @@ export function useUserRequestsColumns() {
                 onClick: () => {
                   mutate(
                     {
-                      id: row.original.id,
+                      ids: [row.original.id],
                       action: ApprovalRequestAction.APPROVE
                     },
                     {
@@ -158,9 +155,6 @@ export function useUserRequestsColumns() {
                           description: 'Request approved',
                           status: 'success'
                         });
-                        queryClient.invalidateQueries(
-                          ACTIVITY_REQUESTS_QUERY_KEY
-                        );
                       }
                     }
                   );
@@ -211,5 +205,5 @@ export function useUserRequestsColumns() {
         }
       })
     ];
-  }, [mutate, notify, queryClient, setApprovalModel]);
+  }, [mutate, notify, setApprovalModel]);
 }
