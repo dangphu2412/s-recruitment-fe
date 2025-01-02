@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
   activityRequestApiClient,
   GetActivityRequestQuery
@@ -48,9 +48,14 @@ export function useCreateActivityRequestMutation() {
 }
 
 export function useUpdateApprovalActivityRequestMutation() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationKey: ['update-approval-request-activity'],
-    mutationFn: activityRequestApiClient.updateApprovalRequestActivity
+    mutationFn: activityRequestApiClient.updateApprovalRequestActivity,
+    onSuccess() {
+      queryClient.invalidateQueries(ACTIVITY_REQUESTS_QUERY_KEY);
+    }
   });
 }
 
