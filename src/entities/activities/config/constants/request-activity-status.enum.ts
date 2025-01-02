@@ -1,3 +1,5 @@
+import startCase from 'lodash/startCase';
+
 export enum RequestActivityStatus {
   PENDING = 'PENDING',
   APPROVED = 'APPROVED',
@@ -10,7 +12,7 @@ export const REQUEST_ACTIVITY_STATUS_DIALOG_MODEL = Object.values(
 ).map(val => {
   return {
     id: val,
-    name: val
+    name: startCase(val.toLowerCase())
   };
 });
 
