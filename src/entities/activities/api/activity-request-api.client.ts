@@ -40,7 +40,7 @@ type CreateRequestActivityDTO = {
 
 type UpdateRequestActivityDTO = {
   action: ApprovalRequestAction;
-  id: number;
+  ids: number[];
   rejectReason?: string;
   reviseNote?: string;
 };
@@ -92,13 +92,10 @@ export const activityRequestApiClient = {
       data
     });
   },
-  updateApprovalRequestActivity: async ({
-    id,
-    ...data
-  }: UpdateRequestActivityDTO) => {
+  updateApprovalRequestActivity: async (data: UpdateRequestActivityDTO) => {
     return authorizedHttpClient.request<void>({
       method: 'patch',
-      url: `/activities/requests/${id}`,
+      url: '/activities/requests/approval-status',
       data
     });
   },
