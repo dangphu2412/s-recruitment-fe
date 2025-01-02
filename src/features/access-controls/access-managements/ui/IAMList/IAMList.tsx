@@ -9,11 +9,11 @@ import {
   Checkbox,
   Flex,
   Grid,
+  Skeleton,
   Text
 } from '@chakra-ui/react';
 import { useNotify } from '../../../../../shared/models/notify';
 import { ContentHeader } from '../../../../../shared/ui';
-import { FullLoader } from '../../../../../shared/ui/Loader/Full/FullLoader';
 import {
   useMutateSaveRoles,
   useQueryControlList
@@ -22,8 +22,8 @@ import { useRBACView } from '../../model';
 
 export function IAMList(): ReactElement {
   const notify = useNotify();
-  const { allRoles } = useQueryControlList();
-  const { saveRoles, isLoading } = useMutateSaveRoles();
+  const { allRoles, isLoading } = useQueryControlList();
+  const { saveRoles } = useMutateSaveRoles();
   const { rbacState, togglePermission, getPermissionMap } =
     useRBACView(allRoles);
 
@@ -60,20 +60,27 @@ export function IAMList(): ReactElement {
     return () => togglePermission(roleId, permissionId);
   }
 
-  if (!allRoles) {
-    return <></>;
-  }
-
   return (
     <div className="space-y-4">
       <ContentHeader
         main={'Identity And Access Management'}
         brief={'Where you manipulate application identity & access managements'}
       />
+      {isLoading && (
+        <div className={'flex flex-col gap-2'}>
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+        </div>
+      )}
 
       <Accordion defaultIndex={[0]} allowMultiple className="py-2">
-        {isLoading && <FullLoader />}
-
         {Object.keys(rbacState).map(roleId => {
           const {
             name,

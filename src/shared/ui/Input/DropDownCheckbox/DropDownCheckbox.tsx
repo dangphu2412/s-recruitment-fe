@@ -51,7 +51,7 @@ export function DropDownMultipleCheckboxSelection<T>({
 
         <PopoverContent>
           <PopoverBody>
-            <div className={'grid grid-cols-2 gap-1'}>
+            <div className={'flex flex-col gap-2'}>
               {(options ?? []).map(option => {
                 return (
                   <Checkbox
@@ -59,6 +59,7 @@ export function DropDownMultipleCheckboxSelection<T>({
                       onSelect(option);
                     }}
                     isChecked={value.includes(option.id)}
+                    className={'px-2 py-1 hover:bg-slate-100'}
                   >
                     {option.name}
                   </Checkbox>
