@@ -165,6 +165,12 @@ export function UserDetailSection({ userId }: Props) {
 
             <Input {...register('phoneNumber')} type={'number'} />
           </FormControl>
+
+          <FormControl>
+            <FormLabel>Tracking ID</FormLabel>
+
+            <Input {...register('trackingId')} type={'text'} />
+          </FormControl>
         </div>
       </div>
 

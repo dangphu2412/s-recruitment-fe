@@ -11,8 +11,8 @@ import { QUERY_USERS_KEY, userActions } from '../../../../entities/user/models';
 import { Box, Tag } from '@chakra-ui/react';
 import { useQueryClient } from 'react-query';
 import { formatDate } from '../../../../shared/models/utils/date.utils';
-import { CommonData } from '../../../../entities/user/models/user-master-data.model';
 import { createColumnHelper } from '@tanstack/table-core';
+import { CommonData } from '../../../../entities/user/api/user-master-data-api-client';
 
 export type UserManagementView = {
   id: string;

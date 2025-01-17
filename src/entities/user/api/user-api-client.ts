@@ -6,7 +6,7 @@ import {
 import { authorizedHttpClient } from '../../../shared/api';
 import { OperationFee } from 'src/entities/monthly-money/models';
 import { Role } from './access-control.client';
-import { CommonData } from '../models/user-master-data.model';
+import { CommonData } from './user-master-data-api-client';
 
 export type User = {
   id: string;
@@ -15,6 +15,7 @@ export type User = {
   fullName: string;
   avatar: string;
   phoneNumber: string;
+  trackingId: string;
   department?: {
     id: string;
     name: string;
@@ -71,6 +72,7 @@ export type UpdateUserDto = {
   departmentId?: string;
   periodId?: string;
   birthday?: string;
+  trackingId?: string;
   phoneNumber?: string;
 };
 
@@ -90,6 +92,7 @@ export type UserDetail = {
   username: string;
   email: string;
   avatar: string;
+  trackingId: string;
   createdAt: string;
   deletedAt: string;
 };
