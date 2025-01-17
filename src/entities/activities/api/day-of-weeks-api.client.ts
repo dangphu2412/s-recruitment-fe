@@ -1,3 +1,4 @@
+import { Page } from 'src/shared/models';
 import { authorizedHttpClient } from '../../../shared/api';
 
 export type DayOfWeek = {
@@ -7,7 +8,7 @@ export type DayOfWeek = {
 
 export const dayOfWeeksApiClient = {
   get: () => {
-    return authorizedHttpClient.request<DayOfWeek[]>({
+    return authorizedHttpClient.request<Page<DayOfWeek>>({
       url: '/day-of-weeks',
       method: 'get'
     });

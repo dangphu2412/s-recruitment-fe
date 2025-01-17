@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type { NextPage } from 'next';
-import { UserActivitiesCalendar } from '../features/activities/user-activities-calendar/ui/UserActivitiesCalendar/UserActivitiesCalendar';
 import { Card, ContentHeader } from '../shared/ui';
+import { ActivityReportChart } from '../features/dashboard-overview/activities-reports-chart/ui/ActivityReportChart';
 
 const Home: NextPage = () => {
   return (
@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         main={'Overview Dashboard'}
         brief={'Overall members activities'}
       />
-      <UserActivitiesCalendar />
+      <ActivityReportChart />
     </Card>
   );
 };

@@ -1,4 +1,5 @@
 import { authorizedHttpClient } from '../../../shared/api';
+import { Page } from '../../../shared/models';
 
 export type TimeOfDay = {
   id: string;
@@ -7,7 +8,7 @@ export type TimeOfDay = {
 
 export const timeOfDaysApiClient = {
   get: () => {
-    return authorizedHttpClient.request<TimeOfDay[]>({
+    return authorizedHttpClient.request<Page<TimeOfDay>>({
       url: '/time-of-days',
       method: 'get'
     });

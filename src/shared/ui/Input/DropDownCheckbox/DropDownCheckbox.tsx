@@ -55,6 +55,7 @@ export function DropDownMultipleCheckboxSelection<T>({
               {(options ?? []).map(option => {
                 return (
                   <Checkbox
+                    key={option.id}
                     onChange={() => {
                       onSelect(option);
                     }}
