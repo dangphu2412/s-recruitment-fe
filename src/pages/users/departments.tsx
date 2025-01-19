@@ -31,6 +31,9 @@ export default function DepartmentPage(): ReactElement {
 
   return (
     <CommonCRUDProvider
+      featureConfig={{
+        enableInlineSearch: true
+      }}
       resource={'department'}
       fetcher={userMasterDataApiClient.getDepartments}
       mutation={userMasterDataApiClient.createDepartment}

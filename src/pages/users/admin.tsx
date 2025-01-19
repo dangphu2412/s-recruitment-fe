@@ -10,7 +10,6 @@ import { UpdateUserToMemberContainer } from '../../features/user-managements/upd
 import { ImportUsersContainer } from '../../features/user-managements/import-users';
 import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
-import { UploadActivitiesButton } from '../../features/user-managements/upload-activities/ui/UploadActivitiesButton/UploadActivitiesButton';
 
 export default function AdministratorPage(): ReactElement {
   return (
@@ -25,7 +24,6 @@ export default function AdministratorPage(): ReactElement {
           <AddUsersContainer />
           <UpdateUserToMemberContainer />
           <ImportUsersContainer />
-          <UploadActivitiesButton />
         </HeaderActionGroup>
       </ContentHeaderLayout>
 

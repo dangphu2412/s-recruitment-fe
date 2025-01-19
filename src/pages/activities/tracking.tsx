@@ -10,6 +10,19 @@ import {
   activityLogApiClient,
   ActivityLogResponse
 } from '../../entities/activities/api/activity-log-api.client';
+import { DateRangeFilter } from '../../features/activity-logs/ui/DateRangeFilter';
+import { endOfDay, subWeeks } from 'date-fns';
+import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { UploadFileButtonWidget } from '../../widgets/upload-file/UploadFileButtonWidget';
+
+function plugin() {
+  return {
+    values: {
+      fromDate: subWeeks(new Date(), 1),
+      toDate: endOfDay(new Date())
+    }
+  };
+}
 
 export default function TrackingPage() {
   const columns = useMemo(() => {
@@ -35,6 +48,7 @@ export default function TrackingPage() {
     <CommonCRUDProvider
       resource={'tracking'}
       fetcher={activityLogApiClient.findLogs}
+      registerPlugin={plugin}
     >
       <Card>
         <ContentHeaderLayout>
@@ -42,9 +56,17 @@ export default function TrackingPage() {
             main={'Activity Logs Management'}
             brief={'Where you observe members logs'}
           />
+          <HeaderActionGroup>
+            <UploadFileButtonWidget
+              resource={'upload-logs'}
+              mutateFn={activityLogApiClient.uploadLogs}
+            >
+              Upload logs
+            </UploadFileButtonWidget>
+          </HeaderActionGroup>
         </ContentHeaderLayout>
 
-        <CommonSearchWidget filterSlot={'Hello'} />
+        <CommonSearchWidget filterSlot={<DateRangeFilter />} />
         <CommonViewEntityTable columns={columns} />
       </Card>
     </CommonCRUDProvider>

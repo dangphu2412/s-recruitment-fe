@@ -1,6 +1,6 @@
 import { create } from 'zustand/react';
 import { DateRange } from '../../../shared/models/filter.api';
-import { useMutation, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import { activityApiClient } from '../api/activity-api.client';
 import { EMPTY_ARRAY } from '../../../shared/config';
 import { endOfMonth, startOfMonth } from 'date-fns';
@@ -48,9 +48,3 @@ export const useActivityStore = create<ActivityStore>(set => ({
   }
 }));
 
-export function useMutateUploadLogs() {
-  return useMutation({
-    mutationKey: ['uploadLogs'],
-    mutationFn: activityApiClient.uploadLogs
-  });
-}

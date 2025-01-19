@@ -56,8 +56,8 @@ export type GetActivityRequestQuery = {
   size: number;
   query: string;
   departmentIds: string[];
-  fromDate: string;
-  toDate: string;
+  fromDate: Date | null;
+  toDate: Date | null;
   status: string[];
 };
 

@@ -1,13 +1,25 @@
+import React, { ChangeEvent, PropsWithChildren, useRef } from 'react';
+import { useNotify } from 'src/shared/models/notify';
+import { Button } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
-import { Button } from '@chakra-ui/react';
-import React, { ChangeEvent, useRef } from 'react';
-import { useMutateUploadLogs } from '../../../../../entities/activities/models/activity.model';
-import { useNotify } from '../../../../../shared/models/notify';
+import { useMutation } from 'react-query';
 
-export function UploadActivitiesButton() {
+type Props = PropsWithChildren<{
+  mutateFn: (file: File) => Promise<void>;
+  resource: string;
+}>;
+
+export function UploadFileButtonWidget({
+  resource,
+  mutateFn,
+  children
+}: Props) {
   const ref = useRef<HTMLInputElement>(null);
-  const { mutate } = useMutateUploadLogs();
+  const { mutate } = useMutation({
+    mutationKey: resource,
+    mutationFn: mutateFn
+  });
   const notify = useNotify();
 
   function handleUpload(event: ChangeEvent<HTMLInputElement>) {
@@ -17,13 +29,13 @@ export function UploadActivitiesButton() {
       mutate(file, {
         onSuccess: () => {
           notify({
-            title: 'Upload activities success',
+            title: 'Upload success',
             status: 'success'
           });
         },
         onError: () => {
           notify({
-            title: 'Upload logs failed',
+            title: 'Upload failed',
             status: 'error'
           });
         }
@@ -35,7 +47,7 @@ export function UploadActivitiesButton() {
     <Button colorScheme="pink" onClick={() => ref.current?.click()}>
       <input type="file" ref={ref} hidden onChange={handleUpload} />
       <FontAwesomeIcon className="mr-2" icon={faUpload} />
-      <span>Track activity</span>
+      <span>{children}</span>
     </Button>
   );
 }

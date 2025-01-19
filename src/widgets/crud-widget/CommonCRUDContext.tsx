@@ -14,13 +14,27 @@ type BaseSchema = Record<
   }
 >;
 
+type FeatureConfig = {
+  enableInlineSearch?: boolean;
+};
+
 type Values = {
-  query: string;
+  query?: string;
   page: number;
   size: number;
+  [key: string]: any;
 };
+type Plugin = {
+  values: {
+    [key: string]: any;
+  };
+};
+
+type PluginRegister = () => Plugin;
+
 type CommonCRUDState = {
   resource: string;
+  featureConfig?: FeatureConfig;
   schema?: BaseSchema;
   mutation?: (data: any) => Promise<void>;
   fetcher: (queries: Values) => Promise<Page<any>>;
@@ -39,25 +53,33 @@ const INITIAL_VALUES = {
   ...DEFAULT_PAGINATION
 };
 
-function createCommonCRUDStore(initProps: InitProps) {
+function createCommonCRUDStore({ registerPlugin, ...initProps }: InitProps) {
   const initValues: Values = initProps.initialValues
     ? initProps.initialValues
     : INITIAL_VALUES;
+
+  const plugin = registerPlugin ? registerPlugin() : null;
+
   return create<CommonCRUDState>(set => {
     return {
       ...initProps,
       initialValues: initValues,
       values: {
-        ...initValues
+        ...initValues,
+        ...(plugin?.values ?? {})
       },
       searchValues: {
-        ...initValues
+        ...initValues,
+        ...(plugin?.values ?? {})
       },
       setValues: values => {
         set(state => {
           return {
             ...state,
-            ...values
+            values: {
+              ...state.values,
+              ...values
+            }
           };
         });
       },
@@ -111,8 +133,15 @@ export const CommonCRUDContext = createContext<CommonCRUDStore | null>(null);
 
 type InitProps = Pick<
   CommonCRUDState,
-  'mutation' | 'fetcher' | 'schema' | 'resource' | 'initialValues'
->;
+  | 'mutation'
+  | 'fetcher'
+  | 'schema'
+  | 'resource'
+  | 'initialValues'
+  | 'featureConfig'
+> & {
+  registerPlugin?: PluginRegister;
+};
 
 export function CommonCRUDProvider({
   children,
@@ -139,13 +168,25 @@ export function useCommonCRUDContext<T>(
 
 export function useQueryResource() {
   const resource = useCommonCRUDContext(state => state.resource);
+  const featureConfig = useCommonCRUDContext(state => state.featureConfig);
   const searchValues = useCommonCRUDContext(state => state.searchValues);
   const fetcher = useCommonCRUDContext(state => state.fetcher);
 
+  function getSearchValues() {
+    const { query, ...rest } = searchValues;
+
+    return featureConfig?.enableInlineSearch
+      ? rest
+      : {
+          query,
+          ...rest
+        };
+  }
+
   return useQuery({
-    queryKey: [resource, searchValues],
+    queryKey: [resource, getSearchValues()],
     queryFn: () => {
-      return fetcher(searchValues);
+      return fetcher(getSearchValues());
     }
   });
 }
