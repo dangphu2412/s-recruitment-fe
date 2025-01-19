@@ -22,5 +22,18 @@ export const activityLogApiClient = {
       url: '/activity-logs',
       params
     });
+  },
+  uploadLogs: async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return authorizedHttpClient.request<void>({
+      method: 'post',
+      url: '/activity-logs',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   }
 };

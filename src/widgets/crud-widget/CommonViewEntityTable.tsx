@@ -10,9 +10,10 @@ type Props<E> = {
 
 export function CommonViewEntityTable<E>({ columns }: Props<E>) {
   const query = useCommonCRUDContext(state => state.searchValues.query);
+  const featureConfig = useCommonCRUDContext(state => state.featureConfig);
   const { data, isFetching } = useQueryResource();
   const items = useMemo(() => {
-    if (query && data?.items) {
+    if (featureConfig?.enableInlineSearch && query && data?.items) {
       return data.items.filter(item => {
         for (const key in item) {
           if (
@@ -27,7 +28,7 @@ export function CommonViewEntityTable<E>({ columns }: Props<E>) {
     }
 
     return data?.items ?? EMPTY_ARRAY;
-  }, [data, query]);
+  }, [data, query, featureConfig]);
 
   return <BasicTable columns={columns} items={items} isLoading={isFetching} />;
 }

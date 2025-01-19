@@ -32,6 +32,9 @@ export default function PeriodPage(): ReactElement {
   return (
     <CommonCRUDProvider
       resource={'period'}
+      featureConfig={{
+        enableInlineSearch: true
+      }}
       fetcher={userMasterDataApiClient.getPeriods}
       mutation={userMasterDataApiClient.createPeriod}
       schema={{

@@ -120,6 +120,7 @@ export function CommonCreateEntityDrawer({
                     errors={errors}
                     register={register}
                     isRequired={fieldSchema.required}
+                    placeholder={fieldSchema.placeholder}
                   />
                 );
               }
@@ -133,6 +134,7 @@ export function CommonCreateEntityDrawer({
                   errors={errors}
                   register={register}
                   isRequired={fieldSchema.required}
+                  placeholder={fieldSchema.placeholder}
                 />
               );
             })}

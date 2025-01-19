@@ -7,15 +7,19 @@ import {
   PopoverContent,
   PopoverFooter,
   PopoverTrigger,
+  Tag,
   useDisclosure
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import React, { ReactNode } from 'react';
+import ReactDatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { endOfDay, startOfDay, subMonths, subWeeks } from 'date-fns';
 
 type DropdownCalendarModel = {
-  fromDate: string | '';
-  toDate: string | '';
+  fromDate: Date | null;
+  toDate: Date | null;
 };
 
 type Props = {
@@ -32,23 +36,7 @@ export function DropDownCalendarSelection({
   onChange
 }: Props): React.ReactElement {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const isChanged = fromDate !== '' || toDate !== '';
-
-  function renderTitle() {
-    if (fromDate === '' && toDate === '') {
-      return title;
-    }
-
-    if (!fromDate) {
-      return `${title} (Until ${toDate})`;
-    }
-
-    if (!toDate) {
-      return `${title} (From ${fromDate})`;
-    }
-
-    return `${title} (${fromDate} ~ ${toDate})`;
-  }
+  const isChanged = fromDate !== null || toDate !== null;
 
   return (
     <div>
@@ -64,29 +52,60 @@ export function DropDownCalendarSelection({
             variant="ghost"
             rightIcon={<FontAwesomeIcon icon={faChevronDown} />}
           >
-            {renderTitle()}
+            {title}
           </Button>
         </PopoverTrigger>
 
         <PopoverContent>
-          <PopoverBody>
-            <FormLabel>Between</FormLabel>
-            <div className={'flex flex-col gap-2'}>
-              <Input
-                type="date"
-                value={fromDate}
-                max={toDate}
-                onChange={e => {
-                  onChange({ fromDate: e.target.value, toDate });
+          <PopoverBody className={'space-y-2'}>
+            <FormLabel>Date range</FormLabel>
+
+            <div className={'flex gap-1 cursor-pointer'}>
+              <Tag
+                onClick={() => {
+                  onChange({
+                    fromDate: startOfDay(new Date()),
+                    toDate: endOfDay(new Date())
+                  });
                 }}
-              />
-              And
-              <Input
-                type="date"
-                value={toDate}
-                min={fromDate}
-                onChange={e => {
-                  onChange({ fromDate, toDate: e.target.value });
+              >
+                Today
+              </Tag>
+              <Tag
+                onClick={() => {
+                  onChange({
+                    fromDate: subWeeks(new Date(), 1),
+                    toDate: endOfDay(new Date())
+                  });
+                }}
+              >
+                1 week
+              </Tag>
+              <Tag
+                onClick={() => {
+                  onChange({
+                    fromDate: subMonths(new Date(), 1),
+                    toDate: endOfDay(new Date())
+                  });
+                }}
+              >
+                1 month
+              </Tag>
+            </div>
+
+            <div className={'flex flex-col gap-2'}>
+              <ReactDatePicker
+                placeholderText={'Select date'}
+                customInput={<Input />}
+                selectsRange
+                startDate={fromDate}
+                endDate={toDate}
+                dateFormat="dd/MM/yyyy"
+                onChange={dates => {
+                  onChange({
+                    fromDate: dates[0],
+                    toDate: dates[1]
+                  });
                 }}
               />
             </div>
@@ -95,7 +114,7 @@ export function DropDownCalendarSelection({
           <PopoverFooter className={'text-right'}>
             <Button
               onClick={() => {
-                onChange({ fromDate: '', toDate: '' });
+                onChange({ fromDate: null, toDate: null });
               }}
             >
               Clear

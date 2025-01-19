@@ -88,12 +88,12 @@ export const useMyActivityStore = create<MyActivityStore>(set => ({
 }));
 
 type ActivityRequestStore = Pagination &
-  DateRange<string | ''> & {
+  DateRange<Date | null> & {
     query: string;
     departmentIds: string[];
     status: string[];
     searchValues: Pagination &
-      DateRange<string | ''> & {
+      DateRange<Date | null> & {
         query: string;
         departmentIds: string[];
         status: string[];
@@ -111,8 +111,8 @@ const DEFAULT_SEARCH = {
   ...DEFAULT_PAGINATION,
   query: '',
   departmentIds: [],
-  fromDate: '',
-  toDate: '',
+  fromDate: null,
+  toDate: null,
   status: []
 };
 
