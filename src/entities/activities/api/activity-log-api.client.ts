@@ -15,6 +15,12 @@ export type FindActivityLogQuery = {
   size: number;
 };
 
+export type LogAnalyticResponse = {
+  lateCount: number;
+  onTimeCount: number;
+  notFinishedCount: number;
+};
+
 export const activityLogApiClient = {
   findLogs: async (params: FindActivityLogQuery) => {
     return authorizedHttpClient.request<Page<ActivityLogResponse>>({
@@ -34,6 +40,12 @@ export const activityLogApiClient = {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
+    });
+  },
+  findAnalyticLogs: () => {
+    return authorizedHttpClient.request<LogAnalyticResponse>({
+      method: 'get',
+      url: '/activity-logs/analytics'
     });
   }
 };

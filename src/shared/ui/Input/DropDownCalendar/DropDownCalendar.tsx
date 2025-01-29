@@ -15,7 +15,14 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import React, { ReactNode } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { endOfDay, startOfDay, subMonths, subWeeks } from 'date-fns';
+import {
+  endOfDay,
+  isSameDay,
+  isToday,
+  startOfDay,
+  subMonths,
+  subWeeks
+} from 'date-fns';
 
 type DropdownCalendarModel = {
   fromDate: Date | null;
@@ -62,6 +69,9 @@ export function DropDownCalendarSelection({
 
             <div className={'flex gap-1 cursor-pointer'}>
               <Tag
+                colorScheme={
+                  fromDate !== null && isToday(fromDate) ? 'teal' : undefined
+                }
                 onClick={() => {
                   onChange({
                     fromDate: startOfDay(new Date()),
@@ -72,6 +82,12 @@ export function DropDownCalendarSelection({
                 Today
               </Tag>
               <Tag
+                colorScheme={
+                  fromDate !== null &&
+                  isSameDay(fromDate, subWeeks(new Date(), 1))
+                    ? 'teal'
+                    : undefined
+                }
                 onClick={() => {
                   onChange({
                     fromDate: subWeeks(new Date(), 1),
@@ -82,6 +98,12 @@ export function DropDownCalendarSelection({
                 1 week
               </Tag>
               <Tag
+                colorScheme={
+                  fromDate !== null &&
+                  isSameDay(fromDate, subMonths(new Date(), 1))
+                    ? 'teal'
+                    : undefined
+                }
                 onClick={() => {
                   onChange({
                     fromDate: subMonths(new Date(), 1),
