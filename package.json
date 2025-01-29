@@ -9,7 +9,7 @@
     "dev": "next dev -H 127.0.0.1 --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --fix",
+    "lint": "eslint .",
     "pretty": "prettier --write --config .prettierrc.json src/**/*.{ts,tsx}",
     "prepare": "husky install"
   },

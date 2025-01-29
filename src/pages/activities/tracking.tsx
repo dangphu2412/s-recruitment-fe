@@ -14,6 +14,8 @@ import { DateRangeFilter } from '../../features/activity-logs/ui/DateRangeFilter
 import { endOfDay, subWeeks } from 'date-fns';
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { UploadFileButtonWidget } from '../../widgets/upload-file/UploadFileButtonWidget';
+import { formatDateTime } from '../../shared/models/utils/date.utils';
+import { Tag } from '@chakra-ui/react';
 
 function plugin() {
   return {
@@ -29,11 +31,27 @@ export default function TrackingPage() {
     const columnHelper = createColumnHelper<ActivityLogResponse>();
 
     return [
+      columnHelper.display({
+        header: 'Log status',
+        cell: props => {
+          if (props.row.original.isLate) {
+            return <Tag colorScheme={'red'}>Late</Tag>;
+          }
+
+          if (props.row.original.fromTime === props.row.original.toTime) {
+            return <Tag colorScheme={'yellow'}>Not checkout</Tag>;
+          }
+
+          return <Tag colorScheme={'green'}>On time</Tag>;
+        }
+      }),
       columnHelper.accessor('fromTime', {
-        header: 'From time'
+        header: 'From time',
+        cell: ({ getValue }) => formatDateTime(getValue())
       }),
       columnHelper.accessor('toTime', {
-        header: 'To time'
+        header: 'To time',
+        cell: ({ getValue }) => formatDateTime(getValue())
       }),
       columnHelper.accessor('deviceUserId', {
         header: 'Device User Id'
@@ -49,6 +67,7 @@ export default function TrackingPage() {
       resource={'tracking'}
       fetcher={activityLogApiClient.findLogs}
       registerPlugin={plugin}
+      featureConfig={{ enableInlineSearch: true }}
     >
       <Card>
         <ContentHeaderLayout>

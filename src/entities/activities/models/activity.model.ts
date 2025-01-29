@@ -47,4 +47,3 @@ export const useActivityStore = create<ActivityStore>(set => ({
     });
   }
 }));
-
