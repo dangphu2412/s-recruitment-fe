@@ -1,18 +1,21 @@
 import { authorizedHttpClient } from '../../../shared/api';
 import { User } from '../../user/api';
 import { Page } from '../../../shared/models';
+import { LogWorkStatus } from '../config/constants/log-work-status.enum';
+import { encodeMultiQueryParams } from '../../../shared/models/pagination';
 
 export type ActivityLogResponse = {
   fromTime: string;
   toTime: string;
   deviceUserId: string;
-  isLate: boolean;
+  workStatus: LogWorkStatus;
   author: User | null;
 };
 
 export type FindActivityLogQuery = {
   page: number;
   size: number;
+  workStatus?: string;
 };
 
 export type LogAnalyticResponse = {
@@ -26,7 +29,12 @@ export const activityLogApiClient = {
     return authorizedHttpClient.request<Page<ActivityLogResponse>>({
       method: 'get',
       url: '/activity-logs',
-      params
+      params: {
+        ...params,
+        workStatus: params.workStatus
+          ? encodeMultiQueryParams(params.workStatus)
+          : undefined
+      }
     });
   },
   uploadLogs: async (file: File) => {
@@ -40,6 +48,12 @@ export const activityLogApiClient = {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
+    });
+  },
+  syncLogs: async () => {
+    return authorizedHttpClient.request<void>({
+      method: 'patch',
+      url: '/activity-logs/works'
     });
   },
   findAnalyticLogs: () => {

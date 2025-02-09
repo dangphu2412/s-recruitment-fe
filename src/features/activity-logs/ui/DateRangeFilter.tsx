@@ -19,22 +19,18 @@ export function DateRangeFilter({
       title={'Date range'}
       fromDate={fromDate}
       toDate={toDate}
-      onChange={data => {
-        if (liveQueryChange) {
-          if (data.toDate === null || data.fromDate === null) {
-            setValues({
-              fromDate: data.fromDate,
-              toDate: data.toDate
-            });
-            return;
-          }
-          submitValues({
-            fromDate: data.fromDate,
-            toDate: data.toDate
-          });
+      showApplyButton={liveQueryChange}
+      onApply={() => {
+        if (fromDate === null || toDate === null) {
           return;
         }
 
+        submitValues({
+          fromDate,
+          toDate
+        });
+      }}
+      onChange={data => {
         setValues({
           fromDate: data.fromDate,
           toDate: data.toDate

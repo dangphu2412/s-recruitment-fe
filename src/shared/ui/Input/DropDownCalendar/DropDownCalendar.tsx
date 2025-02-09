@@ -21,7 +21,8 @@ import {
   isToday,
   startOfDay,
   subMonths,
-  subWeeks
+  subWeeks,
+  subYears
 } from 'date-fns';
 
 type DropdownCalendarModel = {
@@ -31,13 +32,17 @@ type DropdownCalendarModel = {
 
 type Props = {
   title: ReactNode;
+  showApplyButton?: boolean;
   fromDate: DropdownCalendarModel['fromDate'];
   toDate: DropdownCalendarModel['toDate'];
   onChange: (value: DropdownCalendarModel) => void;
+  onApply?: () => void;
 };
 
 export function DropDownCalendarSelection({
   title,
+  showApplyButton,
+  onApply,
   fromDate,
   toDate,
   onChange
@@ -113,27 +118,61 @@ export function DropDownCalendarSelection({
               >
                 1 month
               </Tag>
+
+              <Tag
+                colorScheme={
+                  fromDate !== null &&
+                  isSameDay(fromDate, subYears(new Date(), 1))
+                    ? 'teal'
+                    : undefined
+                }
+                onClick={() => {
+                  onChange({
+                    fromDate: subYears(new Date(), 1),
+                    toDate: endOfDay(new Date())
+                  });
+                }}
+              >
+                1 year
+              </Tag>
             </div>
 
             <div className={'flex flex-col gap-2'}>
-              <ReactDatePicker
-                placeholderText={'Select date'}
-                customInput={<Input />}
-                selectsRange
-                startDate={fromDate}
-                endDate={toDate}
-                dateFormat="dd/MM/yyyy"
-                onChange={dates => {
-                  onChange({
-                    fromDate: dates[0],
-                    toDate: dates[1]
-                  });
-                }}
-              />
+              <div>
+                <FormLabel>From date</FormLabel>
+                <ReactDatePicker
+                  placeholderText={'Select date'}
+                  customInput={<Input />}
+                  selected={fromDate}
+                  dateFormat="dd/MM/yyyy"
+                  onChange={date => {
+                    onChange({
+                      fromDate: date,
+                      toDate: toDate
+                    });
+                  }}
+                />
+              </div>
+
+              <div>
+                <FormLabel>To date</FormLabel>
+                <ReactDatePicker
+                  placeholderText={'Select date'}
+                  customInput={<Input />}
+                  selected={toDate}
+                  dateFormat="dd/MM/yyyy"
+                  onChange={date => {
+                    onChange({
+                      fromDate: fromDate,
+                      toDate: date
+                    });
+                  }}
+                />
+              </div>
             </div>
           </PopoverBody>
 
-          <PopoverFooter className={'text-right'}>
+          <PopoverFooter className={'flex text-right justify-between'}>
             <Button
               onClick={() => {
                 onChange({ fromDate: null, toDate: null });
@@ -141,6 +180,16 @@ export function DropDownCalendarSelection({
             >
               Clear
             </Button>
+
+            {showApplyButton && (
+              <Button
+                onClick={() => {
+                  onApply?.();
+                }}
+              >
+                Apply
+              </Button>
+            )}
           </PopoverFooter>
         </PopoverContent>
       </Popover>
