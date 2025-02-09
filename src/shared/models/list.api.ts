@@ -27,7 +27,7 @@ export type ProbationQuery = {
 
 export const DEFAULT_PAGINATION: Pagination = {
   page: 1,
-  size: 10
+  size: 20
 };
 
 export const paginator = <T>(

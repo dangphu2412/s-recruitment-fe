@@ -11,7 +11,7 @@ export function useDayOfWeeksQuery() {
   });
 
   return {
-    data: data ?? ([] as DayOfWeek[])
+    data: data?.items ?? ([] as DayOfWeek[])
   };
 }
 
@@ -23,6 +23,6 @@ export function useTimeOfDayQuery() {
   });
 
   return {
-    data: data ?? ([] as TimeOfDay[])
+    data: data?.items ?? ([] as TimeOfDay[])
   };
 }

@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, Key } from 'react';
 
 type DropdownCheckBoxModel<ID> = {
   id: ID;
@@ -23,7 +23,7 @@ type Props<ID> = {
   onSelect: (value: DropdownCheckBoxModel<ID>) => void;
 };
 
-export function DropDownMultipleCheckboxSelection<T>({
+export function DropDownMultipleCheckboxSelection<T extends Key>({
   title,
   value,
   options,
@@ -41,11 +41,11 @@ export function DropDownMultipleCheckboxSelection<T>({
       >
         <PopoverTrigger>
           <Button
-            colorScheme={value.length ? 'teal' : undefined}
+            colorScheme={value?.length ? 'teal' : undefined}
             variant="ghost"
             rightIcon={<FontAwesomeIcon icon={faChevronDown} />}
           >
-            {title} {value.length ? `(${value.length})` : ''}
+            {title} {value?.length ? `(${value.length})` : ''}
           </Button>
         </PopoverTrigger>
 
@@ -55,10 +55,11 @@ export function DropDownMultipleCheckboxSelection<T>({
               {(options ?? []).map(option => {
                 return (
                   <Checkbox
+                    key={option.id}
                     onChange={() => {
                       onSelect(option);
                     }}
-                    isChecked={value.includes(option.id)}
+                    isChecked={value?.includes(option.id)}
                     className={'px-2 py-1 hover:bg-slate-100'}
                   >
                     {option.name}

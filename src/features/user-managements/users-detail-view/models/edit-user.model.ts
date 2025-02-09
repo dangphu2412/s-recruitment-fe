@@ -6,6 +6,7 @@ export function mapUserDetailToEditForm(userDetail: User): EditUserForm {
     email: userDetail.email,
     username: userDetail.username,
     fullName: userDetail.fullName,
+    trackingId: userDetail.trackingId,
     birthday: formatToInputDate(userDetail.birthday),
     phoneNumber: userDetail.phoneNumber,
     department: userDetail.department?.id,
@@ -21,6 +22,7 @@ export type EditUserForm = {
   period?: string;
   birthday?: string;
   phoneNumber: string;
+  trackingId: string;
   monthlyConfigId?: string;
 };
 
@@ -34,6 +36,7 @@ export function mapFormToEditUserDto(
     departmentId: form.department,
     periodId: form.period,
     birthday: form.birthday,
+    trackingId: form.trackingId,
     phoneNumber: form.phoneNumber
   };
 }
