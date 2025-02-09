@@ -16,6 +16,9 @@ import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderAc
 import { UploadFileButtonWidget } from '../../widgets/upload-file/UploadFileButtonWidget';
 import { formatDateTime } from '../../shared/models/utils/date.utils';
 import { Tag } from '@chakra-ui/react';
+import { SyncWorkButton } from '../../features/activity-logs/ui/SyncWorkButton';
+import { LogWorkStatus } from '../../entities/activities/config/constants/log-work-status.enum';
+import { StatusFilterDialog } from '../../features/activity-logs/ui/LogWorkStatusFilter';
 
 function plugin() {
   return {
@@ -34,11 +37,11 @@ export default function TrackingPage() {
       columnHelper.display({
         header: 'Log status',
         cell: props => {
-          if (props.row.original.isLate) {
+          if (props.row.original.workStatus === LogWorkStatus.LATE) {
             return <Tag colorScheme={'red'}>Late</Tag>;
           }
 
-          if (props.row.original.fromTime === props.row.original.toTime) {
+          if (props.row.original.workStatus === LogWorkStatus.NOT_FINISHED) {
             return <Tag colorScheme={'yellow'}>Not checkout</Tag>;
           }
 
@@ -76,6 +79,7 @@ export default function TrackingPage() {
             brief={'Where you observe members logs'}
           />
           <HeaderActionGroup>
+            <SyncWorkButton />
             <UploadFileButtonWidget
               resource={'upload-logs'}
               mutateFn={activityLogApiClient.uploadLogs}
@@ -85,7 +89,14 @@ export default function TrackingPage() {
           </HeaderActionGroup>
         </ContentHeaderLayout>
 
-        <CommonSearchWidget filterSlot={<DateRangeFilter />} />
+        <CommonSearchWidget
+          filterSlot={
+            <>
+              <DateRangeFilter />
+              <StatusFilterDialog />
+            </>
+          }
+        />
         <CommonViewEntityTable columns={columns} />
       </Card>
     </CommonCRUDProvider>

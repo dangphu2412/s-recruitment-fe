@@ -42,6 +42,7 @@ type CommonCRUDState = {
   values: Values;
   searchValues: Values;
   setValues: (values: Partial<Values>) => void;
+  toggleValue: (key: string, value: any) => void;
   setValue: (key: string, value: any) => void;
   reset: () => void;
   submitSearch: () => void;
@@ -91,6 +92,22 @@ function createCommonCRUDStore({ registerPlugin, ...initProps }: InitProps) {
             [key]: value
           }
         }));
+      },
+      toggleValue: (key, value) => {
+        // Add or remove value from array of values of key
+        set(state => {
+          const values = state.values[key] || [];
+          const newValues = values.includes(value)
+            ? values.filter((v: string) => v !== value)
+            : [...values, value];
+          return {
+            ...state,
+            values: {
+              ...state.values,
+              [key]: newValues
+            }
+          };
+        });
       },
       submitValues: values => {
         set(state => {

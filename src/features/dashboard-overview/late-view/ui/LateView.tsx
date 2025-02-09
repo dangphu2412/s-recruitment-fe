@@ -11,13 +11,14 @@ import { createColumnHelper } from '@tanstack/table-core';
 import { Heading, Tag } from '@chakra-ui/react';
 import { formatDateTime } from '../../../../shared/models/utils/date.utils';
 import { DateRangeFilter } from '../../../activity-logs/ui/DateRangeFilter';
+import { LogWorkStatus } from '../../../../entities/activities/config/constants/log-work-status.enum';
 
 function plugin() {
   return {
     values: {
       fromDate: subWeeks(new Date(), 1),
       toDate: endOfDay(new Date()),
-      isLate: true
+      workStatus: [LogWorkStatus.LATE]
     }
   };
 }
@@ -30,7 +31,7 @@ export function LateView() {
       columnHelper.display({
         header: 'Log status',
         cell: props => {
-          if (props.row.original.isLate) {
+          if (props.row.original.workStatus) {
             return <Tag colorScheme={'red'}>Late</Tag>;
           }
 
