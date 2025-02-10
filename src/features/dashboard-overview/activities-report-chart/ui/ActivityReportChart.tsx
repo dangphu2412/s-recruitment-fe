@@ -5,11 +5,12 @@ import {
   Chart as ChartJS,
   ChartData,
   Legend,
-  Tooltip
+  Tooltip,
+  PieController
 } from 'chart.js';
 import { useActivityLogAnalytic } from '../../../../entities/activities/models/activity-log.model';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, PieController);
 
 export function ActivityReportChart() {
   const theme = useTheme();
