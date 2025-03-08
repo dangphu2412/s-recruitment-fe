@@ -33,6 +33,7 @@ import {
 import { useNotify } from '../../../../../shared/models/notify';
 import { useQueryClient } from 'react-query';
 import { RoleSettingDrawer } from '../../../user-roles-setting/ui/RoleSettings/RoleSettingDrawer';
+import { useTrackedUsers } from '../../../../../entities/activities/models/activity-master-data.model';
 
 type Props = {
   userId: string;
@@ -54,6 +55,7 @@ export function UserDetailSection({ userId }: Props) {
   });
   const { data: departments } = useDepartments();
   const { data: periods } = usePeriods();
+  const { data: trackedUsers } = useTrackedUsers();
   const { updateUser } = useMutateUpdateUser();
 
   function handleEdit(inputs: EditUserForm) {
@@ -169,7 +171,15 @@ export function UserDetailSection({ userId }: Props) {
           <FormControl>
             <FormLabel>Tracking ID</FormLabel>
 
-            <Input {...register('trackingId')} type={'text'} />
+            <Select placeholder="Select tracking" {...register('trackingId')}>
+              {trackedUsers?.map(user => {
+                return (
+                  <option key={user.userId} value={user.userId}>
+                    {user.name}
+                  </option>
+                );
+              })}
+            </Select>
           </FormControl>
         </div>
       </div>
