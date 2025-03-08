@@ -38,6 +38,9 @@ export function UploadFileButtonWidget({
             title: 'Upload failed',
             status: 'error'
           });
+        },
+        onSettled: () => {
+          ref.current!.files = null;
         }
       });
     }
