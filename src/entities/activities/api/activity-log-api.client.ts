@@ -15,7 +15,7 @@ export type ActivityLogResponse = {
 export type FindActivityLogQuery = {
   page: number;
   size: number;
-  workStatus?: string;
+  workStatus?: string[];
 };
 
 export type LogAnalyticResponse = {
@@ -48,12 +48,6 @@ export const activityLogApiClient = {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    });
-  },
-  syncLogs: async () => {
-    return authorizedHttpClient.request<void>({
-      method: 'patch',
-      url: '/activity-logs/works'
     });
   },
   findAnalyticLogs: () => {
