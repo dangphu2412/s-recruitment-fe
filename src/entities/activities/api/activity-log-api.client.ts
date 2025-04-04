@@ -3,6 +3,7 @@ import { User } from '../../user/api';
 import { Page } from '../../../shared/models';
 import { LogWorkStatus } from '../config/constants/log-work-status.enum';
 import { encodeMultiQueryParams } from '../../../shared/models/pagination';
+import { BoxItem } from '../../../shared/models/combobox.api';
 
 export type ActivityLogResponse = {
   fromTime: string;
@@ -16,6 +17,7 @@ export type FindActivityLogQuery = {
   page: number;
   size: number;
   workStatus?: string[];
+  authors: BoxItem[];
 };
 
 export type LogAnalyticResponse = {
@@ -33,6 +35,9 @@ export const activityLogApiClient = {
         ...params,
         workStatus: params.workStatus
           ? encodeMultiQueryParams(params.workStatus)
+          : undefined,
+        authors: params.authors
+          ? encodeMultiQueryParams(params.authors.map(author => author.value))
           : undefined
       }
     });

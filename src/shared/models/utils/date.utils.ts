@@ -5,7 +5,9 @@ const DATE_FORMAT = 'dd-MM-yyyy';
 const INPUT_DATE_FORMAT = 'yyyy-MM-dd';
 const DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss';
 
-export function formatDate(date: Date | string | null | undefined): string {
+type DateInput = Date | string | null | undefined;
+
+function formatRoot(date: DateInput, formatT: string): string {
   if (isNil(date)) {
     return '';
   }
@@ -15,42 +17,24 @@ export function formatDate(date: Date | string | null | undefined): string {
   }
 
   if (typeof date === 'string') {
-    return format(new Date(date), DATE_FORMAT);
+    return format(new Date(date), formatT);
   }
 
-  return format(date, DATE_FORMAT);
+  return format(date, formatT);
 }
 
-export function formatDateTime(date: Date | string | null | undefined): string {
-  if (isNil(date)) {
-    return '';
-  }
-
-  if ('' === date) {
-    return '';
-  }
-
-  if (typeof date === 'string') {
-    return format(new Date(date), DATE_TIME_FORMAT);
-  }
-
-  return format(date, DATE_TIME_FORMAT);
+export function formatDayOfWeekAndDate(date: DateInput): string {
+  return formatRoot(date, 'EEEE dd-MM-yyyy HH:mm:ss');
 }
 
-export function formatToInputDate(
-  date: Date | string | null | undefined
-): string {
-  if (isNil(date)) {
-    return '';
-  }
+export function formatDate(date: DateInput): string {
+  return formatRoot(date, DATE_FORMAT);
+}
 
-  if ('' === date) {
-    return '';
-  }
+export function formatDateTime(date: DateInput): string {
+  return formatRoot(date, DATE_TIME_FORMAT);
+}
 
-  if (typeof date === 'string') {
-    return format(new Date(date), INPUT_DATE_FORMAT);
-  }
-
-  return format(date, INPUT_DATE_FORMAT);
+export function formatToInputDate(date: DateInput): string {
+  return formatRoot(date, INPUT_DATE_FORMAT);
 }
