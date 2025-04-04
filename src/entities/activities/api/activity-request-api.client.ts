@@ -65,7 +65,7 @@ export const activityRequestApiClient = {
   getRequestedActivities: async (params: GetActivityRequestQuery) => {
     return authorizedHttpClient.request<Page<ActivityRequestResponse>>({
       method: 'get',
-      url: '/activities/requests',
+      url: '/activity-requests',
       params: {
         ...params,
         departmentIds: encodeMultiQueryParams(params.departmentIds),
@@ -76,26 +76,26 @@ export const activityRequestApiClient = {
   getMyRequestedActivities: async () => {
     return authorizedHttpClient.request<Page<ActivityRequestResponse>>({
       method: 'get',
-      url: '/activities/my-requests'
+      url: '/activity-requests/my'
     });
   },
   getMyRequestedActivity: async (id: number) => {
     return authorizedHttpClient.request<ActivityRequestResponse>({
       method: 'get',
-      url: `/activities/my-requests/${id}`
+      url: `/activity-requests/my/${id}`
     });
   },
   createRequestActivities: async (data: CreateRequestActivityDTO) => {
     return authorizedHttpClient.request<void>({
       method: 'post',
-      url: '/activities/requests',
+      url: '/activity-requests',
       data
     });
   },
   updateApprovalRequestActivity: async (data: UpdateRequestActivityDTO) => {
     return authorizedHttpClient.request<void>({
       method: 'patch',
-      url: '/activities/requests/approval-status',
+      url: '/activity-requests/approval-status',
       data
     });
   },
@@ -105,8 +105,21 @@ export const activityRequestApiClient = {
   }: UpdateMyRequestActivityDTO) => {
     return authorizedHttpClient.request<void>({
       method: 'patch',
-      url: `/activities/my-requests/${id}`,
+      url: `/activity-requests/my/${id}`,
       data
+    });
+  },
+  uploadRequests: async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return authorizedHttpClient.request<void>({
+      method: 'post',
+      url: '/activity-requests/upload',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
   }
 };

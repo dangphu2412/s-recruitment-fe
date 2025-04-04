@@ -24,7 +24,6 @@ import {
 } from '../../../../../entities/user/models';
 import { useNotify } from '../../../../../shared/models/notify';
 import { useQueryClient } from 'react-query';
-import { usePeriods } from '../../../../../entities/user/models/user-master-data.model';
 import { useQueryMonthlyMoneyConfigs } from '../../../../../entities/monthly-money/models';
 import { MoneyOption } from '../../../../../entities/monthly-money/ui/MoneyOption/MoneyOption';
 import { createUserFileExample } from '../../../../../entities/user/models/create-user-file-example';
@@ -39,7 +38,6 @@ type ImportUserDrawerProps = Pick<UseDisclosureApi, 'onClose'>;
 
 const validationSchema = object({
   file: mixed().nullable().required(),
-  periodId: string().required('Period is required'),
   monthlyConfigId: string().optional()
 });
 
@@ -62,13 +60,10 @@ export function ImportUsersDrawer({
   const notify = useNotify();
   const queryClient = useQueryClient();
 
-  const { data: periods } = usePeriods();
-
   const importUsers: SubmitHandler<Inputs> = inputs => {
     uploadUserByFile(
       {
         file: inputs.file[0],
-        periodId: inputs.periodId,
         monthlyConfigId: inputs.monthlyConfigId
           ? +inputs.monthlyConfigId
           : undefined
@@ -122,29 +117,6 @@ export function ImportUsersDrawer({
         <DrawerHeader>Import S-Group users</DrawerHeader>
 
         <DrawerBody className="space-y-4">
-          <FormControl isInvalid={!!errors.periodId} isRequired>
-            <FormLabel htmlFor="create-user-type">Period</FormLabel>
-
-            <Select
-              placeholder="Select period"
-              {...register('periodId', {
-                required: 'Period is required'
-              })}
-            >
-              {periods?.map(period => {
-                return (
-                  <option key={period.id} value={period.id}>
-                    {period.name}
-                  </option>
-                );
-              })}
-            </Select>
-
-            {errors.periodId && (
-              <FormErrorMessage>{errors.periodId?.message}</FormErrorMessage>
-            )}
-          </FormControl>
-
           <FormControl isInvalid={!!errors.monthlyConfigId}>
             <FormLabel htmlFor="monthlyConfigId">Monthly Config</FormLabel>
 
