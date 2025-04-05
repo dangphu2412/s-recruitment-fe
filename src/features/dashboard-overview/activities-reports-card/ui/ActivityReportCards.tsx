@@ -34,7 +34,7 @@ function ReportCard({ title, iconTitle, summary, children }: Props) {
 
 export function ActivityReportCards() {
   const { data } = useActivityLogAnalytic();
-  const { lateCount, notFinishedCount, onTimeCount } = data ?? {};
+  const { lateCount = 0, notFinishedCount = 0, onTimeCount = 0 } = data ?? {};
 
   return (
     <section className={'grid grid-cols-3 gap-2 w-full'}>

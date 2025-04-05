@@ -11,13 +11,17 @@ export type ActivityLogResponse = {
   deviceUserId: string;
   workStatus: LogWorkStatus;
   author: User | null;
+  deviceAuthor: {
+    deviceUserId: string;
+    name: string;
+  };
 };
 
 export type FindActivityLogQuery = {
   page: number;
   size: number;
   workStatus?: string[];
-  authors: BoxItem[];
+  authors?: BoxItem[];
 };
 
 export type LogAnalyticResponse = {
@@ -36,7 +40,7 @@ export const activityLogApiClient = {
         workStatus: params.workStatus
           ? encodeMultiQueryParams(params.workStatus)
           : undefined,
-        authors: params.authors
+        authors: params.authors?.length
           ? encodeMultiQueryParams(params.authors.map(author => author.value))
           : undefined
       }

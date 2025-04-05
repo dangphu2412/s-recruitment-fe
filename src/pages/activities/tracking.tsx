@@ -50,6 +50,21 @@ export default function TrackingPage() {
           return <Tag colorScheme={'green'}>On time</Tag>;
         }
       }),
+      columnHelper.accessor('author.email', {
+        header: 'Author email',
+        cell: props => {
+          const value = props.getValue();
+
+          if (!value) {
+            return <Tag colorScheme={'gray'}>Not Linked</Tag>;
+          }
+
+          return <span>{value}</span>;
+        }
+      }),
+      columnHelper.accessor('deviceAuthor.name', {
+        header: 'Device User'
+      }),
       columnHelper.accessor('fromTime', {
         header: 'From time',
         cell: ({ getValue }) => formatDayOfWeekAndDate(getValue())
@@ -57,12 +72,6 @@ export default function TrackingPage() {
       columnHelper.accessor('toTime', {
         header: 'To time',
         cell: ({ getValue }) => formatDayOfWeekAndDate(getValue())
-      }),
-      columnHelper.accessor('deviceUserId', {
-        header: 'Device User'
-      }),
-      columnHelper.accessor('author.email', {
-        header: 'Author email'
       })
     ];
   }, []);
