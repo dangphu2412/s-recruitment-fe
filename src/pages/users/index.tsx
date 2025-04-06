@@ -10,6 +10,8 @@ import { UpdateUserToMemberContainer } from '../../features/user-managements/upd
 import { ImportUsersContainer } from '../../features/user-managements/import-users';
 import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { activityMdmApiClient } from '../../entities/activities/api/activity-mdm-api.client';
+import { UploadFileButtonWidget } from '../../widgets/upload-file/UploadFileButtonWidget';
 
 export default function AdministratorPage(): ReactElement {
   return (
@@ -24,6 +26,12 @@ export default function AdministratorPage(): ReactElement {
           <AddUsersContainer />
           <UpdateUserToMemberContainer />
           <ImportUsersContainer />
+          <UploadFileButtonWidget
+            resource={'upload-logs'}
+            mutateFn={activityMdmApiClient.uploadUsers}
+          >
+            Upload device users
+          </UploadFileButtonWidget>
         </HeaderActionGroup>
       </ContentHeaderLayout>
 

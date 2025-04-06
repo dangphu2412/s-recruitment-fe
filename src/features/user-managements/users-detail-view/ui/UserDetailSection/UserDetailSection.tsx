@@ -65,7 +65,7 @@ export function UserDetailSection({ userId }: Props) {
       trackedUsers?.map(user => {
         return {
           text: user.name,
-          value: user.deviceUserId
+          value: user.trackingId
         };
       }) ?? []
     );

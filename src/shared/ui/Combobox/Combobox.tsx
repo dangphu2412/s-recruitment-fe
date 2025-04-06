@@ -33,13 +33,13 @@ export const Combobox = ({
         });
 
   return (
-    <HeadlessCombobox name={name} value={value} onChange={onChange}>
+    <HeadlessCombobox name={name} value={value} onChange={e => onChange(e)}>
       <div className={'relative'}>
         <HeadlessCombobox.Input
           as={Input}
           onChange={event => setQuery(event.target.value)}
           placeholder={placeholder}
-          displayValue={(item: BoxItem) =>
+          displayValue={() =>
             filteredItems.find(item => item.value === value)?.text ?? ''
           }
         />

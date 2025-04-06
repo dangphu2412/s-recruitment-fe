@@ -13,7 +13,7 @@ import { authorizedHttpClient } from '../../../shared/api';
  */
 export type TrackedUsers = {
   name: string;
-  deviceUserId: string;
+  trackingId: string;
 };
 
 export const activityMdmApiClient = {
