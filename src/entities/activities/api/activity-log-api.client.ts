@@ -15,6 +15,7 @@ export type ActivityLogResponse = {
     deviceUserId: string;
     name: string;
   };
+  activityId: number;
 };
 
 export type FindActivityLogQuery = {

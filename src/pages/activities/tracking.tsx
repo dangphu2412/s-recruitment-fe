@@ -22,7 +22,6 @@ import { Tag } from '@chakra-ui/react';
 import { LogWorkStatus } from '../../entities/activities/config/constants/log-work-status.enum';
 import { StatusFilterDialog } from '../../features/activity-logs/ui/LogWorkStatusFilter';
 import { UserFilter } from '../../features/activity-logs/ui/UserFilter';
-import { activityMdmApiClient } from '../../entities/activities/api/activity-mdm-api.client';
 import {
   QuerySynchronizeSchema,
   useQuerySynchronizer
@@ -135,13 +134,6 @@ export default function TrackingPage() {
               mutateFn={activityLogApiClient.uploadLogs}
             >
               Upload logs
-            </UploadFileButtonWidget>
-
-            <UploadFileButtonWidget
-              resource={'upload-logs'}
-              mutateFn={activityMdmApiClient.uploadUsers}
-            >
-              Upload device users
             </UploadFileButtonWidget>
           </HeaderActionGroup>
         </ContentHeaderLayout>
