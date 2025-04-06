@@ -56,6 +56,7 @@ export function UpdateUserToMemberContainerDrawer({
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
     watch
   } = useForm<MemberInputs>({
     mode: 'onChange'
@@ -82,7 +83,10 @@ export function UpdateUserToMemberContainerDrawer({
   const { data: departments } = useDepartments();
   const { data: periods } = usePeriods();
   const { monthlyMoneyConfigs } = useQueryMonthlyMoneyConfigs({
-    isEnabled: true
+    isEnabled: true,
+    onSuccess: data => {
+      setValue('monthlyMoneyConfig', data[0].id);
+    }
   });
   const { data: probationUsers, isLoading } = useProbationUsers({
     departmentId: department,

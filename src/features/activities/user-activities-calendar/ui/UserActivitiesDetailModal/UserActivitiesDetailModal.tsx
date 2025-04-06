@@ -34,7 +34,7 @@ export function UserActivitiesDetailModal({ selectedDays, onClose }: Props) {
   );
 
   return (
-    <Modal isOpen={selectedDays !== null} onClose={onClose}>
+    <Modal isOpen={selectedDays !== null} onClose={onClose} size={'3xl'}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Registered detail</ModalHeader>
