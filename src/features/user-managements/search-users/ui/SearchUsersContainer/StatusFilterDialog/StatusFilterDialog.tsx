@@ -10,8 +10,7 @@ export function StatusFilterDialog(): React.ReactElement {
   const options = [
     { id: UserStatus.DEBTOR, name: 'Debt' },
     { id: UserStatus.ACTIVE, name: 'Active' },
-    { id: UserStatus.INACTIVE, name: 'Inactive' },
-    { id: UserStatus.TEMPORARY_STOP, name: 'Temporary Stop' }
+    { id: UserStatus.INACTIVE, name: 'Inactive' }
   ];
 
   return (

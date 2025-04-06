@@ -97,7 +97,7 @@ export function accumulateTotalActivities(
 export function groupCalendarItemsByRequestType(
   items: CalendarItem[]
 ): Record<string, CalendarItem[]> {
-  return items.reduce((acc, item) => {
+  const calendarMap = items.reduce((acc, item) => {
     if (!acc[item.requestType]) {
       acc[item.requestType] = [];
     }
@@ -106,4 +106,19 @@ export function groupCalendarItemsByRequestType(
 
     return acc;
   }, {} as Record<string, CalendarItem[]>);
+
+  Object.keys(calendarMap).forEach(key => {
+    calendarMap[key] = calendarMap[key].sort((a, b) => {
+      if (a.timeOfDay.fromTime < b.timeOfDay.fromTime) {
+        return -1;
+      }
+      if (a.timeOfDay.fromTime > b.timeOfDay.fromTime) {
+        return 1;
+      }
+
+      return 0;
+    });
+  });
+
+  return calendarMap;
 }

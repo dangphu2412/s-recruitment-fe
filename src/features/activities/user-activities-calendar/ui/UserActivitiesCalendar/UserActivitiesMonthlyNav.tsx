@@ -4,7 +4,6 @@ import { useMonthlyCalendar } from '@zach.codes/react-calendar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Button, Text } from '@chakra-ui/react';
-import { AddActivityRequestContainer } from '../../../add-activity-request';
 
 export function UserActivitiesMonthlyNav() {
   const { locale, currentMonth, onCurrentMonthChange } = useMonthlyCalendar();
@@ -43,8 +42,6 @@ export function UserActivitiesMonthlyNav() {
       >
         Today
       </Button>
-
-      <AddActivityRequestContainer />
     </div>
   );
 }

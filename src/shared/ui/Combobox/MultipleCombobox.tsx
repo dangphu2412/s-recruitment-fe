@@ -77,7 +77,7 @@ export const MultipleCombobox = ({
   return (
     <HeadlessCombobox name={name} value={value} onChange={onChange} multiple>
       <div className={'relative space-y-2'}>
-        <div className="space-x-2">
+        <div className=" space-y-1">
           {value.map(item => {
             return (
               <Tag key={item?.value} className="space-x-2">

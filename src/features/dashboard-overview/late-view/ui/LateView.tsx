@@ -5,7 +5,7 @@ import {
 import { CommonViewEntityTable } from '../../../../widgets/crud-widget/CommonViewEntityTable';
 import * as React from 'react';
 import { useMemo } from 'react';
-import { endOfDay, subWeeks } from 'date-fns';
+import { endOfDay, subMonths } from 'date-fns';
 import { CommonCRUDProvider } from 'src/widgets/crud-widget/CommonCRUDContext';
 import { createColumnHelper } from '@tanstack/table-core';
 import { Heading, Tag } from '@chakra-ui/react';
@@ -16,7 +16,7 @@ import { LogWorkStatus } from '../../../../entities/activities/config/constants/
 function plugin() {
   return {
     values: {
-      fromDate: subWeeks(new Date(), 1),
+      fromDate: subMonths(new Date(), 1),
       toDate: endOfDay(new Date()),
       workStatus: [LogWorkStatus.LATE]
     }
@@ -68,7 +68,7 @@ export function LateView() {
       >
         <div className={'flex justify-between'}>
           <Heading size={'md'}>Late activities</Heading>
-          <DateRangeFilter liveQueryChange />
+          <DateRangeFilter showApplyButton />
         </div>
         <CommonViewEntityTable columns={columns} />
       </CommonCRUDProvider>
