@@ -3,11 +3,11 @@ import { DropDownCalendarSelection } from '../../../shared/ui/Input/DropDownCale
 import { useCommonCRUDContext } from '../../../widgets/crud-widget/CommonCRUDContext';
 
 type DateRangeFilterProps = {
-  liveQueryChange?: boolean;
+  showApplyButton?: boolean;
 };
 
 export function DateRangeFilter({
-  liveQueryChange
+  showApplyButton
 }: DateRangeFilterProps): React.ReactElement {
   const fromDate = useCommonCRUDContext(state => state.values.fromDate);
   const toDate = useCommonCRUDContext(state => state.values.toDate);
@@ -19,7 +19,7 @@ export function DateRangeFilter({
       title={'Date range'}
       fromDate={fromDate}
       toDate={toDate}
-      showApplyButton={liveQueryChange}
+      showApplyButton={showApplyButton}
       onApply={() => {
         if (fromDate === null || toDate === null) {
           return;

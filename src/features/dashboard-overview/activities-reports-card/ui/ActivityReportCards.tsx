@@ -67,7 +67,7 @@ export function ActivityReportCards() {
           </Text>
         }
         title={'On Time'}
-        summary={'On time activities'}
+        summary={'Total on time activities'}
         link={getLinkByStatus(LogWorkStatus.ON_TIME)}
       >
         {onTimeCount}
@@ -80,7 +80,7 @@ export function ActivityReportCards() {
           </Text>
         }
         title={'Late'}
-        summary={'Late activities'}
+        summary={'Total late activities'}
         link={getLinkByStatus(LogWorkStatus.LATE)}
       >
         {lateCount}
@@ -93,7 +93,7 @@ export function ActivityReportCards() {
           </Text>
         }
         title={'Not Finished'}
-        summary={'Not finished activities'}
+        summary={'Total not finished activities'}
         link={getLinkByStatus(LogWorkStatus.NOT_FINISHED)}
       >
         {notFinishedCount}
