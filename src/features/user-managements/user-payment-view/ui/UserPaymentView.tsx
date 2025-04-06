@@ -1,8 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectPaymentUserId,
-  userActions
-} from '../../../../entities/user/models';
+import { useUserStore } from '../../../../entities/user/models';
 import {
   Button,
   Modal,
@@ -18,12 +14,16 @@ import { UserPaymentList } from './UserPaymentList';
 import { AddUserPayment } from './AddUserPayment';
 
 export function UserPaymentView() {
-  const selectedPaymentUserId = useSelector(selectPaymentUserId) as string;
-  const dispatch = useDispatch();
+  const selectedPaymentUserId = useUserStore(
+    user => user.overview.selectedPaymentUserId
+  );
+  const setSelectedPaymentUserId = useUserStore(
+    user => user.setSelectedPaymentUserId
+  );
   const [step, setStep] = useState(0);
 
   function close() {
-    dispatch(userActions.setSelectedPaymentUserId(undefined));
+    setSelectedPaymentUserId(undefined);
   }
 
   if (!selectedPaymentUserId) {

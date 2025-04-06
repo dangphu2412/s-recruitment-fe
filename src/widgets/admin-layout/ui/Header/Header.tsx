@@ -18,7 +18,7 @@ import styles from './Header.module.scss';
 import { useSelector } from 'react-redux';
 import { currentMenuSelector } from '../../../../entities/menu/models';
 import Link from 'next/link';
-import { selectCurrentUser } from '../../../../entities/user/models';
+import { useUserStore } from '../../../../entities/user/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 
@@ -36,7 +36,7 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
   const router = useRouter();
   const headerRef = React.useRef<HTMLDivElement>(null);
   const currentMenu = useSelector(currentMenuSelector);
-  const user = useSelector(selectCurrentUser);
+  const user = useUserStore(user => user.currentUser);
 
   const menuName = currentMenu?.name ?? 'Main';
 
