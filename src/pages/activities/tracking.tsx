@@ -2,7 +2,10 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import { Card, ContentHeader } from '../../shared/ui';
 import { createColumnHelper } from '@tanstack/table-core';
-import { CommonCRUDProvider } from '../../widgets/crud-widget/CommonCRUDContext';
+import {
+  CommonCRUDProvider,
+  useCommonCRUDContext
+} from '../../widgets/crud-widget/CommonCRUDContext';
 import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import { CommonSearchWidget } from '../../widgets/crud-widget/CommonSearchWidget';
 import { CommonViewEntityTable } from '../../widgets/crud-widget/CommonViewEntityTable';
@@ -20,6 +23,10 @@ import { LogWorkStatus } from '../../entities/activities/config/constants/log-wo
 import { StatusFilterDialog } from '../../features/activity-logs/ui/LogWorkStatusFilter';
 import { UserFilter } from '../../features/activity-logs/ui/UserFilter';
 import { activityMdmApiClient } from '../../entities/activities/api/activity-mdm-api.client';
+import {
+  QuerySynchronizeSchema,
+  useQuerySynchronizer
+} from '../../shared/models/query-synchronizer';
 
 function plugin() {
   return {
@@ -29,6 +36,38 @@ function plugin() {
       authors: []
     }
   };
+}
+
+const SyncActivityLogQuerySchema: QuerySynchronizeSchema<{
+  fromDate: string;
+  toDate: string;
+  authors: string[];
+  workStatus: string[];
+}> = {
+  fromDate: {
+    target: 'fromDate',
+    type: Date
+  },
+  toDate: {
+    target: 'toDate',
+    type: Date
+  },
+  workStatus: {
+    target: 'workStatus',
+    type: String,
+    isArray: true
+  }
+};
+
+function QuerySynchronizer() {
+  const submitValues = useCommonCRUDContext(state => state.submitValues);
+
+  useQuerySynchronizer({
+    schema: SyncActivityLogQuerySchema,
+    updater: submitValues
+  });
+
+  return <></>;
 }
 
 export default function TrackingPage() {
@@ -83,6 +122,7 @@ export default function TrackingPage() {
       registerPlugin={plugin}
       featureConfig={{ enableInlineSearch: true }}
     >
+      <QuerySynchronizer />
       <Card>
         <ContentHeaderLayout>
           <ContentHeader

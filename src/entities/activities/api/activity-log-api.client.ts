@@ -24,6 +24,11 @@ export type FindActivityLogQuery = {
   authors?: BoxItem[];
 };
 
+export type FindAnalyticLogQuery = {
+  fromDate?: string;
+  toDate?: string;
+};
+
 export type LogAnalyticResponse = {
   lateCount: number;
   onTimeCount: number;
@@ -59,10 +64,11 @@ export const activityLogApiClient = {
       }
     });
   },
-  findAnalyticLogs: () => {
+  findAnalyticLogs: (findAnalyticLogQuery: FindAnalyticLogQuery) => {
     return authorizedHttpClient.request<LogAnalyticResponse>({
       method: 'get',
-      url: '/activity-logs/analytics'
+      url: '/activity-logs/analytics',
+      params: findAnalyticLogQuery
     });
   }
 };

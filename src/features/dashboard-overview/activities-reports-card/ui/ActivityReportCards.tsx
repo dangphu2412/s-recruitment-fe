@@ -1,20 +1,33 @@
 import { useActivityLogAnalytic } from '../../../../entities/activities/models/activity-log.model';
-import { Card, CardBody, CardHeader, Heading, Text } from '@chakra-ui/react';
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Heading,
+  Link,
+  Text
+} from '@chakra-ui/react';
 import { PropsWithChildren, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleXmark,
   faClock,
+  faExternalLink,
   faProcedures
 } from '@fortawesome/free-solid-svg-icons';
+import NextLink from 'next/link';
+import { subYears } from 'date-fns';
+import { formatToInputDate } from '../../../../shared/models/utils/date.utils';
+import { LogWorkStatus } from '../../../../entities/activities/config/constants/log-work-status.enum';
 
 type Props = PropsWithChildren<{
   iconTitle: ReactNode;
   title: ReactNode;
   summary: ReactNode;
+  link: string;
 }>;
 
-function ReportCard({ title, iconTitle, summary, children }: Props) {
+function ReportCard({ title, iconTitle, summary, link, children }: Props) {
   return (
     <Card>
       <CardHeader>
@@ -26,7 +39,9 @@ function ReportCard({ title, iconTitle, summary, children }: Props) {
       <CardBody>
         <Text fontSize={'2xl'}>{children}</Text>
 
-        <Text fontSize={'sm'}>{summary}</Text>
+        <Link href={link} fontSize={'sm'} as={NextLink}>
+          {summary} <FontAwesomeIcon icon={faExternalLink} />
+        </Link>
       </CardBody>
     </Card>
   );
@@ -35,6 +50,13 @@ function ReportCard({ title, iconTitle, summary, children }: Props) {
 export function ActivityReportCards() {
   const { data } = useActivityLogAnalytic();
   const { lateCount = 0, notFinishedCount = 0, onTimeCount = 0 } = data ?? {};
+
+  function getLinkByStatus(status: string) {
+    const fromDate = formatToInputDate(subYears(new Date(), 1));
+    const toDate = formatToInputDate(new Date());
+
+    return `/activities/tracking?fromDate=${fromDate}&toDate=${toDate}&workStatus=${status}`;
+  }
 
   return (
     <section className={'grid grid-cols-3 gap-2 w-full'}>
@@ -46,6 +68,7 @@ export function ActivityReportCards() {
         }
         title={'On Time'}
         summary={'On time activities'}
+        link={getLinkByStatus(LogWorkStatus.ON_TIME)}
       >
         {onTimeCount}
       </ReportCard>
@@ -58,6 +81,7 @@ export function ActivityReportCards() {
         }
         title={'Late'}
         summary={'Late activities'}
+        link={getLinkByStatus(LogWorkStatus.LATE)}
       >
         {lateCount}
       </ReportCard>
@@ -70,6 +94,7 @@ export function ActivityReportCards() {
         }
         title={'Not Finished'}
         summary={'Not finished activities'}
+        link={getLinkByStatus(LogWorkStatus.NOT_FINISHED)}
       >
         {notFinishedCount}
       </ReportCard>

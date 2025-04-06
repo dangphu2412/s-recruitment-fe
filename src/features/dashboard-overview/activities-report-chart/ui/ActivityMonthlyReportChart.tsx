@@ -1,20 +1,28 @@
-import { Heading, useTheme } from '@chakra-ui/react';
+import { Heading, ListItem, UnorderedList, useTheme } from '@chakra-ui/react';
 import { Chart } from 'react-chartjs-2';
 import {
   ArcElement,
   Chart as ChartJS,
   ChartData,
   Legend,
-  Tooltip,
-  PieController
+  PieController,
+  Tooltip
 } from 'chart.js';
 import { useActivityLogAnalytic } from '../../../../entities/activities/models/activity-log.model';
+import { subMonths } from 'date-fns';
+import { useMemo } from 'react';
 
 ChartJS.register(ArcElement, Tooltip, Legend, PieController);
 
-export function ActivityReportChart() {
+export function ActivityMonthlyReportChart() {
   const theme = useTheme();
-  const { data } = useActivityLogAnalytic();
+  const query = useMemo(() => {
+    return {
+      fromDate: subMonths(new Date(), 1).toISOString(),
+      toDate: new Date().toISOString()
+    };
+  }, []);
+  const { data } = useActivityLogAnalytic(query);
   const { lateCount = 0, notFinishedCount = 0, onTimeCount = 0 } = data ?? {};
 
   const chartData: ChartData<'pie'> = {
@@ -40,9 +48,15 @@ export function ActivityReportChart() {
 
   return (
     <section className={'space-y-8'}>
-      <Heading size={'md'}>Weekly report</Heading>
+      <Heading size={'md'}>Monthly report</Heading>
 
       <Chart type={'pie'} data={chartData} />
+
+      <UnorderedList>
+        <ListItem>On time: {onTimeCount}</ListItem>
+        <ListItem>Late: {lateCount}</ListItem>
+        <ListItem>Not finished: {notFinishedCount}</ListItem>
+      </UnorderedList>
     </section>
   );
 }

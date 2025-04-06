@@ -1,9 +1,15 @@
 import { useQuery } from 'react-query';
-import { activityLogApiClient } from '../api/activity-log-api.client';
+import {
+  activityLogApiClient,
+  FindAnalyticLogQuery
+} from '../api/activity-log-api.client';
 
-export function useActivityLogAnalytic() {
+export function useActivityLogAnalytic(
+  findAnalyticLogQuery?: FindAnalyticLogQuery
+) {
   return useQuery({
-    queryKey: ['analytic-logs'],
-    queryFn: activityLogApiClient.findAnalyticLogs
+    queryKey: ['analytic-logs', findAnalyticLogQuery],
+    queryFn: () =>
+      activityLogApiClient.findAnalyticLogs(findAnalyticLogQuery ?? {})
   });
 }
