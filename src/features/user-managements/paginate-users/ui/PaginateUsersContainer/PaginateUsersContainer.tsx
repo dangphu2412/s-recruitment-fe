@@ -1,10 +1,8 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   QUERY_USERS_KEY,
-  selectPagination,
-  userActions,
-  useUserOverview
+  useUserOverview,
+  useUserStore
 } from '../../../../../entities/user/models';
 import { Paginator } from '../../../../../shared/ui/Pagination/Paginator';
 import { Button, Text } from '@chakra-ui/react';
@@ -12,36 +10,32 @@ import { useQueryClient } from 'react-query';
 import { RefreshButton } from '../../../../../shared/ui/Button/RefreshButton';
 
 export function PaginateUsersContainer(): React.ReactElement {
-  const dispatch = useDispatch();
-  const { page, size } = useSelector(selectPagination);
+  const { page, size } = useUserStore(user => user.overview.pagination);
+  const setPagination = useUserStore(user => user.setPagination);
+  const submitWithFilter = useUserStore(user => user.submitWithFilter);
+  const resetFilter = useUserStore(user => user.resetFilter);
   const { data } = useUserOverview();
   const totalRecords = data?.metadata.totalRecords;
   const queryClient = useQueryClient();
 
   function handlePageChange(currentPage: number) {
-    dispatch(
-      userActions.setPagination({
-        page: currentPage
-      })
-    );
-    dispatch(
-      userActions.submitWithFilter({
-        query: ''
-      })
-    );
+    setPagination({
+      page: currentPage
+    });
+
+    submitWithFilter({
+      query: ''
+    });
   }
 
   function handleSizeChange(currentSize: number) {
-    dispatch(
-      userActions.setPagination({
-        size: currentSize
-      })
-    );
-    dispatch(
-      userActions.submitWithFilter({
-        query: ''
-      })
-    );
+    setPagination({
+      size: currentSize
+    });
+
+    submitWithFilter({
+      query: ''
+    });
   }
 
   function refresh() {
@@ -51,7 +45,7 @@ export function PaginateUsersContainer(): React.ReactElement {
   }
 
   function handleResetFilter() {
-    dispatch(userActions.resetFilter());
+    resetFilter();
   }
 
   return (

@@ -6,8 +6,10 @@ import { RoleCell } from '../ui/UsersOverviewTable/Cell/RoleCell';
 import { StatusCell } from '../ui/UsersOverviewTable/Cell/StatusCell';
 import { OperationFee } from '../../../../entities/monthly-money/models';
 import { Role } from '../../../../entities/user/api';
-import { useDispatch } from 'react-redux';
-import { QUERY_USERS_KEY, userActions } from '../../../../entities/user/models';
+import {
+  QUERY_USERS_KEY,
+  useUserStore
+} from '../../../../entities/user/models';
 import { Box, Tag } from '@chakra-ui/react';
 import { useQueryClient } from 'react-query';
 import { formatDate } from '../../../../shared/models/utils/date.utils';
@@ -35,7 +37,9 @@ const columnHelper = createColumnHelper<UserManagementView>();
 
 export function useAdminColumns() {
   const { push } = useRouter();
-  const dispatch = useDispatch();
+  const setSelectedPaymentUserId = useUserStore(
+    user => user.setSelectedPaymentUserId
+  );
   const queryClient = useQueryClient();
 
   const handleRefresh = useCallback(() => {
@@ -113,13 +117,11 @@ export function useAdminColumns() {
           <UserOverviewAction
             {...props}
             push={push}
-            onPaymentClick={id =>
-              dispatch(userActions.setSelectedPaymentUserId(id))
-            }
+            onPaymentClick={id => setSelectedPaymentUserId(id)}
           />
         )
       })
     ],
-    [dispatch, handleRefresh, push]
+    [setSelectedPaymentUserId, handleRefresh, push]
   );
 }

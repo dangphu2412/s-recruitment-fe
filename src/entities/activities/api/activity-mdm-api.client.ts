@@ -12,19 +12,28 @@ import { authorizedHttpClient } from '../../../shared/api';
  *     },
  */
 export type TrackedUsers = {
-  uid: number;
-  role: number;
-  password: string;
   name: string;
-  cardno: number;
-  userId: string;
+  trackingId: string;
 };
 
 export const activityMdmApiClient = {
   getUsers: () => {
     return authorizedHttpClient.request<Page<TrackedUsers>>({
-      url: '/activity-mdm/tracked-users',
+      url: '/device-users',
       method: 'get'
+    });
+  },
+  uploadUsers: async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return authorizedHttpClient.request<void>({
+      method: 'post',
+      url: '/device-users',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
   }
 };

@@ -33,6 +33,14 @@ export function UserCombobox({ value = [], ...rest }: UserComboboxProps) {
           fromDate: null,
           toDate: null
         }
+      },
+      periodIds: {
+        type: FilterKey.EXACT,
+        value: []
+      },
+      departmentIds: {
+        type: FilterKey.EXACT,
+        value: []
       }
     },
     pagination: DEFAULT_PAGINATION

@@ -78,7 +78,6 @@ export type UpdateUserDto = {
 
 export type UploadUserDto = {
   file: File;
-  periodId: string;
   monthlyConfigId?: number;
 };
 
@@ -166,7 +165,6 @@ export const userApiClient = {
   ): Promise<FileCreationResponse> {
     const formData = new FormData();
     formData.append('file', uploadUserDto.file);
-    formData.append('periodId', uploadUserDto.periodId.toString());
 
     return authorizedHttpClient.request({
       method: 'post',

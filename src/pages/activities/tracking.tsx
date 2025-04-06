@@ -2,7 +2,10 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import { Card, ContentHeader } from '../../shared/ui';
 import { createColumnHelper } from '@tanstack/table-core';
-import { CommonCRUDProvider } from '../../widgets/crud-widget/CommonCRUDContext';
+import {
+  CommonCRUDProvider,
+  useCommonCRUDContext
+} from '../../widgets/crud-widget/CommonCRUDContext';
 import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import { CommonSearchWidget } from '../../widgets/crud-widget/CommonSearchWidget';
 import { CommonViewEntityTable } from '../../widgets/crud-widget/CommonViewEntityTable';
@@ -14,18 +17,56 @@ import { DateRangeFilter } from '../../features/activity-logs/ui/DateRangeFilter
 import { endOfDay, subWeeks } from 'date-fns';
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { UploadFileButtonWidget } from '../../widgets/upload-file/UploadFileButtonWidget';
-import { formatDateTime } from '../../shared/models/utils/date.utils';
+import { formatDayOfWeekAndDate } from '../../shared/models/utils/date.utils';
 import { Tag } from '@chakra-ui/react';
 import { LogWorkStatus } from '../../entities/activities/config/constants/log-work-status.enum';
 import { StatusFilterDialog } from '../../features/activity-logs/ui/LogWorkStatusFilter';
+import { UserFilter } from '../../features/activity-logs/ui/UserFilter';
+import {
+  QuerySynchronizeSchema,
+  useQuerySynchronizer
+} from '../../shared/models/query-synchronizer';
 
 function plugin() {
   return {
     values: {
       fromDate: subWeeks(new Date(), 1),
-      toDate: endOfDay(new Date())
+      toDate: endOfDay(new Date()),
+      authors: []
     }
   };
+}
+
+const SyncActivityLogQuerySchema: QuerySynchronizeSchema<{
+  fromDate: string;
+  toDate: string;
+  authors: string[];
+  workStatus: string[];
+}> = {
+  fromDate: {
+    target: 'fromDate',
+    type: Date
+  },
+  toDate: {
+    target: 'toDate',
+    type: Date
+  },
+  workStatus: {
+    target: 'workStatus',
+    type: String,
+    isArray: true
+  }
+};
+
+function QuerySynchronizer() {
+  const submitValues = useCommonCRUDContext(state => state.submitValues);
+
+  useQuerySynchronizer({
+    schema: SyncActivityLogQuerySchema,
+    updater: submitValues
+  });
+
+  return <></>;
 }
 
 export default function TrackingPage() {
@@ -47,19 +88,28 @@ export default function TrackingPage() {
           return <Tag colorScheme={'green'}>On time</Tag>;
         }
       }),
+      columnHelper.accessor('author.email', {
+        header: 'Author email',
+        cell: props => {
+          const value = props.getValue();
+
+          if (!value) {
+            return <Tag colorScheme={'gray'}>Not Linked</Tag>;
+          }
+
+          return <span>{value}</span>;
+        }
+      }),
+      columnHelper.accessor('deviceAuthor.name', {
+        header: 'Device User'
+      }),
       columnHelper.accessor('fromTime', {
         header: 'From time',
-        cell: ({ getValue }) => formatDateTime(getValue())
+        cell: ({ getValue }) => formatDayOfWeekAndDate(getValue())
       }),
       columnHelper.accessor('toTime', {
         header: 'To time',
-        cell: ({ getValue }) => formatDateTime(getValue())
-      }),
-      columnHelper.accessor('deviceUserId', {
-        header: 'Device User Id'
-      }),
-      columnHelper.accessor('author.email', {
-        header: 'Author email'
+        cell: ({ getValue }) => formatDayOfWeekAndDate(getValue())
       })
     ];
   }, []);
@@ -71,6 +121,7 @@ export default function TrackingPage() {
       registerPlugin={plugin}
       featureConfig={{ enableInlineSearch: true }}
     >
+      <QuerySynchronizer />
       <Card>
         <ContentHeaderLayout>
           <ContentHeader
@@ -92,6 +143,7 @@ export default function TrackingPage() {
             <>
               <DateRangeFilter />
               <StatusFilterDialog />
+              <UserFilter />
             </>
           }
         />

@@ -1,4 +1,4 @@
-import { Fragment, ReactElement, useState, FC } from 'react';
+import { FC, Fragment, ReactElement, useState } from 'react';
 import { Combobox as HeadlessCombobox, Transition } from '@headlessui/react';
 import { Input } from '@chakra-ui/react';
 import classes from './Combobox.module.scss';
@@ -33,13 +33,15 @@ export const Combobox = ({
         });
 
   return (
-    <HeadlessCombobox name={name} value={value} onChange={onChange}>
+    <HeadlessCombobox name={name} value={value} onChange={e => onChange(e)}>
       <div className={'relative'}>
         <HeadlessCombobox.Input
           as={Input}
           onChange={event => setQuery(event.target.value)}
           placeholder={placeholder}
-          displayValue={(item: BoxItem) => item.text}
+          displayValue={() =>
+            filteredItems.find(item => item.value === value)?.text ?? ''
+          }
         />
 
         <Transition
@@ -51,7 +53,7 @@ export const Combobox = ({
         >
           <HeadlessCombobox.Options className={classes['option-container']}>
             {filteredItems.map(item => (
-              <HeadlessCombobox.Option key={item.value} value={item}>
+              <HeadlessCombobox.Option key={item.value} value={item.value}>
                 <Item text={item.text} value={item.value} />
               </HeadlessCombobox.Option>
             ))}

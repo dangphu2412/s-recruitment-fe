@@ -16,9 +16,9 @@ import {
   Tag
 } from '@chakra-ui/react';
 import { ContentHeader, FormLabel } from '../../../../../shared/ui';
-import React from 'react';
+import React, { useMemo } from 'react';
 import NotFound from 'next/dist/client/components/not-found-error';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import {
   EditUserForm,
   mapFormToEditUserDto,
@@ -34,6 +34,7 @@ import { useNotify } from '../../../../../shared/models/notify';
 import { useQueryClient } from 'react-query';
 import { RoleSettingDrawer } from '../../../user-roles-setting/ui/RoleSettings/RoleSettingDrawer';
 import { useTrackedUsers } from '../../../../../entities/activities/models/activity-master-data.model';
+import { Combobox } from '../../../../../shared/ui/Combobox/Combobox';
 
 type Props = {
   userId: string;
@@ -47,7 +48,8 @@ export function UserDetailSection({ userId }: Props) {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    control
   } = useForm<EditUserForm>({
     values: userDetail
       ? mapUserDetailToEditForm(userDetail)
@@ -57,6 +59,17 @@ export function UserDetailSection({ userId }: Props) {
   const { data: periods } = usePeriods();
   const { data: trackedUsers } = useTrackedUsers();
   const { updateUser } = useMutateUpdateUser();
+
+  const trackItems = useMemo(() => {
+    return (
+      trackedUsers?.map(user => {
+        return {
+          text: user.name,
+          value: user.trackingId
+        };
+      }) ?? []
+    );
+  }, [trackedUsers]);
 
   function handleEdit(inputs: EditUserForm) {
     updateUser(mapFormToEditUserDto(userId, inputs), {
@@ -89,7 +102,7 @@ export function UserDetailSection({ userId }: Props) {
     <div className={'space-y-4'}>
       <div className={'space-y-4'}>
         <ContentHeaderLayout>
-          <ContentHeader main={`Profile of ${userDetail.fullName}`} />
+          <ContentHeader main={`${userDetail.fullName}`} />
 
           <HeaderActionGroup>
             <Button onClick={handleSubmit(handleEdit)}>Save</Button>
@@ -171,15 +184,19 @@ export function UserDetailSection({ userId }: Props) {
           <FormControl>
             <FormLabel>Tracking ID</FormLabel>
 
-            <Select placeholder="Select tracking" {...register('trackingId')}>
-              {trackedUsers?.map(user => {
+            <Controller
+              name="trackingId"
+              control={control}
+              render={({ field }) => {
                 return (
-                  <option key={user.userId} value={user.userId}>
-                    {user.name}
-                  </option>
+                  <Combobox
+                    {...field}
+                    placeholder={'Search user by tracking ID'}
+                    items={trackItems}
+                  />
                 );
-              })}
-            </Select>
+              }}
+            />
           </FormControl>
         </div>
       </div>

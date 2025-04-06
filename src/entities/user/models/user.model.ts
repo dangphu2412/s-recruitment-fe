@@ -1,5 +1,5 @@
 import { OperationFee } from '../../monthly-money/models';
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FilterKey } from '../../../shared/config';
 import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
 import {
@@ -7,7 +7,6 @@ import {
   Filter,
   FilterParam
 } from '../../../shared/models/filter.api';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNotify } from '../../../shared/models/notify';
 import { AppError, useHandleError } from '../../../shared/models/error';
@@ -18,8 +17,9 @@ import {
   parseFilterQuery,
   parsePagination
 } from '../../../shared/models/pagination';
-import { AppStorage, createStoreModel } from '../../../shared/models/store';
+import { createStoreModel } from '../../../shared/models/store';
 import { UserStatus } from '../config';
+import { create } from 'zustand';
 
 export type UserDomain = {
   currentUser: UserDetail | null;
@@ -50,48 +50,6 @@ export type AdminState = {
   submission: Pick<AdminState, 'pagination' | 'filters'>;
   selectedPaymentUserId?: string;
 };
-
-export const selectOverviewState = (
-  state: AppStorage<'UserDomain', UserDomain>
-) => state.UserDomain.overview;
-
-export const selectCurrentUser = (
-  state: AppStorage<'UserDomain', UserDomain>
-) => state.UserDomain.currentUser;
-
-export const selectSubmission = createSelector(
-  selectOverviewState,
-  state => state.submission
-);
-
-export const selectPagination = createSelector(
-  selectOverviewState,
-  state => state.pagination
-);
-
-export const selectFilters = createSelector(
-  selectOverviewState,
-  state => state.filters
-);
-
-export const selectUserStatus = createSelector(
-  selectOverviewState,
-  state => state.filters.userStatus
-);
-
-export const selectDepartmentIds = createSelector(
-  selectOverviewState,
-  state => state.filters.departmentIds
-);
-export const selectPeriodIds = createSelector(
-  selectOverviewState,
-  state => state.filters.periodIds
-);
-
-export const selectPaymentUserId = createSelector(
-  selectOverviewState,
-  state => state.selectedPaymentUserId
-);
 
 export function getInitialOverviewState(): AdminState {
   return {
@@ -164,162 +122,212 @@ export function getInitialUserState(): UserDomain {
   };
 }
 
-const userSlice = createSlice({
-  name: 'UserDomain',
-  initialState: getInitialUserState(),
-  reducers: {
-    setPagination: (state, action: PayloadAction<Partial<Pagination>>) => {
-      state.overview.pagination = {
-        ...state.overview.pagination,
-        ...action.payload
-      };
-      state.overview.submission = {
-        pagination: state.overview.pagination,
-        filters: state.overview.filters
-      };
-    },
-    setFilter: (state, action: PayloadAction<FilterParam<AdminFilter>>) => {
-      if (action.payload.query !== undefined) {
-        state.overview.filters.query = {
-          type: FilterKey.LIKE,
-          value: action.payload.query
-        };
-        return;
-      }
+type UserStore = {
+  currentUser?: UserDetail;
+  overview: {
+    pagination: Pagination;
+    filters: AdminFilter;
+    submission: {
+      pagination: Pagination;
+      filters: AdminFilter;
+    };
+    selectedPaymentUserId?: string;
+  };
+  setPagination: (pagination: Partial<Pagination>) => void;
+  setFilter: (filter: FilterParam<AdminFilter>) => void;
+  toggleUserStatus: (status: UserStatus) => void;
+  toggleDepartment: (id: string) => void;
+  togglePeriod: (id: string) => void;
+  setIsSubmitted: () => void;
+  submitWithFilter: (filter: FilterParam<AdminFilter>) => void;
+  resetFilter: () => void;
+  saveCurrentUser: (user: UserDetail) => void;
+  setSelectedPaymentUserId: (id?: string) => void;
+};
 
-      if (action.payload.joinedIn) {
-        state.overview.filters.joinedIn = {
+export const useUserStore = create<UserStore>((set, get) => ({
+  currentUser: undefined,
+  overview: {
+    pagination: getInitialUserState().overview.pagination,
+    filters: getInitialUserState().overview.filters,
+    submission: {
+      pagination: getInitialUserState().overview.pagination,
+      filters: getInitialUserState().overview.filters
+    },
+    selectedPaymentUserId: undefined
+  },
+  setPagination: pagination => {
+    const { overview } = get();
+    const updatedPagination = { ...overview.pagination, ...pagination };
+    set(state => ({
+      overview: {
+        ...state.overview,
+        pagination: updatedPagination,
+        submission: {
+          ...state.overview.submission,
+          pagination: updatedPagination
+        }
+      }
+    }));
+  },
+  setFilter: filter => {
+    set(state => {
+      const updatedFilters = { ...state.overview.filters };
+
+      if (filter.query !== undefined) {
+        updatedFilters.query = { type: FilterKey.LIKE, value: filter.query };
+      }
+      if (filter.joinedIn) {
+        updatedFilters.joinedIn = {
           type: FilterKey.RANGE,
-          value: action.payload.joinedIn
+          value: filter.joinedIn
         };
       }
-
-      if (action.payload.userStatus !== undefined) {
-        state.overview.filters.userStatus = {
+      if (filter.userStatus !== undefined) {
+        updatedFilters.userStatus = {
           type: FilterKey.EXACT,
-          value: action.payload.userStatus
+          value: filter.userStatus
         };
       }
-
-      if (action.payload.departmentIds !== undefined) {
-        state.overview.filters.departmentIds = {
+      if (filter.departmentIds !== undefined) {
+        updatedFilters.departmentIds = {
           type: FilterKey.EXACT,
-          value: action.payload.departmentIds
+          value: filter.departmentIds
         };
       }
-
-      if (action.payload.periodIds !== undefined) {
-        state.overview.filters.periodIds = {
+      if (filter.periodIds !== undefined) {
+        updatedFilters.periodIds = {
           type: FilterKey.EXACT,
-          value: action.payload.periodIds
+          value: filter.periodIds
         };
       }
-    },
-    toggleUserStatus: (state, action: PayloadAction<UserStatus>) => {
-      if (action.payload !== undefined) {
-        const currentStatus = state.overview.filters.userStatus;
 
-        if (currentStatus.value.includes(action.payload)) {
-          state.overview.filters.userStatus = {
-            type: FilterKey.EXACT,
-            value: currentStatus.value.filter(
-              status => status !== action.payload
-            )
-          };
-          return;
+      return {
+        overview: {
+          ...state.overview,
+          filters: updatedFilters
         }
-
-        state.overview.filters.userStatus = {
-          type: FilterKey.EXACT,
-          value: [...currentStatus.value, action.payload]
-        };
-      }
-    },
-    toggleDepartment: (state, action: PayloadAction<string>) => {
-      if (action.payload !== undefined) {
-        const currentDepartmentIds = state.overview.filters.departmentIds;
-
-        if (currentDepartmentIds.value.includes(action.payload)) {
-          state.overview.filters.departmentIds = {
-            type: FilterKey.EXACT,
-            value: currentDepartmentIds.value.filter(
-              id => id !== action.payload
-            )
-          };
-          return;
-        }
-
-        state.overview.filters.departmentIds = {
-          type: FilterKey.EXACT,
-          value: [...currentDepartmentIds.value, action.payload]
-        };
-      }
-    },
-    togglePeriod: (state, action: PayloadAction<string>) => {
-      if (action.payload !== undefined) {
-        const currentPeriodIds = state.overview.filters.periodIds;
-
-        if (currentPeriodIds.value.includes(action.payload)) {
-          state.overview.filters.periodIds = {
-            type: FilterKey.EXACT,
-            value: currentPeriodIds.value.filter(id => id !== action.payload)
-          };
-          return;
-        }
-
-        state.overview.filters.periodIds = {
-          type: FilterKey.EXACT,
-          value: [...currentPeriodIds.value, action.payload]
-        };
-      }
-    },
-    setIsSubmitted: state => {
-      state.overview.submission = {
-        pagination: state.overview.pagination,
-        filters: state.overview.filters
       };
-    },
-    submitWithFilter: (
-      state,
-      action: PayloadAction<FilterParam<AdminFilter>>
-    ) => {
-      if (action.payload.query !== undefined) {
-        state.overview.filters.query = {
-          type: FilterKey.LIKE,
-          value: action.payload.query
-        };
-      }
+    });
+  },
+  toggleUserStatus: status => {
+    set(state => {
+      const current = state.overview.filters.userStatus.value || [];
+      const exists = current.includes(status);
+      const updated = exists
+        ? current.filter(s => s !== status)
+        : [...current, status];
 
-      if (action.payload.joinedIn) {
-        state.overview.filters.joinedIn = {
+      return {
+        overview: {
+          ...state.overview,
+          filters: {
+            ...state.overview.filters,
+            userStatus: {
+              type: FilterKey.EXACT,
+              value: updated
+            }
+          }
+        }
+      };
+    });
+  },
+  toggleDepartment: id => {
+    set(state => {
+      const current = state.overview.filters.departmentIds.value || [];
+      const exists = current.includes(id);
+      const updated = exists ? current.filter(v => v !== id) : [...current, id];
+
+      return {
+        overview: {
+          ...state.overview,
+          filters: {
+            ...state.overview.filters,
+            departmentIds: {
+              type: FilterKey.EXACT,
+              value: updated
+            }
+          }
+        }
+      };
+    });
+  },
+  togglePeriod: id => {
+    set(state => {
+      const current = state.overview.filters.periodIds.value || [];
+      const exists = current.includes(id);
+      const updated = exists ? current.filter(v => v !== id) : [...current, id];
+
+      return {
+        overview: {
+          ...state.overview,
+          filters: {
+            ...state.overview.filters,
+            periodIds: {
+              type: FilterKey.EXACT,
+              value: updated
+            }
+          }
+        }
+      };
+    });
+  },
+  setIsSubmitted: () => {
+    set(state => ({
+      overview: {
+        ...state.overview,
+        submission: {
+          pagination: state.overview.pagination,
+          filters: state.overview.filters
+        }
+      }
+    }));
+  },
+  submitWithFilter: filter => {
+    set(state => {
+      const newFilters = { ...state.overview.filters };
+      if (filter.query !== undefined) {
+        newFilters.query = { type: FilterKey.LIKE, value: filter.query };
+      }
+      if (filter.joinedIn) {
+        newFilters.joinedIn = {
           type: FilterKey.RANGE,
-          value: action.payload.joinedIn
+          value: filter.joinedIn
         };
       }
 
-      state.overview.submission = {
-        pagination: state.overview.pagination,
-        filters: state.overview.filters
+      return {
+        overview: {
+          ...state.overview,
+          filters: newFilters,
+          submission: {
+            pagination: state.overview.pagination,
+            filters: newFilters
+          }
+        }
       };
-    },
-    resetFilter: state => {
-      state.overview.filters = getInitialOverviewState().filters;
-    },
-    saveCurrentUser: (state, action: PayloadAction<UserDetail>) => {
-      state.currentUser = action.payload;
-    },
-    setSelectedPaymentUserId: (
-      state,
-      action: PayloadAction<string | undefined>
-    ) => {
-      state.overview.selectedPaymentUserId = action.payload;
-    }
+    });
+  },
+  resetFilter: () => {
+    set(state => ({
+      overview: {
+        ...state.overview,
+        filters: getInitialOverviewState().filters
+      }
+    }));
+  },
+  saveCurrentUser: user => {
+    set(() => ({ currentUser: user }));
+  },
+  setSelectedPaymentUserId: id => {
+    set(state => ({
+      overview: {
+        ...state.overview,
+        selectedPaymentUserId: id
+      }
+    }));
   }
-});
-
-export const userActions = userSlice.actions;
-
-export const userStorage = createStoreModel('UserDomain', userSlice.reducer);
+}));
 
 type UserSession = {
   user?: UserDetail;
@@ -327,7 +335,7 @@ type UserSession = {
 };
 
 export function useUserSession(): UserSession {
-  const dispatch = useDispatch();
+  const saveCurrentUser = useUserStore(user => user.saveCurrentUser);
   const { profile, status } = useQueryMyProfile();
 
   function getSessionStatus() {
@@ -346,9 +354,9 @@ export function useUserSession(): UserSession {
     function syncUserSession() {
       if (status !== 'success' || !profile) return;
 
-      dispatch(userActions.saveCurrentUser(profile));
+      saveCurrentUser(profile);
     },
-    [dispatch, profile, status]
+    [profile, saveCurrentUser, status]
   );
 
   return {
@@ -358,7 +366,7 @@ export function useUserSession(): UserSession {
 }
 
 export function useMutateCreateUser() {
-  const dispatch = useDispatch();
+  const setIsSubmitted = useUserStore(user => user.setIsSubmitted);
   const notify = useNotify();
 
   function handleMutateCreateUserError({ clientCode, message }: AppError) {
@@ -398,7 +406,7 @@ export function useMutateCreateUser() {
         status: 'success'
       });
 
-      dispatch(userActions.setIsSubmitted());
+      setIsSubmitted();
     },
     onError: handle
   });
@@ -406,7 +414,7 @@ export function useMutateCreateUser() {
 
 export function useMutateUserActive() {
   const toast = useNotify();
-  const dispatch = useDispatch();
+  const setIsSubmitted = useUserStore(user => user.setIsSubmitted);
 
   return useMutation({
     mutationFn: userApiClient.toggleActive,
@@ -417,7 +425,7 @@ export function useMutateUserActive() {
         status: 'success'
       });
 
-      dispatch(userActions.setIsSubmitted());
+      setIsSubmitted();
     }
   });
 }
@@ -491,7 +499,9 @@ export function useQueryUsers({
 }
 
 export function useUserOverview() {
-  const { filters, pagination } = useSelector(selectSubmission);
+  const { filters, pagination } = useUserStore(
+    user => user.overview.submission
+  );
 
   return useQueryUsers({
     filters,

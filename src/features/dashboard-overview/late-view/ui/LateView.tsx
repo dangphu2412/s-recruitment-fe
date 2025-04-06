@@ -51,7 +51,7 @@ export function LateView() {
         cell: ({ getValue }) => formatDateTime(getValue())
       }),
       columnHelper.accessor('deviceUserId', {
-        header: 'Device User Id'
+        header: 'Device User'
       }),
       columnHelper.accessor('author.email', {
         header: 'Author email'
