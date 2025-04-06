@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { ActivityReportCards } from '../features/dashboard-overview/activities-reports-card/ui/ActivityReportCards';
 import { LateView } from '../features/dashboard-overview/late-view/ui/LateView';
 import { Card } from '../shared/ui';
-import { ActivityReportChart } from '../features/dashboard-overview/activities-report-chart/ui/ActivityReportChart';
+import { ActivityMonthlyReportChart } from '../features/dashboard-overview/activities-report-chart/ui/ActivityMonthlyReportChart';
 
 // https://dribbble.com/shots/21931587-Cotton-HR-Management-Dashboard
 const Home: NextPage = () => {
@@ -17,7 +17,7 @@ const Home: NextPage = () => {
             <LateView />
           </Card>
           <Card>
-            <ActivityReportChart />
+            <ActivityMonthlyReportChart />
           </Card>
         </div>
       </div>

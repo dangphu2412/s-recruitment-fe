@@ -58,3 +58,6 @@ export function parseFilterQuery(
 export function encodeMultiQueryParams(values: string[]): string {
   return values.join(',');
 }
+export function decodeMultiQueryParams(value: string): string[] {
+  return value.split(',');
+}
