@@ -1,13 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUserStatus, userActions } from 'src/entities/user/models';
+import { useUserStore } from 'src/entities/user/models';
 import { UserStatus } from '../../../../../../entities/user/config';
 import { DropDownMultipleCheckboxSelection } from '../../../../../../shared/ui/Input/DropDownCheckbox/DropDownCheckbox';
 
 export function StatusFilterDialog(): React.ReactElement {
-  const dispatch = useDispatch();
-
-  const { value } = useSelector(selectUserStatus);
+  const value = useUserStore(user => user.overview.filters.userStatus.value);
+  const toggleUserStatus = useUserStore(user => user.toggleUserStatus);
 
   const options = [
     { id: UserStatus.DEBTOR, name: 'Debt' },
@@ -21,9 +19,7 @@ export function StatusFilterDialog(): React.ReactElement {
       title={'Status'}
       value={value}
       options={options}
-      onSelect={option =>
-        dispatch(userActions.toggleUserStatus(option.id as UserStatus))
-      }
+      onSelect={option => toggleUserStatus(option.id as UserStatus)}
     />
   );
 }
