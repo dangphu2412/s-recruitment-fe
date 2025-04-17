@@ -4,7 +4,7 @@ import { useDepartments } from '../../../../../../entities/user/models/user-mast
 import { DropDownMultipleCheckboxSelection } from '../../../../../../shared/ui/Input/DropDownCheckbox/DropDownCheckbox';
 
 export function DepartmentFilterDialog(): React.ReactElement {
-  const value = useUserStore(user => user.overview.filters.departmentIds.value);
+  const value = useUserStore(user => user.overview.filters.departmentIds);
   const toggleDepartment = useUserStore(user => user.toggleDepartment);
   const { data: departments } = useDepartments();
 

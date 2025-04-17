@@ -4,7 +4,7 @@ import { UserStatus } from '../../../../../../entities/user/config';
 import { DropDownMultipleCheckboxSelection } from '../../../../../../shared/ui/Input/DropDownCheckbox/DropDownCheckbox';
 
 export function StatusFilterDialog(): React.ReactElement {
-  const value = useUserStore(user => user.overview.filters.userStatus.value);
+  const value = useUserStore(user => user.overview.filters.userStatus);
   const toggleUserStatus = useUserStore(user => user.toggleUserStatus);
 
   const options = [

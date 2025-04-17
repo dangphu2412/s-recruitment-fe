@@ -1,21 +1,61 @@
 import { useMutation, useQuery } from 'react-query';
-import { accessControlApiClient, UpdateRolePayload } from '../api';
+import {
+  accessControlApiClient,
+  CreateRolePayload,
+  UpdateRolePayload
+} from '../api';
+import { create } from 'zustand/react';
 
 export function useMutateSaveRoles() {
   const { mutate, isLoading } = useMutation({
     mutationFn: (request: UpdateRolePayload) =>
-      accessControlApiClient.update(request),
+      accessControlApiClient.updateRolePermissions(request),
     mutationKey: 'MUTATION_SAVE_ROLES'
   });
 
   return { saveRoles: mutate, isLoading };
 }
 
+export function useMutateCreateNewRoles() {
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (request: CreateRolePayload) =>
+      accessControlApiClient.createRole(request),
+    mutationKey: 'MUTATION_NEW_ROLES'
+  });
+
+  return { addRole: mutate, isLoading };
+}
+
+export const QUERY_CONTROL_LIST = 'QUERY_CONTROL_LIST';
+
 export function useQueryControlList() {
   const { data, isLoading, isSuccess } = useQuery({
-    queryKey: 'QUERY_CONTROL_LIST',
-    queryFn: () => accessControlApiClient.get()
+    queryKey: QUERY_CONTROL_LIST,
+    queryFn: () => accessControlApiClient.getRoles()
   });
 
   return { allRoles: data, isLoading, isSuccess };
 }
+
+export function useQueryPermissions() {
+  const { data } = useQuery({
+    queryKey: 'QUERY_PERMISSIONS',
+    queryFn: () => accessControlApiClient.getPermissions()
+  });
+
+  return { data };
+}
+
+type RoleStore = {
+  selectedRoleId: string | null;
+  isAddingRole: boolean;
+  hasUnsavedChanges: boolean;
+};
+
+export const useRoleStore = create<RoleStore>((set, get, store) => {
+  return {
+    selectedRoleId: null,
+    isAddingRole: false,
+    hasUnsavedChanges: false
+  };
+});

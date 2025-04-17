@@ -3,13 +3,13 @@ import { Input } from '@chakra-ui/react';
 import { useUserStore } from 'src/entities/user/models';
 
 export function SearchInput(): React.ReactElement {
-  const value = useUserStore(user => user.overview.filters.query.value);
+  const value = useUserStore(user => user.overview.filters.search);
   const setFilter = useUserStore(user => user.setFilter);
   const setIsSubmitted = useUserStore(user => user.setIsSubmitted);
 
   function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFilter({
-      query: e.target.value
+      search: e.target.value
     });
   }
 

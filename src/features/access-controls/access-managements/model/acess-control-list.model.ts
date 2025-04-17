@@ -1,66 +1,14 @@
-import { useEffect, useState } from 'react';
-import { ControlList, Right, Role } from '../../../../entities/user/api';
+import { ControlList } from '../../../../entities/user/api';
 
-type AccessControlView = Record<
-  string,
-  Role & {
-    permissions: Record<string, Right>;
-  }
->;
+export type RolePermissions = Record<string, string[]>;
 
-function buildState(rbac: ControlList): AccessControlView {
-  const state: AccessControlView = {};
-
-  rbac.access.forEach(({ rights, ...role }) => {
-    state[role.id] = {
-      ...role,
-      permissions: {}
+export function mapToRolePermissions(roles: ControlList): RolePermissions {
+  return roles.access.reduce((res, role) => {
+    return {
+      ...res,
+      [role.id]: role.rights
+        .filter(right => right.canAccess)
+        .map(permission => permission.id)
     };
-    rights.forEach(right => {
-      state[role.id].permissions[right.id] = right;
-    });
-  });
-
-  return state;
-}
-
-export function useRBACView(rbac: ControlList | undefined) {
-  const [rbacState, setRbacState] = useState<AccessControlView>(
-    rbac ? buildState(rbac) : {}
-  );
-
-  function togglePermission(roleId: string, permissionId: string): void {
-    setRbacState(baseState => {
-      const role = baseState[roleId];
-
-      role.permissions[permissionId].canAccess =
-        !role.permissions[permissionId].canAccess;
-
-      return {
-        ...baseState,
-        [roleId]: {
-          ...role,
-          permissions: {
-            ...role.permissions
-          }
-        }
-      };
-    });
-  }
-
-  function getRolePermissions(roleId: string) {
-    return rbacState[roleId].permissions;
-  }
-
-  useEffect(() => {
-    if (rbac) {
-      setRbacState(buildState(rbac));
-    }
-  }, [rbac]);
-
-  return {
-    rbacState,
-    togglePermission,
-    getPermissionMap: getRolePermissions
-  };
+  }, {});
 }
