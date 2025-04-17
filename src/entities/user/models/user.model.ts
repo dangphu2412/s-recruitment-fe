@@ -1,31 +1,15 @@
 import { OperationFee } from '../../monthly-money/models';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FilterKey } from '../../../shared/config';
 import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
-import {
-  CombineSearchFilter,
-  Filter,
-  FilterParam
-} from '../../../shared/models/filter.api';
 import { useEffect } from 'react';
 import { useNotify } from '../../../shared/models/notify';
 import { AppError, useHandleError } from '../../../shared/models/error';
 import { ClientErrorCode } from '../../../shared/config/constants/client-code';
 import { useMutation, useQuery } from 'react-query';
-import { userApiClient } from '../api';
-import {
-  parseFilterQuery,
-  parsePagination
-} from '../../../shared/models/pagination';
-import { createStoreModel } from '../../../shared/models/store';
+import { GetUserQuery, userApiClient } from '../api';
+import { parseFilterQuery } from '../../../shared/models/pagination';
 import { UserStatus } from '../config';
 import { create } from 'zustand';
-
-export type UserDomain = {
-  currentUser: UserDetail | null;
-  sessionStatus: 'authenticated' | 'unauthenticated' | 'verifying';
-  overview: AdminState;
-};
 
 export type UserDetail = {
   id: string;
@@ -37,182 +21,82 @@ export type UserDetail = {
   operationFee?: OperationFee;
 };
 
-export type AdminFilter = CombineSearchFilter<{
-  joinedIn: Filter<FilterKey.RANGE, Date | null>;
-  userStatus: Filter<FilterKey.EXACT, string[]>;
-  departmentIds: Filter<FilterKey.EXACT, string[]>;
-  periodIds: Filter<FilterKey.EXACT, string[]>;
-}>;
-
-export type AdminState = {
-  pagination: Pagination;
-  filters: AdminFilter;
-  submission: Pick<AdminState, 'pagination' | 'filters'>;
-  selectedPaymentUserId?: string;
-};
-
-export function getInitialOverviewState(): AdminState {
+export function getInitialOverviewState(): UserStore['overview'] {
+  const defaultState: OverviewFilters = {
+    ...DEFAULT_PAGINATION,
+    search: '',
+    userStatus: [],
+    departmentIds: [],
+    periodIds: []
+  };
   return {
-    pagination: DEFAULT_PAGINATION,
-    filters: {
-      query: {
-        type: FilterKey.LIKE,
-        value: ''
-      },
-      joinedIn: {
-        type: FilterKey.RANGE,
-        value: {
-          fromDate: null,
-          toDate: null
-        }
-      },
-      userStatus: {
-        type: FilterKey.EXACT,
-        value: []
-      },
-      departmentIds: {
-        type: FilterKey.EXACT,
-        value: []
-      },
-      periodIds: {
-        type: FilterKey.EXACT,
-        value: []
-      }
-    },
-    submission: {
-      pagination: {
-        page: 1,
-        size: 10
-      },
-      filters: {
-        query: {
-          type: FilterKey.LIKE,
-          value: ''
-        },
-        joinedIn: {
-          type: FilterKey.RANGE,
-          value: {
-            fromDate: null,
-            toDate: null
-          }
-        },
-        userStatus: {
-          type: FilterKey.EXACT,
-          value: []
-        },
-        departmentIds: {
-          type: FilterKey.EXACT,
-          value: []
-        },
-        periodIds: {
-          type: FilterKey.EXACT,
-          value: []
-        }
-      }
-    },
+    filters: { ...defaultState },
+    submission: { ...defaultState },
     selectedPaymentUserId: undefined
   };
 }
 
-export function getInitialUserState(): UserDomain {
-  return {
-    overview: getInitialOverviewState(),
-    currentUser: null,
-    sessionStatus: 'unauthenticated'
-  };
-}
+type OverviewFilters = {
+  userStatus: string[];
+  departmentIds: string[];
+  periodIds: string[];
+  search: string;
+} & Pagination;
 
 type UserStore = {
   currentUser?: UserDetail;
   overview: {
-    pagination: Pagination;
-    filters: AdminFilter;
-    submission: {
-      pagination: Pagination;
-      filters: AdminFilter;
-    };
+    filters: OverviewFilters;
+    submission: OverviewFilters;
     selectedPaymentUserId?: string;
   };
   setPagination: (pagination: Partial<Pagination>) => void;
-  setFilter: (filter: FilterParam<AdminFilter>) => void;
+  setFilter: (filter: Partial<OverviewFilters>) => void;
   toggleUserStatus: (status: UserStatus) => void;
   toggleDepartment: (id: string) => void;
   togglePeriod: (id: string) => void;
   setIsSubmitted: () => void;
-  submitWithFilter: (filter: FilterParam<AdminFilter>) => void;
+  submitWithFilter: (filter: Partial<OverviewFilters>) => void;
   resetFilter: () => void;
   saveCurrentUser: (user: UserDetail) => void;
   setSelectedPaymentUserId: (id?: string) => void;
 };
 
 export const useUserStore = create<UserStore>((set, get) => ({
+  overview: getInitialOverviewState(),
   currentUser: undefined,
-  overview: {
-    pagination: getInitialUserState().overview.pagination,
-    filters: getInitialUserState().overview.filters,
-    submission: {
-      pagination: getInitialUserState().overview.pagination,
-      filters: getInitialUserState().overview.filters
-    },
-    selectedPaymentUserId: undefined
-  },
+  sessionStatus: 'unauthenticated',
   setPagination: pagination => {
-    const { overview } = get();
-    const updatedPagination = { ...overview.pagination, ...pagination };
     set(state => ({
       overview: {
         ...state.overview,
-        pagination: updatedPagination,
+        filters: {
+          ...state.overview.filters,
+          ...pagination
+        },
         submission: {
           ...state.overview.submission,
-          pagination: updatedPagination
+          ...pagination
         }
       }
     }));
   },
   setFilter: filter => {
     set(state => {
-      const updatedFilters = { ...state.overview.filters };
-
-      if (filter.query !== undefined) {
-        updatedFilters.query = { type: FilterKey.LIKE, value: filter.query };
-      }
-      if (filter.joinedIn) {
-        updatedFilters.joinedIn = {
-          type: FilterKey.RANGE,
-          value: filter.joinedIn
-        };
-      }
-      if (filter.userStatus !== undefined) {
-        updatedFilters.userStatus = {
-          type: FilterKey.EXACT,
-          value: filter.userStatus
-        };
-      }
-      if (filter.departmentIds !== undefined) {
-        updatedFilters.departmentIds = {
-          type: FilterKey.EXACT,
-          value: filter.departmentIds
-        };
-      }
-      if (filter.periodIds !== undefined) {
-        updatedFilters.periodIds = {
-          type: FilterKey.EXACT,
-          value: filter.periodIds
-        };
-      }
-
       return {
         overview: {
           ...state.overview,
-          filters: updatedFilters
+          filters: {
+            ...state.overview.filters,
+            ...filter
+          }
         }
       };
     });
   },
   toggleUserStatus: status => {
     set(state => {
-      const current = state.overview.filters.userStatus.value || [];
+      const current = state.overview.filters.userStatus || [];
       const exists = current.includes(status);
       const updated = exists
         ? current.filter(s => s !== status)
@@ -223,10 +107,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
           ...state.overview,
           filters: {
             ...state.overview.filters,
-            userStatus: {
-              type: FilterKey.EXACT,
-              value: updated
-            }
+            userStatus: updated
           }
         }
       };
@@ -234,7 +115,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
   },
   toggleDepartment: id => {
     set(state => {
-      const current = state.overview.filters.departmentIds.value || [];
+      const current = state.overview.filters.departmentIds || [];
       const exists = current.includes(id);
       const updated = exists ? current.filter(v => v !== id) : [...current, id];
 
@@ -243,10 +124,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
           ...state.overview,
           filters: {
             ...state.overview.filters,
-            departmentIds: {
-              type: FilterKey.EXACT,
-              value: updated
-            }
+            departmentIds: updated
           }
         }
       };
@@ -254,7 +132,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
   },
   togglePeriod: id => {
     set(state => {
-      const current = state.overview.filters.periodIds.value || [];
+      const current = state.overview.filters.periodIds || [];
       const exists = current.includes(id);
       const updated = exists ? current.filter(v => v !== id) : [...current, id];
 
@@ -263,10 +141,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
           ...state.overview,
           filters: {
             ...state.overview.filters,
-            periodIds: {
-              type: FilterKey.EXACT,
-              value: updated
-            }
+            periodIds: updated
           }
         }
       };
@@ -277,32 +152,19 @@ export const useUserStore = create<UserStore>((set, get) => ({
       overview: {
         ...state.overview,
         submission: {
-          pagination: state.overview.pagination,
-          filters: state.overview.filters
+          ...state.overview.filters
         }
       }
     }));
   },
   submitWithFilter: filter => {
     set(state => {
-      const newFilters = { ...state.overview.filters };
-      if (filter.query !== undefined) {
-        newFilters.query = { type: FilterKey.LIKE, value: filter.query };
-      }
-      if (filter.joinedIn) {
-        newFilters.joinedIn = {
-          type: FilterKey.RANGE,
-          value: filter.joinedIn
-        };
-      }
-
       return {
         overview: {
           ...state.overview,
-          filters: newFilters,
+          filters: { ...state.overview.filters },
           submission: {
-            pagination: state.overview.pagination,
-            filters: newFilters
+            ...state.overview.filters
           }
         }
       };
@@ -473,25 +335,24 @@ export function useQueryUserRoles(userId: string) {
 export const QUERY_USERS_KEY = 'QUERY_USERS';
 
 type QueryUserOptions = {
-  filters: AdminFilter;
-  pagination: Pagination;
+  query: GetUserQuery;
   enabled?: boolean;
   onSuccess?: () => void;
 };
 
-export function useQueryUsers({
-  filters,
-  pagination,
-  ...options
-}: QueryUserOptions) {
-  const { query, ...restFilters } = filters;
+export function useQueryUsers({ query, ...options }: QueryUserOptions) {
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: [QUERY_USERS_KEY, pagination, restFilters, query],
-    queryFn: () =>
-      userApiClient.getMany({
-        filters: parseFilterQuery(filters),
-        pagination: parsePagination(pagination.page, pagination.size)
-      }),
+    queryKey: [
+      QUERY_USERS_KEY,
+      query.page,
+      query.size,
+      query.search,
+      query.userStatus?.toString(),
+      query.departmentIds?.toString(),
+      query.periodIds?.toString(),
+      query.roleIds?.toString()
+    ],
+    queryFn: () => userApiClient.getMany(query),
     ...options
   });
 
@@ -499,13 +360,10 @@ export function useQueryUsers({
 }
 
 export function useUserOverview() {
-  const { filters, pagination } = useUserStore(
-    user => user.overview.submission
-  );
+  const submission = useUserStore(user => user.overview.submission);
 
   return useQueryUsers({
-    filters,
-    pagination
+    query: submission as GetUserQuery
   });
 }
 

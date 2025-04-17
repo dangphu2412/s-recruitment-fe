@@ -6,7 +6,6 @@ import React, { useMemo, useState } from 'react';
 import { BoxItem } from '../../../../shared/models/combobox.api';
 import { useQueryUsers } from '../../models';
 import { useDebounceValue } from '../../../../shared/models/debounce';
-import { FilterKey } from '../../../../shared/config';
 import { DEFAULT_PAGINATION } from '../../../../shared/models';
 
 type UserComboboxProps = Omit<ComboboxProps, 'items'>;
@@ -18,32 +17,10 @@ export function UserCombobox({ value = [], ...rest }: UserComboboxProps) {
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounceValue(query);
   const { data } = useQueryUsers({
-    filters: {
-      query: {
-        type: FilterKey.LIKE,
-        value: debouncedQuery
-      },
-      userStatus: {
-        type: FilterKey.EXACT,
-        value: []
-      },
-      joinedIn: {
-        type: FilterKey.RANGE,
-        value: {
-          fromDate: null,
-          toDate: null
-        }
-      },
-      periodIds: {
-        type: FilterKey.EXACT,
-        value: []
-      },
-      departmentIds: {
-        type: FilterKey.EXACT,
-        value: []
-      }
-    },
-    pagination: DEFAULT_PAGINATION
+    query: {
+      ...DEFAULT_PAGINATION,
+      search: debouncedQuery
+    }
   });
   const items: BoxItem[] = useMemo(() => {
     if (!data) return [];

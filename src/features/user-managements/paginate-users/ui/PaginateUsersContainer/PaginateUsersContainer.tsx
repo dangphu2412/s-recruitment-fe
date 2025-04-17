@@ -10,10 +10,12 @@ import { useQueryClient } from 'react-query';
 import { RefreshButton } from '../../../../../shared/ui/Button/RefreshButton';
 
 export function PaginateUsersContainer(): React.ReactElement {
-  const { page, size } = useUserStore(user => user.overview.pagination);
+  const page = useUserStore(user => user.overview.filters.page);
+  const size = useUserStore(user => user.overview.filters.size);
   const setPagination = useUserStore(user => user.setPagination);
   const submitWithFilter = useUserStore(user => user.submitWithFilter);
   const resetFilter = useUserStore(user => user.resetFilter);
+
   const { data } = useUserOverview();
   const totalRecords = data?.metadata.totalRecords;
   const queryClient = useQueryClient();
@@ -24,7 +26,7 @@ export function PaginateUsersContainer(): React.ReactElement {
     });
 
     submitWithFilter({
-      query: ''
+      search: ''
     });
   }
 
@@ -34,7 +36,7 @@ export function PaginateUsersContainer(): React.ReactElement {
     });
 
     submitWithFilter({
-      query: ''
+      search: ''
     });
   }
 

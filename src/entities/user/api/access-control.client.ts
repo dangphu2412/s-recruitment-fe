@@ -25,15 +25,34 @@ export type UpdateRolePayload = {
   rights: Array<string>;
 };
 
+export type CreateRolePayload = {
+  name: string;
+  isEditable: boolean;
+  description: string;
+};
+
 export const accessControlApiClient = {
-  get(): Promise<ControlList> {
+  getRoles(): Promise<ControlList> {
     return authorizedHttpClient.request<ControlList>({
       method: 'get',
       url: '/roles'
     });
   },
-  async update(payload: UpdateRolePayload): Promise<void> {
-    await authorizedHttpClient.request<ControlList>({
+  getPermissions(): Promise<Permission[]> {
+    return authorizedHttpClient.request<Permission[]>({
+      method: 'get',
+      url: '/permissions'
+    });
+  },
+  createRole(role: CreateRolePayload): Promise<void> {
+    return authorizedHttpClient.request<void>({
+      method: 'post',
+      data: role,
+      url: '/roles'
+    });
+  },
+  async updateRolePermissions(payload: UpdateRolePayload): Promise<void> {
+    await authorizedHttpClient.request<void>({
       method: 'put',
       url: `/roles/${payload.id}`,
       data: payload
