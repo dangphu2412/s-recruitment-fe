@@ -27,6 +27,7 @@ export type User = {
   createdAt: string;
   deletedAt: string;
   operationFee?: OperationFee;
+  joinedAt: string;
 };
 
 export type UserManagementView = {
@@ -71,6 +72,7 @@ export type UpdateUserDto = {
   birthday?: string;
   trackingId?: string;
   phoneNumber?: string;
+  joinedAt?: string;
 };
 
 export type UploadUserDto = {

@@ -175,11 +175,19 @@ export function UserDetailSection({ userId }: Props) {
             </FormControl>
           </div>
 
-          <FormControl>
-            <FormLabel>Phone</FormLabel>
+          <div className={'grid grid-cols-2 gap-4'}>
+            <FormControl>
+              <FormLabel>Phone</FormLabel>
 
-            <Input {...register('phoneNumber')} type={'number'} />
-          </FormControl>
+              <Input {...register('phoneNumber')} type={'number'} />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Join At</FormLabel>
+
+              <Input {...register('joinedAt')} type={'date'} />
+            </FormControl>
+          </div>
 
           <FormControl>
             <FormLabel>Tracking ID</FormLabel>
