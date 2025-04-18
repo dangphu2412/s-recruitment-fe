@@ -35,18 +35,21 @@ import {
   useToast
 } from '@chakra-ui/react';
 import {
+  QUERY_CONTROL_LIST,
+  useMutateUpdateAssignedPersonsToRole,
   useQueryControlList,
   useQueryUsers,
   useRoleStore
 } from '../../../../../entities/user/models';
 import { DEFAULT_PAGINATION } from '../../../../../shared/models';
+import { useQueryClient } from 'react-query';
 
 export function UserRoleAssignmentView() {
   const toast = useToast();
   const selectedRoleId = useRoleStore(state => state.selectedRoleId);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: users } = useQueryUsers({
+  const { data: users, refetch } = useQueryUsers({
     query: {
       ...DEFAULT_PAGINATION,
       search: '',
@@ -62,10 +65,12 @@ export function UserRoleAssignmentView() {
     },
     enabled: selectedRoleId !== null
   });
+  const { assignUsers } = useMutateUpdateAssignedPersonsToRole();
   const [isAddUsersDialogOpen, setIsAddUsersDialogOpen] = useState(false);
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
 
-  const { allRoles } = useQueryControlList();
+  const { allRoles } = useQueryControlList({ hasTotalUsers: true });
+  const queryClient = useQueryClient();
 
   // Get the currently selected role
   const selectedRole = useMemo(() => {
@@ -77,32 +82,28 @@ export function UserRoleAssignmentView() {
   const handleAddUsersToRole = () => {
     if (!selectedRole || selectedUserIds.length === 0) return;
 
-    // Assign users to roles
+    assignUsers(
+      {
+        id: +(selectedRoleId as string),
+        userIds: selectedUserIds
+      },
+      {
+        onSuccess: () => {
+          refetch();
+          queryClient.invalidateQueries([QUERY_CONTROL_LIST]);
+          toast({
+            title: 'Users added to role',
+            description: `${selectedUserIds.length} users have been assigned to the ${selectedRole.name} role.`,
+            status: 'success',
+            duration: 3000,
+            isClosable: true
+          });
+        }
+      }
+    );
 
     setSelectedUserIds([]);
     setIsAddUsersDialogOpen(false);
-
-    toast({
-      title: 'Users added to role',
-      description: `${selectedUserIds.length} users have been assigned to the ${selectedRole.name} role.`,
-      status: 'success',
-      duration: 3000,
-      isClosable: true
-    });
-  };
-
-  const handleRemoveUserFromRole = (userId: string) => {
-    if (!selectedRole) return;
-
-    // Remove user out of role assignment
-
-    toast({
-      title: 'User removed from role',
-      description: `User has been removed from the ${selectedRole.name} role.`,
-      status: 'info',
-      duration: 3000,
-      isClosable: true
-    });
   };
 
   const toggleUserSelection = (userId: string) => {
@@ -158,7 +159,7 @@ export function UserRoleAssignmentView() {
                       {role.description}
                     </Text>
                     <Badge mt={2} variant="outline" colorScheme="blue">
-                      10 users
+                      {role.totalUsers} users
                     </Badge>
                   </Box>
                 ))}
@@ -203,7 +204,6 @@ export function UserRoleAssignmentView() {
                         <Th>User</Th>
                         <Th>Email</Th>
                         <Th>All Roles</Th>
-                        <Th isNumeric>Actions</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
@@ -224,16 +224,6 @@ export function UserRoleAssignmentView() {
                                 </Badge>
                               ))}
                             </HStack>
-                          </Td>
-                          <Td isNumeric>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              // leftIcon={<CloseIcon />}
-                              onClick={() => handleRemoveUserFromRole(user.id)}
-                            >
-                              Remove
-                            </Button>
                           </Td>
                         </Tr>
                       ))}
