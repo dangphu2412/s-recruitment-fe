@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import {
-  Avatar,
   Badge,
   Box,
   Button,
@@ -25,13 +24,8 @@ import {
   ModalHeader,
   ModalOverlay,
   Stack,
-  Table,
-  Tbody,
-  Td,
+  Tag,
   Text,
-  Th,
-  Thead,
-  Tr,
   useToast
 } from '@chakra-ui/react';
 import {
@@ -43,11 +37,19 @@ import {
 } from '../../../../../entities/user/models';
 import { DEFAULT_PAGINATION } from '../../../../../shared/models';
 import { useQueryClient } from 'react-query';
+import { createColumnHelper } from '@tanstack/table-core';
+import { Role } from '../../../../../entities/user/api';
+import { BasicTable } from '../../../../../shared/ui';
+
+type UserRoleAssignmentColumn = {
+  fullName: string;
+  email: string;
+  roles: Role[];
+};
 
 export function UserRoleAssignmentView() {
   const toast = useToast();
   const selectedRoleId = useRoleStore(state => state.selectedRoleId);
-  const [searchQuery, setSearchQuery] = useState('');
 
   const { data: users, refetch } = useQueryUsers({
     query: {
@@ -58,6 +60,7 @@ export function UserRoleAssignmentView() {
     enabled: selectedRoleId !== null
   });
 
+  const [searchQuery, setSearchQuery] = useState('');
   const { data: searchUsers } = useQueryUsers({
     query: {
       ...DEFAULT_PAGINATION,
@@ -65,21 +68,47 @@ export function UserRoleAssignmentView() {
     },
     enabled: selectedRoleId !== null
   });
+  const { allRoles } = useQueryControlList({ hasTotalUsers: true });
+  const queryClient = useQueryClient();
+
   const { assignUsers } = useMutateUpdateAssignedPersonsToRole();
   const [isAddUsersDialogOpen, setIsAddUsersDialogOpen] = useState(false);
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
 
-  const { allRoles } = useQueryControlList({ hasTotalUsers: true });
-  const queryClient = useQueryClient();
-
-  // Get the currently selected role
   const selectedRole = useMemo(() => {
     return selectedRoleId
       ? allRoles?.access.find(role => role.id === selectedRoleId)
       : null;
   }, [allRoles?.access, selectedRoleId]);
 
-  const handleAddUsersToRole = () => {
+  const columns = useMemo(() => {
+    const columnHelper = createColumnHelper<UserRoleAssignmentColumn>();
+
+    return [
+      columnHelper.accessor('fullName', {
+        header: 'Name'
+      }),
+      columnHelper.accessor('email', {
+        header: 'Email'
+      }),
+      columnHelper.accessor('roles', {
+        header: 'Roles',
+        cell: ({ getValue }) => {
+          return (
+            <HStack spacing={1} wrap="wrap">
+              {getValue().map(role => (
+                <Tag key={role.id} mr={1}>
+                  {role.name}
+                </Tag>
+              ))}
+            </HStack>
+          );
+        }
+      })
+    ];
+  }, []);
+
+  function handleAddUsersToRole() {
     if (!selectedRole || selectedUserIds.length === 0) return;
 
     assignUsers(
@@ -104,15 +133,15 @@ export function UserRoleAssignmentView() {
 
     setSelectedUserIds([]);
     setIsAddUsersDialogOpen(false);
-  };
+  }
 
-  const toggleUserSelection = (userId: string) => {
+  function toggleUserSelection(userId: string) {
     setSelectedUserIds(prev =>
       prev.includes(userId)
         ? prev.filter(id => id !== userId)
         : [...prev, userId]
     );
-  };
+  }
 
   return (
     <Box>
@@ -198,37 +227,7 @@ export function UserRoleAssignmentView() {
             <CardBody>
               {selectedRole ? (
                 users ? (
-                  <Table variant="simple">
-                    <Thead>
-                      <Tr>
-                        <Th>User</Th>
-                        <Th>Email</Th>
-                        <Th>All Roles</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {(users?.items ?? []).map(user => (
-                        <Tr key={user.id}>
-                          <Td>
-                            <Flex align="center" gap={2}>
-                              <Avatar size="sm" name={user.fullName} />
-                              <Text fontWeight="medium">{user.fullName}</Text>
-                            </Flex>
-                          </Td>
-                          <Td>{user.email}</Td>
-                          <Td>
-                            <HStack spacing={1} wrap="wrap">
-                              {user.roles.map(role => (
-                                <Badge key={role.id} mr={1}>
-                                  {role.name}
-                                </Badge>
-                              ))}
-                            </HStack>
-                          </Td>
-                        </Tr>
-                      ))}
-                    </Tbody>
-                  </Table>
+                  <BasicTable columns={columns} items={users?.items ?? []} />
                 ) : (
                   <Center
                     h="200px"
