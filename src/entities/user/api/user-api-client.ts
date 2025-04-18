@@ -1,12 +1,9 @@
-import {
-  GetManyParams,
-  Page,
-  ProbationQuery
-} from 'src/shared/models/list.api';
+import { Page, Pagination, ProbationQuery } from 'src/shared/models/list.api';
 import { authorizedHttpClient } from '../../../shared/api';
 import { OperationFee } from 'src/entities/monthly-money/models';
 import { Role } from './access-control.client';
 import { CommonData } from './user-master-data-api-client';
+import { encodeParams } from '../../../shared/models/pagination';
 
 export type User = {
   id: string;
@@ -105,6 +102,14 @@ type FileCreationResponse = {
   duplicatedEmails?: string[];
 }[];
 
+export type GetUserQuery = {
+  userStatus?: string[];
+  departmentIds?: string[];
+  periodIds?: string[];
+  roleIds?: string[];
+  search: string;
+} & Pagination;
+
 export const userApiClient = {
   getMyProfile(): Promise<UserDetail> {
     return authorizedHttpClient.request({
@@ -118,14 +123,11 @@ export const userApiClient = {
       method: 'get'
     });
   },
-  getMany(params: GetManyParams): Promise<Page<UserManagementView>> {
+  getMany(params: GetUserQuery): Promise<Page<UserManagementView>> {
     return authorizedHttpClient.request<Page<UserManagementView>>({
       url: '/users',
       method: 'get',
-      params: {
-        ...params.filters,
-        ...params.pagination
-      }
+      params: encodeParams(params)
     });
   },
   getUserRoles(userId: string): Promise<UserRolesView> {

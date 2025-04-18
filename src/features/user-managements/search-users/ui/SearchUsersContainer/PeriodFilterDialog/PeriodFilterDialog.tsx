@@ -4,7 +4,7 @@ import { usePeriods } from '../../../../../../entities/user/models/user-master-d
 import { DropDownMultipleCheckboxSelection } from '../../../../../../shared/ui/Input/DropDownCheckbox/DropDownCheckbox';
 
 export function PeriodFilterDialog(): React.ReactElement {
-  const value = useUserStore(user => user.overview.filters.periodIds.value);
+  const value = useUserStore(user => user.overview.filters.periodIds);
   const togglePeriod = useUserStore(user => user.togglePeriod);
   const { data: periods } = usePeriods();
 

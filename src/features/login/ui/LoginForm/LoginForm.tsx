@@ -23,8 +23,7 @@ export function LoginForm(): ReactElement {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    reset
+    formState: { errors }
   } = useForm<LoginModel>();
   const { push } = useRouter();
 
@@ -40,9 +39,6 @@ export function LoginForm(): ReactElement {
       onSuccess: credentials => {
         persistentStorage.saveTokens(credentials);
         push('/');
-      },
-      onError: () => {
-        reset();
       }
     });
   }

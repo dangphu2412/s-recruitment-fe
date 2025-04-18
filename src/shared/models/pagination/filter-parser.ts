@@ -61,3 +61,15 @@ export function encodeMultiQueryParams(values: string[]): string {
 export function decodeMultiQueryParams(value: string): string[] {
   return value.split(',');
 }
+
+export function encodeParams(values: Record<string, unknown | unknown[]>) {
+  Object.keys({ ...values }).forEach(key => {
+    const value = values[key];
+
+    if (Array.isArray(value)) {
+      values[key] = encodeMultiQueryParams(value);
+    }
+  });
+
+  return values;
+}
