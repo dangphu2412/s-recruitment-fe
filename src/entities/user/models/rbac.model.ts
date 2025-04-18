@@ -2,6 +2,8 @@ import { useMutation, useQuery } from 'react-query';
 import {
   accessControlApiClient,
   CreateRolePayload,
+  GetRolesQuery,
+  UpdateAssignedPersonRolePayload,
   UpdateRolePayload
 } from '../api';
 import { create } from 'zustand/react';
@@ -26,12 +28,24 @@ export function useMutateCreateNewRoles() {
   return { addRole: mutate, isLoading };
 }
 
+export function useMutateUpdateAssignedPersonsToRole() {
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (request: UpdateAssignedPersonRolePayload) =>
+      accessControlApiClient.updateAssignedPerson(request),
+    mutationKey: 'MUTATION_ASSIGNED_PERSON'
+  });
+
+  return { assignUsers: mutate, isLoading };
+}
+
 export const QUERY_CONTROL_LIST = 'QUERY_CONTROL_LIST';
 
-export function useQueryControlList() {
+export function useQueryControlList(
+  query: GetRolesQuery = {} as GetRolesQuery
+) {
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: QUERY_CONTROL_LIST,
-    queryFn: () => accessControlApiClient.getRoles()
+    queryFn: () => accessControlApiClient.getRoles(query)
   });
 
   return { allRoles: data, isLoading, isSuccess };
@@ -52,7 +66,7 @@ type RoleStore = {
   hasUnsavedChanges: boolean;
 };
 
-export const useRoleStore = create<RoleStore>((set, get, store) => {
+export const useRoleStore = create<RoleStore>(() => {
   return {
     selectedRoleId: null,
     isAddingRole: false,

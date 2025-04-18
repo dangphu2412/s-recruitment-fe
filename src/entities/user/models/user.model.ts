@@ -341,7 +341,7 @@ type QueryUserOptions = {
 };
 
 export function useQueryUsers({ query, ...options }: QueryUserOptions) {
-  const { data, isLoading, isFetching } = useQuery({
+  const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: [
       QUERY_USERS_KEY,
       query.page,
@@ -356,7 +356,7 @@ export function useQueryUsers({ query, ...options }: QueryUserOptions) {
     ...options
   });
 
-  return { data, isLoading, isFetching };
+  return { data, isLoading, isFetching, refetch };
 }
 
 export function useUserOverview() {
