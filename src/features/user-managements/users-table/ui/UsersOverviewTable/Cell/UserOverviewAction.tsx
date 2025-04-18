@@ -24,11 +24,6 @@ export function UserOverviewAction({
     const actions: ActionOnUserItem[] = [];
     if (!row.original.isProbation) {
       actions.push({
-        key: `UPDATE_ROLE_KEY${row.original.id}`,
-        content: 'Manage role',
-        onClick: () => push(`/users/${row.original.id}/role-settings`)
-      });
-      actions.push({
         key: `MANAGE_PAID_KEY${row.original.id}`,
         content: 'Manage payment',
         onClick: () => {
@@ -39,7 +34,7 @@ export function UserOverviewAction({
 
     actions.push({
       key: `GO_TO_DETAIL${row.original.id}`,
-      content: 'Go to detail',
+      content: 'Edit profile',
       onClick: () => {
         push(`/users/${row.original.id}/profile`);
       }
