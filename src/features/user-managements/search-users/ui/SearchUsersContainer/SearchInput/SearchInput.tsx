@@ -25,7 +25,7 @@ export function SearchInput(): React.ReactElement {
 
   return (
     <Input
-      placeholder="Search by username"
+      placeholder="Search by username, full name"
       value={value}
       onChange={handleSearchChange}
       onKeyDown={handleSearchPress}
