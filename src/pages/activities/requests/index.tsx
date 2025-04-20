@@ -19,6 +19,8 @@ export default function RequestsPage() {
         />
         <HeaderActionGroup>
           <UploadFileButtonWidget
+            id={'upload-file'}
+            title={'Import user requests by file'}
             resource={'upload-requests'}
             mutateFn={activityRequestApiClient.uploadRequests}
           >
