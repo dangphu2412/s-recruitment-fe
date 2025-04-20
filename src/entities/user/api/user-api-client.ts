@@ -77,7 +77,6 @@ export type UpdateUserDto = {
 
 export type UploadUserDto = {
   file: File;
-  monthlyConfigId?: number;
 };
 
 export type PatchUserRolesPayload = {

@@ -21,8 +21,6 @@ import {
 export default function AdministratorPage(): ReactElement {
   return (
     <Card>
-      <UserGuideButton steps={UserManagementGuideSteps} />
-
       <ContentHeaderLayout>
         <ContentHeader
           main={'Administrator management'}
@@ -38,8 +36,9 @@ export default function AdministratorPage(): ReactElement {
             resource={'upload-logs'}
             mutateFn={activityMdmApiClient.uploadUsers}
           >
-            Upload device users
+            Device Users
           </UploadFileButtonWidget>
+          <UserGuideButton steps={UserManagementGuideSteps} />
         </HeaderActionGroup>
       </ContentHeaderLayout>
 

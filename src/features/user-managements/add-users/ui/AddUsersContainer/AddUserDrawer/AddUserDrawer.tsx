@@ -99,59 +99,71 @@ export function AddUserDrawer({
       <DrawerContent>
         <DrawerCloseButton />
 
-        <DrawerHeader>Create new S-Group members</DrawerHeader>
+        <DrawerHeader>Create new member</DrawerHeader>
 
         <DrawerBody className="space-y-4">
-          <FormControl isInvalid={!!errors.department}>
-            <FormLabel htmlFor="create-user-type">Domain</FormLabel>
+          <div className={'grid grid-cols-2 gap-2'}>
+            <HookFormInput
+              name={'email'}
+              label={'Email'}
+              type={'email'}
+              placeholder={'Email ...'}
+              errors={errors}
+              register={register}
+              isRequired
+            />
 
-            <Select placeholder="Select department" {...register('department')}>
-              {departments?.map(department => {
-                return (
-                  <option key={department.id} value={department.id}>
-                    {department.name}
-                  </option>
-                );
-              })}
-            </Select>
+            <HookFormInput
+              name={'fullName'}
+              label={'Full name'}
+              placeholder={'Your full name ...'}
+              errors={errors}
+              register={register}
+            />
+          </div>
 
-            {errors.department && (
-              <FormErrorMessage>{errors.department?.message}</FormErrorMessage>
-            )}
-          </FormControl>
+          <div className={'grid grid-cols-2 gap-2'}>
+            <FormControl isInvalid={!!errors.department} isRequired>
+              <FormLabel htmlFor="create-user-type">Domain</FormLabel>
 
-          <FormControl isInvalid={!!errors.period}>
-            <FormLabel htmlFor="create-user-type">Period</FormLabel>
+              <Select
+                placeholder="Select department"
+                {...register('department')}
+              >
+                {departments?.map(department => {
+                  return (
+                    <option key={department.id} value={department.id}>
+                      {department.name}
+                    </option>
+                  );
+                })}
+              </Select>
 
-            <Select placeholder="Select period" {...register('period')}>
-              {periods?.map(period => {
-                return (
-                  <option key={period.id} value={period.id}>
-                    {period.name}
-                  </option>
-                );
-              })}
-            </Select>
+              {errors.department && (
+                <FormErrorMessage>
+                  {errors.department?.message}
+                </FormErrorMessage>
+              )}
+            </FormControl>
 
-            {errors.period && (
-              <FormErrorMessage>{errors.period?.message}</FormErrorMessage>
-            )}
-          </FormControl>
+            <FormControl isInvalid={!!errors.period} isRequired>
+              <FormLabel htmlFor="create-user-type">Period</FormLabel>
 
-          <HookFormInput
-            name={'email'}
-            label={'Email'}
-            type={'email'}
-            errors={errors}
-            register={register}
-          />
+              <Select placeholder="Select period" {...register('period')}>
+                {periods?.map(period => {
+                  return (
+                    <option key={period.id} value={period.id}>
+                      {period.name}
+                    </option>
+                  );
+                })}
+              </Select>
 
-          <HookFormInput
-            name={'fullName'}
-            label={'Full name'}
-            errors={errors}
-            register={register}
-          />
+              {errors.period && (
+                <FormErrorMessage>{errors.period?.message}</FormErrorMessage>
+              )}
+            </FormControl>
+          </div>
 
           <HookFormInput
             name={'birthday'}
