@@ -1,10 +1,8 @@
 import { ReactElement, useState } from 'react';
-import { Provider } from 'react-redux';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ChakraProvider } from '@chakra-ui/react';
 import { getQueryClientConfig } from 'src/config/react-query.config';
 import { SystemPropsAdapter } from 'src/config/system-provider/system-props.adapter';
-import { store } from 'src/config/redux.config';
 
 export function SystemProvider({
   onError,
@@ -23,9 +21,7 @@ export function SystemProvider({
   return (
     <ChakraProvider>
       <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <Provider store={store}>{children}</Provider>
-        </Hydrate>
+        <Hydrate state={pageProps.dehydratedState}>{children}</Hydrate>
       </QueryClientProvider>
     </ChakraProvider>
   );

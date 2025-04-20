@@ -1,6 +1,5 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
-  faBook,
   faCodePullRequest,
   faHome,
   faMask,
@@ -39,7 +38,6 @@ const IconKeyByCode: Record<string, IconDefinition> = {
   USER_MANAGEMENT_ICON: faUser,
   CATEGORY_ICON: faHome,
   RECRUITMENT_ICON: faSuitcase,
-  POST_ICON: faBook,
   MASTER_ICON: faMask,
   ACTIVITY_MANAGEMENT_ICON: faCodePullRequest
 };
