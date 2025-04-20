@@ -2,14 +2,12 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
 import { systemStorage } from 'src/shared/models/store';
-import { menuStorage } from '../entities/menu/models';
 import { postStorage } from '../entities/posts/models';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const appStoreReducer = combineReducers({
   ...systemStorage,
-  ...menuStorage,
   ...postStorage
 });
 
