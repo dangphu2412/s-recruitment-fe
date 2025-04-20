@@ -33,6 +33,7 @@ export default function AdministratorPage(): ReactElement {
           <UpdateUserToMemberContainer />
           <UploadFileButtonWidget
             id={StepIds.BTN_UPLOAD_DEVICE_USERS}
+            title={'Import device users by xlsx file'}
             resource={'upload-logs'}
             mutateFn={activityMdmApiClient.uploadUsers}
           >

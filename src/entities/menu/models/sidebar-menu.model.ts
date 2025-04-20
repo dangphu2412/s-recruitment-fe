@@ -11,7 +11,6 @@ import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import isEmpty from 'lodash/isEmpty';
-import { useDispatch } from 'react-redux';
 import { create } from 'zustand/react';
 
 export type SidebarMenu = SidebarMenuItem[];
@@ -111,8 +110,6 @@ export function useSyncParamsToMenu({ menus }: SyncParamsToMenuProps) {
       return acc;
     }, [] as SidebarMenu);
   }, [menus]);
-  const dispatch = useDispatch();
-
   useEffect(() => {
     const found = flattenItems.find(item => item.accessLink === pathname);
 
@@ -121,5 +118,5 @@ export function useSyncParamsToMenu({ menus }: SyncParamsToMenuProps) {
         currentMenu: found
       });
     }
-  }, [dispatch, flattenItems, pathname]);
+  }, [flattenItems, pathname]);
 }

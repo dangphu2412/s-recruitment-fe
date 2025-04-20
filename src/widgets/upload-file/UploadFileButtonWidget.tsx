@@ -1,32 +1,33 @@
-import React, { ChangeEvent, PropsWithChildren, useRef } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 import { useNotify } from 'src/shared/models/notify';
 import { Button } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { useMutation } from 'react-query';
+import { UploadModal } from '../../shared/ui/Header/ContentHeader/UploadModal';
+import { HeaderModalAction } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 
 type Props = PropsWithChildren<{
   mutateFn: (file: File) => Promise<void>;
   resource: string;
-  id?: string;
+  id: string;
+  title: ReactNode;
 }>;
 
 export function UploadFileButtonWidget({
   resource,
   mutateFn,
   children,
+  title,
   ...rest
 }: Props) {
-  const ref = useRef<HTMLInputElement>(null);
   const { mutate } = useMutation({
     mutationKey: resource,
     mutationFn: mutateFn
   });
   const notify = useNotify();
 
-  function handleUpload(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-
+  function handleUpload(file: File | null | undefined) {
     if (file) {
       mutate(file, {
         onSuccess: () => {
@@ -40,19 +41,25 @@ export function UploadFileButtonWidget({
             title: 'Upload failed',
             status: 'error'
           });
-        },
-        onSettled: () => {
-          ref.current!.files = null;
         }
       });
     }
   }
 
   return (
-    <Button colorScheme="pink" onClick={() => ref.current?.click()} {...rest}>
-      <input type="file" ref={ref} hidden onChange={handleUpload} />
-      <FontAwesomeIcon className="mr-2" icon={faUpload} />
-      <span>{children}</span>
-    </Button>
+    <>
+      <HeaderModalAction
+        {...rest}
+        triggerButton={props => (
+          <Button colorScheme="pink" {...props}>
+            <FontAwesomeIcon className="mr-2" icon={faUpload} />
+            <span>{children}</span>
+          </Button>
+        )}
+        content={props => (
+          <UploadModal {...props} title={title} onSave={handleUpload} />
+        )}
+      />
+    </>
   );
 }
