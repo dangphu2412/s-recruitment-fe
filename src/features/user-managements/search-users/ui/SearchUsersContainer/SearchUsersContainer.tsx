@@ -5,6 +5,7 @@ import { SearchInput } from './SearchInput/SearchInput';
 import { useUserStore } from 'src/entities/user/models';
 import { DepartmentFilterDialog } from './DepartmentFilterDialog/DepartmentFilterDialog';
 import { PeriodFilterDialog } from './PeriodFilterDialog/PeriodFilterDialog';
+import { StepIds } from '../../../user-guide/user-management-guide';
 
 export function SearchUsersContainer(): React.ReactElement {
   const setIsSubmitted = useUserStore(user => user.setIsSubmitted);
@@ -14,7 +15,7 @@ export function SearchUsersContainer(): React.ReactElement {
   }
 
   return (
-    <div className={'flex flex-row gap-2'}>
+    <div className={'flex flex-row gap-2'} id={StepIds.FILTERS_BAR}>
       <SearchInput />
       <DepartmentFilterDialog />
       <PeriodFilterDialog />

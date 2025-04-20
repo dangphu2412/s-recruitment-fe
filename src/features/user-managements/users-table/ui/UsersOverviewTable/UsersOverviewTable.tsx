@@ -8,6 +8,7 @@ import {
   getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table';
+import { StepIds } from '../../../user-guide/user-management-guide';
 
 export function UsersOverviewTable(): ReactElement {
   const { data, isFetching } = useUserOverview();
@@ -27,6 +28,7 @@ export function UsersOverviewTable(): ReactElement {
 
   return (
     <Table
+      id={StepIds.USER_TABLE}
       table={table}
       items={data?.items ?? EMPTY_ARRAY}
       isLoading={isFetching}

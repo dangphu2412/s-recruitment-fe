@@ -8,12 +8,14 @@ import { useMutation } from 'react-query';
 type Props = PropsWithChildren<{
   mutateFn: (file: File) => Promise<void>;
   resource: string;
+  id?: string;
 }>;
 
 export function UploadFileButtonWidget({
   resource,
   mutateFn,
-  children
+  children,
+  ...rest
 }: Props) {
   const ref = useRef<HTMLInputElement>(null);
   const { mutate } = useMutation({
@@ -47,7 +49,7 @@ export function UploadFileButtonWidget({
   }
 
   return (
-    <Button colorScheme="pink" onClick={() => ref.current?.click()}>
+    <Button colorScheme="pink" onClick={() => ref.current?.click()} {...rest}>
       <input type="file" ref={ref} hidden onChange={handleUpload} />
       <FontAwesomeIcon className="mr-2" icon={faUpload} />
       <span>{children}</span>

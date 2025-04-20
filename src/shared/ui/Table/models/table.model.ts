@@ -12,6 +12,7 @@ export type BaseTableProps<D extends object> = {
   className?: string;
   table: ReactTable<D>;
   items?: D[];
+  id?: string;
 };
 
 export type BasicTableProps<D extends object> = Omit<

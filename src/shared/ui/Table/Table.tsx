@@ -25,7 +25,8 @@ export function Table<T extends object>({
   onRowClick,
   caption,
   className,
-  table
+  table,
+  ...rest
 }: BaseTableProps<T>): ReactElement {
   function renderHeader() {
     return (
@@ -117,6 +118,7 @@ export function Table<T extends object>({
       overflowY={'auto'}
       maxWidth={'auto'}
       className={classNames(classes['table-container'], className)}
+      {...rest}
     >
       <BaseTable variant="simple" className={'w-full'}>
         {caption && <TableCaption>{caption}</TableCaption>}
