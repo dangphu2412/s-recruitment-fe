@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, Tooltip } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import Joyride, { CallBackProps, EVENTS, STATUS, Step } from 'react-joyride';
@@ -37,7 +37,7 @@ export function UserGuideButton({ steps }: Props) {
 
   return (
     <>
-      <div className={'flex flex-wrap justify-end'}>
+      <div className={'absolute top-0'}>
         <Joyride
           continuous
           run={isRun}
@@ -53,14 +53,12 @@ export function UserGuideButton({ steps }: Props) {
             }
           }}
         />
-        <Button
-          colorScheme={'green'}
-          leftIcon={<FontAwesomeIcon icon={faBook} />}
-          onClick={handleClickStart}
-        >
-          Guide
-        </Button>
       </div>
+      <Tooltip label="User guide">
+        <Button colorScheme={'green'} onClick={handleClickStart}>
+          <FontAwesomeIcon icon={faBook} />
+        </Button>
+      </Tooltip>
     </>
   );
 }
