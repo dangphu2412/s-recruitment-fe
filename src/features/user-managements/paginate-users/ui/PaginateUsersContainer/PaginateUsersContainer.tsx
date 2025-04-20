@@ -8,6 +8,7 @@ import { Paginator } from '../../../../../shared/ui/Pagination/Paginator';
 import { Button, Text } from '@chakra-ui/react';
 import { useQueryClient } from 'react-query';
 import { RefreshButton } from '../../../../../shared/ui/Button/RefreshButton';
+import { StepIds } from '../../../user-guide/user-management-guide';
 
 export function PaginateUsersContainer(): React.ReactElement {
   const page = useUserStore(user => user.overview.filters.page);
@@ -51,7 +52,7 @@ export function PaginateUsersContainer(): React.ReactElement {
   }
 
   return (
-    <div className={'flex justify-between'}>
+    <div className={'flex justify-between'} id={StepIds.PAGINATION_CONTROLS}>
       <div className={'flex gap-2 items-center'}>
         <RefreshButton onClick={refresh} />
         <Paginator

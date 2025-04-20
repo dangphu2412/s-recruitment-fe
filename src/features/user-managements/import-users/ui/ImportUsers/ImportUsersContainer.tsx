@@ -4,11 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { ImportUsersDrawer } from './ImportUsersModal';
 import { HeaderDrawerAction } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { StepIds } from '../../../user-guide/user-management-guide';
 
 export function ImportUsersContainer(): React.ReactElement {
   return (
     <HeaderDrawerAction
-      id={'import-users-action'}
+      id={StepIds.BTN_IMPORT_USER}
       triggerButton={props => (
         <Button colorScheme="pink" {...props}>
           <FontAwesomeIcon className="mr-2" icon={faUpload} />

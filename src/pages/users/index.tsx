@@ -12,10 +12,17 @@ import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/Conten
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { activityMdmApiClient } from '../../entities/activities/api/activity-mdm-api.client';
 import { UploadFileButtonWidget } from '../../widgets/upload-file/UploadFileButtonWidget';
+import { UserGuideButton } from '../../shared/user-guide/UserGuideButton';
+import {
+  StepIds,
+  UserManagementGuideSteps
+} from '../../features/user-managements/user-guide/user-management-guide';
 
 export default function AdministratorPage(): ReactElement {
   return (
     <Card>
+      <UserGuideButton steps={UserManagementGuideSteps} />
+
       <ContentHeaderLayout>
         <ContentHeader
           main={'Administrator management'}
@@ -24,9 +31,10 @@ export default function AdministratorPage(): ReactElement {
 
         <HeaderActionGroup>
           <AddUsersContainer />
-          <UpdateUserToMemberContainer />
           <ImportUsersContainer />
+          <UpdateUserToMemberContainer />
           <UploadFileButtonWidget
+            id={StepIds.BTN_UPLOAD_DEVICE_USERS}
             resource={'upload-logs'}
             mutateFn={activityMdmApiClient.uploadUsers}
           >

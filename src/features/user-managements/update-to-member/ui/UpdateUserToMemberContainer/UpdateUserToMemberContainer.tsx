@@ -4,11 +4,12 @@ import { UpdateUserToMemberContainerDrawer } from './AddUserDrawer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { HeaderDrawerAction } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { StepIds } from '../../../user-guide/user-management-guide';
 
 export function UpdateUserToMemberContainer(): React.ReactElement {
   return (
     <HeaderDrawerAction
-      id={'update-user-to-member'}
+      id={StepIds.BTN_UPGRADE_USER}
       triggerButton={props => (
         <Button colorScheme="pink" {...props}>
           <FontAwesomeIcon className="mr-2" icon={faArrowUp} />
