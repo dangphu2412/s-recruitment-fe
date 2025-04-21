@@ -4,6 +4,7 @@ import { useActivityRequestStore } from '../../../../../entities/activities/mode
 import { DepartmentFilterDialog } from '../DepartmentFilterDialog/DepartmentFilterDialog';
 import { LastChangedAtFilterDialog } from '../RequestRangeFilterDialog/LastChangedAtFilterDialog';
 import { StatusFilterDialog } from '../StatusFilterDialog/DepartmentFilterDialog';
+import { RequestTypeFilterDialog } from '../RequestTypeFilterDialog/RequestTypeFilterDialog';
 
 export function SearchActivities(): React.ReactElement {
   const query = useActivityRequestStore(state => state.query);
@@ -32,6 +33,7 @@ export function SearchActivities(): React.ReactElement {
 
       <DepartmentFilterDialog />
       <StatusFilterDialog />
+      <RequestTypeFilterDialog />
       <LastChangedAtFilterDialog />
 
       <div>
