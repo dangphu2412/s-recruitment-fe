@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 type BaseSchema = Record<
   string,
   {
-    type: 'text' | 'select' | 'textarea';
+    type: 'text' | 'select' | 'textarea' | 'date' | 'time';
     label: string;
     placeholder: string;
     options?: Array<{ value: string; label: string }>;
