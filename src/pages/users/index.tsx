@@ -39,7 +39,10 @@ export default function AdministratorPage(): ReactElement {
           >
             Device Users
           </UploadFileButtonWidget>
-          <UserGuideButton steps={UserManagementGuideSteps} />
+          <UserGuideButton
+            feature={'user-managements'}
+            steps={UserManagementGuideSteps}
+          />
         </HeaderActionGroup>
       </ContentHeaderLayout>
 

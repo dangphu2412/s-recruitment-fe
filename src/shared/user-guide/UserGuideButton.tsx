@@ -6,9 +6,10 @@ import React, { useEffect, useState } from 'react';
 
 type Props = {
   steps: Step[];
+  feature: string;
 };
 
-export function UserGuideButton({ steps }: Props) {
+export function UserGuideButton({ steps, feature }: Props) {
   const [isRun, setIsRun] = useState(false);
 
   function handleClickStart(event: React.MouseEvent<HTMLElement>) {
@@ -24,16 +25,16 @@ export function UserGuideButton({ steps }: Props) {
       EVENTS.TOUR_END === data.type
     ) {
       setIsRun(false); // turn off the tour
-      localStorage.setItem('seen-user-tour', 'true');
+      localStorage.setItem(`${feature}-user-tour`, 'true');
     }
   }
 
   useEffect(() => {
-    const hasSeenTour = localStorage.getItem('seen-user-tour');
+    const hasSeenTour = localStorage.getItem(`${feature}-user-tour`);
     if (!hasSeenTour) {
       setIsRun(true);
     }
-  }, []);
+  }, [feature]);
 
   return (
     <>
