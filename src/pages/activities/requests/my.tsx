@@ -5,6 +5,8 @@ import { MyRequestsTable } from '../../../features/activities/my-requests-table/
 import { AddActivityRequestContainer } from '../../../features/activities/add-activity-request';
 import { HeaderActionGroup } from '../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { MyDetailRequest } from '../../../features/activities/my-detail-request/ui/MyDetailRequest';
+import { UserGuideButton } from '../../../shared/user-guide/UserGuideButton';
+import { MyActivityGuideSteps } from '../../../features/activities/user-guide/activity-guide';
 
 export default function MyRequestActivityPage() {
   return (
@@ -16,6 +18,10 @@ export default function MyRequestActivityPage() {
         />
         <HeaderActionGroup>
           <AddActivityRequestContainer />
+          <UserGuideButton
+            feature={'my-requests'}
+            steps={MyActivityGuideSteps}
+          />
         </HeaderActionGroup>
       </ContentHeaderLayout>
 
