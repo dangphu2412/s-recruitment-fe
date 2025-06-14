@@ -376,7 +376,7 @@ export function useProbationUsers({
         }),
         pagination: {
           page: 1,
-          size: 50
+          size: 999
         }
       }),
     enabled: !!periodId
@@ -404,15 +404,6 @@ export function useMutateUpgradeMembers() {
   });
 
   return { upgradeToMembers: mutate, isLoading };
-}
-
-export function useMutateUploadUserByFile() {
-  const { mutate, isLoading } = useMutation({
-    mutationKey: 'MUTATION_UPLOAD_USER_BY_FILE',
-    mutationFn: userApiClient.uploadUserByFile
-  });
-
-  return { uploadUserByFile: mutate, isLoading };
 }
 
 export function useMutateUpdateUser() {

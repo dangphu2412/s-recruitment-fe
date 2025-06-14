@@ -10,7 +10,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Heading,
   Select
 } from '@chakra-ui/react';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
@@ -139,14 +138,10 @@ export function UpdateUserToMemberContainerDrawer({
       <DrawerContent>
         <DrawerCloseButton />
 
-        <DrawerHeader>Upgrade Probation to Members in S-Group</DrawerHeader>
+        <DrawerHeader>Upgrade to Official Member</DrawerHeader>
 
         <DrawerBody className="space-y-4">
           <div className="space-y-4">
-            <Heading as={'h3'} size={'md'}>
-              Probationary users
-            </Heading>
-
             <div className={'grid grid-cols-2 gap-2'}>
               <FormControl isInvalid={!!errors.period} isRequired>
                 <FormLabel htmlFor="period">Period</FormLabel>
@@ -227,7 +222,7 @@ export function UpdateUserToMemberContainerDrawer({
             Cancel
           </Button>
           <Button colorScheme="blue" onClick={handleSubmit(saveUser)}>
-            Save
+            Upgrade
           </Button>
         </DrawerFooter>
       </DrawerContent>

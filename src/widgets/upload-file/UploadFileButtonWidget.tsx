@@ -8,18 +8,18 @@ import { UploadModal } from '../../shared/ui/Header/ContentHeader/UploadModal';
 import { HeaderModalAction } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { noop } from '../../shared/models/utils';
 
-type Props = PropsWithChildren<{
-  mutateFn: (file: File) => Promise<void>;
+type Props<R = void> = PropsWithChildren<{
+  mutateFn: (file: File) => Promise<R>;
   resource: string;
   id: string;
   title: ReactNode;
   description?: ReactNode;
   accept?: string;
-  onSuccess?: () => void;
+  onSuccess?: (response: R) => void;
   onError?: (error: unknown) => void;
 }>;
 
-export function UploadFileButtonWidget({
+export function UploadFileButtonWidget<R = void>({
   resource,
   mutateFn,
   children,
@@ -29,7 +29,7 @@ export function UploadFileButtonWidget({
   onSuccess,
   onError,
   ...rest
-}: Props) {
+}: Props<R>) {
   const { mutate } = useMutation({
     mutationKey: resource,
     mutationFn: mutateFn,
@@ -40,9 +40,9 @@ export function UploadFileButtonWidget({
   function handleUpload(file: File | null | undefined) {
     if (file) {
       mutate(file, {
-        onSuccess: () => {
+        onSuccess: response => {
           if (onSuccess) {
-            onSuccess();
+            onSuccess(response);
             return;
           }
 

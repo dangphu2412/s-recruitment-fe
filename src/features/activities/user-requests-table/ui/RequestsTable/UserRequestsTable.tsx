@@ -46,7 +46,7 @@ export function UserRequestsTable() {
           table.setRowSelection(() => ({}));
           notify({
             title: 'Success',
-            description: `Request ${rowIds.length} has been approved`,
+            description: `${rowIds.length} requests has been approved`,
             status: 'success'
           });
         }

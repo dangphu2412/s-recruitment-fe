@@ -163,11 +163,9 @@ export const userApiClient = {
       data: createUserDto
     });
   },
-  uploadUserByFile(
-    uploadUserDto: UploadUserDto
-  ): Promise<FileCreationResponse> {
+  uploadUserByFile(file: File): Promise<FileCreationResponse> {
     const formData = new FormData();
-    formData.append('file', uploadUserDto.file);
+    formData.append('file', file);
 
     return authorizedHttpClient.request({
       method: 'post',

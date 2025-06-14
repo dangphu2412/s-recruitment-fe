@@ -59,7 +59,7 @@ export default function AdministratorPage(): ReactElement {
               });
             }}
           >
-            Device Users
+            Fingerprint Users
           </UploadFileButtonWidget>
           <UserGuideButton
             feature={'user-managements'}
