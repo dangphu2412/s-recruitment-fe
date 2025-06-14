@@ -49,7 +49,7 @@ function ReportCard({ title, iconTitle, summary, link, children }: Props) {
 
 export function ActivityReportCards() {
   const { data } = useActivityLogAnalytic();
-  const { lateCount = 0, notFinishedCount = 0, onTimeCount = 0 } = data ?? {};
+  const { lateCount, notFinishedCount, onTimeCount } = data ?? {};
 
   function getLinkByStatus(status: string) {
     const fromDate = formatToInputDate(subYears(new Date(), 1));
@@ -70,7 +70,7 @@ export function ActivityReportCards() {
         summary={'Total on time activities'}
         link={getLinkByStatus(LogWorkStatus.ON_TIME)}
       >
-        {onTimeCount}
+        {onTimeCount ?? '-'}
       </ReportCard>
 
       <ReportCard
@@ -83,7 +83,7 @@ export function ActivityReportCards() {
         summary={'Total late activities'}
         link={getLinkByStatus(LogWorkStatus.LATE)}
       >
-        {lateCount}
+        {lateCount ?? '-'}
       </ReportCard>
 
       <ReportCard
@@ -96,7 +96,7 @@ export function ActivityReportCards() {
         summary={'Total not finished activities'}
         link={getLinkByStatus(LogWorkStatus.NOT_FINISHED)}
       >
-        {notFinishedCount}
+        {notFinishedCount ?? '-'}
       </ReportCard>
     </section>
   );
