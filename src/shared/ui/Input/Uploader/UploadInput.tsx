@@ -12,10 +12,11 @@ export type UploadInputRef = {
 type UploadInputProps = {
   label?: string;
   placeholder?: string;
+  accept?: string;
 };
 
 const UploadInput = forwardRef<UploadInputRef, UploadInputProps>(
-  ({ label = 'Upload File', placeholder = 'Click to upload' }, ref) => {
+  ({ label = 'Upload File', placeholder = 'Click to upload', accept }, ref) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [fileName, setFileName] = useState<string | null>(null);
     const fileRef = useRef<File | null>(null);
@@ -56,6 +57,7 @@ const UploadInput = forwardRef<UploadInputRef, UploadInputProps>(
           type="file"
           onChange={handleFileChange}
           className="hidden"
+          accept={accept}
         />
       </div>
     );
