@@ -15,6 +15,7 @@ type Props = PropsWithChildren<{
   title: ReactNode;
   description?: ReactNode;
   accept?: string;
+  onSuccess?: () => void;
   onError?: (error: unknown) => void;
 }>;
 
@@ -25,6 +26,7 @@ export function UploadFileButtonWidget({
   title,
   description,
   accept,
+  onSuccess,
   onError,
   ...rest
 }: Props) {
@@ -39,6 +41,11 @@ export function UploadFileButtonWidget({
     if (file) {
       mutate(file, {
         onSuccess: () => {
+          if (onSuccess) {
+            onSuccess();
+            return;
+          }
+
           notify({
             title: 'Upload success',
             status: 'success'

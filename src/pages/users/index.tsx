@@ -17,8 +17,12 @@ import {
   StepIds,
   UserManagementGuideSteps
 } from '../../features/user-managements/user-guide/user-management-guide';
+import { useNotify } from '../../shared/models/notify';
+import Link from 'next/link';
 
 export default function AdministratorPage(): ReactElement {
+  const notify = useNotify();
+
   return (
     <Card>
       <ContentHeaderLayout>
@@ -42,6 +46,18 @@ export default function AdministratorPage(): ReactElement {
             resource={'upload-logs'}
             accept={'.json'}
             mutateFn={activityMdmApiClient.uploadUsers}
+            onSuccess={() => {
+              notify({
+                title: (
+                  <>
+                    Create fingerprint users successfully. Please visit{' '}
+                    <Link href={'/activities/fingerprint-users'}>here</Link> or
+                    visit at /activities/fingerprint-users
+                  </>
+                ),
+                status: 'success'
+              });
+            }}
           >
             Device Users
           </UploadFileButtonWidget>
