@@ -49,22 +49,7 @@ export function UserActivitiesDetailModal({ selectedDays, onClose }: Props) {
                     <AccordionIcon />
                   </AccordionButton>
 
-                  {groupedItems[requestType].map(item => {
-                    return (
-                      <Fragment key={item.id}>
-                        <AccordionPanel pb={4}>
-                          <Text fontSize={'lg'}>
-                            {item?.author?.fullName} - {item?.author?.email}
-                          </Text>
-                          <RequestDayText
-                            {...item}
-                            dayOfWeekName={item.dayOfWeek?.name}
-                            timeOfDayName={item.timeOfDay?.name}
-                          />
-                        </AccordionPanel>
-                      </Fragment>
-                    );
-                  })}
+                  <GroupItems items={groupedItems[requestType]} />
                 </AccordionItem>
               );
             })}
@@ -78,5 +63,30 @@ export function UserActivitiesDetailModal({ selectedDays, onClose }: Props) {
         </ModalFooter>
       </ModalContent>
     </Modal>
+  );
+}
+
+type GroupItemProps = {
+  items: CalendarItem[];
+};
+
+function GroupItems({ items }: GroupItemProps) {
+  return (
+    <>
+      {items.map(item => {
+        return (
+          <AccordionPanel pb={4}>
+            <Text fontSize={'lg'}>
+              {item?.author?.fullName} - {item?.author?.email}
+            </Text>
+            <RequestDayText
+              {...item}
+              dayOfWeekName={item.dayOfWeek?.name}
+              timeOfDayName={item.timeOfDay?.name}
+            />
+          </AccordionPanel>
+        );
+      })}
+    </>
   );
 }
