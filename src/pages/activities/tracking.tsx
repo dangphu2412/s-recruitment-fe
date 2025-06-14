@@ -132,6 +132,8 @@ export default function TrackingPage() {
             <UploadFileButtonWidget
               resource={'upload-logs'}
               mutateFn={activityLogApiClient.uploadLogs}
+              id={'upload-logs'}
+              title={'Upload fingerprint activity logs'}
             >
               Upload logs
             </UploadFileButtonWidget>
