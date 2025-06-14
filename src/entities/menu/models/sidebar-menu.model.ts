@@ -1,20 +1,17 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
-  faBook,
-  faUser,
+  faCodePullRequest,
   faHome,
-  faSuitcase,
   faMask,
-  faCodePullRequest
+  faSuitcase,
+  faUser
 } from '@fortawesome/free-solid-svg-icons';
 import { menuApiClient, MenuItem } from '../api';
 import { useQuery } from 'react-query';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createStoreModel } from '../../../shared/models/store';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import isEmpty from 'lodash/isEmpty';
-import { useDispatch } from 'react-redux';
+import { create } from 'zustand/react';
 
 export type SidebarMenu = SidebarMenuItem[];
 
@@ -26,11 +23,20 @@ export type SidebarMenuItem = {
   subMenus: SidebarMenuItem[] | undefined;
 };
 
+export type MenuStore = {
+  currentMenu: SidebarMenuItem | null;
+};
+
+export const useMenuStore = create<MenuStore>(() => {
+  return {
+    currentMenu: null
+  };
+});
+
 const IconKeyByCode: Record<string, IconDefinition> = {
   USER_MANAGEMENT_ICON: faUser,
   CATEGORY_ICON: faHome,
   RECRUITMENT_ICON: faSuitcase,
-  POST_ICON: faBook,
   MASTER_ICON: faMask,
   ACTIVITY_MANAGEMENT_ICON: faCodePullRequest
 };
@@ -92,6 +98,7 @@ type SyncParamsToMenuProps = {
 
 export function useSyncParamsToMenu({ menus }: SyncParamsToMenuProps) {
   const { pathname } = useRouter();
+
   const flattenItems = React.useMemo(() => {
     return menus.reduce((acc, item) => {
       acc.push(item);
@@ -103,34 +110,13 @@ export function useSyncParamsToMenu({ menus }: SyncParamsToMenuProps) {
       return acc;
     }, [] as SidebarMenu);
   }, [menus]);
-  const dispatch = useDispatch();
-
   useEffect(() => {
     const found = flattenItems.find(item => item.accessLink === pathname);
 
     if (found) {
-      dispatch(menuActions.setCurrentMenu(found));
+      useMenuStore.setState({
+        currentMenu: found
+      });
     }
-  }, [dispatch, flattenItems, pathname]);
+  }, [flattenItems, pathname]);
 }
-
-export type MenuDomain = {
-  currentMenu: SidebarMenuItem;
-};
-
-const menuSlice = createSlice({
-  name: 'MenuDomain',
-  initialState: {} as MenuDomain,
-  reducers: {
-    setCurrentMenu(state, action: PayloadAction<SidebarMenuItem>) {
-      state.currentMenu = action.payload;
-    }
-  }
-});
-
-export const currentMenuSelector = (state: { MenuDomain: MenuDomain }) =>
-  state.MenuDomain.currentMenu;
-
-export const menuActions = menuSlice.actions;
-
-export const menuStorage = createStoreModel('MenuDomain', menuSlice.reducer);

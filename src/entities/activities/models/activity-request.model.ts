@@ -92,17 +92,22 @@ type ActivityRequestStore = Pagination &
     query: string;
     departmentIds: string[];
     status: string[];
+    requestTypes: string[];
     searchValues: Pagination &
       DateRange<Date | null> & {
         query: string;
         departmentIds: string[];
         status: string[];
+        requestTypes: string[];
       };
     submitValues: (
       values: Partial<Pick<ActivityRequestStore, 'page' | 'size' | 'query'>>
     ) => void;
     setValue: (key: keyof ActivityRequestStore, value: any) => void;
-    toggleValues: (key: 'departmentIds' | 'status', value: any) => void;
+    toggleValues: (
+      key: 'departmentIds' | 'status' | 'requestTypes',
+      value: any
+    ) => void;
     reset: () => void;
     submitSearch: () => void;
   };
@@ -113,7 +118,8 @@ const DEFAULT_SEARCH = {
   departmentIds: [],
   fromDate: null,
   toDate: null,
-  status: []
+  status: [],
+  requestTypes: []
 };
 
 export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
@@ -150,6 +156,7 @@ export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
           fromDate: state.fromDate,
           toDate: state.toDate,
           status: state.status,
+          requestTypes: state.requestTypes,
           ...values
         }
       };
@@ -166,7 +173,8 @@ export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
           departmentIds: state.departmentIds,
           fromDate: state.fromDate,
           toDate: state.toDate,
-          status: state.status
+          status: state.status,
+          requestTypes: state.requestTypes
         }
       };
     });

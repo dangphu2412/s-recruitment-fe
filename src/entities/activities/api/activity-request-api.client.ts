@@ -59,6 +59,7 @@ export type GetActivityRequestQuery = {
   fromDate: Date | null;
   toDate: Date | null;
   status: string[];
+  requestTypes: string[];
 };
 
 export const activityRequestApiClient = {
@@ -69,7 +70,8 @@ export const activityRequestApiClient = {
       params: {
         ...params,
         departmentIds: encodeMultiQueryParams(params.departmentIds),
-        status: encodeMultiQueryParams(params.status)
+        status: encodeMultiQueryParams(params.status),
+        requestTypes: encodeMultiQueryParams(params.requestTypes)
       }
     });
   },

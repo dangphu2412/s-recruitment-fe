@@ -3,13 +3,13 @@ import { FilterKey } from '../../../shared/config';
 import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
 import { useEffect } from 'react';
 import { useNotify } from '../../../shared/models/notify';
-import { AppError, useHandleError } from '../../../shared/models/error';
-import { ClientErrorCode } from '../../../shared/config/constants/client-code';
+import { useHandleError } from '../../../shared/models/error';
 import { useMutation, useQuery } from 'react-query';
 import { GetUserQuery, userApiClient } from '../api';
 import { parseFilterQuery } from '../../../shared/models/pagination';
 import { UserStatus } from '../config';
 import { create } from 'zustand';
+import { HttpError } from '../../../shared/models/http-client';
 
 export type UserDetail = {
   id: string;
@@ -231,27 +231,19 @@ export function useMutateCreateUser() {
   const setIsSubmitted = useUserStore(user => user.setIsSubmitted);
   const notify = useNotify();
 
-  function handleMutateCreateUserError({ clientCode, message }: AppError) {
-    if (clientCode === ClientErrorCode.USER_EMAIL_EXISTED) {
+  function handleMutateCreateUserError(error: HttpError | Error) {
+    if (HttpError.isHttpError(error) && error?.status === '409') {
       return notify({
         title: 'Email existed',
         status: 'error',
-        description: message
-      });
-    }
-
-    if (clientCode === ClientErrorCode.NOT_FOUND_USER) {
-      return notify({
-        title: 'This user is not ready to become member',
-        status: 'error',
-        description: message
+        description: 'Email existed'
       });
     }
 
     notify({
-      title: 'System is facing issue',
+      title: 'Internal server error',
       status: 'error',
-      description: message
+      description: 'Internal server error'
     });
   }
 
@@ -384,7 +376,7 @@ export function useProbationUsers({
         }),
         pagination: {
           page: 1,
-          size: 50
+          size: 999
         }
       }),
     enabled: !!periodId
@@ -412,15 +404,6 @@ export function useMutateUpgradeMembers() {
   });
 
   return { upgradeToMembers: mutate, isLoading };
-}
-
-export function useMutateUploadUserByFile() {
-  const { mutate, isLoading } = useMutation({
-    mutationKey: 'MUTATION_UPLOAD_USER_BY_FILE',
-    mutationFn: userApiClient.uploadUserByFile
-  });
-
-  return { uploadUserByFile: mutate, isLoading };
 }
 
 export function useMutateUpdateUser() {

@@ -35,7 +35,7 @@ export function HeaderDrawerAction({
 
   return (
     <>
-      <TriggerButton onClick={onOpen} />
+      <TriggerButton onClick={onOpen} id={id} />
       <Drawer placement="right" size="xl" onClose={onClose} isOpen={isOpen}>
         <Content onClose={onClose} />
       </Drawer>
@@ -62,7 +62,7 @@ export function HeaderModalAction({
 
   return (
     <>
-      <TriggerButton onClick={onOpen} />
+      <TriggerButton onClick={onOpen} id={id} />
       <ModalContainer onClose={onClose} isOpen={isOpen}>
         <Content onClose={onClose} />
       </ModalContainer>

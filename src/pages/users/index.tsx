@@ -12,8 +12,17 @@ import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/Conten
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { activityMdmApiClient } from '../../entities/activities/api/activity-mdm-api.client';
 import { UploadFileButtonWidget } from '../../widgets/upload-file/UploadFileButtonWidget';
+import { UserGuideButton } from '../../shared/user-guide/UserGuideButton';
+import {
+  StepIds,
+  UserManagementGuideSteps
+} from '../../features/user-managements/user-guide/user-management-guide';
+import { useNotify } from '../../shared/models/notify';
+import Link from 'next/link';
 
 export default function AdministratorPage(): ReactElement {
+  const notify = useNotify();
+
   return (
     <Card>
       <ContentHeaderLayout>
@@ -24,14 +33,38 @@ export default function AdministratorPage(): ReactElement {
 
         <HeaderActionGroup>
           <AddUsersContainer />
-          <UpdateUserToMemberContainer />
           <ImportUsersContainer />
+          <UpdateUserToMemberContainer />
           <UploadFileButtonWidget
+            id={StepIds.BTN_UPLOAD_DEVICE_USERS}
+            title={'Upload Fingerprint Users'}
+            description={
+              <>
+                File <b>users.json</b> from fingerprint machine
+              </>
+            }
             resource={'upload-logs'}
+            accept={'.json'}
             mutateFn={activityMdmApiClient.uploadUsers}
+            onSuccess={() => {
+              notify({
+                title: (
+                  <>
+                    Create fingerprint users successfully. Please visit{' '}
+                    <Link href={'/activities/fingerprint-users'}>here</Link> or
+                    visit at /activities/fingerprint-users
+                  </>
+                ),
+                status: 'success'
+              });
+            }}
           >
-            Upload device users
+            Fingerprint Users
           </UploadFileButtonWidget>
+          <UserGuideButton
+            feature={'user-managements'}
+            steps={UserManagementGuideSteps}
+          />
         </HeaderActionGroup>
       </ContentHeaderLayout>
 

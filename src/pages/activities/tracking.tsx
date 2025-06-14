@@ -18,7 +18,7 @@ import { endOfDay, subWeeks } from 'date-fns';
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { UploadFileButtonWidget } from '../../widgets/upload-file/UploadFileButtonWidget';
 import { formatDayOfWeekAndDate } from '../../shared/models/utils/date.utils';
-import { Tag } from '@chakra-ui/react';
+import { Tag, useToast } from '@chakra-ui/react';
 import { LogWorkStatus } from '../../entities/activities/config/constants/log-work-status.enum';
 import { StatusFilterDialog } from '../../features/activity-logs/ui/LogWorkStatusFilter';
 import { UserFilter } from '../../features/activity-logs/ui/UserFilter';
@@ -26,6 +26,7 @@ import {
   QuerySynchronizeSchema,
   useQuerySynchronizer
 } from '../../shared/models/query-synchronizer';
+import { useQueryClient } from 'react-query';
 
 function plugin() {
   return {
@@ -70,6 +71,8 @@ function QuerySynchronizer() {
 }
 
 export default function TrackingPage() {
+  const queryClient = useQueryClient();
+  const toast = useToast();
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<ActivityLogResponse>();
 
@@ -132,6 +135,36 @@ export default function TrackingPage() {
             <UploadFileButtonWidget
               resource={'upload-logs'}
               mutateFn={activityLogApiClient.uploadLogs}
+              id={'upload-logs'}
+              title={'Upload fingerprint activity logs'}
+              accept={'.json'}
+              description={
+                <>
+                  <p>
+                    File <b>attendances.json</b> from fingerprint machine
+                  </p>
+                  <p>
+                    Download file{' '}
+                    <a
+                      className={'underline'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={
+                        'https://console.cloud.google.com/storage/browser/_details/sgroup-bucket/attendances.json;tab=live_object?inv=1&invt=Ab0Gmg&project=sgroup-hr-management-prod'
+                      }
+                    >
+                      here
+                    </a>
+                  </p>
+                </>
+              }
+              onSuccess={() => {
+                toast({
+                  title: 'Upload successfully',
+                  status: 'success'
+                });
+                queryClient.invalidateQueries(['upload-logs']);
+              }}
             >
               Upload logs
             </UploadFileButtonWidget>

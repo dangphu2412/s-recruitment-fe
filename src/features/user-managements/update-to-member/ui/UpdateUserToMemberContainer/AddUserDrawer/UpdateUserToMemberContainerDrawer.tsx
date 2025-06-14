@@ -10,9 +10,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Heading,
-  Select,
-  Text
+  Select
 } from '@chakra-ui/react';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -140,19 +138,10 @@ export function UpdateUserToMemberContainerDrawer({
       <DrawerContent>
         <DrawerCloseButton />
 
-        <DrawerHeader>Upgrade Probation to Members in S-Group</DrawerHeader>
+        <DrawerHeader>Upgrade to Official Member</DrawerHeader>
 
         <DrawerBody className="space-y-4">
           <div className="space-y-4">
-            <Heading as={'h3'} size={'md'}>
-              Step 1: Please select probationary users from the available data
-              source?
-            </Heading>
-            <Text>
-              Please note that user that is <b>inactive</b> will not be shown
-              here
-            </Text>
-
             <div className={'grid grid-cols-2 gap-2'}>
               <FormControl isInvalid={!!errors.period} isRequired>
                 <FormLabel htmlFor="period">Period</FormLabel>
@@ -200,12 +189,6 @@ export function UpdateUserToMemberContainerDrawer({
                 )}
               </FormControl>
             </div>
-          </div>
-
-          <div className="space-y-4">
-            <Heading as={'h3'} size={'md'}>
-              Step 2: Please correct the users that we are upgrading to members
-            </Heading>
 
             <FormControl isInvalid={!!errors.monthlyMoneyConfig} isRequired>
               <FormLabel htmlFor="create-user-type">
@@ -239,7 +222,7 @@ export function UpdateUserToMemberContainerDrawer({
             Cancel
           </Button>
           <Button colorScheme="blue" onClick={handleSubmit(saveUser)}>
-            Save
+            Upgrade
           </Button>
         </DrawerFooter>
       </DrawerContent>

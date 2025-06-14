@@ -15,8 +15,7 @@ import {
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
-import { useSelector } from 'react-redux';
-import { currentMenuSelector } from '../../../../entities/menu/models';
+import { useMenuStore } from '../../../../entities/menu/models';
 import Link from 'next/link';
 import { useUserStore } from '../../../../entities/user/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,7 +34,7 @@ type UserActionItem = {
 export function Header({ isMenuHidden }: Props): React.ReactElement {
   const router = useRouter();
   const headerRef = React.useRef<HTMLDivElement>(null);
-  const currentMenu = useSelector(currentMenuSelector);
+  const currentMenu = useMenuStore(state => state.currentMenu);
   const user = useUserStore(user => user.currentUser);
 
   const menuName = currentMenu?.name ?? 'Main';

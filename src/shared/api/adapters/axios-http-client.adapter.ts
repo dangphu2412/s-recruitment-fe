@@ -1,5 +1,4 @@
 import {
-  ClientError,
   HttpClient,
   HttpError,
   HttpRequest,
@@ -10,14 +9,11 @@ import axios, {
   AxiosInstance,
   default as AxiosStatic
 } from 'axios';
-import { ClientErrorCode } from '../../config/constants/client-code';
 import { persistentStorage } from 'src/shared/api/services/persistent.storage';
 import { tokenManager } from '../services';
 
 const RenewTokenOnResponseInterceptor = async (error: AxiosError) => {
-  const isUnauthorized =
-    (error.response?.data as ClientError)?.errorCode ===
-    ClientErrorCode.UNAUTHORIZED;
+  const isUnauthorized = error.response?.status === 401;
 
   if (isUnauthorized) {
     await tokenManager.renew();
@@ -46,18 +42,16 @@ export class HttpClientAdapter implements HttpClient {
       return response;
     } catch (error: unknown) {
       if (AxiosStatic.isAxiosError(error)) {
-        const code = error.response
-          ? (error.response?.data as ClientError)?.code
-          : error.code;
-
         throw new HttpError({
           message: error.message,
-          status: error.status ?? '500',
-          code: code ?? ClientErrorCode.GOT_ISSUE
+          status: (error.response?.status ?? 500)?.toString()
         });
       }
 
-      throw error;
+      throw new HttpError({
+        message: (error as Error).message,
+        status: '500'
+      });
     }
   }
 }

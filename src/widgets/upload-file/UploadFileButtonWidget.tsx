@@ -1,56 +1,92 @@
-import React, { ChangeEvent, PropsWithChildren, useRef } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 import { useNotify } from 'src/shared/models/notify';
 import { Button } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { useMutation } from 'react-query';
+import { UploadModal } from '../../shared/ui/Header/ContentHeader/UploadModal';
+import { HeaderModalAction } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { noop } from '../../shared/models/utils';
 
-type Props = PropsWithChildren<{
-  mutateFn: (file: File) => Promise<void>;
+type Props<R = void> = PropsWithChildren<{
+  mutateFn: (file: File) => Promise<R>;
   resource: string;
+  id: string;
+  title: ReactNode;
+  description?: ReactNode;
+  accept?: string;
+  onSuccess?: (response: R) => void;
+  onError?: (error: unknown) => void;
 }>;
 
-export function UploadFileButtonWidget({
+export function UploadFileButtonWidget<R = void>({
   resource,
   mutateFn,
-  children
-}: Props) {
-  const ref = useRef<HTMLInputElement>(null);
+  children,
+  title,
+  description,
+  accept,
+  onSuccess,
+  onError,
+  ...rest
+}: Props<R>) {
   const { mutate } = useMutation({
     mutationKey: resource,
-    mutationFn: mutateFn
+    mutationFn: mutateFn,
+    onError: noop
   });
   const notify = useNotify();
 
-  function handleUpload(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-
+  function handleUpload(file: File | null | undefined) {
     if (file) {
       mutate(file, {
-        onSuccess: () => {
+        onSuccess: response => {
+          if (onSuccess) {
+            onSuccess(response);
+            return;
+          }
+
           notify({
             title: 'Upload success',
             status: 'success'
           });
         },
-        onError: () => {
+        onError: error => {
+          if (onError) {
+            onError(error);
+            return;
+          }
+
           notify({
-            title: 'Upload failed',
+            title:
+              'Upload failed. Please check your file size, file content, file type',
             status: 'error'
           });
-        },
-        onSettled: () => {
-          ref.current!.files = null;
         }
       });
     }
   }
 
   return (
-    <Button colorScheme="pink" onClick={() => ref.current?.click()}>
-      <input type="file" ref={ref} hidden onChange={handleUpload} />
-      <FontAwesomeIcon className="mr-2" icon={faUpload} />
-      <span>{children}</span>
-    </Button>
+    <>
+      <HeaderModalAction
+        {...rest}
+        triggerButton={props => (
+          <Button colorScheme="pink" {...props}>
+            <FontAwesomeIcon className="mr-2" icon={faUpload} />
+            <span>{children}</span>
+          </Button>
+        )}
+        content={props => (
+          <UploadModal
+            {...props}
+            title={title}
+            description={description}
+            accept={accept}
+            onSave={handleUpload}
+          />
+        )}
+      />
+    </>
   );
 }

@@ -8,8 +8,12 @@ import { ApprovalUserRequestModal } from '../../../features/activities/approval-
 import { HeaderActionGroup } from '../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { UploadFileButtonWidget } from '../../../widgets/upload-file/UploadFileButtonWidget';
 import { activityRequestApiClient } from '../../../entities/activities/api/activity-request-api.client';
+import { useQueryClient } from 'react-query';
+import { ACTIVITY_REQUESTS_QUERY_KEY } from '../../../entities/activities/models/activity-request.model';
 
 export default function RequestsPage() {
+  const queryClient = useQueryClient();
+
   return (
     <Card>
       <ContentHeaderLayout>
@@ -19,10 +23,37 @@ export default function RequestsPage() {
         />
         <HeaderActionGroup>
           <UploadFileButtonWidget
+            id={'upload-file'}
+            title={'Upload File to Add User Requests'}
             resource={'upload-requests'}
             mutateFn={activityRequestApiClient.uploadRequests}
+            accept={'.xlsx'}
+            description={
+              <>
+                <p>
+                  Only <b>.xlsx</b> files are supported
+                </p>
+                <p>The file must contain exactly one sheet</p>
+                <p>
+                  The sheet must follow the specified{' '}
+                  <a
+                    className={'underline'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={
+                      'https://docs.google.com/spreadsheets/d/1_zp1fd9jufVg8VZkU3ulWTR2DPZh9kMcKqzZoVxzxfU/edit?gid=0#gid=0'
+                    }
+                  >
+                    format
+                  </a>
+                </p>
+              </>
+            }
+            onSuccess={() => {
+              queryClient.invalidateQueries([ACTIVITY_REQUESTS_QUERY_KEY]);
+            }}
           >
-            Upload requests
+            Import Request Activities
           </UploadFileButtonWidget>
         </HeaderActionGroup>
       </ContentHeaderLayout>

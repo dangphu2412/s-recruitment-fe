@@ -5,6 +5,7 @@ import {
   useMyActivityStore
 } from '../../../../../entities/activities/models/activity-request.model';
 import { useMemo } from 'react';
+import { StepIds } from '../../../user-guide/activity-guide';
 
 export function MyRequestsTable() {
   const { data, isLoading } = useMyActivityRequestsQuery();
@@ -14,6 +15,7 @@ export function MyRequestsTable() {
 
   return (
     <BasicTable
+      id={StepIds.MY_REQUEST_TABLE}
       columns={columns}
       items={items}
       isLoading={isLoading}

@@ -17,24 +17,18 @@ export type HttpResponse<T = any> = T;
 export type HttpErrorConstructParams = {
   message: string;
   status: string;
-  code: string;
 };
-export interface ClientError extends Error {
-  errorCode: string;
-  code: string;
-}
+
 export class HttpError extends Error {
   static isHttpError(error: unknown): error is HttpError {
     return error instanceof HttpError;
   }
 
   public status;
-  public code;
 
-  constructor({ message, status, code }: HttpErrorConstructParams) {
+  constructor({ message, status }: HttpErrorConstructParams) {
     super(message);
     this.status = status;
-    this.code = code;
   }
 }
 
