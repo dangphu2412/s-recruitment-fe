@@ -6,12 +6,16 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { useMutation } from 'react-query';
 import { UploadModal } from '../../shared/ui/Header/ContentHeader/UploadModal';
 import { HeaderModalAction } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
+import { noop } from '../../shared/models/utils';
 
 type Props = PropsWithChildren<{
   mutateFn: (file: File) => Promise<void>;
   resource: string;
   id: string;
   title: ReactNode;
+  description?: ReactNode;
+  accept?: string;
+  onError?: (error: unknown) => void;
 }>;
 
 export function UploadFileButtonWidget({
@@ -19,11 +23,15 @@ export function UploadFileButtonWidget({
   mutateFn,
   children,
   title,
+  description,
+  accept,
+  onError,
   ...rest
 }: Props) {
   const { mutate } = useMutation({
     mutationKey: resource,
-    mutationFn: mutateFn
+    mutationFn: mutateFn,
+    onError: noop
   });
   const notify = useNotify();
 
@@ -36,9 +44,15 @@ export function UploadFileButtonWidget({
             status: 'success'
           });
         },
-        onError: () => {
+        onError: error => {
+          if (onError) {
+            onError(error);
+            return;
+          }
+
           notify({
-            title: 'Upload failed',
+            title:
+              'Upload failed. Please check your file size, file content, file type',
             status: 'error'
           });
         }
@@ -57,7 +71,13 @@ export function UploadFileButtonWidget({
           </Button>
         )}
         content={props => (
-          <UploadModal {...props} title={title} onSave={handleUpload} />
+          <UploadModal
+            {...props}
+            title={title}
+            description={description}
+            accept={accept}
+            onSave={handleUpload}
+          />
         )}
       />
     </>

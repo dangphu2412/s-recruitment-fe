@@ -33,8 +33,14 @@ export default function AdministratorPage(): ReactElement {
           <UpdateUserToMemberContainer />
           <UploadFileButtonWidget
             id={StepIds.BTN_UPLOAD_DEVICE_USERS}
-            title={'Import device users by xlsx file'}
+            title={'Upload Fingerprint Users'}
+            description={
+              <>
+                File <b>users.json</b> from fingerprint machine
+              </>
+            }
             resource={'upload-logs'}
+            accept={'.json'}
             mutateFn={activityMdmApiClient.uploadUsers}
           >
             Device Users

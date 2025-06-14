@@ -6,20 +6,25 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay,
+  Text
 } from '@chakra-ui/react';
 import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
 import { UploadInput, UploadInputRef } from '../../Input/Uploader/UploadInput';
 
 type ModalProps = Pick<UseDisclosureApi, 'onClose'> & {
   title: ReactNode;
+  description?: ReactNode;
+  accept?: string;
   onSave?: (file: File | null | undefined) => void;
 };
 
 export function UploadModal({
   onSave,
   onClose,
-  title
+  title,
+  description,
+  accept
 }: ModalProps): React.ReactElement {
   const fileRef = React.useRef<UploadInputRef>(null);
 
@@ -37,7 +42,8 @@ export function UploadModal({
         <ModalHeader>{title}</ModalHeader>
 
         <ModalBody className="space-y-4">
-          <UploadInput ref={fileRef} />
+          <UploadInput ref={fileRef} accept={accept} />
+          {description && <Text fontSize={'sm'}>{description}</Text>}
         </ModalBody>
 
         <ModalFooter>
