@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { HttpError } from '../http-client';
 import { useNotify } from '../notify';
 
@@ -16,14 +16,16 @@ export function useHandleError({
   onHandleClientError
 }: ErrorHandlerProps = {}) {
   const showToast = useNotify();
+  const refHandleError = useRef<
+    ErrorHandlerProps['onHandleClientError'] | null
+  >(null);
+
+  if (onHandleClientError !== refHandleError.current) {
+    refHandleError.current = onHandleClientError;
+  }
 
   return useCallback(
     (error: any) => {
-      if (onHandleClientError) {
-        onHandleClientError(error);
-        return;
-      }
-
       if (HttpError.isHttpError(error)) {
         if (error.status === '403') {
           showToast({
@@ -31,15 +33,30 @@ export function useHandleError({
             status: 'error',
             description: error.message
           });
+          return;
+        }
+
+        if (error.status === '500') {
+          showToast({
+            title: 'Internal Server Error',
+            status: 'error',
+            description: error.message
+          });
+          return;
         }
       }
 
+      if (refHandleError?.current) {
+        refHandleError.current(error);
+        return;
+      }
+
       showToast({
-        title: 'Internal Server Error',
+        title: 'Unhandled Client Error',
         status: 'error',
         description: error.message
       });
     },
-    [onHandleClientError, showToast]
+    [showToast]
   );
 }

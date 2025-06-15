@@ -27,6 +27,7 @@ import {
   useQuerySynchronizer
 } from '../../shared/models/query-synchronizer';
 import { useQueryClient } from 'react-query';
+import Link from 'next/link';
 
 function plugin() {
   return {
@@ -155,6 +156,17 @@ export default function TrackingPage() {
                     >
                       here
                     </a>
+                  </p>
+                  <p>
+                    <b>Reminder</b>: Make sure the linkage between{' '}
+                    <Link className={'underline'} href={'/users'}>
+                      User Management
+                    </Link>{' '}
+                    and{' '}
+                    <Link className={'underline'} href={'/fingerprint-users'}>
+                      Fingerprint Users
+                    </Link>{' '}
+                    is kept up to date.
                   </p>
                 </>
               }

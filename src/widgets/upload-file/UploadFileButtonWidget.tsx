@@ -7,6 +7,7 @@ import { useMutation } from 'react-query';
 import { UploadModal } from '../../shared/ui/Header/ContentHeader/UploadModal';
 import { HeaderModalAction } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { noop } from '../../shared/models/utils';
+import { useHandleError } from '../../shared/models/error';
 
 type Props<R = void> = PropsWithChildren<{
   mutateFn: (file: File) => Promise<R>;
@@ -37,6 +38,18 @@ export function UploadFileButtonWidget<R = void>({
   });
   const notify = useNotify();
 
+  function commonErrorHandler(error: Error) {
+    notify({
+      title:
+        'Upload failed. Please check your file size, file content, file type',
+      status: 'error'
+    });
+  }
+
+  const handleError = useHandleError({
+    onHandleClientError: onError ?? commonErrorHandler
+  });
+
   function handleUpload(file: File | null | undefined) {
     if (file) {
       mutate(file, {
@@ -51,18 +64,7 @@ export function UploadFileButtonWidget<R = void>({
             status: 'success'
           });
         },
-        onError: error => {
-          if (onError) {
-            onError(error);
-            return;
-          }
-
-          notify({
-            title:
-              'Upload failed. Please check your file size, file content, file type',
-            status: 'error'
-          });
-        }
+        onError: handleError
       });
     }
   }
