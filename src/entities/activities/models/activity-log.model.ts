@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import {
   activityLogApiClient,
   FindAnalyticLogQuery
@@ -11,5 +11,12 @@ export function useActivityLogAnalytic(
     queryKey: ['analytic-logs', findAnalyticLogQuery],
     queryFn: () =>
       activityLogApiClient.findAnalyticLogs(findAnalyticLogQuery ?? {})
+  });
+}
+
+export function useMutateSyncLogs() {
+  return useMutation({
+    mutationKey: 'analytic-logs',
+    mutationFn: activityLogApiClient.uploadLogs
   });
 }
