@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { DayOfWeek, dayOfWeeksApiClient } from '../api/day-of-weeks-api.client';
 import { TimeOfDay, timeOfDaysApiClient } from '../api/time-of-days-api.client';
 import { CACHE_INFINITY } from '../../../shared/config/constants/react-query';
@@ -41,4 +41,11 @@ export function useTrackedUsers() {
   return {
     data: data?.items ?? ([] as TrackedUsers[])
   };
+}
+
+export function useMutateFingerPrintUsers() {
+  return useMutation({
+    mutationKey: ['mutateFingerPrintUsers'],
+    mutationFn: activityMdmApiClient.uploadUsers
+  });
 }

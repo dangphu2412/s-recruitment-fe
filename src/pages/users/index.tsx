@@ -10,18 +10,19 @@ import { UpdateUserToMemberContainer } from '../../features/user-managements/upd
 import { ImportUsersContainer } from '../../features/user-managements/import-users';
 import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
-import { activityMdmApiClient } from '../../entities/activities/api/activity-mdm-api.client';
-import { UploadFileButtonWidget } from '../../widgets/upload-file/UploadFileButtonWidget';
 import { UserGuideButton } from '../../shared/user-guide/UserGuideButton';
-import {
-  StepIds,
-  UserManagementGuideSteps
-} from '../../features/user-managements/user-guide/user-management-guide';
+import { UserManagementGuideSteps } from '../../features/user-managements/user-guide/user-management-guide';
 import { useNotify } from '../../shared/models/notify';
-import Link from 'next/link';
+import { Button } from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRotate } from '@fortawesome/free-solid-svg-icons';
+import { useMutateFingerPrintUsers } from '../../entities/activities/models/activity-master-data.model';
+import { useQueryClient } from 'react-query';
 
 export default function AdministratorPage(): ReactElement {
   const notify = useNotify();
+  const { mutate } = useMutateFingerPrintUsers();
+  const queryClient = useQueryClient();
 
   return (
     <Card>
@@ -35,32 +36,24 @@ export default function AdministratorPage(): ReactElement {
           <AddUsersContainer />
           <ImportUsersContainer />
           <UpdateUserToMemberContainer />
-          <UploadFileButtonWidget
-            id={StepIds.BTN_UPLOAD_DEVICE_USERS}
-            title={'Upload Fingerprint Users'}
-            description={
-              <>
-                File <b>users.json</b> from fingerprint machine
-              </>
-            }
-            resource={'upload-logs'}
-            accept={'.json'}
-            mutateFn={activityMdmApiClient.uploadUsers}
-            onSuccess={() => {
-              notify({
-                title: (
-                  <>
-                    Create fingerprint users successfully. Please visit{' '}
-                    <Link href={'/activities/fingerprint-users'}>here</Link> or
-                    visit at /activities/fingerprint-users
-                  </>
-                ),
-                status: 'success'
+          <Button
+            colorScheme="pink"
+            onClick={() => {
+              mutate(undefined, {
+                onSuccess: () => {
+                  notify({
+                    title: 'Synchronized successfully',
+                    status: 'success'
+                  });
+                  queryClient.invalidateQueries(['trackedUsers']);
+                }
               });
             }}
           >
-            Fingerprint Users
-          </UploadFileButtonWidget>
+            <FontAwesomeIcon className="mr-2" icon={faRotate} />
+            Sync users
+          </Button>
+
           <UserGuideButton
             feature={'user-managements'}
             steps={UserManagementGuideSteps}
