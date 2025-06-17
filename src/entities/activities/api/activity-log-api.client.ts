@@ -52,17 +52,10 @@ export const activityLogApiClient = {
       }
     });
   },
-  uploadLogs: async (file: File) => {
-    const formData = new FormData();
-    formData.append('file', file);
-
+  uploadLogs: async () => {
     return authorizedHttpClient.request<void>({
       method: 'post',
-      url: '/activity-logs',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+      url: '/activity-logs'
     });
   },
   findAnalyticLogs: (findAnalyticLogQuery: FindAnalyticLogQuery) => {

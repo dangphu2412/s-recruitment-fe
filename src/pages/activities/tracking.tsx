@@ -16,9 +16,8 @@ import {
 import { DateRangeFilter } from '../../features/activity-logs/ui/DateRangeFilter';
 import { endOfDay, subWeeks } from 'date-fns';
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
-import { UploadFileButtonWidget } from '../../widgets/upload-file/UploadFileButtonWidget';
 import { formatDayOfWeekAndDate } from '../../shared/models/utils/date.utils';
-import { Tag, useToast } from '@chakra-ui/react';
+import { Button, Tag, useToast } from '@chakra-ui/react';
 import { LogWorkStatus } from '../../entities/activities/config/constants/log-work-status.enum';
 import { StatusFilterDialog } from '../../features/activity-logs/ui/LogWorkStatusFilter';
 import { UserFilter } from '../../features/activity-logs/ui/UserFilter';
@@ -27,7 +26,9 @@ import {
   useQuerySynchronizer
 } from '../../shared/models/query-synchronizer';
 import { useQueryClient } from 'react-query';
-import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRotate } from '@fortawesome/free-solid-svg-icons';
+import { useMutateSyncLogs } from '../../entities/activities/models/activity-log.model';
 
 function plugin() {
   return {
@@ -74,6 +75,8 @@ function QuerySynchronizer() {
 export default function TrackingPage() {
   const queryClient = useQueryClient();
   const toast = useToast();
+  const { mutate } = useMutateSyncLogs();
+
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<ActivityLogResponse>();
 
@@ -133,53 +136,23 @@ export default function TrackingPage() {
             brief={'Where you observe members logs'}
           />
           <HeaderActionGroup>
-            <UploadFileButtonWidget
-              resource={'upload-logs'}
-              mutateFn={activityLogApiClient.uploadLogs}
-              id={'upload-logs'}
-              title={'Upload fingerprint activity logs'}
-              accept={'.json'}
-              description={
-                <>
-                  <p>
-                    File <b>attendances.json</b> from fingerprint machine
-                  </p>
-                  <p>
-                    Download file{' '}
-                    <a
-                      className={'underline'}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={
-                        'https://console.cloud.google.com/storage/browser/_details/sgroup-bucket/attendances.json;tab=live_object?inv=1&invt=Ab0Gmg&project=sgroup-hr-management-prod'
-                      }
-                    >
-                      here
-                    </a>
-                  </p>
-                  <p>
-                    <b>Reminder</b>: Make sure the linkage between{' '}
-                    <Link className={'underline'} href={'/users'}>
-                      User Management
-                    </Link>{' '}
-                    and{' '}
-                    <Link className={'underline'} href={'/fingerprint-users'}>
-                      Fingerprint Users
-                    </Link>{' '}
-                    is kept up to date.
-                  </p>
-                </>
-              }
-              onSuccess={() => {
-                toast({
-                  title: 'Upload successfully',
-                  status: 'success'
+            <Button
+              colorScheme="pink"
+              onClick={() => {
+                mutate(undefined, {
+                  onSuccess: () => {
+                    toast({
+                      title: 'Synchorinized successfully',
+                      status: 'success'
+                    });
+                    queryClient.invalidateQueries(['upload-logs']);
+                  }
                 });
-                queryClient.invalidateQueries(['upload-logs']);
               }}
             >
-              Upload logs
-            </UploadFileButtonWidget>
+              <FontAwesomeIcon className="mr-2" icon={faRotate} />
+              Sync logs
+            </Button>
           </HeaderActionGroup>
         </ContentHeaderLayout>
 
