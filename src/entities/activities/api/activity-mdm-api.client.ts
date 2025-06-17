@@ -23,17 +23,10 @@ export const activityMdmApiClient = {
       method: 'get'
     });
   },
-  uploadUsers: async (file: File) => {
-    const formData = new FormData();
-    formData.append('file', file);
-
+  uploadUsers: async () => {
     return authorizedHttpClient.request<void>({
       method: 'post',
-      url: '/device-users',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+      url: '/device-users'
     });
   }
 };
