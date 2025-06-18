@@ -126,7 +126,6 @@ export default function TrackingPage() {
       resource={'tracking'}
       fetcher={activityLogApiClient.findLogs}
       registerPlugin={plugin}
-      featureConfig={{ enableInlineSearch: true }}
     >
       <QuerySynchronizer />
       <Card>
