@@ -23,6 +23,7 @@ export type FindActivityLogQuery = {
   size: number;
   workStatus?: string[];
   authors?: BoxItem[];
+  query?: string;
 };
 
 export type FindAnalyticLogQuery = {
