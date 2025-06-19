@@ -108,7 +108,7 @@ export default function TrackingPage() {
         }
       }),
       columnHelper.accessor('deviceAuthor.name', {
-        header: 'Device User'
+        header: 'Fingerprint User Name'
       }),
       columnHelper.accessor('fromTime', {
         header: 'From time',
@@ -156,6 +156,7 @@ export default function TrackingPage() {
         </ContentHeaderLayout>
 
         <CommonSearchWidget
+          placeholder={'Search start with username or fingerprint user name'}
           filterSlot={
             <>
               <DateRangeFilter />
