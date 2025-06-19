@@ -8,9 +8,13 @@ import { useQueryClient } from 'react-query';
 
 type Props = {
   filterSlot?: React.ReactNode;
+  placeholder?: string;
 };
 
-export function CommonSearchWidget({ filterSlot }: Props): React.ReactElement {
+export function CommonSearchWidget({
+  filterSlot,
+  placeholder = 'Search anything ...'
+}: Props): React.ReactElement {
   const query = useCommonCRUDContext(state => state.values.query);
   const page = useCommonCRUDContext(state => state.values.page);
   const size = useCommonCRUDContext(state => state.values.size);
@@ -50,7 +54,7 @@ export function CommonSearchWidget({ filterSlot }: Props): React.ReactElement {
     <>
       <div className={'flex flex-row gap-2'}>
         <Input
-          placeholder="Search anything ..."
+          placeholder={placeholder}
           value={query}
           onChange={e => setValue('query', e.target.value)}
           onKeyDown={handleSearchPress}
