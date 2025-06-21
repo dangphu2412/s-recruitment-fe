@@ -4,6 +4,7 @@ import { Footer } from '../../../../shared/ui/Footer';
 import { SideBar } from '../../../../features/menu/features-menu';
 import { ToggleMenuButton } from '../ToggleMenuButton/ToggleMenuButton';
 import { Header } from '../Header/Header';
+import { TaskProgressBar } from '../../../../shared/progress-tasks-bar/progress-tasks-bar';
 
 type AdminLayoutProps = PropsWithChildren;
 
@@ -54,6 +55,8 @@ export function AdminLayout({
           <Footer />
         </div>
       </div>
+
+      <TaskProgressBar />
     </AuthenticatedGuard>
   );
 }

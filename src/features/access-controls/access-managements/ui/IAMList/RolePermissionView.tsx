@@ -16,8 +16,7 @@ import {
   IconButton,
   Input,
   Stack,
-  Text,
-  useToast
+  Text
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
@@ -33,6 +32,7 @@ import xor from 'lodash/xor';
 import { useQueryClient } from 'react-query';
 import { Controller, useForm } from 'react-hook-form';
 import { mapToRolePermissions, RolePermissions } from '../../model';
+import { useNotify } from '../../../../../shared/models/notify';
 
 type NewRole = {
   name: string;
@@ -41,7 +41,7 @@ type NewRole = {
 };
 
 export function RolePermissionsView() {
-  const toast = useToast();
+  const toast = useNotify();
   const { allRoles } = useQueryControlList();
   const { data: permissions } = useQueryPermissions();
   const { saveRoles } = useMutateSaveRoles();
@@ -84,9 +84,7 @@ export function RolePermissionsView() {
           toast({
             title: 'Changes saved',
             description: 'Role permissions have been updated successfully.',
-            status: 'success',
-            duration: 3000,
-            isClosable: true
+            status: 'success'
           });
           reset();
           useRoleStore.setState(pre => ({ ...pre, hasUnsavedChanges: false }));
