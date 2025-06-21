@@ -17,7 +17,7 @@ import { DateRangeFilter } from '../../features/activity-logs/ui/DateRangeFilter
 import { endOfDay, subWeeks } from 'date-fns';
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { formatDayOfWeekAndDate } from '../../shared/models/utils/date.utils';
-import { Button, Tag, useToast } from '@chakra-ui/react';
+import { Button, Tag } from '@chakra-ui/react';
 import { LogWorkStatus } from '../../entities/activities/config/constants/log-work-status.enum';
 import { StatusFilterDialog } from '../../features/activity-logs/ui/LogWorkStatusFilter';
 import { UserFilter } from '../../features/activity-logs/ui/UserFilter';
@@ -29,6 +29,8 @@ import { useQueryClient } from 'react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotate } from '@fortawesome/free-solid-svg-icons';
 import { useMutateSyncLogs } from '../../entities/activities/models/activity-log.model';
+import { useNotify } from '../../shared/models/notify';
+import { useTaskProgressStore } from '../../shared/progress-tasks-bar/progress-tasks-bar';
 
 function plugin() {
   return {
@@ -71,11 +73,15 @@ function QuerySynchronizer() {
 
   return <></>;
 }
+const TASK_ID = 'activity-log-task';
 
 export default function TrackingPage() {
   const queryClient = useQueryClient();
-  const toast = useToast();
+  const toast = useNotify();
   const { mutate } = useMutateSyncLogs();
+  const startTask = useTaskProgressStore(state => state.startTask);
+  const completeTask = useTaskProgressStore(state => state.completeTask);
+  const failTask = useTaskProgressStore(state => state.failTask);
 
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<ActivityLogResponse>();
@@ -138,13 +144,18 @@ export default function TrackingPage() {
             <Button
               colorScheme="pink"
               onClick={() => {
+                startTask({
+                  label: 'Synchrone Activity Logs',
+                  progress: 20,
+                  id: TASK_ID
+                });
                 mutate(undefined, {
                   onSuccess: () => {
-                    toast({
-                      title: 'Synchorinized successfully',
-                      status: 'success'
-                    });
-                    queryClient.invalidateQueries(['upload-logs']);
+                    completeTask(TASK_ID);
+                    queryClient.invalidateQueries(['tracking']);
+                  },
+                  onError: () => {
+                    failTask(TASK_ID);
                   }
                 });
               }}
