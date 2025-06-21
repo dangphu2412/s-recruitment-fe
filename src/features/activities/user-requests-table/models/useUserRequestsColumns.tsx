@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/table-core';
-import { Checkbox } from '@chakra-ui/react';
+import { Checkbox, Link } from '@chakra-ui/react';
 import {
   useMyActivityStore,
   useUpdateApprovalActivityRequestMutation
@@ -18,11 +18,14 @@ import { RequestDayText } from '../../../../entities/activities/ui/RequestDayTex
 import { MoreActionCell } from '../../../../shared/ui/Table/Cell/MoreActionCell';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faRotateBack, faX } from '@fortawesome/free-solid-svg-icons';
+import NextLink from 'next/link';
 
 export type RequestsColumn = {
   id: number;
   author: {
+    id: string;
     fullName: string;
+    email: string;
   };
   requestType: string;
   dayOfWeek: {
@@ -75,13 +78,31 @@ export function useUserRequestsColumns() {
         },
         enableSorting: false
       }),
-      columnHelper.accessor('author.fullName', {
-        header: 'Requester'
-      }),
       columnHelper.accessor('requestType', {
         header: 'Request type',
         cell: props => {
           return <RequestTypeTag value={props.getValue() as RequestTypes} />;
+        },
+        maxSize: 32
+      }),
+      columnHelper.accessor('author', {
+        header: 'Requester',
+        cell: ({ getValue }) => {
+          const author = getValue();
+
+          return (
+            <div className={'space-y-2'}>
+              <Link
+                color="teal.500"
+                href={`/users/${author.id}/profile`}
+                as={NextLink}
+              >
+                {author.fullName}
+              </Link>
+
+              <p>{author.email}</p>
+            </div>
+          );
         }
       }),
       columnHelper.display({

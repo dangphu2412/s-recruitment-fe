@@ -7,6 +7,7 @@ import { HeaderActionGroup } from '../../../shared/ui/Header/ContentHeader/Heade
 import { MyDetailRequest } from '../../../features/activities/my-detail-request/ui/MyDetailRequest';
 import { UserGuideButton } from '../../../shared/user-guide/UserGuideButton';
 import { MyActivityGuideSteps } from '../../../features/activities/user-guide/activity-guide';
+import { SearchMyActivities } from '../../../features/activities/search-my-activities';
 
 export default function MyRequestActivityPage() {
   return (
@@ -25,6 +26,7 @@ export default function MyRequestActivityPage() {
         </HeaderActionGroup>
       </ContentHeaderLayout>
 
+      <SearchMyActivities />
       <MyRequestsTable />
       <MyDetailRequest />
     </Card>
