@@ -62,6 +62,10 @@ export type GetActivityRequestQuery = {
   requestTypes: string[];
 };
 
+type GetMyActivityQuery = {
+  status: string[];
+};
+
 export const activityRequestApiClient = {
   getRequestedActivities: async (params: GetActivityRequestQuery) => {
     return authorizedHttpClient.request<Page<ActivityRequestResponse>>({
@@ -75,10 +79,13 @@ export const activityRequestApiClient = {
       }
     });
   },
-  getMyRequestedActivities: async () => {
+  getMyRequestedActivities: async (params: GetMyActivityQuery) => {
     return authorizedHttpClient.request<Page<ActivityRequestResponse>>({
       method: 'get',
-      url: '/activity-requests/my'
+      url: '/activity-requests/my',
+      params: {
+        status: encodeMultiQueryParams(params.status)
+      }
     });
   },
   getMyRequestedActivity: async (id: number) => {
