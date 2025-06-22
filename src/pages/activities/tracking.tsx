@@ -17,7 +17,7 @@ import { DateRangeFilter } from '../../features/activity-logs/ui/DateRangeFilter
 import { endOfDay, subWeeks } from 'date-fns';
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { formatDayOfWeekAndDate } from '../../shared/models/utils/date.utils';
-import { Button, Tag } from '@chakra-ui/react';
+import { Button, Tag, Text } from '@chakra-ui/react';
 import { LogWorkStatus } from '../../entities/activities/config/constants/log-work-status.enum';
 import { StatusFilterDialog } from '../../features/activity-logs/ui/LogWorkStatusFilter';
 import { UserFilter } from '../../features/activity-logs/ui/UserFilter';
@@ -118,11 +118,39 @@ export default function TrackingPage() {
       }),
       columnHelper.accessor('fromTime', {
         header: 'From time',
-        cell: ({ getValue }) => formatDayOfWeekAndDate(getValue())
+        cell: ({ getValue, row }) => {
+          return (
+            <>
+              <p>{formatDayOfWeekAndDate(getValue())}</p>
+              {row.original.auditedFromTime && (
+                <p>
+                  <Text fontSize={'sm'} color={'red'} as={'span'}>
+                    Audit to:
+                  </Text>
+                  {formatDayOfWeekAndDate(row.original.auditedFromTime)}
+                </p>
+              )}
+            </>
+          );
+        }
       }),
       columnHelper.accessor('toTime', {
         header: 'To time',
-        cell: ({ getValue }) => formatDayOfWeekAndDate(getValue())
+        cell: ({ getValue, row }) => {
+          return (
+            <>
+              <p>{formatDayOfWeekAndDate(getValue())}</p>
+              {row.original.auditedToTime && (
+                <p>
+                  <Text fontSize={'sm'} color={'red'} as={'span'}>
+                    Audit to:
+                  </Text>
+                  {formatDayOfWeekAndDate(row.original.auditedToTime)}
+                </p>
+              )}
+            </>
+          );
+        }
       })
     ];
   }, []);
