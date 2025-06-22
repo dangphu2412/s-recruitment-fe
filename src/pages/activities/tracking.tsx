@@ -17,7 +17,7 @@ import { DateRangeFilter } from '../../features/activity-logs/ui/DateRangeFilter
 import { endOfDay, subWeeks } from 'date-fns';
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { formatDayOfWeekAndDate } from '../../shared/models/utils/date.utils';
-import { Button, Tag, useToast } from '@chakra-ui/react';
+import { Button, Tag, Text } from '@chakra-ui/react';
 import { LogWorkStatus } from '../../entities/activities/config/constants/log-work-status.enum';
 import { StatusFilterDialog } from '../../features/activity-logs/ui/LogWorkStatusFilter';
 import { UserFilter } from '../../features/activity-logs/ui/UserFilter';
@@ -29,6 +29,8 @@ import { useQueryClient } from 'react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotate } from '@fortawesome/free-solid-svg-icons';
 import { useMutateSyncLogs } from '../../entities/activities/models/activity-log.model';
+import { useTaskProgressStore } from '../../shared/progress-tasks-bar/progress-tasks-bar';
+import { useNotify } from '../../shared/models/notify';
 
 function plugin() {
   return {
@@ -71,11 +73,15 @@ function QuerySynchronizer() {
 
   return <></>;
 }
+const TASK_ID = 'activity-log-task';
 
 export default function TrackingPage() {
   const queryClient = useQueryClient();
-  const toast = useToast();
   const { mutate } = useMutateSyncLogs();
+  const notify = useNotify();
+  const startTask = useTaskProgressStore(state => state.startTask);
+  const completeTask = useTaskProgressStore(state => state.completeTask);
+  const failTask = useTaskProgressStore(state => state.failTask);
 
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<ActivityLogResponse>();
@@ -112,11 +118,39 @@ export default function TrackingPage() {
       }),
       columnHelper.accessor('fromTime', {
         header: 'From time',
-        cell: ({ getValue }) => formatDayOfWeekAndDate(getValue())
+        cell: ({ getValue, row }) => {
+          return (
+            <>
+              <p>{formatDayOfWeekAndDate(getValue())}</p>
+              {row.original.auditedFromTime && (
+                <p>
+                  <Text fontSize={'sm'} color={'red'} as={'span'}>
+                    Audit to:
+                  </Text>
+                  {formatDayOfWeekAndDate(row.original.auditedFromTime)}
+                </p>
+              )}
+            </>
+          );
+        }
       }),
       columnHelper.accessor('toTime', {
         header: 'To time',
-        cell: ({ getValue }) => formatDayOfWeekAndDate(getValue())
+        cell: ({ getValue, row }) => {
+          return (
+            <>
+              <p>{formatDayOfWeekAndDate(getValue())}</p>
+              {row.original.auditedToTime && (
+                <p>
+                  <Text fontSize={'sm'} color={'red'} as={'span'}>
+                    Audit to:
+                  </Text>
+                  {formatDayOfWeekAndDate(row.original.auditedToTime)}
+                </p>
+              )}
+            </>
+          );
+        }
       })
     ];
   }, []);
@@ -138,13 +172,22 @@ export default function TrackingPage() {
             <Button
               colorScheme="pink"
               onClick={() => {
+                startTask({
+                  label: 'Synchronize Activity Logs',
+                  progress: 20,
+                  id: TASK_ID
+                });
                 mutate(undefined, {
                   onSuccess: () => {
-                    toast({
-                      title: 'Synchorinized successfully',
+                    notify({
+                      title: 'Synchronize Activity Logs',
                       status: 'success'
                     });
-                    queryClient.invalidateQueries(['upload-logs']);
+                    completeTask(TASK_ID);
+                    queryClient.invalidateQueries(['tracking']);
+                  },
+                  onError: () => {
+                    failTask(TASK_ID);
                   }
                 });
               }}

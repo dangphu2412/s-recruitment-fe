@@ -16,6 +16,8 @@ export type ActivityLogResponse = {
     name: string;
   };
   activityId: number;
+  auditedFromTime: string | null;
+  auditedToTime: string | null;
 };
 
 export type FindActivityLogQuery = {

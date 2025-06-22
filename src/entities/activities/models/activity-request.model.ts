@@ -22,9 +22,12 @@ export function useActivityRequestsQuery(params: GetActivityRequestQuery) {
 export const MY_ACTIVITY_REQUESTS_QUERY_KEY = 'MY_ACTIVITY_REQUESTS_QUERY_KEY';
 
 export function useMyActivityRequestsQuery() {
+  const searchValues = useMyActivityStore(state => state.searchValues);
+
   return useQuery({
-    queryKey: [MY_ACTIVITY_REQUESTS_QUERY_KEY],
-    queryFn: () => activityRequestApiClient.getMyRequestedActivities()
+    queryKey: [MY_ACTIVITY_REQUESTS_QUERY_KEY, searchValues],
+    queryFn: () =>
+      activityRequestApiClient.getMyRequestedActivities(searchValues)
   });
 }
 
@@ -71,14 +74,51 @@ type ApprovalModel = {
   action: ApprovalRequestAction;
 };
 
-type MyActivityStore = {
+type MyActivitySearchModel = {
+  query: string;
+  status: string[];
+};
+
+type MyActivityStore = MyActivitySearchModel & {
+  searchValues: MyActivitySearchModel;
   selectedId: number | null;
+  submitSearch: () => void;
+  toggleValues: (key: 'status', value: any) => void;
   setSelectedId: (id: number | null) => void;
   approvalModel: ApprovalModel | null;
   setApprovalModel: (model: ApprovalModel | null) => void;
 };
 
 export const useMyActivityStore = create<MyActivityStore>(set => ({
+  query: '',
+  status: [],
+  searchValues: {
+    query: '',
+    status: []
+  },
+  submitSearch: () => {
+    set(state => {
+      return {
+        ...state,
+        searchValues: {
+          query: '', // Currently too little information so inline search will be performed
+          status: state.status
+        }
+      };
+    });
+  },
+  toggleValues: (key, value) => {
+    set(state => {
+      return {
+        ...state,
+        [key]: Array.isArray(state[key])
+          ? state[key].includes(value)
+            ? state[key].filter(item => item !== value)
+            : [...state[key], value]
+          : value
+      };
+    });
+  },
   selectedId: null,
   setSelectedId: (id: number | null) =>
     set(state => ({ ...state, selectedId: id })),

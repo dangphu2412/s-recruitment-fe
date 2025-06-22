@@ -70,6 +70,13 @@ export function useRoleView({ userId }: RoleViewProps) {
         { userId, roleIds: newRoles },
         {
           onSuccess() {
+            queryClient.invalidateQueries({
+              queryKey: [QUERY_USERS_KEY]
+            });
+
+            queryClient.invalidateQueries({
+              queryKey: [QUERY_USER_DETAIL_KEY]
+            });
             notify({
               title: 'Save roles',
               status: 'success'
