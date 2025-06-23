@@ -1,6 +1,6 @@
 import React from 'react';
-import { DropDownCalendarSelection } from '../../../shared/ui/Input/DropDownCalendar/DropDownCalendar';
-import { useCommonCRUDContext } from '../../../widgets/crud-widget/CommonCRUDContext';
+import { DropDownCalendarSelection } from '../../../../shared/ui/Input/DropDownCalendar/DropDownCalendar';
+import { useActivityLogListStore } from '../../../../entities/activities/models/activity-log.model';
 
 type DateRangeFilterProps = {
   showApplyButton?: boolean;
@@ -9,10 +9,10 @@ type DateRangeFilterProps = {
 export function DateRangeFilter({
   showApplyButton
 }: DateRangeFilterProps): React.ReactElement {
-  const fromDate = useCommonCRUDContext(state => state.values.fromDate);
-  const toDate = useCommonCRUDContext(state => state.values.toDate);
-  const setValues = useCommonCRUDContext(state => state.setValues);
-  const submitValues = useCommonCRUDContext(state => state.submitValues);
+  const fromDate = useActivityLogListStore(state => state.values.fromDate);
+  const toDate = useActivityLogListStore(state => state.values.toDate);
+  const setValues = useActivityLogListStore(state => state.setValues);
+  const submitValues = useActivityLogListStore(state => state.submitValues);
 
   return (
     <DropDownCalendarSelection

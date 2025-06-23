@@ -10,7 +10,7 @@ import { CommonCRUDProvider } from 'src/widgets/crud-widget/CommonCRUDContext';
 import { createColumnHelper } from '@tanstack/table-core';
 import { Heading, Tag } from '@chakra-ui/react';
 import { formatDateTime } from '../../../../shared/models/utils/date.utils';
-import { DateRangeFilter } from '../../../activity-logs/ui/DateRangeFilter';
+import { DateRangeFilter } from '../../../activity-logs/search-activity-logs/ui/DateRangeFilter';
 import { LogWorkStatus } from '../../../../entities/activities/config/constants/log-work-status.enum';
 
 function plugin() {
