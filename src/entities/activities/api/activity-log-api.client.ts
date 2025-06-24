@@ -3,7 +3,7 @@ import { User } from '../../user/api';
 import { Page } from '../../../shared/models';
 import { LogWorkStatus } from '../config/constants/log-work-status.enum';
 import { encodeMultiQueryParams } from '../../../shared/models/pagination';
-import { BoxItem } from '../../../shared/models/combobox.api';
+import { downloadFile } from '../../../shared/models/file';
 
 export type ActivityLogResponse = {
   fromTime: string;
@@ -24,7 +24,7 @@ export type FindActivityLogQuery = {
   page: number;
   size: number;
   workStatus?: string[];
-  authors?: BoxItem[];
+  authors?: string[];
   query?: string;
 };
 
@@ -50,7 +50,7 @@ export const activityLogApiClient = {
           ? encodeMultiQueryParams(params.workStatus)
           : undefined,
         authors: params.authors?.length
-          ? encodeMultiQueryParams(params.authors.map(author => author.value))
+          ? encodeMultiQueryParams(params.authors)
           : undefined
       }
     });
@@ -60,6 +60,15 @@ export const activityLogApiClient = {
       method: 'post',
       url: '/activity-logs'
     });
+  },
+  downloadReportLogs: async () => {
+    const response = await authorizedHttpClient.request<Blob>({
+      method: 'post',
+      url: '/activity-logs/reports',
+      responseType: 'blob'
+    });
+
+    return downloadFile(response, 'reports-6-months.xlsx');
   },
   findAnalyticLogs: (findAnalyticLogQuery: FindAnalyticLogQuery) => {
     return authorizedHttpClient.request<LogAnalyticResponse>({

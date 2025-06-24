@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { flexRender } from '@tanstack/react-table';
+import { Cell, flexRender, Row } from '@tanstack/react-table';
 import {
   Table as BaseTable,
   TableCaption,
@@ -18,6 +18,11 @@ import { ActionColumnIds, BaseTableProps } from './models/table.model';
 import { SortIcon } from './SortIcon';
 import { MoreAction } from './MoreAction';
 import { getPinStyle } from './models/pin.model';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faChevronDown,
+  faChevronRight
+} from '@fortawesome/free-solid-svg-icons';
 
 export function Table<T extends object>({
   items = [],
@@ -79,6 +84,40 @@ export function Table<T extends object>({
       return null;
     }
 
+    function renderCell(row: Row<T>, cell: Cell<T, unknown>) {
+      if (cell.getIsGrouped()) {
+        return (
+          <div
+            style={getPinStyle(cell.column)}
+            onClick={row.getToggleExpandedHandler()}
+            className={classNames(
+              row.getCanExpand() ? 'cursor-pointer' : 'cursor-default',
+              'flex items-center bg-white'
+            )}
+          >
+            <FontAwesomeIcon
+              icon={row.getIsExpanded() ? faChevronDown : faChevronRight}
+            />{' '}
+            {flexRender(cell.column.columnDef.cell, cell.getContext())} (
+            {row.subRows.length})
+          </div>
+        );
+      }
+
+      if (cell.getIsAggregated()) {
+        return flexRender(
+          cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
+          cell.getContext()
+        );
+      }
+
+      if (cell.getIsPlaceholder()) {
+        return null;
+      }
+
+      return flexRender(cell.column.columnDef.cell, cell.getContext());
+    }
+
     return (
       <Tbody className={'relative'}>
         {table.getRowModel().rows.map(row => {
@@ -101,7 +140,7 @@ export function Table<T extends object>({
                     className={classNames('bg-white')}
                     style={getPinStyle(cell.column)}
                   >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {renderCell(row, cell)}
                   </Td>
                 );
               })}
