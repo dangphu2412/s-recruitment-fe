@@ -39,7 +39,7 @@ export const useTaskProgressStore = create<TaskStore>(set => ({
   failTask: id =>
     set(state => ({
       tasks: state.tasks.map(t =>
-        t.id === id ? { ...t, status: 'failed' } : t
+        t.id === id ? { ...t, status: 'failed', progress: 100 } : t
       )
     })),
   removeTasks: (ids: string[]) =>

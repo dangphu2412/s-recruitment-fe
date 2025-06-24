@@ -25,6 +25,13 @@ export function useMutateSyncLogs() {
   });
 }
 
+export function useMutateDownloadReport() {
+  return useMutation({
+    mutationKey: 'download-report-logs',
+    mutationFn: activityLogApiClient.downloadReportLogs
+  });
+}
+
 export type ActivityLogsSearch = {
   query?: string;
   page: number;

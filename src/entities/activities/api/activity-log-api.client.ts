@@ -3,6 +3,7 @@ import { User } from '../../user/api';
 import { Page } from '../../../shared/models';
 import { LogWorkStatus } from '../config/constants/log-work-status.enum';
 import { encodeMultiQueryParams } from '../../../shared/models/pagination';
+import { downloadFile } from '../../../shared/models/file';
 
 export type ActivityLogResponse = {
   fromTime: string;
@@ -59,6 +60,15 @@ export const activityLogApiClient = {
       method: 'post',
       url: '/activity-logs'
     });
+  },
+  downloadReportLogs: async () => {
+    const response = await authorizedHttpClient.request<Blob>({
+      method: 'post',
+      url: '/activity-logs/reports',
+      responseType: 'blob'
+    });
+
+    return downloadFile(response, 'reports.xlsx');
   },
   findAnalyticLogs: (findAnalyticLogQuery: FindAnalyticLogQuery) => {
     return authorizedHttpClient.request<LogAnalyticResponse>({
