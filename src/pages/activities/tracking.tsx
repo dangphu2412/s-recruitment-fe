@@ -13,6 +13,7 @@ import {
   ActivityLogsSearch,
   useActivityLogListStore
 } from '../../entities/activities/models/activity-log.model';
+import { DownloadLogsReportButton } from '../../features/activity-logs/download-logs-report/ui/DownloadLogsReportButton';
 
 const SyncActivityLogQuerySchema: QuerySynchronizeSchema<
   Partial<ActivityLogsSearch>
@@ -48,6 +49,7 @@ export default function TrackingPage() {
           brief={'Where you observe members logs'}
         />
         <HeaderActionGroup>
+          <DownloadLogsReportButton />
           <SyncActivityLogsButton />
         </HeaderActionGroup>
       </ContentHeaderLayout>
