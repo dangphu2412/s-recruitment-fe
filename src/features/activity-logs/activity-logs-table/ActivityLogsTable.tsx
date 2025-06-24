@@ -7,6 +7,8 @@ import { Tag, Text } from '@chakra-ui/react';
 import { formatDayOfWeekAndDate } from '../../../shared/models/utils/date.utils';
 import {
   getCoreRowModel,
+  getExpandedRowModel,
+  getGroupedRowModel,
   getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table';
@@ -19,7 +21,7 @@ export function ActivityLogsTable() {
     const columnHelper = createColumnHelper<ActivityLogResponse>();
 
     return [
-      columnHelper.display({
+      columnHelper.accessor('workStatus', {
         header: 'Log status',
         cell: props => {
           if (props.row.original.workStatus === LogWorkStatus.LATE) {
@@ -92,7 +94,9 @@ export function ActivityLogsTable() {
     columns,
     data: data?.items ?? EMPTY_ARRAY,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel()
+    getSortedRowModel: getSortedRowModel(),
+    getGroupedRowModel: getGroupedRowModel(),
+    getExpandedRowModel: getExpandedRowModel()
   });
 
   return (

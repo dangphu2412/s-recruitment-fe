@@ -70,6 +70,21 @@ export function MoreAction<T>({ column }: Props<T>) {
     );
   }
 
+  function renderGroupBySection() {
+    if (!column.getCanGroup()) {
+      return null;
+    }
+
+    return (
+      <>
+        <MenuItem onClick={column.getToggleGroupingHandler()}>
+          {column.getIsGrouped() ? 'Remove group' : 'Group'}
+        </MenuItem>
+        <Divider />
+      </>
+    );
+  }
+
   if (!column.getCanSort() && !column.getCanPin() && !column.getCanHide()) {
     return null;
   }
@@ -89,6 +104,7 @@ export function MoreAction<T>({ column }: Props<T>) {
           {renderSortSection()}
           {renderPinSection()}
           {renderHideSection()}
+          {renderGroupBySection()}
         </MenuList>
       </Portal>
     </Menu>

@@ -3,12 +3,12 @@ import { useAdminColumns } from '../../models/useAdminColumns';
 import { EMPTY_ARRAY } from '../../../../../shared/config';
 import { useUserOverview } from '../../../../../entities/user/models';
 import { Table } from '../../../../../shared/ui/Table/Table';
+import { StepIds } from '../../../user-guide/user-management-guide';
 import {
   getCoreRowModel,
   getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table';
-import { StepIds } from '../../../user-guide/user-management-guide';
 
 export function UsersOverviewTable(): ReactElement {
   const { data, isFetching } = useUserOverview();
