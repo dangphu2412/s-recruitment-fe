@@ -18,6 +18,15 @@ export function useActivityLogAnalytic(
   });
 }
 
+export function useV2ActivityLogAnalytic(
+  findAnalyticLogQuery: FindAnalyticLogQuery
+) {
+  return useQuery({
+    queryKey: ['analytic-logs-v2', findAnalyticLogQuery],
+    queryFn: () => activityLogApiClient.findV2AnalyticLogs(findAnalyticLogQuery)
+  });
+}
+
 export function useMutateSyncLogs() {
   return useMutation({
     mutationKey: 'analytic-logs',
