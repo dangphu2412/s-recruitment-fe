@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { Button, Heading, Text } from '@chakra-ui/react';
 import { Chart } from 'react-chartjs-2';
 import {
+  BarController,
   BarElement,
   CategoryScale,
   Chart as ChartJS,
@@ -25,7 +26,8 @@ ChartJS.register(
   LinearScale,
   PointElement,
   Title,
-  BarElement
+  BarElement,
+  BarController
 );
 
 enum GroupType {
