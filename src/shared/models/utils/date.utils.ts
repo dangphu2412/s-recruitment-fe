@@ -3,6 +3,7 @@ import { isNil } from './simple-assertion.utils';
 
 const DATE_FORMAT = 'dd-MM-yyyy';
 const INPUT_DATE_FORMAT = 'yyyy-MM-dd';
+const MONTH_FORMAT = 'yyyy-MM';
 const DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss';
 
 type DateInput = Date | string | null | undefined;
@@ -29,6 +30,10 @@ export function formatDayOfWeekAndDate(date: DateInput): string {
 
 export function formatDate(date: DateInput): string {
   return formatRoot(date, DATE_FORMAT);
+}
+
+export function formatMonth(date: DateInput): string {
+  return formatRoot(date, MONTH_FORMAT);
 }
 
 export function formatDateTime(date: DateInput): string {
