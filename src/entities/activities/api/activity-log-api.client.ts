@@ -31,12 +31,22 @@ export type FindActivityLogQuery = {
 export type FindAnalyticLogQuery = {
   fromDate?: string;
   toDate?: string;
+  groupType?: string;
 };
 
 export type LogAnalyticResponse = {
   lateCount: number;
   onTimeCount: number;
   notFinishedCount: number;
+};
+
+export type LogV2AnalyticResponse = {
+  items: {
+    lateCount: number;
+    onTimeCount: number;
+    notFinishedCount: number;
+    date?: string;
+  }[];
 };
 
 export const activityLogApiClient = {
@@ -74,6 +84,13 @@ export const activityLogApiClient = {
     return authorizedHttpClient.request<LogAnalyticResponse>({
       method: 'get',
       url: '/activity-logs/analytics',
+      params: findAnalyticLogQuery
+    });
+  },
+  findV2AnalyticLogs: (findAnalyticLogQuery: FindAnalyticLogQuery) => {
+    return authorizedHttpClient.request<LogV2AnalyticResponse>({
+      method: 'get',
+      url: '/activity-logs/v2/analytics',
       params: findAnalyticLogQuery
     });
   }

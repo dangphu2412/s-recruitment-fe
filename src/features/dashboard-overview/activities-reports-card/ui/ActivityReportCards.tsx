@@ -1,18 +1,12 @@
 import { useActivityLogAnalytic } from '../../../../entities/activities/models/activity-log.model';
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Heading,
-  Link,
-  Text
-} from '@chakra-ui/react';
+import { Card, CardBody, CardHeader, Link, Text } from '@chakra-ui/react';
 import { PropsWithChildren, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleXmark,
   faClock,
   faExternalLink,
+  faHeart,
   faProcedures
 } from '@fortawesome/free-solid-svg-icons';
 import NextLink from 'next/link';
@@ -31,17 +25,19 @@ function ReportCard({ title, iconTitle, summary, link, children }: Props) {
   return (
     <Card>
       <CardHeader>
-        <Heading size="md" className={'space-x-2'}>
+        <Text fontSize="lg" className={'space-x-2 font-bold'}>
           <span>{iconTitle}</span>
           <span>{title}</span>
-        </Heading>
+        </Text>
       </CardHeader>
       <CardBody>
         <Text fontSize={'2xl'}>{children}</Text>
 
-        <Link href={link} fontSize={'sm'} as={NextLink}>
-          {summary} <FontAwesomeIcon icon={faExternalLink} />
-        </Link>
+        <Text fontSize={'md'}>
+          <Link href={link} fontSize={'sm'} as={NextLink}>
+            {summary} <FontAwesomeIcon icon={faExternalLink} />
+          </Link>
+        </Text>
       </CardBody>
     </Card>
   );
@@ -50,6 +46,7 @@ function ReportCard({ title, iconTitle, summary, link, children }: Props) {
 export function ActivityReportCards() {
   const { data } = useActivityLogAnalytic();
   const { lateCount, notFinishedCount, onTimeCount } = data ?? {};
+  const total = (lateCount ?? 0) + (notFinishedCount ?? 0) + (onTimeCount ?? 0);
 
   function getLinkByStatus(status: string) {
     const fromDate = formatToInputDate(subYears(new Date(), 1));
@@ -59,7 +56,20 @@ export function ActivityReportCards() {
   }
 
   return (
-    <section className={'grid grid-cols-3 gap-2 w-full'}>
+    <>
+      <ReportCard
+        iconTitle={
+          <Text as={'span'}>
+            <FontAwesomeIcon icon={faHeart} />
+          </Text>
+        }
+        link={'/activities/tracking'}
+        title={'Total activities'}
+        summary={'All activities combined'}
+      >
+        {total}
+      </ReportCard>
+
       <ReportCard
         iconTitle={
           <Text color={'green.500'} as={'span'}>
@@ -98,6 +108,6 @@ export function ActivityReportCards() {
       >
         {notFinishedCount ?? '-'}
       </ReportCard>
-    </section>
+    </>
   );
 }
