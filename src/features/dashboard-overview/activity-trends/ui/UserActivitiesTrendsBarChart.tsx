@@ -14,11 +14,11 @@ import {
   PointElement,
   Title
 } from 'chart.js';
-import { useV2ActivityLogAnalytic } from '../../../../entities/activities/models/activity-log.model';
 import {
   formatDate,
   formatMonth
 } from '../../../../shared/models/utils/date.utils';
+import { useDashboardUserActivityTrend } from '../../../../entities/dashboard/models/dashboard.model';
 
 ChartJS.register(
   LineElement,
@@ -52,9 +52,8 @@ const groupOptions = [
 
 export function UserActivitiesTrendsBarChart() {
   const [groupType, setGroupType] = useState(GroupType.WEEKLY);
-  const { data } = useV2ActivityLogAnalytic({
-    groupType
-  });
+  const { data } = useDashboardUserActivityTrend(groupType);
+
   const options: ChartOptions<'bar'> = useMemo(() => {
     return {
       responsive: true,
