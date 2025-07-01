@@ -49,6 +49,12 @@ export const accessControlApiClient = {
       params: query
     });
   },
+  getMyRoles(): Promise<Role[]> {
+    return authorizedHttpClient.request<Role[]>({
+      method: 'get',
+      url: '/roles/me'
+    });
+  },
   getPermissions(): Promise<Permission[]> {
     return authorizedHttpClient.request<Permission[]>({
       method: 'get',

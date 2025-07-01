@@ -14,6 +14,7 @@ import { HttpError } from '../../../shared/models/http-client';
 export type UserDetail = {
   id: string;
   username: string;
+  fullName: string;
   email: string;
   avatar: string;
   createdAt: string;

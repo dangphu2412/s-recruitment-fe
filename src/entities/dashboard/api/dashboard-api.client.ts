@@ -7,6 +7,14 @@ export type KPI = {
   totalActiveMembers: number;
   totalLateMembers: number;
 };
+export type MyKPI = {
+  estimatedPaid: number;
+  totalPayment: number;
+  totalPendingRequests: number;
+  totalLateActivities: number;
+  totalToBeFinishedWork: number;
+  totalFinishedWork: number;
+};
 
 export type UserActivityTrendResponse = {
   items: UserActivityTrend[];
@@ -23,6 +31,12 @@ export const dashboardApiClient = {
   getKPI: () => {
     return authorizedHttpClient.request<KPI>({
       url: '/dashboard/kpi',
+      method: 'get'
+    });
+  },
+  getMyKPI: () => {
+    return authorizedHttpClient.request<MyKPI>({
+      url: '/dashboard/kpi/me',
       method: 'get'
     });
   },
