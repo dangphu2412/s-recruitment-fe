@@ -51,6 +51,15 @@ export function useQueryControlList(
   return { allRoles: data, isLoading, isSuccess };
 }
 
+export function useQueryMyRoles() {
+  const { data, isLoading } = useQuery({
+    queryKey: ['MY_ROLES'],
+    queryFn: () => accessControlApiClient.getMyRoles()
+  });
+
+  return { myRoles: data, isLoading };
+}
+
 export function useQueryPermissions() {
   const { data } = useQuery({
     queryKey: 'QUERY_PERMISSIONS',

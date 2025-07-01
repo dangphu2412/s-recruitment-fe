@@ -9,6 +9,13 @@ export function useDashboardKPI() {
   });
 }
 
+export function useDashboardMyKPI() {
+  return useQuery({
+    queryKey: ['dashboard-my-kpi'],
+    queryFn: dashboardApiClient.getMyKPI
+  });
+}
+
 export function useDashboardUserActivityTrend(groupType: GroupType) {
   return useQuery({
     queryKey: ['dashboard-kpi', groupType],
