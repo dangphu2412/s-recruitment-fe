@@ -8,30 +8,48 @@ import {
   PieController,
   Tooltip
 } from 'chart.js';
-import { useActivityLogAnalytic } from '../../../../entities/activities/models/activity-log.model';
-import { subMonths } from 'date-fns';
 import * as React from 'react';
 import { useMemo } from 'react';
+import { useDashboardUserActivityTrend } from '../../../../entities/dashboard/models/dashboard.model';
+import { GroupType } from '../../../../entities/dashboard/config/dashboard.constants';
 
 ChartJS.register(ArcElement, Tooltip, Legend, PieController);
 
 export function ActivityMonthlyReportPieChart() {
   const theme = useTheme();
-  const query = useMemo(() => {
-    return {
-      fromDate: subMonths(new Date(), 1).toISOString(),
-      toDate: new Date().toISOString()
-    };
-  }, []);
-  const { data } = useActivityLogAnalytic(query);
-  const { lateCount = 0, notFinishedCount = 0, onTimeCount = 0 } = data ?? {};
+  const { data } = useDashboardUserActivityTrend(GroupType.MONTHLY);
+
+  const computed = useMemo(() => {
+    if (!data) {
+      return {
+        onTimeCount: 0,
+        lateCount: 0,
+        notFinishedCount: 0
+      };
+    }
+
+    return data.items.reduce(
+      (result, current) => {
+        return {
+          onTimeCount: result.onTimeCount + +current.onTimeCount,
+          lateCount: result.lateCount + +current.lateCount,
+          notFinishedCount: result.notFinishedCount + +current.notFinishedCount
+        };
+      },
+      { onTimeCount: 0, lateCount: 0, notFinishedCount: 0 }
+    );
+  }, [data]);
 
   const chartData: ChartData<'pie'> = {
     labels: ['On Time', 'Late', 'Not Finished'],
     datasets: [
       {
         label: 'Total of activities',
-        data: [onTimeCount ?? 0, lateCount ?? 0, notFinishedCount ?? 0],
+        data: [
+          computed.onTimeCount,
+          computed.lateCount,
+          computed.notFinishedCount
+        ],
         backgroundColor: [
           theme.colors['green']['500'],
           theme.colors['red']['500'],
