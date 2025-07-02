@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
   activityRequestApiClient,
-  GetActivityRequestQuery
+  GetActivityRequestQuery,
+  GetMyActivityQuery
 } from '../api/activity-request-api.client';
 import { create } from 'zustand/react';
 import { ApprovalRequestAction } from '../config/constants/request-activity-status.enum';
@@ -21,14 +22,18 @@ export function useActivityRequestsQuery(params: GetActivityRequestQuery) {
 
 export const MY_ACTIVITY_REQUESTS_QUERY_KEY = 'MY_ACTIVITY_REQUESTS_QUERY_KEY';
 
-export function useMyActivityRequestsQuery() {
-  const searchValues = useMyActivityStore(state => state.searchValues);
-
+export function useMyActivityRequestsQuery(searchValues: GetMyActivityQuery) {
   return useQuery({
     queryKey: [MY_ACTIVITY_REQUESTS_QUERY_KEY, searchValues],
     queryFn: () =>
       activityRequestApiClient.getMyRequestedActivities(searchValues)
   });
+}
+
+export function useMyActivityRequests() {
+  const searchValues = useMyActivityStore(state => state.searchValues);
+
+  return useMyActivityRequestsQuery(searchValues);
 }
 
 export const MY_ACTIVITY_REQUEST_DETAIL_QUERY_KEY =

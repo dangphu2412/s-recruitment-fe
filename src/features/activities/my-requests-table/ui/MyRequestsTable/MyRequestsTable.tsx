@@ -1,7 +1,7 @@
 import { BasicTable } from '../../../../../shared/ui';
 import { useMyRequestsColumns } from '../../models/useMyRequestsColumns';
 import {
-  useMyActivityRequestsQuery,
+  useMyActivityRequests,
   useMyActivityStore
 } from '../../../../../entities/activities/models/activity-request.model';
 import { useMemo } from 'react';
@@ -9,7 +9,7 @@ import { StepIds } from '../../../user-guide/activity-guide';
 import { useDebounceValue } from '../../../../../shared/models/debounce';
 
 export function MyRequestsTable() {
-  const { data, isLoading } = useMyActivityRequestsQuery();
+  const { data, isLoading } = useMyActivityRequests();
   const selectId = useMyActivityStore(state => state.setSelectedId);
   const query = useMyActivityStore(state => state.query);
   const deboucnedQuery = useDebounceValue(query);

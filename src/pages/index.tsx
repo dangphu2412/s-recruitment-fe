@@ -8,7 +8,7 @@ import { useQueryMyRoles, useUserStore } from '../entities/user/models';
 import { FullLoader } from '../shared/ui/Loader/Full/FullLoader';
 import { UserActivitiesCard } from '../features/dashboard-overview/user-activities-card/ui/UserActivitiesCard';
 import { MyActivitiesTrendsBarChart } from '../features/dashboard-overview/my-activity-trends/ui/MyActivitiesTrendsBarChart';
-import { MyPerformanceBarChart } from '../features/dashboard-overview/my-performance/ui/MyPerformanceBarChart';
+import { MyPendingTasks } from '../features/dashboard-overview/my-pending-tasks/ui/MyPendingTasks';
 
 // https://dribbble.com/shots/21931587-Cotton-HR-Management-Dashboard
 const Home: NextPage = () => {
@@ -72,7 +72,7 @@ function UserDashboard() {
 
         <Card className={'col-span-2'}>
           <CardBody>
-            <MyPerformanceBarChart />
+            <MyPendingTasks />
           </CardBody>
         </Card>
       </div>
