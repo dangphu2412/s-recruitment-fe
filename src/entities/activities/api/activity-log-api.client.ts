@@ -40,15 +40,6 @@ export type LogAnalyticResponse = {
   notFinishedCount: number;
 };
 
-export type LogV2AnalyticResponse = {
-  items: {
-    lateCount: number;
-    onTimeCount: number;
-    notFinishedCount: number;
-    date?: string;
-  }[];
-};
-
 export const activityLogApiClient = {
   findLogs: async (params: FindActivityLogQuery) => {
     return authorizedHttpClient.request<Page<ActivityLogResponse>>({
@@ -84,13 +75,6 @@ export const activityLogApiClient = {
     return authorizedHttpClient.request<LogAnalyticResponse>({
       method: 'get',
       url: '/activity-logs/analytics',
-      params: findAnalyticLogQuery
-    });
-  },
-  findV2AnalyticLogs: (findAnalyticLogQuery: FindAnalyticLogQuery) => {
-    return authorizedHttpClient.request<LogV2AnalyticResponse>({
-      method: 'get',
-      url: '/activity-logs/v2/analytics',
       params: findAnalyticLogQuery
     });
   }

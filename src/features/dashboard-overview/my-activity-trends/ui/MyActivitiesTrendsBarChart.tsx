@@ -18,7 +18,7 @@ import {
   formatDate,
   formatMonth
 } from '../../../../shared/models/utils/date.utils';
-import { useDashboardUserActivityTrend } from '../../../../entities/dashboard/models/dashboard.model';
+import { useDashboardMyActivityTrend } from '../../../../entities/dashboard/models/dashboard.model';
 
 ChartJS.register(
   LineElement,
@@ -50,9 +50,9 @@ const groupOptions = [
   }
 ];
 
-export function UserActivitiesTrendsBarChart() {
+export function MyActivitiesTrendsBarChart() {
   const [groupType, setGroupType] = useState(GroupType.WEEKLY);
-  const { data } = useDashboardUserActivityTrend(groupType);
+  const { data } = useDashboardMyActivityTrend(groupType);
 
   const options: ChartOptions<'bar'> = useMemo(() => {
     return {
@@ -116,12 +116,17 @@ export function UserActivitiesTrendsBarChart() {
     };
   }, [data, groupType]);
 
+  const totalActivities =
+    data?.items?.reduce((acc, item) => {
+      return acc + +item.onTimeCount + +item.notFinishedCount + +item.lateCount;
+    }, 0) ?? 0;
+
   return (
     <section className={'space-y-8'}>
       <div className={'grid grid-cols-3'}>
         <div className={'col-span-2'}>
-          <Heading size={'md'}>User Activity Trends</Heading>
-          <Text fontSize={'sm'}>Activity trends over time</Text>
+          <Heading size={'md'}>My Daily Activity</Heading>
+          <Text fontSize={'sm'}>Your activity count this week</Text>
         </div>
 
         <div className={'grid grid-cols-3 gap-2'}>
@@ -137,6 +142,7 @@ export function UserActivitiesTrendsBarChart() {
       </div>
 
       <Chart type={'bar'} data={chartData} options={options} />
+      <p>Total: {totalActivities} activities</p>
     </section>
   );
 }
