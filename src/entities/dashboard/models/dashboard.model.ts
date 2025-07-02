@@ -22,3 +22,9 @@ export function useDashboardUserActivityTrend(groupType: GroupType) {
     queryFn: () => dashboardApiClient.getUserActivityTrends(groupType)
   });
 }
+export function useDashboardMyActivityTrend(groupType: GroupType) {
+  return useQuery({
+    queryKey: ['dashboard-my-kpi', groupType],
+    queryFn: () => dashboardApiClient.getMyActivityTrends(groupType)
+  });
+}

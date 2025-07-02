@@ -7,7 +7,7 @@ import { Card, CardBody, Heading, Text } from '@chakra-ui/react';
 import { useQueryMyRoles, useUserStore } from '../entities/user/models';
 import { FullLoader } from '../shared/ui/Loader/Full/FullLoader';
 import { UserActivitiesCard } from '../features/dashboard-overview/user-activities-card/ui/UserActivitiesCard';
-import { MyActivitiesTrendsBarChart } from '../features/dashboard-overview/my-activity-trends/ui/UserActivitiesTrendsBarChart';
+import { MyActivitiesTrendsBarChart } from '../features/dashboard-overview/my-activity-trends/ui/MyActivitiesTrendsBarChart';
 import { MyPerformanceBarChart } from '../features/dashboard-overview/my-performance/ui/MyPerformanceBarChart';
 
 // https://dribbble.com/shots/21931587-Cotton-HR-Management-Dashboard

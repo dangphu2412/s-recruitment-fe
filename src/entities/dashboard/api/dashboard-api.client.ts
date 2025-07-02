@@ -27,6 +27,17 @@ export type UserActivityTrend = {
   date: string;
 };
 
+export type MyActivityTrendResponse = {
+  items: MyActivityTrend[];
+};
+
+export type MyActivityTrend = {
+  lateCount: number;
+  onTimeCount: number;
+  notFinishedCount: number;
+  date: string;
+};
+
 export const dashboardApiClient = {
   getKPI: () => {
     return authorizedHttpClient.request<KPI>({
@@ -43,6 +54,15 @@ export const dashboardApiClient = {
   getUserActivityTrends: (groupType: GroupType) => {
     return authorizedHttpClient.request<UserActivityTrendResponse>({
       url: '/dashboard/user-activity-trends',
+      method: 'get',
+      params: {
+        groupType
+      }
+    });
+  },
+  getMyActivityTrends: (groupType: GroupType) => {
+    return authorizedHttpClient.request<MyActivityTrendResponse>({
+      url: '/dashboard/user-activity-trends/me',
       method: 'get',
       params: {
         groupType
