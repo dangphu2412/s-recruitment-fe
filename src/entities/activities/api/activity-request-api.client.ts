@@ -62,7 +62,7 @@ export type GetActivityRequestQuery = {
   requestTypes: string[];
 };
 
-type GetMyActivityQuery = {
+export type GetMyActivityQuery = {
   status: string[];
 };
 
