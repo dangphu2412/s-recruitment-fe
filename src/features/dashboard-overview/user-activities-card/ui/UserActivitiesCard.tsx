@@ -113,8 +113,9 @@ export function UserActivitiesCard() {
           <Text fontSize={'2xl'}>{data?.totalLateActivities ?? 0}</Text>
 
           <Text fontSize={'md'}>
-            <Link href={'/activities/my'} fontSize={'sm'} as={NextLink}>
-              View yours late <FontAwesomeIcon icon={faExternalLink} />
+            <Link href={'#'} fontSize={'sm'} as={NextLink}>
+              View yours late (developing){' '}
+              <FontAwesomeIcon icon={faExternalLink} />
             </Link>
           </Text>
         </CardBody>
