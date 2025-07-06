@@ -1,6 +1,7 @@
 import { authorizedHttpClient } from '../../../shared/api';
+import { Page } from '../../../shared/models';
 
-type Payment = {
+export type Payment = {
   id: string;
   userId: string;
   amount: number;
@@ -27,6 +28,12 @@ export const paymentsApiClient = {
       method: 'post',
       url: `users/${payload.userId}/payments`,
       data: payload
+    });
+  },
+  getMyPayments: () => {
+    return authorizedHttpClient.request<Page<Payment>>({
+      method: 'get',
+      url: 'payments'
     });
   }
 };
