@@ -49,7 +49,7 @@ export function UserActivitiesCard() {
 
         <CardBody className={'space-y-2'}>
           <Text fontSize={'2xl'} color={'green'}>
-            {data?.totalPayment ?? 0}vnd/ {data?.estimatedPaid ?? 0}vnd
+            {data?.totalPayment ?? 0}/ {data?.estimatedPaid ?? 0}đ
           </Text>
 
           <Progress colorScheme={'green'} value={getPercentagePaid()} />
