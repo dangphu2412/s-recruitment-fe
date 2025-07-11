@@ -21,8 +21,8 @@ import NotFound from 'next/dist/client/components/not-found-error';
 import { Controller, useForm } from 'react-hook-form';
 import {
   EditUserForm,
-  mapFormToEditUserDto,
-  mapUserDetailToEditForm
+  fromFormToEditUserDto,
+  fromUserDetailToEditForm
 } from '../../models/edit-user.model';
 import { ContentHeaderLayout } from '../../../../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import { HeaderActionGroup } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
@@ -52,7 +52,7 @@ export function UserDetailSection({ userId }: Props) {
     control
   } = useForm<EditUserForm>({
     values: userDetail
-      ? mapUserDetailToEditForm(userDetail)
+      ? fromUserDetailToEditForm(userDetail)
       : ({} as EditUserForm)
   });
   const { data: departments } = useDepartments();
@@ -72,7 +72,7 @@ export function UserDetailSection({ userId }: Props) {
   }, [trackedUsers]);
 
   function handleEdit(inputs: EditUserForm) {
-    updateUser(mapFormToEditUserDto(userId, inputs), {
+    updateUser(fromFormToEditUserDto(userId, inputs), {
       onSuccess: () => {
         notify({
           title: 'User updated',

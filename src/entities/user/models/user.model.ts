@@ -285,15 +285,18 @@ export function useMutateUserActive() {
   });
 }
 
+export const QUERY_MY_PROFILE = 'QUERY_MY_PROFILE';
+
 export function useQueryMyProfile() {
-  const { data, status } = useQuery({
-    queryKey: 'QUERY_MY_PROFILE',
+  const { data, isLoading, status } = useQuery({
+    queryKey: [QUERY_MY_PROFILE],
     queryFn: userApiClient.getMyProfile,
     enabled: true
   });
 
   return {
     profile: data,
+    isLoading,
     status
   };
 }
@@ -414,4 +417,13 @@ export function useMutateUpdateUser() {
   });
 
   return { updateUser: mutate, isLoading };
+}
+
+export function useMutateUpdateMyProfile() {
+  const { mutate, isLoading } = useMutation({
+    mutationKey: 'MUTATION_UPDATE_MY_PROFILE',
+    mutationFn: userApiClient.updateMyProfile
+  });
+
+  return { updateMyProfile: mutate, isLoading };
 }

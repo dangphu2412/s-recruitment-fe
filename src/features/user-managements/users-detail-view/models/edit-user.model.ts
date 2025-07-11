@@ -1,7 +1,26 @@
-import { UpdateUserDto, User } from '../../../../entities/user/api';
+import {
+  UpdateMyProfileDto,
+  UpdateUserDto,
+  User,
+  UserDetail
+} from '../../../../entities/user/api';
 import { formatToInputDate } from '../../../../shared/models/utils/date.utils';
 
-export function mapUserDetailToEditForm(userDetail: User): EditUserForm {
+export function fromUserDetailToEditForm(userDetail: User): EditUserForm {
+  return {
+    email: userDetail.email,
+    username: userDetail.username,
+    fullName: userDetail.fullName,
+    trackingId: userDetail.trackingId,
+    birthday: formatToInputDate(userDetail.birthday),
+    phoneNumber: userDetail.phoneNumber,
+    joinedAt: formatToInputDate(userDetail.joinedAt),
+    department: userDetail.department?.id,
+    period: userDetail.period?.id
+  };
+}
+
+export function fromMyProfileToEditForm(userDetail: UserDetail): EditUserForm {
   return {
     email: userDetail.email,
     username: userDetail.username,
@@ -28,7 +47,7 @@ export type EditUserForm = {
   monthlyConfigId?: string;
 };
 
-export function mapFormToEditUserDto(
+export function fromFormToEditUserDto(
   id: string,
   form: EditUserForm
 ): UpdateUserDto {
@@ -41,5 +60,15 @@ export function mapFormToEditUserDto(
     trackingId: form.trackingId,
     phoneNumber: form.phoneNumber,
     joinedAt: form.joinedAt
+  };
+}
+
+export function fromFormToEditMyProfileDto(
+  form: EditUserForm
+): UpdateMyProfileDto {
+  return {
+    fullName: form.fullName,
+    birthday: form.birthday,
+    phoneNumber: form.phoneNumber
   };
 }
