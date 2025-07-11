@@ -9,15 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
-    strategy:
-      matrix:
-        node: [18.x]
-
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ${{ vars.NODE_VERSION }}
           cache: 'yarn'
 
       - name: Cache node_modules
@@ -29,11 +25,4 @@ jobs:
             - cache-node-modules-
 
       - name: Build dist
-        run: |
-          yarn build
-
-      - name: Upload Dist Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist
+        run: yarn build
