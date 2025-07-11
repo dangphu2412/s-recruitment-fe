@@ -87,9 +87,21 @@ export type PatchUserRolesPayload = {
 export type UserDetail = {
   id: string;
   username: string;
+  fullName: string;
   email: string;
   avatar: string;
   trackingId: string;
+  phoneNumber: string;
+  birthday: string;
+  department: {
+    id: string;
+    name: string;
+  };
+  period: {
+    id: string;
+    name: string;
+  };
+  joinedAt: string;
   createdAt: string;
   deletedAt: string;
 };
@@ -110,6 +122,12 @@ export type GetUserQuery = {
   roleIds?: string[];
   search: string;
 } & Pagination;
+
+export type UpdateMyProfileDto = {
+  fullName: string;
+  birthday?: string;
+  phoneNumber?: string;
+};
 
 export const userApiClient = {
   getMyProfile(): Promise<UserDetail> {
@@ -196,6 +214,13 @@ export const userApiClient = {
   updateUser(data: Partial<User>): Promise<void> {
     return authorizedHttpClient.request({
       url: `/users/${data.id}`,
+      method: 'patch',
+      data
+    });
+  },
+  updateMyProfile(data: UpdateMyProfileDto): Promise<void> {
+    return authorizedHttpClient.request({
+      url: '/users/me',
       method: 'patch',
       data
     });
