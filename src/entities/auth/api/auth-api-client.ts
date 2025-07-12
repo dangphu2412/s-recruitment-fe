@@ -13,6 +13,11 @@ export interface RenewTokensRequest {
   refreshToken: string;
 }
 
+export type UpdateMyPasswordPayload = {
+  currentPassword: string;
+  newPassword: string;
+};
+
 export const authApiClient = {
   login(body: LoginRequest) {
     return httpClient.request<Tokens>({
@@ -35,7 +40,11 @@ export const authApiClient = {
       url: '/auth/logout'
     });
   },
-  registerByCredentials(payload: LoginRequest): Promise<Tokens> {
-    return Promise.resolve({ tokens: [] });
+  updateMyPassword(payload: UpdateMyPasswordPayload) {
+    return httpClient.request<Tokens>({
+      method: 'post',
+      data: payload,
+      url: '/auth/password'
+    });
   }
 };
