@@ -18,13 +18,14 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import {
   EditUserForm,
-  fromMyProfileToEditForm,
-  fromFormToEditMyProfileDto
+  fromFormToEditMyProfileDto,
+  fromMyProfileToEditForm
 } from '../../models/edit-user.model';
 import { ContentHeaderLayout } from '../../../../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import { HeaderActionGroup } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { useNotify } from '../../../../../shared/models/notify';
 import { useQueryClient } from 'react-query';
+import { ChangePasswordContainer } from './ChangePasswordModal/ChangePasswordModal';
 
 export function MyProfile() {
   const { profile, isLoading } = useQueryMyProfile();
@@ -69,6 +70,7 @@ export function MyProfile() {
 
           <HeaderActionGroup>
             <Button onClick={handleSubmit(handleEdit)}>Save</Button>
+            <ChangePasswordContainer />
           </HeaderActionGroup>
         </ContentHeaderLayout>
 

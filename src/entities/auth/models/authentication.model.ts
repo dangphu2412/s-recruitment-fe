@@ -22,6 +22,21 @@ export function useLoginMutation() {
   });
 }
 
+export function useChangeMyPassword() {
+  const showNotify = useNotify();
+
+  return useMutation({
+    mutationFn: authApiClient.updateMyPassword,
+    mutationKey: ['UPDATE_PASSWORD'],
+    onError: () => {
+      showNotify({
+        title: 'Incorrect current password',
+        status: 'error'
+      });
+    }
+  });
+}
+
 export const useLogOut = () => {
   const { push } = useRouter();
   const queryClient = useQueryClient();
