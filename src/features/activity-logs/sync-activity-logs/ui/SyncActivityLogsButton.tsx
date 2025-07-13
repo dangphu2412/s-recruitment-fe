@@ -2,7 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@chakra-ui/react';
 import * as React from 'react';
 import { useQueryClient } from 'react-query';
-import { useMutateSyncLogs } from '../../../../entities/activities/models/activity-log.model';
+import {
+  ACTIVITY_LOGS_QUERY_KEY,
+  useMutateSyncLogs
+} from '../../../../entities/activities/models/activity-log.model';
 import { useNotify } from '../../../../shared/models/notify';
 import { useTaskProgressStore } from '../../../../shared/progress-tasks-bar/progress-tasks-bar';
 import { faRotate } from '@fortawesome/free-solid-svg-icons';
@@ -33,7 +36,7 @@ export function SyncActivityLogsButton() {
               status: 'success'
             });
             completeTask(TASK_ID);
-            queryClient.invalidateQueries(['tracking']);
+            queryClient.invalidateQueries([ACTIVITY_LOGS_QUERY_KEY]);
           },
           onError: () => {
             failTask(TASK_ID);
