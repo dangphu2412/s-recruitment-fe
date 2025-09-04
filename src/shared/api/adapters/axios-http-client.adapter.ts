@@ -1,14 +1,9 @@
 import {
   HttpClient,
-  HttpError,
   HttpRequest,
   HttpResponse
 } from 'src/shared/models/http-client';
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  default as AxiosStatic
-} from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 import { persistentStorage } from 'src/shared/api/services/persistent.storage';
 import { tokenManager } from '../services';
 
@@ -36,22 +31,8 @@ export class HttpClientAdapter implements HttpClient {
   }
 
   async request<T>(data: HttpRequest): Promise<HttpResponse<T>> {
-    try {
-      const { data: response } = await this.axios.request(data);
+    const { data: response } = await this.axios.request(data);
 
-      return response;
-    } catch (error: unknown) {
-      if (AxiosStatic.isAxiosError(error)) {
-        throw new HttpError({
-          message: error.message,
-          status: (error.response?.status ?? 500)?.toString()
-        });
-      }
-
-      throw new HttpError({
-        message: (error as Error).message,
-        status: '500'
-      });
-    }
+    return response;
   }
 }
