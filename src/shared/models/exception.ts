@@ -46,6 +46,15 @@ export function useExceptionHandler({
         return;
       }
 
+      if (AxiosError.ERR_NETWORK === error.code) {
+        showToast({
+          title: 'Network Error',
+          status: 'error'
+        });
+        router.push('/login');
+        return;
+      }
+
       if (HttpStatus.UNAUTHORIZED === error.response?.status) {
         return;
       }
@@ -77,10 +86,9 @@ export function useExceptionHandler({
       }
 
       showToast({
-        title:
-          'System is troubleshooting error. Please contact administrator dangphu241299@gmail.com',
+        title: 'System is troubleshooting error.',
         status: 'error',
-        description: error.message
+        description: 'Please contact administrator dangphu241299@gmail.com'
       });
     },
     [router, showToast]
