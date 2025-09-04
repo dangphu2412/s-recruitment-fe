@@ -14,24 +14,15 @@ export type HttpRequest = {
 };
 
 export type HttpResponse<T = any> = T;
-export type HttpErrorConstructParams = {
-  message: string;
-  status: string;
-};
-
-export class HttpError extends Error {
-  static isHttpError(error: unknown): error is HttpError {
-    return error instanceof HttpError;
-  }
-
-  public status;
-
-  constructor({ message, status }: HttpErrorConstructParams) {
-    super(message);
-    this.status = status;
-  }
-}
 
 export interface HttpClient {
   request: <T = any>(data: HttpRequest) => Promise<HttpResponse<T>>;
+}
+
+export enum HttpStatus {
+  NOT_FOUND = 404,
+  UNAUTHORIZED = 401,
+  ACCESS_DENIED = 403,
+  CONFLICT = 409,
+  INTERNAL_SERVER = 500
 }
