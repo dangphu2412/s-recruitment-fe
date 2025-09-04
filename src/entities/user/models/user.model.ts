@@ -3,13 +3,16 @@ import { FilterKey } from '../../../shared/config';
 import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
 import { useEffect } from 'react';
 import { useNotify } from '../../../shared/models/notify';
-import { useHandleError } from '../../../shared/models/error';
+import {
+  isBusinessException,
+  useExceptionHandler
+} from '../../../shared/models/exception';
 import { useMutation, useQuery } from 'react-query';
 import { GetUserQuery, userApiClient } from '../api';
 import { parseFilterQuery } from '../../../shared/models/pagination';
 import { UserStatus } from '../config';
 import { create } from 'zustand';
-import { HttpError } from '../../../shared/models/http-client';
+import { HttpStatus } from '../../../shared/models/http-client';
 
 export type UserDetail = {
   id: string;
@@ -232,8 +235,11 @@ export function useMutateCreateUser() {
   const setIsSubmitted = useUserStore(user => user.setIsSubmitted);
   const notify = useNotify();
 
-  function handleMutateCreateUserError(error: HttpError | Error) {
-    if (HttpError.isHttpError(error) && error?.status === '409') {
+  function handleMutateCreateUserError(error: Error) {
+    if (
+      isBusinessException(error) &&
+      error?.response?.status === HttpStatus.CONFLICT
+    ) {
       return notify({
         title: 'Email existed',
         status: 'error',
@@ -248,8 +254,8 @@ export function useMutateCreateUser() {
     });
   }
 
-  const handle = useHandleError({
-    onHandleClientError: handleMutateCreateUserError
+  const handle = useExceptionHandler({
+    onBusinessExceptionCapture: handleMutateCreateUserError
   });
 
   return useMutation({

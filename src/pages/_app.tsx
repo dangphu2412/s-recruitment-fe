@@ -4,12 +4,12 @@ import '../../styles/typography.module.scss';
 import { SystemProvider } from 'src/config/system-provider/system.provider';
 import { AppPropsWithLayout } from 'src/shared/models/next.types';
 import { AdminLayout } from '../widgets/admin-layout';
-import { useHandleError } from '../shared/models/error';
+import { useExceptionHandler } from '../shared/models/exception';
 import React from 'react';
 import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const handleError = useHandleError();
+  const handleError = useExceptionHandler();
 
   const renderLayout =
     Component.getLayout ?? (page => <AdminLayout>{page}</AdminLayout>);

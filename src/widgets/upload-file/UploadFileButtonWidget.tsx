@@ -7,7 +7,7 @@ import { useMutation } from 'react-query';
 import { UploadModal } from '../../shared/ui/Header/ContentHeader/UploadModal';
 import { HeaderModalAction } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { noop } from '../../shared/models/utils';
-import { useHandleError } from '../../shared/models/error';
+import { useExceptionHandler } from '../../shared/models/exception';
 
 type Props<R = void> = PropsWithChildren<{
   mutateFn: (file: File) => Promise<R>;
@@ -46,8 +46,8 @@ export function UploadFileButtonWidget<R = void>({
     });
   }
 
-  const handleError = useHandleError({
-    onHandleClientError: onError ?? commonErrorHandler
+  const handleError = useExceptionHandler({
+    onBusinessExceptionCapture: onError ?? commonErrorHandler
   });
 
   function handleUpload(file: File | null | undefined) {

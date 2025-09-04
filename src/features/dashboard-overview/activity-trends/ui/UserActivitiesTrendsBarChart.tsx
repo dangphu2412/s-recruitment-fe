@@ -127,6 +127,7 @@ export function UserActivitiesTrendsBarChart() {
         <div className={'grid grid-cols-3 gap-2'}>
           {groupOptions.map(option => (
             <Button
+              key={option.value}
               colorScheme={groupType === option.value ? 'pink' : undefined}
               onClick={() => setGroupType(option.value)}
             >

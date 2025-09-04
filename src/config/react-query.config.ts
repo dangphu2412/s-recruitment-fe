@@ -1,5 +1,5 @@
 import { QueryClientConfig } from 'react-query/types/core/types';
-import { ErrorHandler } from '../shared/models/error/useHandleError';
+import { ErrorHandler } from '../shared/models/exception';
 
 type QueryClientAdapter = {
   onError: ErrorHandler;
