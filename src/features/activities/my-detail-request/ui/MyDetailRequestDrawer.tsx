@@ -113,7 +113,7 @@ export function MyDetailRequestDrawer({
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader className={'flex items-center space-x-2'}>
-            <span>My request</span>
+            <span>Request</span>
             <ActivityStatusTag value={approvalStatus} />
           </DrawerHeader>
 

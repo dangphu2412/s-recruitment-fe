@@ -66,7 +66,7 @@ export function AddActivityRequestModal({
   const notify = useNotify();
 
   const queryClient = useQueryClient();
-  const { mutate } = useCreateActivityRequestMutation();
+  const { mutate, isLoading } = useCreateActivityRequestMutation();
   const { data: dayOfWeeks } = useDayOfWeeksQuery();
   const { data: timeOfDays } = useTimeOfDayQuery();
 
@@ -215,7 +215,12 @@ export function AddActivityRequestModal({
           <Button variant="outline" mr={3} onClick={onClose}>
             Cancel
           </Button>
-          <Button colorScheme="blue" onClick={handleSubmit(createRequest)}>
+          <Button
+            colorScheme="blue"
+            onClick={handleSubmit(createRequest)}
+            isLoading={isLoading}
+            isDisabled={isLoading}
+          >
             Save
           </Button>
         </ModalFooter>

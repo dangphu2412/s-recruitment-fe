@@ -5,6 +5,7 @@ const DATE_FORMAT = 'dd-MM-yyyy';
 const INPUT_DATE_FORMAT = 'yyyy-MM-dd';
 const MONTH_FORMAT = 'yyyy-MM';
 const DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss';
+const DATE_TIME_TEXT_FORMAT = 'MMM dd, yyyy HH:mm:ss';
 
 type DateInput = Date | string | null | undefined;
 
@@ -38,6 +39,10 @@ export function formatMonth(date: DateInput): string {
 
 export function formatDateTime(date: DateInput): string {
   return formatRoot(date, DATE_TIME_FORMAT);
+}
+
+export function formatDateTimeText(date: DateInput): string {
+  return formatRoot(date, DATE_TIME_TEXT_FORMAT);
 }
 
 export function formatToInputDate(date: DateInput): string {
