@@ -22,19 +22,29 @@ export function MoreActionCell({ renderActions }: Props) {
   }
 
   return (
-    <Menu>
-      <MenuButton className={styles['cell-more-option']} cursor="pointer">
-        <FontAwesomeIcon icon={faEllipsisVertical} />
-      </MenuButton>
-      <Portal>
-        <MenuList>
-          {actions.map(item => (
-            <MenuItem className={'z-10'} key={item.key} onClick={item.onClick}>
-              {item.content}
-            </MenuItem>
-          ))}
-        </MenuList>
-      </Portal>
-    </Menu>
+    <div
+      onClick={event => {
+        event.stopPropagation();
+      }}
+    >
+      <Menu>
+        <MenuButton className={styles['cell-more-option']} cursor="pointer">
+          <FontAwesomeIcon icon={faEllipsisVertical} />
+        </MenuButton>
+        <Portal>
+          <MenuList>
+            {actions.map(item => (
+              <MenuItem
+                className={'z-10'}
+                key={item.key}
+                onClick={item.onClick}
+              >
+                {item.content}
+              </MenuItem>
+            ))}
+          </MenuList>
+        </Portal>
+      </Menu>
+    </div>
   );
 }

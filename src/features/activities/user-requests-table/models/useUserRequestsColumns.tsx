@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/table-core';
 import { Checkbox, Link } from '@chakra-ui/react';
 import {
+  getRequestActions,
   useMyActivityStore,
   useUpdateApprovalActivityRequestMutation
 } from '../../../../entities/activities/models/activity-request.model';
@@ -91,7 +92,13 @@ export function useUserRequestsColumns() {
           const author = getValue();
 
           return (
-            <div className={'space-y-2'}>
+            <div
+              className={'space-y-2'}
+              onClick={event => {
+                event.preventDefault();
+                event.stopPropagation();
+              }}
+            >
               <Link
                 color="teal.500"
                 href={`/users/${author.id}/profile`}
@@ -137,20 +144,7 @@ export function useUserRequestsColumns() {
         id: 'Actions',
         header: 'Actions',
         cell: ({ row }) => {
-          const nextStateButton: Record<
-            RequestActivityStatus,
-            ApprovalRequestAction[]
-          > = {
-            [RequestActivityStatus.PENDING]: [
-              ApprovalRequestAction.APPROVE,
-              ApprovalRequestAction.REJECT,
-              ApprovalRequestAction.REVISE
-            ],
-            [RequestActivityStatus.APPROVED]: [],
-            [RequestActivityStatus.REJECTED]: [ApprovalRequestAction.REVISE],
-            [RequestActivityStatus.REVISE]: []
-          };
-          const actions = nextStateButton[row.original.approvalStatus];
+          const actions = getRequestActions(row.original.approvalStatus);
 
           function renderActions() {
             const btnActions = [];
