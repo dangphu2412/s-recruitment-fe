@@ -69,7 +69,7 @@ export const activityLogApiClient = {
       responseType: 'blob'
     });
 
-    return downloadFile(response, 'reports-6-months.xlsx');
+    return downloadFile(response, 'reports-1-months.xlsx');
   },
   findAnalyticLogs: (findAnalyticLogQuery: FindAnalyticLogQuery) => {
     return authorizedHttpClient.request<LogAnalyticResponse>({
