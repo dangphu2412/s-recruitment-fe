@@ -5,7 +5,10 @@ import {
   GetMyActivityQuery
 } from '../api/activity-request-api.client';
 import { create } from 'zustand/react';
-import { ApprovalRequestAction } from '../config/constants/request-activity-status.enum';
+import {
+  ApprovalRequestAction,
+  RequestActivityStatus
+} from '../config/constants/request-activity-status.enum';
 import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
 import { object, string } from 'yup';
 import { RequestTypes } from '../config/constants/request-activity-metadata.constant';
@@ -48,6 +51,16 @@ export function useMyActivityRequestDetailQuery(id: number | null) {
   });
 }
 
+export const ACTIVITY_REQUEST_DETAIL_QUERY_KEY =
+  'ACTIVITY_REQUEST_DETAIL_QUERY_KEY';
+export function useActivityRequestDetailQuery(id: number | null) {
+  return useQuery({
+    queryKey: [ACTIVITY_REQUEST_DETAIL_QUERY_KEY, id],
+    queryFn: () => activityRequestApiClient.getById(id as number),
+    enabled: id !== null
+  });
+}
+
 export function useCreateActivityRequestMutation() {
   return useMutation({
     mutationKey: ['create-request-activity'],
@@ -71,6 +84,13 @@ export function useUpdateMyActivityRequestMutation() {
   return useMutation({
     mutationKey: ['update-my-request-activity'],
     mutationFn: activityRequestApiClient.updateMyRequestActivity
+  });
+}
+
+export function useUpdateActivityRequestMutation() {
+  return useMutation({
+    mutationKey: ['update-request-activity'],
+    mutationFn: activityRequestApiClient.updateRequestActivity
   });
 }
 
@@ -155,6 +175,7 @@ type ActivityRequestStore = Pagination &
     ) => void;
     reset: () => void;
     submitSearch: () => void;
+    selectedId: null | number;
   };
 
 const DEFAULT_SEARCH = {
@@ -172,6 +193,7 @@ export const useActivityRequestStore = create<ActivityRequestStore>(set => ({
   searchValues: {
     ...DEFAULT_SEARCH
   },
+  selectedId: null,
   setValue: (key, value) => {
     set(state => ({ ...state, [key]: value }));
   },
@@ -304,3 +326,23 @@ export const activityRequestValidationSchema = object({
     )
     .nullable()
 });
+
+export function getRequestActions(
+  status: RequestActivityStatus
+): ApprovalRequestAction[] {
+  const nextStateTransition: Record<
+    RequestActivityStatus,
+    ApprovalRequestAction[]
+  > = {
+    [RequestActivityStatus.PENDING]: [
+      ApprovalRequestAction.APPROVE,
+      ApprovalRequestAction.REJECT,
+      ApprovalRequestAction.REVISE
+    ],
+    [RequestActivityStatus.APPROVED]: [],
+    [RequestActivityStatus.REJECTED]: [ApprovalRequestAction.REVISE],
+    [RequestActivityStatus.REVISE]: []
+  };
+
+  return nextStateTransition[status];
+}

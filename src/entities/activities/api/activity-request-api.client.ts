@@ -94,6 +94,12 @@ export const activityRequestApiClient = {
       url: `/activity-requests/my/${id}`
     });
   },
+  getById: async (id: number) => {
+    return authorizedHttpClient.request<ActivityRequestResponse>({
+      method: 'get',
+      url: `/activity-requests/${id}`
+    });
+  },
   createRequestActivities: async (data: CreateRequestActivityDTO) => {
     return authorizedHttpClient.request<void>({
       method: 'post',
@@ -115,6 +121,16 @@ export const activityRequestApiClient = {
     return authorizedHttpClient.request<void>({
       method: 'patch',
       url: `/activity-requests/my/${id}`,
+      data
+    });
+  },
+  updateRequestActivity: async ({
+    id,
+    ...data
+  }: UpdateMyRequestActivityDTO) => {
+    return authorizedHttpClient.request<void>({
+      method: 'patch',
+      url: `/activity-requests/${id}`,
       data
     });
   },
