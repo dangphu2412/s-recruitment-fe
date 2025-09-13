@@ -18,6 +18,7 @@ import {
   useSyncParamsToMenu
 } from 'src/entities/menu/models';
 import Image from 'next/image';
+import { useTranslate } from '../../../../../shared/translations/translation';
 
 type Props = Omit<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
@@ -34,6 +35,7 @@ export function SideBar({
 }: Props): React.ReactElement {
   const currentMenu = useMenuStore(state => state.currentMenu);
   const { items, selectMenu, goToDashboard } = useMenu();
+  const { formatMessage } = useTranslate();
 
   useSyncParamsToMenu({
     menus: items
@@ -53,13 +55,13 @@ export function SideBar({
         marginTop="0.5rem"
         marginBottom="1.5rem"
         display={'flex'}
-        className={'flex items-center justify-left cursor-pointer gap-2'}
+        className={'flex items-center justify-left cursor-pointer gap-4'}
         onClick={goToDashboard}
       >
         <Image src={'/logo.png'} alt={'logo'} width={'35'} height={'42'} />
 
-        <Text align="left" fontSize="lg">
-          Admin
+        <Text align="left" fontSize="lg" fontWeight={'medium'}>
+          {formatMessage({ id: 'menu.title' })}
         </Text>
       </Box>
 

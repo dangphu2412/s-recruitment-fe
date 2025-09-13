@@ -20,6 +20,7 @@ import Link from 'next/link';
 import { useUserStore } from '../../../../entities/user/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import { LanguageSwitcher } from '../../../../shared/translations/switcher';
 
 type Props = {
   isMenuHidden: boolean;
@@ -29,6 +30,7 @@ type UserActionItem = {
   text: React.ReactNode;
   link: string;
   icon?: React.ReactNode;
+  color?: string;
 };
 
 export function Header({ isMenuHidden }: Props): React.ReactElement {
@@ -48,7 +50,8 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
     {
       text: 'Log Out',
       link: '/logout',
-      icon: <FontAwesomeIcon icon={faSignOut} />
+      icon: <FontAwesomeIcon icon={faSignOut} />,
+      color: 'red.500'
     }
   ];
 
@@ -93,9 +96,10 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
           className="space-x-4"
           flexDirection="row"
         >
+          <LanguageSwitcher />
           <Menu>
             <MenuButton cursor="pointer">
-              <Avatar size={'sm'} />
+              <Avatar size={'sm'} name={user?.fullName} />
             </MenuButton>
             <MenuList className={'divide-y'}>
               <Text className={'mx-3 my-2'} fontSize={'sm'} color={'pink.500'}>
@@ -105,6 +109,7 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
               <div>
                 {userActionItems.map(item => (
                   <MenuItem
+                    color={item.color}
                     key={item.link}
                     onClick={() => router.push(item.link)}
                     className={'space-x-2'}

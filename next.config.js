@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  i18n: {
+    locales: ["en", "vi"],
+    defaultLocale: "vi",
+  },
   reactStrictMode: true,
   experimental: {
     turbo: {
