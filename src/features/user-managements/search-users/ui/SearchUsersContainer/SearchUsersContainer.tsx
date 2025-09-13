@@ -6,9 +6,11 @@ import { useUserStore } from 'src/entities/user/models';
 import { DepartmentFilterDialog } from './DepartmentFilterDialog/DepartmentFilterDialog';
 import { PeriodFilterDialog } from './PeriodFilterDialog/PeriodFilterDialog';
 import { StepIds } from '../../../user-guide/user-management-guide';
+import { useTranslate } from '../../../../../shared/translations/translation';
 
 export function SearchUsersContainer(): React.ReactElement {
   const setIsSubmitted = useUserStore(user => user.setIsSubmitted);
+  const { formatMessage } = useTranslate();
 
   function handleSubmitFilter() {
     setIsSubmitted();
@@ -22,7 +24,9 @@ export function SearchUsersContainer(): React.ReactElement {
       <StatusFilterDialog />
 
       <div>
-        <Button onClick={handleSubmitFilter}>Search</Button>
+        <Button onClick={handleSubmitFilter}>
+          {formatMessage({ id: 'user.search' })}
+        </Button>
       </div>
     </div>
   );

@@ -5,10 +5,12 @@ import { useNotify } from '../../../../../shared/models/notify';
 import { useQueryClient } from 'react-query';
 import { UploadFileButtonWidget } from '../../../../../widgets/upload-file/UploadFileButtonWidget';
 import { userApiClient } from '../../../../../entities/user/api';
+import { useTranslate } from '../../../../../shared/translations/translation';
 
 export function ImportUsersContainer(): React.ReactElement {
   const notify = useNotify();
   const queryClient = useQueryClient();
+  const { formatMessage } = useTranslate();
 
   function renderDescription() {
     return (
@@ -37,7 +39,7 @@ export function ImportUsersContainer(): React.ReactElement {
   return (
     <UploadFileButtonWidget
       id={StepIds.BTN_IMPORT_USER}
-      title={'Upload Users'}
+      title={formatMessage({ id: 'user.uploadUsers' })}
       description={renderDescription()}
       resource={'upload-users'}
       accept={'.xlsx'}
@@ -76,7 +78,7 @@ export function ImportUsersContainer(): React.ReactElement {
         });
       }}
     >
-      Upload Users
+      {formatMessage({ id: 'user.uploadUsers' })}
     </UploadFileButtonWidget>
   );
 }

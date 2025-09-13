@@ -15,6 +15,7 @@ import { useQueryClient } from 'react-query';
 import { formatDate } from '../../../../shared/models/utils/date.utils';
 import { createColumnHelper } from '@tanstack/table-core';
 import { CommonData } from '../../../../entities/user/api/user-master-data-api-client';
+import { useTranslate } from '../../../../shared/translations/translation';
 
 export type UserManagementView = {
   id: string;
@@ -45,11 +46,12 @@ export function useAdminColumns() {
   const handleRefresh = useCallback(() => {
     queryClient.invalidateQueries(QUERY_USERS_KEY);
   }, [queryClient]);
+  const { formatMessage } = useTranslate();
 
   return useMemo(
     () => [
       columnHelper.accessor('deletedAt', {
-        header: 'Status',
+        header: formatMessage({ id: 'user.table.status' }),
         cell: props => (
           <StatusCell
             key={props.row.id}
@@ -60,14 +62,14 @@ export function useAdminColumns() {
         enableSorting: false
       }),
       columnHelper.accessor('username', {
-        header: 'Username',
+        header: formatMessage({ id: 'user.table.username' }),
         cell: UsernameCell
       }),
       columnHelper.accessor('fullName', {
-        header: 'Full Name'
+        header: formatMessage({ id: 'user.table.fullName' })
       }),
       columnHelper.accessor('debtMonths', {
-        header: 'Debt Months',
+        header: formatMessage({ id: 'user.table.debtMonths' }),
         cell: props => {
           if (props.row.original.isProbation) {
             return <Tag>Probation</Tag>;
@@ -81,7 +83,7 @@ export function useAdminColumns() {
         }
       }),
       columnHelper.accessor('paidMonths', {
-        header: 'Paid Months',
+        header: formatMessage({ id: 'user.table.paidMonths' }),
         cell: props => {
           if (props.row.original.isProbation) {
             return <Tag>Probation</Tag>;
@@ -91,7 +93,7 @@ export function useAdminColumns() {
         }
       }),
       columnHelper.accessor('remainMonths', {
-        header: 'Remain Months',
+        header: formatMessage({ id: 'user.table.remainMonths' }),
         cell: props => {
           if (props.row.original.isProbation) {
             return <Tag>Probation</Tag>;
@@ -101,18 +103,18 @@ export function useAdminColumns() {
         }
       }),
       columnHelper.accessor('joinedAt', {
-        header: 'Joined At',
+        header: formatMessage({ id: 'user.table.joinedAt' }),
         cell: props => <>{formatDate(props.getValue())}</>
       }),
       columnHelper.accessor('roles', {
-        header: 'Roles',
+        header: formatMessage({ id: 'user.table.roles' }),
         cell: RoleCell
       }),
       columnHelper.accessor('department.name', {
-        header: 'Department'
+        header: formatMessage({ id: 'user.table.department' })
       }),
       columnHelper.display({
-        header: 'Actions',
+        header: formatMessage({ id: 'user.table.actions' }),
         cell: props => (
           <UserOverviewAction
             {...props}
@@ -122,6 +124,6 @@ export function useAdminColumns() {
         )
       })
     ],
-    [setSelectedPaymentUserId, handleRefresh, push]
+    [formatMessage, handleRefresh, push, setSelectedPaymentUserId]
   );
 }

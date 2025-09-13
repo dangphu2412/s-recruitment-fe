@@ -9,8 +9,10 @@ import { Button, Text } from '@chakra-ui/react';
 import { useQueryClient } from 'react-query';
 import { RefreshButton } from '../../../../../shared/ui/Button/RefreshButton';
 import { StepIds } from '../../../user-guide/user-management-guide';
+import { useTranslate } from '../../../../../shared/translations/translation';
 
 export function PaginateUsersContainer(): React.ReactElement {
+  const { formatMessage } = useTranslate();
   const page = useUserStore(user => user.overview.filters.page);
   const size = useUserStore(user => user.overview.filters.size);
   const setPagination = useUserStore(user => user.setPagination);
@@ -67,10 +69,15 @@ export function PaginateUsersContainer(): React.ReactElement {
 
       <div className={'flex gap-2 items-center'}>
         <Text fontSize={'sm'} fontWeight={'medium'}>
-          Total: {totalRecords} users
+          {formatMessage(
+            { id: 'user.totalUsers' },
+            {
+              count: totalRecords
+            }
+          )}
         </Text>
         <Button variant={'ghost'} onClick={handleResetFilter}>
-          Clear
+          {formatMessage({ id: 'user.clear' })}
         </Button>
       </div>
     </div>
