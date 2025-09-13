@@ -1,3 +1,26 @@
 {
-  "menu.title": "HRM"
+  "menu.title": "HRM",
+  "shared.add": "Tạo mới",
+  "user.heading": "Quản lý người dùng",
+  "user.subHeading": "Nơi bạn có thể tạo, cập nhật và thay đổi trạng thái hoạt động của người dùng",
+  "user.searchPlaceholder": "Tìm theo tên đăng nhập, họ tên",
+  "user.uploadUsers": "Tải lên file",
+  "user.member": "Thành viên",
+  "user.syncUsers": "Đồng bộ",
+  "user.department": "Phòng ban",
+  "user.period": "Khoá",
+  "user.status": "Trạng thái",
+  "user.search": "Tìm kiếm",
+  "user.clear": "Xóa",
+  "user.totalUsers": "Tổng: {count} người dùng",
+  "user.table.status": "Trạng thái",
+  "user.table.username": "Tên đăng nhập",
+  "user.table.fullName": "Họ và tên",
+  "user.table.debtMonths": "Tháng nợ",
+  "user.table.paidMonths": "Tháng đã trả",
+  "user.table.remainMonths": "Tháng còn lại",
+  "user.table.joinedAt": "Thời điểm tham gia",
+  "user.table.roles": "Quyền",
+  "user.table.department": "Phòng ban",
+  "user.table.actions": "Thao tác"
 }
