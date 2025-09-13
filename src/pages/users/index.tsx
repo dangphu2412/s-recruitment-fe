@@ -18,18 +18,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotate } from '@fortawesome/free-solid-svg-icons';
 import { useMutateFingerPrintUsers } from '../../entities/activities/models/activity-master-data.model';
 import { useQueryClient } from 'react-query';
+import { useTranslate } from '../../shared/translations/translation';
 
 export default function AdministratorPage(): ReactElement {
   const notify = useNotify();
   const { mutate } = useMutateFingerPrintUsers();
   const queryClient = useQueryClient();
+  const { formatMessage } = useTranslate();
 
   return (
     <Card>
       <ContentHeaderLayout>
         <ContentHeader
-          main={'Administrator management'}
-          brief={'Where you can create, update and change user active'}
+          main={formatMessage({ id: 'user.heading' })}
+          brief={formatMessage({ id: 'user.subHeading' })}
         />
 
         <HeaderActionGroup>
@@ -51,7 +53,7 @@ export default function AdministratorPage(): ReactElement {
             }}
           >
             <FontAwesomeIcon className="mr-2" icon={faRotate} />
-            Sync users
+            {formatMessage({ id: 'user.syncUsers' })}
           </Button>
 
           <UserGuideButton
