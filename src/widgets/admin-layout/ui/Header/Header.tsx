@@ -14,11 +14,17 @@ import classNames from 'classnames';
 import styles from './Header.module.scss';
 import { useUserStore } from '../../../../entities/user/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAnglesRight,
+  faBars,
+  faSignOut,
+  faUser
+} from '@fortawesome/free-solid-svg-icons';
 import { LanguageSwitcher } from '../../../../shared/translations/switcher';
 import Image from 'next/image';
 import { useTranslate } from '../../../../shared/translations/translation';
 import Link from 'next/link';
+import { useSidebarController } from '../../../../features/menu/features-menu/ui/SideBar/SideBarControl';
 
 type UserActionItem = {
   text: React.ReactNode;
@@ -32,6 +38,7 @@ export function Header(): React.ReactElement {
   const headerRef = React.useRef<HTMLDivElement>(null);
   const user = useUserStore(user => user.currentUser);
   const { formatMessage } = useTranslate();
+  const [sidebarState, setSidebarState] = useSidebarController();
 
   const userActionItems: UserActionItem[] = [
     {
@@ -57,7 +64,19 @@ export function Header(): React.ReactElement {
     >
       <div className={'flex items-center justify-left cursor-pointer gap-4'}>
         <Tooltip label="Coming soon">
-          <FontAwesomeIcon icon={faBars} width={48} height={64} />
+          <FontAwesomeIcon
+            icon={sidebarState.isOpen ? faBars : faAnglesRight}
+            width={48}
+            height={64}
+            onClick={() => {
+              setSidebarState(pre => {
+                return {
+                  ...pre,
+                  isOpen: !pre.isOpen
+                };
+              });
+            }}
+          />
         </Tooltip>
 
         <Link className={'flex gap-2'} href={'/'}>

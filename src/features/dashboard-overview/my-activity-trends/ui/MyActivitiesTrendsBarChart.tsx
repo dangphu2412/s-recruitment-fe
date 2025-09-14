@@ -19,6 +19,8 @@ import {
   formatMonth
 } from '../../../../shared/models/utils/date.utils';
 import { useDashboardMyActivityTrend } from '../../../../entities/dashboard/models/dashboard.model';
+import colors from 'tailwindcss/colors';
+import { useTranslate } from '../../../../shared/translations/translation';
 
 ChartJS.register(
   LineElement,
@@ -53,6 +55,7 @@ const groupOptions = [
 export function MyActivitiesTrendsBarChart() {
   const [groupType, setGroupType] = useState(GroupType.WEEKLY);
   const { data } = useDashboardMyActivityTrend(groupType);
+  const { formatMessage } = useTranslate();
 
   const options: ChartOptions<'bar'> = useMemo(() => {
     return {
@@ -82,19 +85,19 @@ export function MyActivitiesTrendsBarChart() {
 
     function getDataSet() {
       const late = {
-        label: 'Late',
+        label: formatMessage({ id: 'myDashboard.chart.late' }),
         data: [] as number[],
-        backgroundColor: '#f87171'
+        backgroundColor: colors.red['500']
       };
       const onTime = {
-        label: 'Correct',
+        label: formatMessage({ id: 'myDashboard.chart.correct' }),
         data: [] as number[],
-        backgroundColor: '#4ade80'
+        backgroundColor: colors.green['500']
       };
       const unChecked = {
-        label: 'Unchecked',
+        label: formatMessage({ id: 'myDashboard.chart.unchecked' }),
         data: [] as number[],
-        backgroundColor: '#facc15'
+        backgroundColor: colors.yellow['500']
       };
 
       if (!data) {
@@ -114,7 +117,7 @@ export function MyActivitiesTrendsBarChart() {
       labels: getLabels(),
       datasets: getDataSet()
     };
-  }, [data, groupType]);
+  }, [data, formatMessage, groupType]);
 
   const totalActivities =
     data?.items?.reduce((acc, item) => {
@@ -125,8 +128,12 @@ export function MyActivitiesTrendsBarChart() {
     <section className={'space-y-8'}>
       <div className={'grid grid-cols-3'}>
         <div className={'col-span-2'}>
-          <Heading size={'md'}>My Daily Activity</Heading>
-          <Text fontSize={'sm'}>Your activity count this week</Text>
+          <Heading size={'md'}>
+            {formatMessage({ id: 'myDashboard.myDailyActivity' })}
+          </Heading>
+          <Text fontSize={'sm'}>
+            {formatMessage({ id: 'myDashboard.myDailyActivityDesc' })}
+          </Text>
         </div>
 
         <div className={'grid grid-cols-3 gap-2'}>
@@ -142,7 +149,16 @@ export function MyActivitiesTrendsBarChart() {
       </div>
 
       <Chart type={'bar'} data={chartData} options={options} />
-      <p>Total: {totalActivities} activities</p>
+      <p>
+        {formatMessage(
+          {
+            id: 'myDashboard.chart.totalActivities'
+          },
+          {
+            count: totalActivities
+          }
+        )}
+      </p>
     </section>
   );
 }
