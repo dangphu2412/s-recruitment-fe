@@ -19,6 +19,7 @@ import {
   formatMonth
 } from '../../../../shared/models/utils/date.utils';
 import { useDashboardUserActivityTrend } from '../../../../entities/dashboard/models/dashboard.model';
+import colors from 'tailwindcss/colors';
 
 ChartJS.register(
   LineElement,
@@ -84,17 +85,17 @@ export function UserActivitiesTrendsBarChart() {
       const late = {
         label: 'Late',
         data: [] as number[],
-        backgroundColor: '#f87171'
+        backgroundColor: colors.red['500']
       };
       const onTime = {
         label: 'Correct',
         data: [] as number[],
-        backgroundColor: '#4ade80'
+        backgroundColor: colors.green['500']
       };
       const unChecked = {
         label: 'Unchecked',
         data: [] as number[],
-        backgroundColor: '#facc15'
+        backgroundColor: colors.yellow['500']
       };
 
       if (!data) {

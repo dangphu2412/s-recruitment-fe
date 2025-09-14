@@ -4,6 +4,7 @@ import { Footer } from '../../../../shared/ui/Footer';
 import { SideBar } from '../../../../features/menu/features-menu';
 import { Header } from '../Header/Header';
 import { TaskProgressBar } from '../../../../shared/progress-tasks-bar/progress-tasks-bar';
+import { SideBarController } from '../../../../features/menu/features-menu/ui/SideBar/SideBarControl';
 
 type AdminLayoutProps = PropsWithChildren;
 
@@ -12,17 +13,19 @@ export function AdminLayout({
 }: AdminLayoutProps): React.ReactElement {
   return (
     <AuthenticatedGuard>
-      <Header />
+      <SideBarController>
+        <Header />
 
-      <div className={'flex'}>
-        <SideBar />
+        <div className={'flex'}>
+          <SideBar />
 
-        <div className={'flex-1'}>
-          <div className="min-h-[calc(100vh-160px)] px-4">{children}</div>
+          <div className={'flex-1'}>
+            <div className="min-h-[calc(100vh-160px)] px-4">{children}</div>
 
-          <Footer />
+            <Footer />
+          </div>
         </div>
-      </div>
+      </SideBarController>
 
       <TaskProgressBar />
     </AuthenticatedGuard>

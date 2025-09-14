@@ -10,9 +10,11 @@ import NextLink from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 import { useDashboardMyKPI } from '../../../../entities/dashboard/models/dashboard.model';
+import { useTranslate } from '../../../../shared/translations/translation';
 
 export function UserActivitiesCard() {
   const { data } = useDashboardMyKPI();
+  const { formatMessage } = useTranslate();
 
   function getRemainingPayment() {
     if (!data) return 0;
@@ -43,7 +45,7 @@ export function UserActivitiesCard() {
       <Card>
         <CardHeader>
           <Text fontSize="lg" className={'space-x-2 font-bold'}>
-            <span>Total paid</span>
+            <span>{formatMessage({ id: 'myDashboard.totalPaid' })}</span>
           </Text>
         </CardHeader>
 
@@ -55,7 +57,12 @@ export function UserActivitiesCard() {
           <Progress colorScheme={'green'} value={getPercentagePaid()} />
 
           <Text fontSize={'md'}>
-            {getRemainingPayment()} to reach your target
+            {formatMessage(
+              { id: 'myDashboard.totalPaidTarget' },
+              {
+                amount: getRemainingPayment()
+              }
+            )}
           </Text>
         </CardBody>
       </Card>
@@ -63,7 +70,7 @@ export function UserActivitiesCard() {
       <Card>
         <CardHeader>
           <Text fontSize="lg" className={'space-x-2 font-bold'}>
-            <span>To be finished days</span>
+            <span>{formatMessage({ id: 'myDashboard.toBeFinishedDays' })}</span>
           </Text>
         </CardHeader>
 
@@ -75,7 +82,12 @@ export function UserActivitiesCard() {
           <Progress colorScheme={'green'} value={getPercentageWork()} />
 
           <Text fontSize={'md'}>
-            {getRemainingWork()} remaining work in this week
+            {formatMessage(
+              { id: 'myDashboard.toBeFinishedRemain' },
+              {
+                count: getRemainingWork()
+              }
+            )}
           </Text>
         </CardBody>
       </Card>
@@ -83,7 +95,7 @@ export function UserActivitiesCard() {
       <Card>
         <CardHeader>
           <Text fontSize="lg" className={'space-x-2 font-bold'}>
-            <span>Pending requests</span>
+            <span>{formatMessage({ id: 'myDashboard.pendingRequests' })}</span>
           </Text>
         </CardHeader>
 
@@ -96,7 +108,8 @@ export function UserActivitiesCard() {
               fontSize={'sm'}
               as={NextLink}
             >
-              View your requests <FontAwesomeIcon icon={faExternalLink} />
+              {formatMessage({ id: 'myDashboard.pendingRequestsView' })}{' '}
+              <FontAwesomeIcon icon={faExternalLink} />
             </Link>
           </Text>
         </CardBody>
@@ -105,7 +118,7 @@ export function UserActivitiesCard() {
       <Card variant={'elevated'} color={'red'}>
         <CardHeader>
           <Text fontSize="lg" className={'space-x-2 font-bold'}>
-            <span>Late Activities</span>
+            <span>{formatMessage({ id: 'myDashboard.lateActivities' })}</span>
           </Text>
         </CardHeader>
 
@@ -114,7 +127,7 @@ export function UserActivitiesCard() {
 
           <Text fontSize={'md'}>
             <Link href={'#'} fontSize={'sm'} as={NextLink}>
-              View yours late (developing){' '}
+              {formatMessage({ id: 'myDashboard.lateActivitiesView' })}{' '}
               <FontAwesomeIcon icon={faExternalLink} />
             </Link>
           </Text>
