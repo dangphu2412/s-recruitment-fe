@@ -36,7 +36,7 @@ export type UserManagementView = {
 
 const columnHelper = createColumnHelper<UserManagementView>();
 
-export function useAdminColumns() {
+export function useUserManagementColumns() {
   const { push } = useRouter();
   const setSelectedPaymentUserId = useUserStore(
     user => user.setSelectedPaymentUserId
@@ -114,6 +114,7 @@ export function useAdminColumns() {
         header: formatMessage({ id: 'user.table.department' })
       }),
       columnHelper.display({
+        id: 'actions',
         header: formatMessage({ id: 'user.table.actions' }),
         cell: props => (
           <UserOverviewAction
