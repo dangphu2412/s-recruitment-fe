@@ -81,14 +81,9 @@ export function useMenu() {
     [push]
   );
 
-  function goToDashboard() {
-    push('/');
-  }
-
   return {
     items,
-    selectMenu,
-    goToDashboard
+    selectMenu
   };
 }
 

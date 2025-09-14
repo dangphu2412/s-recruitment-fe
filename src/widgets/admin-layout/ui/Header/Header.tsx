@@ -1,30 +1,24 @@
 import React from 'react';
 import {
   Avatar,
-  Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
   Flex,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  Text
+  Text,
+  Tooltip
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
-import { useMenuStore } from '../../../../entities/menu/models';
-import Link from 'next/link';
 import { useUserStore } from '../../../../entities/user/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 import { LanguageSwitcher } from '../../../../shared/translations/switcher';
-
-type Props = {
-  isMenuHidden: boolean;
-};
+import Image from 'next/image';
+import { useTranslate } from '../../../../shared/translations/translation';
+import Link from 'next/link';
 
 type UserActionItem = {
   text: React.ReactNode;
@@ -33,13 +27,11 @@ type UserActionItem = {
   color?: string;
 };
 
-export function Header({ isMenuHidden }: Props): React.ReactElement {
+export function Header(): React.ReactElement {
   const router = useRouter();
   const headerRef = React.useRef<HTMLDivElement>(null);
-  const currentMenu = useMenuStore(state => state.currentMenu);
   const user = useUserStore(user => user.currentUser);
-
-  const menuName = currentMenu?.name ?? 'Main';
+  const { formatMessage } = useTranslate();
 
   const userActionItems: UserActionItem[] = [
     {
@@ -58,38 +50,26 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
   return (
     <Flex
       ref={headerRef}
-      className={classNames(
-        styles['header-wrapper'],
-        isMenuHidden && styles['header-bloated']
-      )}
+      className={classNames(styles['header-wrapper'])}
       justifyContent="space-between"
       alignItems="center"
       zIndex="998"
     >
-      <div>
-        <Breadcrumb fontWeight="medium" fontSize="sm">
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">Pages</BreadcrumbLink>
-          </BreadcrumbItem>
+      <div className={'flex items-center justify-left cursor-pointer gap-4'}>
+        <Tooltip label="Coming soon">
+          <FontAwesomeIcon icon={faBars} width={48} height={64} />
+        </Tooltip>
 
-          <BreadcrumbItem>
-            <BreadcrumbLink href={currentMenu?.accessLink ?? '/'} as={Link}>
-              {menuName}
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
+        <Link className={'flex gap-2'} href={'/'}>
+          <Image src={'/logo.png'} alt={'logo'} width={'25'} height={'30'} />
 
-        <Text
-          align="left"
-          fontSize="md"
-          fontWeight="semibold"
-          marginTop="0.5rem"
-        >
-          {menuName}
-        </Text>
+          <Text align="left" fontSize="lg" fontWeight={'medium'}>
+            {formatMessage({ id: 'menu.title' })}
+          </Text>
+        </Link>
       </div>
 
-      <Box p="4">
+      <div className={''}>
         <Flex
           justifyContent="space-between"
           alignItems="center"
@@ -121,7 +101,7 @@ export function Header({ isMenuHidden }: Props): React.ReactElement {
             </MenuList>
           </Menu>
         </Flex>
-      </Box>
+      </div>
     </Flex>
   );
 }
