@@ -10,32 +10,29 @@ import {
   Text
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
 import styles from './SideBar.module.scss';
 import {
+  SidebarMenuItem,
   useMenu,
   useMenuStore,
   useSyncParamsToMenu
 } from 'src/entities/menu/models';
-import Image from 'next/image';
-import { useTranslate } from '../../../../../shared/translations/translation';
+import {
+  faCaretDown,
+  faCaretRight,
+  faHome
+} from '@fortawesome/free-solid-svg-icons';
+import classNames from 'classnames';
+import Link from 'next/link';
 
-type Props = Omit<
-  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-  'className'
-> & {
-  isSideBarHidden: boolean;
-  isHovering: boolean;
-};
+type Props = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+>;
 
-export function SideBar({
-  isSideBarHidden,
-  isHovering,
-  ...rest
-}: Props): React.ReactElement {
+export function SideBar({ className, ...rest }: Props): React.ReactElement {
   const currentMenu = useMenuStore(state => state.currentMenu);
-  const { items, selectMenu, goToDashboard } = useMenu();
-  const { formatMessage } = useTranslate();
+  const { items, selectMenu } = useMenu();
 
   useSyncParamsToMenu({
     menus: items
@@ -44,105 +41,118 @@ export function SideBar({
   return (
     <aside
       className={classNames(
-        styles['sidebar-wrapper'],
-        isSideBarHidden && styles['sidebar-dynamic-display'],
-        isSideBarHidden && isHovering && styles['sidebar-bloat']
+        'w-[var(--sidebar-w)] h-[calc(100vh-60px)] space-y-4 py-4 bg-white shadow-lg sticky top-[60px]',
+        className
       )}
       {...rest}
     >
-      <Box
-        marginLeft="1rem"
-        marginTop="0.5rem"
-        marginBottom="1.5rem"
-        display={'flex'}
-        className={'flex items-center justify-left cursor-pointer gap-4'}
-        onClick={goToDashboard}
-      >
-        <Image src={'/logo.png'} alt={'logo'} width={'35'} height={'42'} />
+      <Link href={'/'} className={'px-5 space-x-2'}>
+        <FontAwesomeIcon icon={faHome} />
+        <span>Home</span>
+      </Link>
 
-        <Text align="left" fontSize="lg" fontWeight={'medium'}>
-          {formatMessage({ id: 'menu.title' })}
-        </Text>
-      </Box>
+      <hr />
 
-      <hr className="mb-4" />
+      <Accordion allowToggle>
+        {items?.map(item => {
+          return (
+            <AccordionItem borderY="none" key={item.id}>
+              {({ isExpanded }) => (
+                <>
+                  <ParentMenuButton
+                    item={item}
+                    onClick={() => selectMenu(item)}
+                    isExpanded={isExpanded}
+                  />
 
-      <Box display={{ base: 'none', md: 'block' }}>
-        <Accordion allowToggle>
-          {items?.map(item => {
-            return (
-              <AccordionItem borderY="none" key={item.id}>
-                {({ isExpanded }) => (
-                  <>
-                    <AccordionButton
-                      paddingY="0.675rem"
-                      paddingX="1rem"
-                      marginBottom="0.375rem"
-                      className={`${isExpanded ? styles['active-menu'] : ''}`}
-                      onClick={() => selectMenu(item)}
-                    >
-                      {!!item?.icon && (
-                        <Box
-                          backgroundColor="white"
-                          borderRadius="md"
-                          p="1"
-                          height="8"
-                          width="8"
-                          boxShadow="0 .3125rem .625rem 0 rgba(0,0,0,.12)"
-                          marginRight="1"
-                          className={`${
-                            isExpanded ? styles['active-icon'] : ''
-                          }`}
-                        >
-                          <FontAwesomeIcon
-                            width={12}
-                            height={12}
-                            icon={item.icon}
-                            color={isExpanded ? 'white' : 'black'}
-                          />
-                        </Box>
-                      )}
-                      <Text
-                        m={0}
-                        fontWeight={isExpanded ? 'semi-bold' : 'normal'}
-                        align="center"
-                        paddingLeft={1}
-                      >
-                        {item.name}
-                      </Text>
-                    </AccordionButton>
-
-                    {!!item.subMenus && item.subMenus.length > 0 && (
-                      <AccordionPanel p={0}>
-                        <List>
-                          {item.subMenus.map(subMenuItem => {
-                            return (
-                              <ListItem
-                                key={subMenuItem.id}
-                                paddingY="0.675rem"
-                                paddingLeft={4}
-                                fontWeight={
-                                  currentMenu?.id === subMenuItem.id
-                                    ? 'medium'
-                                    : 'light'
-                                }
-                                cursor="pointer"
-                                onClick={() => selectMenu(subMenuItem)}
-                              >
-                                {subMenuItem.name}
-                              </ListItem>
-                            );
-                          })}
-                        </List>
-                      </AccordionPanel>
-                    )}
-                  </>
-                )}
-              </AccordionItem>
-            );
-          })}
-        </Accordion>
-      </Box>
+                  {!!item.subMenus && item.subMenus.length > 0 && (
+                    <AccordionPanel p={0}>
+                      <List>
+                        {item.subMenus.map(subMenuItem => {
+                          return (
+                            <ListItem
+                              key={subMenuItem.id}
+                              className={'py-3 px-5'}
+                              fontWeight={
+                                currentMenu?.id === subMenuItem.id
+                                  ? 'medium'
+                                  : 'light'
+                              }
+                              cursor="pointer"
+                              onClick={() => selectMenu(subMenuItem)}
+                            >
+                              {subMenuItem.name}
+                            </ListItem>
+                          );
+                        })}
+                      </List>
+                    </AccordionPanel>
+                  )}
+                </>
+              )}
+            </AccordionItem>
+          );
+        })}
+      </Accordion>
     </aside>
+  );
+}
+
+type ParentMenuButtonProps = {
+  isExpanded?: boolean;
+  onClick?: () => void;
+  item: SidebarMenuItem;
+};
+function ParentMenuButton({
+  isExpanded,
+  onClick,
+  item
+}: ParentMenuButtonProps) {
+  return (
+    <AccordionButton
+      className={classNames(
+        'flex gap-1 justify-between',
+        `${isExpanded ? styles['active-menu'] : ''}`
+      )}
+      onClick={onClick}
+    >
+      <span className={'flex items-center gap-1'}>
+        {!!item?.icon && (
+          <Box
+            backgroundColor="white"
+            borderRadius="md"
+            p="1"
+            height="8"
+            width="8"
+            boxShadow="0 .3125rem .625rem 0 rgba(0,0,0,.12)"
+            marginRight="1"
+            className={`${isExpanded ? styles['active-icon'] : ''}`}
+          >
+            <FontAwesomeIcon
+              width={12}
+              height={12}
+              icon={item.icon}
+              color={isExpanded ? 'white' : 'black'}
+            />
+          </Box>
+        )}
+
+        <Text
+          m={0}
+          fontWeight={isExpanded ? 'semi-bold' : 'normal'}
+          align="center"
+        >
+          {item.name}
+        </Text>
+      </span>
+
+      {!!item.subMenus && (
+        <FontAwesomeIcon
+          width={12}
+          height={12}
+          icon={isExpanded ? faCaretDown : faCaretRight}
+        />
+      )}
+    </AccordionButton>
   );
 }
