@@ -12,12 +12,14 @@ import { useRouter } from 'next/router';
 import { ActivityStatusTag } from '../../../../entities/activities/ui/ActivityStatusTag/ActivityStatusTag';
 import { RequestDayText } from '../../../../entities/activities/ui/RequestDayText/RequestDayText';
 import { useNotify } from '../../../../shared/models/notify';
+import { useTranslate } from '../../../../shared/translations/translation';
 
 export function MyPendingTasks() {
   const notify = useNotify();
   const { data, isLoading } = useMyActivityRequestsQuery({
     status: [RequestActivityStatus.PENDING]
   });
+  const { formatMessage } = useTranslate();
 
   function renderContent() {
     if (isLoading) {
@@ -101,9 +103,13 @@ export function MyPendingTasks() {
       <div>
         <Heading size={'md'} className={'space-x-2'}>
           <FontAwesomeIcon icon={faClock} />
-          <span>Pending Request Tasks</span>
+          <span>
+            {formatMessage({ id: 'myDashboard.pendingRequestTasks' })}
+          </span>
         </Heading>
-        <Text fontSize={'sm'}>Items requiring your attention</Text>
+        <Text fontSize={'sm'}>
+          {formatMessage({ id: 'myDashboard.pendingRequestTasksDesc' })}
+        </Text>
       </div>
 
       {renderContent()}
@@ -113,6 +119,7 @@ export function MyPendingTasks() {
 
 function NotFoundBanner() {
   const router = useRouter();
+  const { formatMessage } = useTranslate();
 
   function handleViewAllTasks() {
     router.push('/activities/requests/my');
@@ -124,16 +131,15 @@ function NotFoundBanner() {
         <FontAwesomeIcon icon={faCheck} className="h-12 w-12 text-green-500" />
       </div>
       <h3 className="text-lg font-semibold text-gray-900 mb-2">
-        All Clear! 🎉
+        {formatMessage({ id: 'myDashboard.allClear' })}
       </h3>
       <p className="text-gray-600 mb-4 max-w-sm mx-auto">
-        You're all caught up! No pending requests need your attention right now.
+        {formatMessage({ id: 'myDashboard.allClearDesc' })}
       </p>
       <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
-        <p className="text-sm text-green-700">
-          <strong>Great job!</strong> Staying on top of your tasks keeps
-          everything running smoothly.
-        </p>
+        <b className="text-sm text-green-700">
+          {formatMessage({ id: 'myDashboard.greatJob' })}
+        </b>
       </div>
       <Button
         variant="outline"
@@ -142,7 +148,7 @@ function NotFoundBanner() {
         leftIcon={<FontAwesomeIcon icon={faCalendar} />}
         onClick={handleViewAllTasks}
       >
-        <span>View All Tasks</span>
+        <span>{formatMessage({ id: 'myDashboard.viewAllTasks' })}</span>
       </Button>
     </div>
   );

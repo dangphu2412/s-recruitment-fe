@@ -24,19 +24,25 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import Link from 'next/link';
+import { useSidebarController } from './SideBarControl';
 
 type Props = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
 >;
 
-export function SideBar({ className, ...rest }: Props): React.ReactElement {
+export function SideBar({ className, ...rest }: Props): JSX.Element {
   const currentMenu = useMenuStore(state => state.currentMenu);
   const { items, selectMenu } = useMenu();
+  const [sidebarState] = useSidebarController();
 
   useSyncParamsToMenu({
     menus: items
   });
+
+  if (!sidebarState.isOpen) {
+    return <></>;
+  }
 
   return (
     <aside
