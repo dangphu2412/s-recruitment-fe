@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch } from '@chakra-ui/react';
-import { UserManagementView } from '../../../models/useAdminColumns';
+import { UserManagementView } from '../../../models/useUserManagementColumns';
 import { useMutateUserActive } from '../../../../../../entities/user/models';
 import { CellContext } from '@tanstack/table-core';
 

@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { Tag } from '@chakra-ui/react';
-import { UserManagementView } from '../../../models/useAdminColumns';
+import { UserManagementView } from '../../../models/useUserManagementColumns';
 import { Role } from '../../../../../../entities/user/api';
 import { CellContext } from '@tanstack/table-core/src/core/cell';
 
