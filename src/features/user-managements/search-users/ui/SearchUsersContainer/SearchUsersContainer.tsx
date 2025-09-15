@@ -7,6 +7,7 @@ import { DepartmentFilterDialog } from './DepartmentFilterDialog/DepartmentFilte
 import { PeriodFilterDialog } from './PeriodFilterDialog/PeriodFilterDialog';
 import { StepIds } from '../../../user-guide/user-management-guide';
 import { useTranslate } from '../../../../../shared/translations/translation';
+import { BirthdayFilterDialog } from './BirthdayFilterDialog/BirthdayFilterDialog';
 
 export function SearchUsersContainer(): React.ReactElement {
   const setIsSubmitted = useUserStore(user => user.setIsSubmitted);
@@ -21,6 +22,7 @@ export function SearchUsersContainer(): React.ReactElement {
       <SearchInput />
       <DepartmentFilterDialog />
       <PeriodFilterDialog />
+      <BirthdayFilterDialog />
       <StatusFilterDialog />
 
       <div>
