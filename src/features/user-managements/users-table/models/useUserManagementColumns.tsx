@@ -27,6 +27,7 @@ export type UserManagementView = {
   deletedAt: string;
   operationFee?: OperationFee;
   remainMonths: number;
+  estimatedPaidMonths: number;
   paidMonths: number;
   debtMonths: number;
   isProbation: boolean;
@@ -89,17 +90,11 @@ export function useUserManagementColumns() {
             return <Tag>Probation</Tag>;
           }
 
-          return <>{props.getValue()}</>;
-        }
-      }),
-      columnHelper.accessor('remainMonths', {
-        header: formatMessage({ id: 'user.table.remainMonths' }),
-        cell: props => {
-          if (props.row.original.isProbation) {
-            return <Tag>Probation</Tag>;
-          }
-
-          return <>{props.getValue()}</>;
+          return (
+            <>
+              {props.getValue()}/{props.row.original.estimatedPaidMonths}
+            </>
+          );
         }
       }),
       columnHelper.accessor('joinedAt', {

@@ -28,6 +28,7 @@ export type UserDetail = {
 export function getInitialOverviewState(): UserStore['overview'] {
   const defaultState: OverviewFilters = {
     ...DEFAULT_PAGINATION,
+    birthday: null,
     search: '',
     userStatus: [],
     departmentIds: [],
@@ -44,6 +45,7 @@ type OverviewFilters = {
   userStatus: string[];
   departmentIds: string[];
   periodIds: string[];
+  birthday: string | null;
   search: string;
 } & Pagination;
 
@@ -352,7 +354,8 @@ export function useQueryUsers({ query, ...options }: QueryUserOptions) {
       query.userStatus?.toString(),
       query.departmentIds?.toString(),
       query.periodIds?.toString(),
-      query.roleIds?.toString()
+      query.roleIds?.toString(),
+      query.birthday?.toString()
     ],
     queryFn: () => userApiClient.getMany(query),
     ...options
