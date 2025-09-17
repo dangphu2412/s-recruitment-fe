@@ -43,6 +43,7 @@ export type UserManagementView = {
   department: CommonData;
   remainMonths: number;
   paidMonths: number;
+  estimatedPaidMonths: number;
   debtMonths: number;
   isProbation: boolean;
 };
@@ -73,10 +74,6 @@ export type UpdateUserDto = {
   trackingId?: string;
   phoneNumber?: string;
   joinedAt?: string;
-};
-
-export type UploadUserDto = {
-  file: File;
 };
 
 export type PatchUserRolesPayload = {
@@ -121,6 +118,7 @@ export type GetUserQuery = {
   periodIds?: string[];
   roleIds?: string[];
   search: string;
+  birthday?: Date | null;
 } & Pagination;
 
 export type UpdateMyProfileDto = {
