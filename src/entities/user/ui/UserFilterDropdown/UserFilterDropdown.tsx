@@ -18,7 +18,7 @@ type Props = {
   onChange: (value: BoxItem[]) => void;
 };
 
-export function UserFilterDropdown({ name, value, onChange }: Props) {
+export function UserFilterDropdown({ name, value, onChange }: Readonly<Props>) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (

@@ -6,15 +6,6 @@
   z-50;
 
   .option-item {
-    @apply py-3 px-3 cursor-pointer hover:bg-[#f1f1f1];
-    display: flex;
-    align-items: center;
+    @apply py-3 px-3 cursor-pointer hover:bg-[#f1f1f1] flex flex-col;
   }
-
-  .option-image {
-    width: 20px;
-    height: 20px;
-    margin-right: 8px; /* Adjust spacing as needed */
-  }
-
 }

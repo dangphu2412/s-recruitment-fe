@@ -3,13 +3,14 @@ import { useActivityLogListStore } from '../../../../entities/activities/models/
 
 export function UserFilter() {
   const value = useActivityLogListStore(state => state.values.authors);
-  const setValue = useActivityLogListStore(state => state.setValue);
 
   return (
     <UserFilterDropdown
       value={value}
-      onChange={val => setValue('authors', val)}
-      name={'Filter by user'}
+      onChange={val =>
+        useActivityLogListStore.getInitialState().setValue('authors', val)
+      }
+      name={'User filter'}
     />
   );
 }
