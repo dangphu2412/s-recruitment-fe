@@ -44,6 +44,10 @@ export const MultipleCombobox = ({
     const cleanedQuery = actualQuery.trim().toLowerCase();
 
     if ('' === cleanedQuery) {
+      if (!Object.keys(selectedMap).length) {
+        return items;
+      }
+
       return items.filter(item => !selectedMap[item.value]);
     }
 
@@ -116,7 +120,7 @@ export const MultipleCombobox = ({
                 fontSize="md"
                 fontWeight="semibold"
               >
-                <Item text={item.text} value={item.value} />
+                <Item {...item} />
               </HeadlessCombobox.Option>
             ))}
           </HeadlessCombobox.Options>
