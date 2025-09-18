@@ -184,7 +184,7 @@ const DEFAULT_SEARCH = {
   departmentIds: [],
   fromDate: null,
   toDate: null,
-  status: [],
+  status: [RequestActivityStatus.PENDING],
   requestTypes: []
 };
 
