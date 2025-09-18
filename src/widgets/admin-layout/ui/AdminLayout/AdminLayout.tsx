@@ -6,11 +6,9 @@ import { Header } from '../Header/Header';
 import { TaskProgressBar } from '../../../../shared/progress-tasks-bar/progress-tasks-bar';
 import { SideBarController } from '../../../../features/menu/features-menu/ui/SideBar/SideBarControl';
 
-type AdminLayoutProps = PropsWithChildren;
-
 export function AdminLayout({
   children
-}: AdminLayoutProps): React.ReactElement {
+}: Readonly<PropsWithChildren>): React.ReactElement {
   return (
     <AuthenticatedGuard>
       <SideBarController>

@@ -7,6 +7,7 @@ import { AdminLayout } from '../widgets/admin-layout';
 import { useExceptionHandler } from '../shared/models/exception';
 import React from 'react';
 import Head from 'next/head';
+import { Analytics } from '@vercel/analytics/next';
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const handleError = useExceptionHandler();
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <title>S-Group</title>
       </Head>
       {renderLayout(<Component {...pageProps} />)}
+      <Analytics mode="production" />
     </SystemProvider>
   );
 }
