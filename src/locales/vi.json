@@ -30,7 +30,7 @@
   "myDashboard.toBeFinishedRemain": "Còn {count} công việc trong tuần này",
   "myDashboard.pendingRequests": "Yêu cầu đang chờ",
   "myDashboard.pendingRequestsView": "Xem yêu cầu của bạn",
-  "myDashboard.lateActivities": "Hoạt động trễ",
+  "myDashboard.lateActivities": "Hoạt động trễ trong {month}",
   "myDashboard.lateActivitiesView": "Xem hoạt động trễ của bạn (đang phát triển)",
   "myDashboard.myDailyActivity": "Hoạt động hằng ngày",
   "myDashboard.myDailyActivityDesc": "Số hoạt động của bạn trong tuần",
