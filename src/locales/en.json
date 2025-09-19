@@ -30,7 +30,7 @@
   "myDashboard.toBeFinishedRemain": "{count} remaining work in this week",
   "myDashboard.pendingRequests": "Pending requests",
   "myDashboard.pendingRequestsView": "View your requests",
-  "myDashboard.lateActivities": "Late Activities",
+  "myDashboard.lateActivities": "Late Activities in {month}",
   "myDashboard.lateActivitiesView": "View yours late (developing)",
   "myDashboard.myDailyActivity": "My Daily Activity",
   "myDashboard.myDailyActivityDesc": "Your activity count this week",

@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 import { useDashboardMyKPI } from '../../../../entities/dashboard/models/dashboard.model';
 import { useTranslate } from '../../../../shared/translations/translation';
+import { format, getMonth } from 'date-fns';
 
 export function UserActivitiesCard() {
   const { data } = useDashboardMyKPI();
@@ -118,7 +119,14 @@ export function UserActivitiesCard() {
       <Card variant={'elevated'} color={'red'}>
         <CardHeader>
           <Text fontSize="lg" className={'space-x-2 font-bold'}>
-            <span>{formatMessage({ id: 'myDashboard.lateActivities' })}</span>
+            <span>
+              {formatMessage(
+                { id: 'myDashboard.lateActivities' },
+                {
+                  month: new Date().toLocaleString('en-US', { month: 'long' })
+                }
+              )}
+            </span>
           </Text>
         </CardHeader>
 
@@ -126,7 +134,11 @@ export function UserActivitiesCard() {
           <Text fontSize={'2xl'}>{data?.totalLateActivities ?? 0}</Text>
 
           <Text fontSize={'md'}>
-            <Link href={'#'} fontSize={'sm'} as={NextLink}>
+            <Link
+              href={'/activities/tracking?status=P'}
+              fontSize={'sm'}
+              as={NextLink}
+            >
               {formatMessage({ id: 'myDashboard.lateActivitiesView' })}{' '}
               <FontAwesomeIcon icon={faExternalLink} />
             </Link>
