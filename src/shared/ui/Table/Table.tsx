@@ -1,19 +1,9 @@
 import { ReactElement } from 'react';
 import { Cell, flexRender, Row } from '@tanstack/react-table';
-import {
-  Table as BaseTable,
-  TableCaption,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr
-} from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { TableLoading } from './TableLoading';
 import { NoData } from './NoData';
 import classNames from 'classnames';
-import classes from './Table.module.scss';
 import { ActionColumnIds, BaseTableProps } from './models/table.model';
 import { SortIcon } from './SortIcon';
 import { MoreAction } from './MoreAction';
@@ -32,24 +22,31 @@ export function Table<T extends object>({
   className,
   table,
   ...rest
-}: BaseTableProps<T>): ReactElement {
+}: Readonly<BaseTableProps<T>>): ReactElement {
   function renderHeader() {
     return (
-      <Thead className={'sticky top-0 z-[3] shadow'}>
+      <thead>
         {table.getHeaderGroups().map(headerGroup => {
           return (
-            <Tr key={headerGroup.id}>
+            <tr
+              key={headerGroup.id}
+              className={'border-b border-gray-200 shadow-sm sticky top-0 z-10'}
+            >
               {headerGroup.headers.map(header => {
                 return (
-                  <Th
+                  <Box
+                    as={'th'}
+                    fontSize="xs"
+                    fontWeight={'semibold'}
                     key={header.id}
                     colSpan={header.colSpan}
                     color="grey"
-                    backgroundColor={'white'}
-                    className={classNames('shadow-md')}
+                    className={classNames(
+                      'shadow-md bg-white px-3 py-2 uppercase'
+                    )}
                     style={getPinStyle(header.column)}
                   >
-                    <div className={'flex flex-row  items-center'}>
+                    <div className={'flex flex-row items-center'}>
                       <span>
                         {header.isPlaceholder
                           ? ''
@@ -69,13 +66,13 @@ export function Table<T extends object>({
                           .toUpperCase() as keyof typeof ActionColumnIds
                       ] && <MoreAction column={header.column} />}
                     </div>
-                  </Th>
+                  </Box>
                 );
               })}
-            </Tr>
+            </tr>
           );
         })}
-      </Thead>
+      </thead>
     );
   }
 
@@ -87,7 +84,9 @@ export function Table<T extends object>({
     function renderCell(row: Row<T>, cell: Cell<T, unknown>) {
       if (cell.getIsGrouped()) {
         return (
-          <div
+          <Text
+            fontSize={'sm'}
+            fontWeight={'medium'}
             style={getPinStyle(cell.column)}
             onClick={row.getToggleExpandedHandler()}
             className={classNames(
@@ -100,7 +99,7 @@ export function Table<T extends object>({
             />{' '}
             {flexRender(cell.column.columnDef.cell, cell.getContext())} (
             {row.subRows.length})
-          </div>
+          </Text>
         );
       }
 
@@ -119,55 +118,56 @@ export function Table<T extends object>({
     }
 
     return (
-      <Tbody className={'relative'}>
+      <tbody>
         {table.getRowModel().rows.map(row => {
           return (
-            <Tr
+            <Box
+              as={'tr'}
               key={row.id}
-              backgroundColor={'white'}
-              _hover={{ backgroundColor: 'gray.200' }}
+              className={classNames(
+                'bg-white border-b border-gray-200 ',
+                onRowClick ? 'pointer' : 'auto'
+              )}
               onClick={() => {
                 onRowClick?.(row);
               }}
-              cursor={onRowClick ? 'pointer' : 'auto'}
             >
               {row.getVisibleCells().map(cell => {
                 const cellId = `${row.id}-${cell.column.id}`;
 
                 return (
-                  <Td
+                  <Text
+                    as={'td'}
+                    fontSize={'sm'}
                     key={cellId}
-                    className={classNames('bg-white')}
+                    className={classNames('bg-white px-4 py-3')}
                     style={getPinStyle(cell.column)}
                   >
                     {renderCell(row, cell)}
-                  </Td>
+                  </Text>
                 );
               })}
-            </Tr>
+            </Box>
           );
         })}
-      </Tbody>
+      </tbody>
     );
   }
 
   return (
-    <TableContainer
-      overflow={'auto'}
-      overflowY={'auto'}
-      maxWidth={'auto'}
-      className={classNames(classes['table-container'], className)}
+    <div
+      className={classNames('h-[500px] overflow-auto bg-white relative')}
       {...rest}
     >
-      <BaseTable variant="simple" className={'w-full'}>
-        {caption && <TableCaption>{caption}</TableCaption>}
+      <table className={'w-max min-w-full absolute'}>
+        {caption && <caption>{caption}</caption>}
 
         {renderHeader()}
         {renderBody()}
-      </BaseTable>
+      </table>
 
       {!isLoading && !items.length && <NoData />}
       {isLoading && <TableLoading />}
-    </TableContainer>
+    </div>
   );
 }

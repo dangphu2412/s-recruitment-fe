@@ -17,7 +17,7 @@ export function RequestDayText({
   timeOfDayName,
   requestChangeDay,
   compensatoryDay
-}: Props) {
+}: Readonly<Props>) {
   if (RequestTypes.WORKING === requestType) {
     return (
       <>

@@ -1,7 +1,6 @@
 import { useUserRequestsColumns } from '../../models/useUserRequestsColumns';
 import {
   useActivityRequests,
-  useActivityRequestStore,
   useUpdateApprovalActivityRequestMutation
 } from '../../../../../entities/activities/models/activity-request.model';
 import React, { useMemo } from 'react';
@@ -75,16 +74,7 @@ export function UserRequestsTable() {
         </Portal>
       )}
 
-      <Table
-        table={table}
-        items={items}
-        isLoading={isFetching}
-        onRowClick={row => {
-          useActivityRequestStore.setState({
-            selectedId: row.original.id
-          });
-        }}
-      />
+      <Table table={table} items={items} isLoading={isFetching} />
     </>
   );
 }

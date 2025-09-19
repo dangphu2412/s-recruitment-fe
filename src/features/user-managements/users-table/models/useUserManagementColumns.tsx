@@ -60,7 +60,8 @@ export function useUserManagementColumns() {
             onSwitchFinish={handleRefresh}
           />
         ),
-        enableSorting: false
+        enableSorting: false,
+        size: 100
       }),
       columnHelper.accessor('username', {
         header: formatMessage({ id: 'user.table.username' }),
