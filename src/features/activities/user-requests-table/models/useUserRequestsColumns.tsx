@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/table-core';
-import { Checkbox, Link } from '@chakra-ui/react';
+import { Checkbox } from '@chakra-ui/react';
 import {
   getRequestActions,
+  useActivityRequestStore,
   useMyActivityStore,
   useUpdateApprovalActivityRequestMutation
 } from '../../../../entities/activities/models/activity-request.model';
@@ -18,8 +19,12 @@ import { RequestTypeTag } from '../../../../entities/activities/ui/RequestTypeTa
 import { RequestDayText } from '../../../../entities/activities/ui/RequestDayText/RequestDayText';
 import { MoreActionCell } from '../../../../shared/ui/Table/Cell/MoreActionCell';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faRotateBack, faX } from '@fortawesome/free-solid-svg-icons';
-import NextLink from 'next/link';
+import {
+  faCheck,
+  faPencil,
+  faRotateBack,
+  faX
+} from '@fortawesome/free-solid-svg-icons';
 
 export type RequestsColumn = {
   id: number;
@@ -36,6 +41,14 @@ export type RequestsColumn = {
   timeOfDay: {
     id: string;
     name: string;
+  };
+  assignee: {
+    id: string;
+    fullName: string;
+  };
+  approver: {
+    id: string;
+    fullName: string;
   };
   createdAt: string;
   updatedAt: string;
@@ -55,6 +68,7 @@ export function useUserRequestsColumns() {
 
     return [
       columnHelper.display({
+        size: 24,
         id: 'select',
         header: ({ table }) => {
           return (
@@ -84,33 +98,21 @@ export function useUserRequestsColumns() {
         cell: props => {
           return <RequestTypeTag value={props.getValue() as RequestTypes} />;
         },
-        maxSize: 32
+        size: 170
       }),
       columnHelper.accessor('author', {
         header: 'Requester',
-        cell: ({ getValue }) => {
+        cell: ({ getValue, cell, column }) => {
           const author = getValue();
 
           return (
-            <div
-              className={'space-y-2'}
-              onClick={event => {
-                event.preventDefault();
-                event.stopPropagation();
-              }}
-            >
-              <Link
-                color="teal.500"
-                href={`/users/${author.id}/profile`}
-                as={NextLink}
-              >
-                {author.fullName}
-              </Link>
-
+            <Fragment key={`${column.id}${cell.id}`}>
+              <span>{author.fullName}</span>
               <p>{author.email}</p>
-            </div>
+            </Fragment>
           );
-        }
+        },
+        size: 200
       }),
       columnHelper.display({
         header: 'Request day',
@@ -124,15 +126,26 @@ export function useUserRequestsColumns() {
               compensatoryDay={props.row.original.compensatoryDay}
             />
           );
-        }
+        },
+        size: 200
       }),
-      columnHelper.accessor('updatedAt', {
-        header: 'Last changed at',
-        cell: props => formatDate(props.getValue())
+      columnHelper.accessor('assignee.fullName', {
+        header: 'Assignee',
+        size: 160
+      }),
+      columnHelper.accessor('approver.fullName', {
+        header: 'Approver',
+        size: 160
       }),
       columnHelper.accessor('createdAt', {
-        header: 'Created at',
-        cell: props => formatDate(props.getValue())
+        header: 'Created At',
+        cell: props => formatDate(props.getValue()),
+        size: 160
+      }),
+      columnHelper.accessor('updatedAt', {
+        header: 'Updated At',
+        cell: props => formatDate(props.getValue()),
+        size: 160
       }),
       columnHelper.accessor('approvalStatus', {
         header: 'Status',
@@ -143,6 +156,7 @@ export function useUserRequestsColumns() {
       columnHelper.display({
         id: 'Actions',
         header: 'Actions',
+        size: 96,
         cell: ({ row }) => {
           const actions = getRequestActions(row.original.approvalStatus);
 
@@ -216,7 +230,19 @@ export function useUserRequestsColumns() {
             return btnActions;
           }
 
-          return <MoreActionCell renderActions={renderActions} />;
+          return (
+            <div className={'gap-4 flex cursor-pointer'}>
+              <FontAwesomeIcon
+                icon={faPencil}
+                onClick={() => {
+                  useActivityRequestStore.setState({
+                    selectedId: row.original.id
+                  });
+                }}
+              />
+              <MoreActionCell renderActions={renderActions} />
+            </div>
+          );
         }
       })
     ];

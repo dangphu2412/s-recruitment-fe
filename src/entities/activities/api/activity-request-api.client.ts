@@ -18,6 +18,16 @@ type ActivityRequestResponse = {
     id: string;
     name: string;
   };
+  assignee: {
+    id: string;
+    fullName: string;
+    email: string;
+  };
+  approver: {
+    id: string;
+    fullName: string;
+    email: string;
+  };
   createdAt: string;
   updatedAt: string;
   approvalStatus: RequestActivityStatus;
