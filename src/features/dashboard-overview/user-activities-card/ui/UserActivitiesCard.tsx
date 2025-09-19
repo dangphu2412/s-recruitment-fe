@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 import { useDashboardMyKPI } from '../../../../entities/dashboard/models/dashboard.model';
 import { useTranslate } from '../../../../shared/translations/translation';
-import { format, getMonth } from 'date-fns';
 
 export function UserActivitiesCard() {
   const { data } = useDashboardMyKPI();
