@@ -1,10 +1,10 @@
 import { Card, ContentHeader } from '../../../shared/ui';
 import { ContentHeaderLayout } from '../../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import React, { useEffect } from 'react';
-import { UserRequestsTable } from '../../../features/activities/user-requests-table/ui/RequestsTable/UserRequestsTable';
-import { PaginateActivities } from '../../../features/activities/paginate-activities';
-import { SearchActivities } from '../../../features/activities/search-activities';
-import { ApprovalUserRequestModal } from '../../../features/activities/approval-modal/ui/ApprovalUserRequestModal';
+import { UserRequestsTable } from '../../../features/activities/requests/managements/user-requests-table/ui/RequestsTable/UserRequestsTable';
+import { PaginateActivitiesRequests } from '../../../features/activities/requests/managements/paginate-activities-requests';
+import { SearchActivitiesRequests } from '../../../features/activities/requests/managements/search-activities';
+import { ApprovalUserRequestModal } from '../../../features/activities/requests/managements/approval-modal/ui/ApprovalUserRequestModal';
 import { HeaderActionGroup } from '../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { UploadFileButtonWidget } from '../../../widgets/upload-file/UploadFileButtonWidget';
 import { activityRequestApiClient } from '../../../entities/activities/api/activity-request-api.client';
@@ -13,7 +13,7 @@ import {
   ACTIVITY_REQUESTS_QUERY_KEY,
   useActivityRequestStore
 } from '../../../entities/activities/models/activity-request.model';
-import { DetailRequest } from '../../../features/activities/detail-request/ui/DetailRequest';
+import { DetailRequest } from '../../../features/activities/requests/managements/detail-request/ui/DetailRequest';
 
 export default function RequestsPage() {
   const queryClient = useQueryClient();
@@ -70,8 +70,8 @@ export default function RequestsPage() {
         </HeaderActionGroup>
       </ContentHeaderLayout>
 
-      <SearchActivities />
-      <PaginateActivities />
+      <SearchActivitiesRequests />
+      <PaginateActivitiesRequests />
       <UserRequestsTable />
       <ApprovalUserRequestModal />
       <DetailRequest />

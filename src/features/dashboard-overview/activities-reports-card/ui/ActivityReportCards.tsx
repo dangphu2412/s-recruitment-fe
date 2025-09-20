@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import NextLink from 'next/link';
 import { subMonths } from 'date-fns';
-import { formatToInputDate } from '../../../../shared/models/utils/date.utils';
+import { formatToInputDate } from '../../../../shared/date';
 import { LogWorkStatus } from '../../../../entities/activities/config/constants/log-work-status.enum';
 import { useDashboardKPI } from '../../../../entities/dashboard/models/dashboard.model';
 

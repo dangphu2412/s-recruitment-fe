@@ -14,10 +14,7 @@ import {
   PointElement,
   Title
 } from 'chart.js';
-import {
-  formatDate,
-  formatMonth
-} from '../../../../shared/models/utils/date.utils';
+import { formatDate, formatMonth } from '../../../../shared/date';
 import { useDashboardMyActivityTrend } from '../../../../entities/dashboard/models/dashboard.model';
 import colors from 'tailwindcss/colors';
 import { useTranslate } from '../../../../shared/translations/translation';

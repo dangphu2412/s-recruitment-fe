@@ -23,7 +23,7 @@ import {
 } from '../../models/edit-user.model';
 import { ContentHeaderLayout } from '../../../../../shared/ui/Header/ContentHeader/ContentHeaderLayout';
 import { HeaderActionGroup } from '../../../../../shared/ui/Header/ContentHeader/HeaderActionGroup';
-import { useNotify } from '../../../../../shared/models/notify';
+import { useNotify } from '../../../../../shared/notify';
 import { useQueryClient } from 'react-query';
 import { ChangePasswordContainer } from './ChangePasswordModal/ChangePasswordModal';
 

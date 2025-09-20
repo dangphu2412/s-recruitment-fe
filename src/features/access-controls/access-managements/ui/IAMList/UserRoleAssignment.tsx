@@ -35,7 +35,7 @@ import {
   useQueryUsers,
   useRoleStore
 } from '../../../../../entities/user/models';
-import { DEFAULT_PAGINATION } from '../../../../../shared/models';
+import { DEFAULT_PAGINATION } from '../../../../../shared/pagination/offset-paging';
 import { useQueryClient } from 'react-query';
 import { createColumnHelper } from '@tanstack/table-core';
 import { Role } from '../../../../../entities/user/api';

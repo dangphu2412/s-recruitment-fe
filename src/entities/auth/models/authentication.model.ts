@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
 import { persistentStorage } from '../../../shared/api/services/persistent.storage';
 import { tokenManager } from '../../../shared/api/services';
-import { useNotify } from '../../../shared/models/notify';
+import { useNotify } from '../../../shared/notify';
 
 export const LOGIN_KEY = 'POST_LOGIN';
 export function useLoginMutation() {

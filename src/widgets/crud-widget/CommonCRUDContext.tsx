@@ -1,6 +1,9 @@
 import { create, useStore } from 'zustand/react';
 import { createContext, PropsWithChildren, useContext, useRef } from 'react';
-import { DEFAULT_PAGINATION, Page } from '../../shared/models';
+import {
+  DEFAULT_PAGINATION,
+  Page
+} from '../../shared/pagination/offset-paging';
 import { useQuery } from 'react-query';
 
 type BaseSchema = Record<

@@ -12,7 +12,7 @@ import { ContentHeaderLayout } from '../../shared/ui/Header/ContentHeader/Conten
 import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { UserGuideButton } from '../../shared/user-guide/UserGuideButton';
 import { UserManagementGuideSteps } from '../../features/user-managements/user-guide/user-management-guide';
-import { useNotify } from '../../shared/models/notify';
+import { useNotify } from '../../shared/notify';
 import { Button } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotate } from '@fortawesome/free-solid-svg-icons';

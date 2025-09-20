@@ -4,7 +4,7 @@ import { createColumnHelper } from '@tanstack/table-core';
 import { ActivityLogResponse } from '../../../entities/activities/api/activity-log-api.client';
 import { LogWorkStatus } from '../../../entities/activities/config/constants/log-work-status.enum';
 import { Tag, Text } from '@chakra-ui/react';
-import { formatDayOfWeekAndDate } from '../../../shared/models/utils/date.utils';
+import { formatDayOfWeekAndDate } from '../../../shared/date';
 import {
   getCoreRowModel,
   getExpandedRowModel,

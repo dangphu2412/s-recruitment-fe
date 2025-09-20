@@ -1,5 +1,5 @@
 import { RequestTypes } from '../../config/constants/request-activity-metadata.constant';
-import { formatDate } from '../../../../shared/models/utils/date.utils';
+import { formatDate } from '../../../../shared/date';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 

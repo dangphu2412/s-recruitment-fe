@@ -1,10 +1,10 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
 import { useRouter } from 'next/router';
 import { LanguageMap } from './translation';
 
-export function TranslationProvider({ children }: { children: ReactNode }) {
-  const { locale = LanguageMap.EN } = useRouter();
+export function TranslationProvider({ children }: Readonly<PropsWithChildren>) {
+  const { locale = LanguageMap.VI } = useRouter();
   const [messages, setMessages] = useState<Record<string, string> | undefined>(
     undefined
   );

@@ -1,5 +1,5 @@
 import { authorizedHttpClient } from 'src/shared/api/factories/http-client.factories';
-import { Page } from 'src/shared/models/list.api';
+import { Page } from 'src/shared/pagination/offset-paging';
 
 export type CommonData = {
   id: string;

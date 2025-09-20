@@ -4,7 +4,7 @@ import {
   User,
   UserDetail
 } from '../../../../entities/user/api';
-import { formatToInputDate } from '../../../../shared/models/utils/date.utils';
+import { formatToInputDate } from '../../../../shared/date';
 
 export function fromUserDetailToEditForm(userDetail: User): EditUserForm {
   return {

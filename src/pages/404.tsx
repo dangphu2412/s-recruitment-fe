@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { NextPageWithLayout } from '../shared/models/next.types';
+import { NextPageWithLayout } from '../shared/next.types';
 import { NoLayout } from '../shared/ui/NoLayout';
 import { Button } from '@chakra-ui/react';
 

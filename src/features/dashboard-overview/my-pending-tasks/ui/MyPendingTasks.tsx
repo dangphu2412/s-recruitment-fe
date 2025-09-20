@@ -11,7 +11,7 @@ import {
 import { useRouter } from 'next/router';
 import { ActivityStatusTag } from '../../../../entities/activities/ui/ActivityStatusTag/ActivityStatusTag';
 import { RequestDayText } from '../../../../entities/activities/ui/RequestDayText/RequestDayText';
-import { useNotify } from '../../../../shared/models/notify';
+import { useNotify } from '../../../../shared/notify';
 import { useTranslate } from '../../../../shared/translations/translation';
 
 export function MyPendingTasks() {

@@ -3,7 +3,7 @@ import { Combobox as HeadlessCombobox, Transition } from '@headlessui/react';
 import { Input } from '@chakra-ui/react';
 import classes from './Combobox.module.scss';
 import { ComboboxItem } from './ComboboxItem';
-import { BoxItem } from '../../models/combobox.api';
+import { BoxItem } from '../../combobox.api';
 
 type ItemProps = BoxItem;
 

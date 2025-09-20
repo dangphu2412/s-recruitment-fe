@@ -5,7 +5,7 @@ import { HeaderActionGroup } from '../../shared/ui/Header/ContentHeader/HeaderAc
 import {
   QuerySynchronizeSchema,
   useQuerySynchronizer
-} from '../../shared/models/query-synchronizer';
+} from '../../shared/query-synchronizer';
 import { SyncActivityLogsButton } from '../../features/activity-logs/sync-activity-logs/ui/SyncActivityLogsButton';
 import { SearchActivityLogsContainer } from '../../features/activity-logs/search-activity-logs/ui/SearchActivityLogsContainer';
 import { ActivityLogsTable } from '../../features/activity-logs/activity-logs-table/ActivityLogsTable';

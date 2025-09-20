@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { AppProps } from 'next/app';
-import { ErrorHandler } from '../../shared/models/exception';
+import { ErrorHandler } from '../../shared/exception';
 
 export type SystemPropsAdapter = PropsWithChildren<{
   onError: ErrorHandler;

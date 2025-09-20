@@ -12,7 +12,7 @@ import {
 } from '../../../../entities/user/models';
 import { Box, Tag } from '@chakra-ui/react';
 import { useQueryClient } from 'react-query';
-import { formatDate } from '../../../../shared/models/utils/date.utils';
+import { formatDate } from '../../../../shared/date';
 import { createColumnHelper } from '@tanstack/table-core';
 import { CommonData } from '../../../../entities/user/api/user-master-data-api-client';
 import { useTranslate } from '../../../../shared/translations/translation';

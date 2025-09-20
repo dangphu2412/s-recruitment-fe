@@ -6,7 +6,7 @@ import {
   ACTIVITY_LOGS_QUERY_KEY,
   useMutateSyncLogs
 } from '../../../../entities/activities/models/activity-log.model';
-import { useNotify } from '../../../../shared/models/notify';
+import { useNotify } from '../../../../shared/notify';
 import { useTaskProgressStore } from '../../../../shared/progress-tasks-bar/progress-tasks-bar';
 import { faRotate } from '@fortawesome/free-solid-svg-icons';
 

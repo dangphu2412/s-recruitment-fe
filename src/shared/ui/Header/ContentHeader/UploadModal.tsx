@@ -9,7 +9,7 @@ import {
   ModalOverlay,
   Text
 } from '@chakra-ui/react';
-import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
+import { UseDisclosureApi } from 'src/shared/disclosure.api';
 import { UploadInput, UploadInputRef } from '../../Input/Uploader/UploadInput';
 
 type ModalProps = Pick<UseDisclosureApi, 'onClose'> & {

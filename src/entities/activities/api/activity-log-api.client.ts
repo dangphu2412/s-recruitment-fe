@@ -1,9 +1,9 @@
 import { authorizedHttpClient } from '../../../shared/api';
 import { User } from '../../user/api';
-import { Page } from '../../../shared/models';
+import { Page } from '../../../shared/pagination/offset-paging';
 import { LogWorkStatus } from '../config/constants/log-work-status.enum';
-import { encodeMultiQueryParams } from '../../../shared/models/pagination';
-import { downloadFile } from '../../../shared/models/file';
+import { encodeMultiQueryParams } from '../../../shared/query-filter';
+import { downloadFile } from '../../../shared/file';
 
 export type ActivityLogResponse = {
   fromTime: string;
