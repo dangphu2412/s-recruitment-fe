@@ -1,9 +1,10 @@
-import { Page, Pagination, ProbationQuery } from 'src/shared/models/list.api';
+import { Page, Pagination } from 'src/shared/pagination/offset-paging';
 import { authorizedHttpClient } from '../../../shared/api';
 import { OperationFee } from 'src/entities/monthly-money/models';
 import { Role } from './access-control.client';
 import { CommonData } from './user-master-data-api-client';
-import { encodeParams } from '../../../shared/models/pagination';
+import { encodeParams } from '../../../shared/query-filter';
+import { FilterQuery } from '../../../shared/filter.api';
 
 export type User = {
   id: string;
@@ -192,7 +193,10 @@ export const userApiClient = {
       }
     });
   },
-  getProbationUsers(params: ProbationQuery): Promise<Page<UserProbationView>> {
+  getProbationUsers(params: {
+    pagination: Pagination;
+    filters: FilterQuery;
+  }): Promise<Page<UserProbationView>> {
     return authorizedHttpClient.request<Page<UserProbationView>>({
       url: '/users/probation',
       method: 'get',

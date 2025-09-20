@@ -1,4 +1,4 @@
-import { Page } from 'src/shared/models';
+import { Page } from 'src/shared/pagination/offset-paging';
 import { authorizedHttpClient } from '../../../shared/api';
 
 /**

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StepIds } from '../../../user-guide/user-management-guide';
 import { QUERY_USERS_KEY } from '../../../../../entities/user/models';
-import { useNotify } from '../../../../../shared/models/notify';
+import { useNotify } from '../../../../../shared/notify';
 import { useQueryClient } from 'react-query';
 import { UploadFileButtonWidget } from '../../../../../widgets/upload-file/UploadFileButtonWidget';
 import { userApiClient } from '../../../../../entities/user/api';

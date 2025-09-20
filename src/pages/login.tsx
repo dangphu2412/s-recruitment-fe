@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { Container, Grid, GridItem } from '@chakra-ui/react';
-import { NextPageWithLayout } from 'src/shared/models/next.types';
+import { NextPageWithLayout } from 'src/shared/next.types';
 import { useIsMutating } from 'react-query';
 import { LoginForm, RightBanner } from '../features/login/ui';
 import { FullLoader } from '../shared/ui/Loader/Full/FullLoader';

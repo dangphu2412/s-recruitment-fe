@@ -7,7 +7,7 @@ import {
   ModalProps,
   useDisclosure
 } from '@chakra-ui/react';
-import { UseDisclosureApi } from '../../../models/disclosure.api';
+import { UseDisclosureApi } from '../../../disclosure.api';
 import { ComponentWithAs } from '@chakra-ui/react/dist/types/system/system.types';
 
 type HeaderActionGroupProps = PropsWithChildren<{}>;

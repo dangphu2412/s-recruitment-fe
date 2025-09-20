@@ -5,7 +5,7 @@ import classes from './Combobox.module.scss';
 import { ComboboxItem } from './ComboboxItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
-import { BoxItem } from '../../models/combobox.api';
+import { BoxItem } from '../../combobox.api';
 
 type ItemProps = BoxItem;
 

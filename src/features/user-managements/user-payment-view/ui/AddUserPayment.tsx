@@ -12,7 +12,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { usePayMutation } from '../../../../entities/monthly-money/models/payment.model';
-import { useNotify } from '../../../../shared/models/notify';
+import { useNotify } from '../../../../shared/notify';
 
 type AddUserPaymentModel = {
   amount: number;

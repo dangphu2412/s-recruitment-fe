@@ -1,5 +1,5 @@
 import React from 'react';
-import { NextPageWithLayout } from '../shared/models/next.types';
+import { NextPageWithLayout } from '../shared/next.types';
 import { NoLayout } from '../shared/ui/NoLayout';
 
 const MaintenancePage: NextPageWithLayout = (): React.ReactElement => (

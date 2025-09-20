@@ -2,7 +2,7 @@ import {
   HttpClient,
   HttpRequest,
   HttpResponse
-} from 'src/shared/models/http-client';
+} from 'src/shared/api/http-client';
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { persistentStorage } from 'src/shared/api/services/persistent.storage';
 import { tokenManager } from '../services';

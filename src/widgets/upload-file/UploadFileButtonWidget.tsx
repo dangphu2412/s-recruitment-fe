@@ -1,13 +1,13 @@
 import React, { PropsWithChildren, ReactNode } from 'react';
-import { useNotify } from 'src/shared/models/notify';
+import { useNotify } from 'src/shared/notify';
 import { Button } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { useMutation } from 'react-query';
 import { UploadModal } from '../../shared/ui/Header/ContentHeader/UploadModal';
 import { HeaderModalAction } from '../../shared/ui/Header/ContentHeader/HeaderActionGroup';
-import { noop } from '../../shared/models/utils';
-import { useExceptionHandler } from '../../shared/models/exception';
+import { useExceptionHandler } from '../../shared/exception';
+import noop from 'lodash/noop';
 
 type Props<R = void> = PropsWithChildren<{
   mutateFn: (file: File) => Promise<R>;

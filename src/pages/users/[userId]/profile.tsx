@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useRouter } from 'next/router';
 import { Card } from '../../../shared/ui';
 import { UserDetailSection } from '../../../features/user-managements/users-detail-view';
-import { normalizeParam } from '../../../shared/models/utils/router.utils';
+import { normalizeParam } from '../../../shared/router';
 import { BackButton } from '../../../shared/ui/Button/BackButton';
 
 export default function UserProfile(): ReactElement {

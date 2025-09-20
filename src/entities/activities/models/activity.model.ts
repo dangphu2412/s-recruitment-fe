@@ -1,5 +1,5 @@
 import { create } from 'zustand/react';
-import { DateRange } from '../../../shared/models/filter.api';
+import { DateRange } from '../../../shared/filter.api';
 import { useQuery } from 'react-query';
 import { activityApiClient } from '../api/activity-api.client';
 import { EMPTY_ARRAY } from '../../../shared/config';

@@ -12,14 +12,14 @@ import {
   FormLabel,
   Select
 } from '@chakra-ui/react';
-import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
+import { UseDisclosureApi } from 'src/shared/disclosure.api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { HeaderDrawerAction } from 'src/shared/ui/Header/ContentHeader/HeaderActionGroup';
 import { AddButton } from '../../shared/ui/Button';
 import { HookFormInput } from '../../shared/ui/Form/HookFormInput/HookFormInput';
 import { useCommonCRUDContext } from './CommonCRUDContext';
 import { useMutation, useQueryClient } from 'react-query';
-import { useNotify } from '../../shared/models/notify';
+import { useNotify } from '../../shared/notify';
 import { HookFormTextarea } from '../../shared/ui/Form/HookFormTextarea/HookFormInput';
 
 export function CommonCreateEntityWidget(): React.ReactElement {

@@ -32,7 +32,7 @@ import xor from 'lodash/xor';
 import { useQueryClient } from 'react-query';
 import { Controller, useForm } from 'react-hook-form';
 import { mapToRolePermissions, RolePermissions } from '../../model';
-import { useNotify } from '../../../../../shared/models/notify';
+import { useNotify } from '../../../../../shared/notify';
 
 type NewRole = {
   name: string;

@@ -12,7 +12,7 @@ import {
   FormLabel,
   Select
 } from '@chakra-ui/react';
-import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
+import { UseDisclosureApi } from 'src/shared/disclosure.api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   useDepartments,
@@ -24,8 +24,8 @@ import {
   useProbationUsers
 } from '../../../../../../entities/user/models';
 import { BasicTable } from '../../../../../../shared/ui';
-import { formatDate } from '../../../../../../shared/models/utils/date.utils';
-import { useNotify } from '../../../../../../shared/models/notify';
+import { formatDate } from '../../../../../../shared/date';
+import { useNotify } from '../../../../../../shared/notify';
 import { useQueryMonthlyMoneyConfigs } from '../../../../../../entities/monthly-money/models';
 import { useQueryClient } from 'react-query';
 import { MoneyOption } from '../../../../../../entities/monthly-money/ui/MoneyOption/MoneyOption';

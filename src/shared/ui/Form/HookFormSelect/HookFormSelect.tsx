@@ -12,7 +12,11 @@ import type {
   FieldValues,
   UseFormRegister
 } from 'react-hook-form';
-import { SelectItem } from '../../../models/select-model';
+
+export type SelectItem = {
+  id: string;
+  name: string;
+};
 
 type Props<T extends FieldValues, N extends FieldPath<T>> = {
   name: N;

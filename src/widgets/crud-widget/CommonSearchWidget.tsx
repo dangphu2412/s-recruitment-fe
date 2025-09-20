@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Input, Text } from '@chakra-ui/react';
 import { Paginator } from 'src/shared/ui/Pagination/Paginator';
 import { RefreshButton } from '../../shared/ui/Button/RefreshButton';
-import { DEFAULT_PAGINATION } from 'src/shared/models';
+import { DEFAULT_PAGINATION } from 'src/shared/pagination/offset-paging';
 import { useCommonCRUDContext, useQueryResource } from './CommonCRUDContext';
 import { useQueryClient } from 'react-query';
 

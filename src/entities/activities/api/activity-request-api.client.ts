@@ -1,11 +1,11 @@
 import { authorizedHttpClient } from '../../../shared/api';
-import { Page } from '../../../shared/models';
+import { Page } from '../../../shared/pagination/offset-paging';
 import { User } from '../../user/api';
 import {
   ApprovalRequestAction,
   RequestActivityStatus
 } from '../config/constants/request-activity-status.enum';
-import { encodeMultiQueryParams } from '../../../shared/models/pagination';
+import { encodeMultiQueryParams } from '../../../shared/query-filter';
 
 type ActivityRequestResponse = {
   id: number;

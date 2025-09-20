@@ -2,7 +2,7 @@ import React, { ReactElement, useRef } from 'react';
 import { Box, Grid, GridItem, List } from '@chakra-ui/react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import { useRouter } from 'next/router';
-import { normalizeParam } from '../../../../../shared/models/utils/router.utils';
+import { normalizeParam } from '../../../../../shared/router';
 import { useRoleView } from '../../model';
 import classes from './RoleSetting.module.scss';
 
