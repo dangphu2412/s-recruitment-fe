@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import classnames from 'classnames';
-import unique from 'lodash.uniq';
+import unique from 'lodash/uniq';
 import { Key } from 'src/shared/config/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRemove } from '@fortawesome/free-solid-svg-icons';

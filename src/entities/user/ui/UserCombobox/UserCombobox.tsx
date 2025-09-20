@@ -1,9 +1,9 @@
 import { ComboboxProps } from '../../../../shared/ui/Combobox/MultipleCombobox';
 import React, { useMemo, useState } from 'react';
-import { BoxItem } from '../../../../shared/models/combobox.api';
+import { BoxItem } from '../../../../shared/combobox.api';
 import { useQueryUsers } from '../../models';
-import { useDebounceValue } from '../../../../shared/models/debounce';
-import { DEFAULT_PAGINATION } from '../../../../shared/models';
+import { useDebounceValue } from '../../../../shared/debounce';
+import { DEFAULT_PAGINATION } from '../../../../shared/pagination/offset-paging';
 import { Box, Button, Input, Text } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';

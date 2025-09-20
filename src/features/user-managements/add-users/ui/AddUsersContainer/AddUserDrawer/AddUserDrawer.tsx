@@ -12,7 +12,7 @@ import {
   FormLabel,
   Select
 } from '@chakra-ui/react';
-import { UseDisclosureApi } from 'src/shared/models/disclosure.api';
+import { UseDisclosureApi } from 'src/shared/disclosure.api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';

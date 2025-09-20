@@ -3,7 +3,7 @@ import { Step } from 'react-joyride';
 
 export const StepIds = {
   USER_TABLE: 'user-table',
-  PAGINATION_CONTROLS: 'pagination-controls',
+  PAGINATION_CONTROLS: 'query-filter-controls',
   SEARCH_BAR: 'search-bar',
   FILTERS_BAR: 'filters-bar',
   BTN_ADD_USER: 'btn-add-user',
@@ -38,8 +38,8 @@ export const UserManagementGuideSteps: Step[] = [
   {
     title: '📍 Navigate Between Pages',
     content:
-      'Use the pagination controls to explore more users. You can refresh the list using the ↻ icon or reset filters anytime.',
-    target: '#pagination-controls' // Add this ID to the pagination container
+      'Use the query-filter controls to explore more users. You can refresh the list using the ↻ icon or reset filters anytime.',
+    target: '#query-filter-controls' // Add this ID to the query-filter container
   },
   {
     title: '🔍 Search Users',

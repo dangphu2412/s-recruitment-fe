@@ -1,4 +1,4 @@
-import { NextPageWithLayout } from '../shared/models/next.types';
+import { NextPageWithLayout } from '../shared/next.types';
 import { NoLayout } from '../shared/ui/NoLayout';
 import { useAutoLogOut } from '../entities/auth/models';
 

@@ -9,10 +9,13 @@ import {
   ApprovalRequestAction,
   RequestActivityStatus
 } from '../config/constants/request-activity-status.enum';
-import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
+import {
+  DEFAULT_PAGINATION,
+  Pagination
+} from '../../../shared/pagination/offset-paging';
 import { object, string } from 'yup';
 import { RequestTypes } from '../config/constants/request-activity-metadata.constant';
-import { DateRange } from '../../../shared/models/filter.api';
+import { DateRange } from '../../../shared/filter.api';
 
 export const ACTIVITY_REQUESTS_QUERY_KEY = 'ACTIVIIY_REQUESTS_QUERY_KEY';
 

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useQueryCategories } from '../../../../../entities/posts/models/category.model';
+import { useQueryCategories } from '../../../../../entities/posts/pagination/category.model';
 import { Search } from '../Search/Search';
 import { Text } from '@chakra-ui/react';
 

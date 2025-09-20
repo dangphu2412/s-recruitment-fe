@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNotify } from '../../../../shared/models/notify';
+import { useNotify } from '../../../../shared/notify';
 import {
   QUERY_USER_DETAIL_KEY,
   QUERY_USERS_KEY,

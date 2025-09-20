@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import classes from './Combobox.module.scss';
-import { BoxItem } from '../../models/combobox.api';
+import { BoxItem } from '../../combobox.api';
 import { Text } from '@chakra-ui/react';
 
 export function ComboboxItem(props: Readonly<BoxItem>): ReactElement {

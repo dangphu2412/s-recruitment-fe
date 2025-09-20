@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@chakra-ui/react';
 import * as React from 'react';
 import { useMutateDownloadReport } from '../../../../entities/activities/models/activity-log.model';
-import { useNotify } from '../../../../shared/models/notify';
+import { useNotify } from '../../../../shared/notify';
 import { useTaskProgressStore } from '../../../../shared/progress-tasks-bar/progress-tasks-bar';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 

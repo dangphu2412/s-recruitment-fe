@@ -30,7 +30,7 @@ import {
   useDepartments,
   usePeriods
 } from '../../../../../entities/user/models/user-master-data.model';
-import { useNotify } from '../../../../../shared/models/notify';
+import { useNotify } from '../../../../../shared/notify';
 import { useQueryClient } from 'react-query';
 import { RoleSettingDrawer } from '../../../user-roles-setting/ui/RoleSettings/RoleSettingDrawer';
 import { useTrackedUsers } from '../../../../../entities/activities/models/activity-master-data.model';

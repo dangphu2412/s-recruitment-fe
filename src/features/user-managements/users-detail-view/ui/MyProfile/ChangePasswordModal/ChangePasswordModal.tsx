@@ -20,7 +20,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useChangeMyPassword } from '../../../../../../entities/auth/models';
-import { useNotify } from '../../../../../../shared/models/notify';
+import { useNotify } from '../../../../../../shared/notify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, ref, string } from 'yup';
 import { useToggle } from 'react-use';

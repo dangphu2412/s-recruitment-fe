@@ -1,18 +1,21 @@
 import { OperationFee } from '../../monthly-money/models';
 import { FilterKey } from '../../../shared/config';
-import { DEFAULT_PAGINATION, Pagination } from '../../../shared/models';
+import {
+  DEFAULT_PAGINATION,
+  Pagination
+} from '../../../shared/pagination/offset-paging';
 import { useEffect } from 'react';
-import { useNotify } from '../../../shared/models/notify';
+import { useNotify } from '../../../shared/notify';
 import {
   isBusinessException,
   useExceptionHandler
-} from '../../../shared/models/exception';
+} from '../../../shared/exception';
 import { useMutation, useQuery } from 'react-query';
 import { GetUserQuery, userApiClient } from '../api';
-import { parseFilterQuery } from '../../../shared/models/pagination';
+import { parseFilterQuery } from '../../../shared/query-filter';
 import { UserStatus } from '../config';
 import { create } from 'zustand';
-import { HttpStatus } from '../../../shared/models/http-client';
+import { HttpStatus } from '../../../shared/api/http-client';
 
 export type UserDetail = {
   id: string;

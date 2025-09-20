@@ -10,7 +10,7 @@ import {
 import { DateRangeFilter } from './DateRangeFilter';
 import { StatusFilterDialog } from './LogWorkStatusFilter';
 import { UserFilter } from './UserFilter';
-import { DEFAULT_PAGINATION } from '../../../../shared/models';
+import { DEFAULT_PAGINATION } from '../../../../shared/pagination/offset-paging';
 import { useQueryClient } from 'react-query';
 
 export function SearchActivityLogsContainer() {

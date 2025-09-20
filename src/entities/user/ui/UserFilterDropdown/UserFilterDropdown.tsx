@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { UserCombobox } from '../UserCombobox/UserCombobox';
-import { BoxItem } from '../../../../shared/models/combobox.api';
+import { BoxItem } from '../../../../shared/combobox.api';
 
 type Props = {
   name: string;

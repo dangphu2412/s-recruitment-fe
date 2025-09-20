@@ -1,5 +1,5 @@
 import { authorizedHttpClient } from '../../../shared/api';
-import { Page } from '../../../shared/models';
+import { Page } from '../../../shared/pagination/offset-paging';
 
 export type TimeOfDay = {
   id: string;

@@ -4,9 +4,9 @@ import {
   FindAnalyticLogQuery
 } from '../api/activity-log-api.client';
 import { create } from 'zustand';
-import { DEFAULT_PAGINATION } from '../../../shared/models';
+import { DEFAULT_PAGINATION } from '../../../shared/pagination/offset-paging';
 import { endOfDay, subWeeks } from 'date-fns';
-import { BoxItem } from '../../../shared/models/combobox.api';
+import { BoxItem } from '../../../shared/combobox.api';
 
 export function useActivityLogAnalytic(
   findAnalyticLogQuery?: FindAnalyticLogQuery
